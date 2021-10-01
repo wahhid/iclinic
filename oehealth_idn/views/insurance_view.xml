@@ -18,6 +18,7 @@
                             <group>
                                 <field name="name"/>
                                 <field name="partner_id" domain="[('is_insurance_company', '=', True)]"/>
+                                <field name="is_bpjs" domain="[('is_insurance_company', '=', True)]"/>
                             </group>
                             <group>
                                 <field name="admin_fee" widget="percentage"/>

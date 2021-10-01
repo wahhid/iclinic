@@ -22,6 +22,8 @@ class oeh_medical_physician(models.Model):
     unit_ids = fields.Many2many('unit.administration', 'unit_doctor_rel', 'doctor_id', 'unit_id', string='Doctor Units')
     app_count = fields.Integer(compute=_app_count, string='Appointments')
     queue_code = fields.Char(string='Queue Code')
+    consultancy_fee = fields.Float('Consultancy Fee (%)', default=0.0)
+    bpjs_price =  fields.Float('Bpsj Charge', default=0.0)
 
     @api.multi
     def view_schedule(self):

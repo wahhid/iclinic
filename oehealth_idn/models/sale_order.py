@@ -47,6 +47,7 @@ class sale_order(models.Model):
 
 class sale_order_line(models.Model):
     _inherit = 'sale.order.line'
+
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID', related='order_id.arrival_id')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID', related='order_id.reg_id')
     patient_id = fields.Many2one(comodel_name='oeh.medical.patient', related='order_id.patient_id', string='Patient', store=True)
@@ -58,6 +59,8 @@ class sale_order_line(models.Model):
     invoice_check = fields.Selection(related='order_id.invoice_check')
     inv_line_id = fields.Many2one(comodel_name='account.invoice.line', string='Invoice Line')
     fee_state = fields.Selection(related='inv_line_id.invoice_id.state', string='Fee State', store=True)
+    consultancy_fee = fields.Float('Consultancy Fee (%)', default=0.0)
+    bpjs_price =  fields.Float('Bpsj Charge', default=0.0)
 
     @api.multi
     def _prepare_invoice_line(self, qty):

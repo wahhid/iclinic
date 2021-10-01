@@ -14,6 +14,7 @@ class HealthInsuranceType(models.Model):
     admin_fee = fields.Float(string='Admin Fee Percentage (%)', default=8)
     max_admin_fee = fields.Float(string='Max Admin Fee')
     active = fields.Boolean(string='Active', default=True)
+    is_bpjs = fields.Boolean('Is BPSJ', default=False)
     _sql_constraints = [
      ('name_uniq', 'unique (name)', 'The insurance type must be unique')]
 
