@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Ophthalmology -->
+    <record model="ir.ui.view" id="oehealth_extra_addons.oeh_medical_ophthalmology_view">
+        <field name="name">oeh_medical_ophthalmology_view</field>
+        <field name="model">oeh.medical.ophthalmology</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Ophthalmology">
+                <header>
+                    <button confirm="Are you sure you want to start the evaluation?" name="start_evaluation" states="Draft" string="Start Evaluation" type="object" class="oe_highlight" groups="oehealth.group_oeh_medical_physician,oehealth.group_oeh_medical_manager"/>
+                    <button confirm="Are you sure you want to complete the evaluation?" name="complete_evaluation" states="In Progress" string="End Evaluation" type="object" class="oe_highlight" groups="oehealth.group_oeh_medical_physician,oehealth.group_oeh_medical_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="Draft,In Progress,Completed" statusbar_colors="{&quot;Completed&quot;:&quot;grey&quot;,&quot;In Progress&quot;:&quot;blue&quot;}"/>
+                </header>
+                <sheet>
+                    <div class="oe_left" style="width: 300px;">
+                        <div class="oe_title">
+                           <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient"/>
+                            <field name="visit_date"/>
+                        </group>
+                        <group>
+                            <field name="doctor" options="{'no_create': True}"/>
+                            <field name="computed_age"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Optometry">
+                            <group string="Refraction">
+                                <group string="Right Eye">
+                                    <field name="rdva" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="rdva_pinhole" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="rdva_aid" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="rnv" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                </group>
+                                <group string="Left Eye">
+                                    <field name="ldva" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="ldva_pinhole" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="ldva_aid" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="lnv" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Right Eye">
+                                    <field name="rspherical" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="rcylinder" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="raxis" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="rnv_add" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                </group>
+                                <group string="Left Eye">
+                                    <field name="lspherical" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="lcylinder" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="laxis" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="lnv_add" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                </group>
+                            </group>
+                            <group string="Best Corrected Visual Acuity">
+                                <group string="Right Eye">
+                                    <field name="rbcva_spherical" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="rbcva_cylinder" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="rbcva_axis" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="rbcva" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="rbcva_nv_add" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="rbcva_nv" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                </group>
+                                <group string="Left Eye">
+                                    <field name="lbcva_spherical" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="lbcva_cylinder" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="lbcva_axis" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="lbcva" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="lbcva_nv_add" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                    <field name="lbcva_nv" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                </group>
+                            </group>
+                            <group string="Tonometry">
+                                <field name="iop_method" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="riop" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                </group>
+                                <group>
+                                    <field name="liop" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Findings">
+                            <field name="findings" nolabel="1" attrs="{'readonly': [('state', '=', 'Completed')]}">
+                                <form string="Findings">
+                                    <sheet>
+                                        <group>
+                                            <group>
+                                                <field name="eye_structure" required="1"/>
+                                                <field name="finding" required="1"/>
+                                            </group>
+                                            <group>
+                                                <field name="affected_eye" required="1"/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                                <tree string="Findings" editable="bottom">
+                                    <field name="eye_structure" required="1"/>
+                                    <field name="affected_eye" required="1"/>
+                                    <field name="finding" required="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <group>
+                                <group>
+                                    <field name="notes" nolabel="1" attrs="{'readonly': [('state', '=', 'Completed')]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

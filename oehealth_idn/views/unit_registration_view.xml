@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="unit_registration_search_view">
+        <field name="name">unit_registration_search_view</field>   
+        <field name="model">unit.registration</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Reg ID #"/>
+                <field name="patient" string="Patient"/>
+                <field name="dob" string="Date of Birth"/>
+                <field name="doctor" string="Doctor"/>
+                <field name="unit" string="Unit"/>
+                <separator/>
+                <filter string="Today" name="today" domain="[('date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('date', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
+                <filter string="Yesterday" domain="[('date','&gt;=', ((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d')))]"/>
+                <separator/>
+                <filter string="Running" name="running" domain="[('state','in',['Unlock','Check-In'])]"/>
+                <filter string="Completed" name="completed" domain="[('state','in',['Lock','Done','Check-Out'])]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Unit" name="group_unit" domain="[]" context="{'group_by':'unit'}"/>
+                    <filter string="Doctor" name="group_doctor" domain="[]" context="{'group_by':'doctor'}"/>
+                    <filter string="Patient" name="group_patient" domain="[]" context="{'group_by':'patient'}"/>
+                    <filter string="Order Month" domain="[]" context="{'group_by':'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Unit Registration Form -->
+    <record model="ir.ui.view" id="unit_registration_form_view">
+        <field name="name">unit_registration_form_view</field>
+        <field name="model">unit.registration</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="create_sale" string="Create Transaction" states="Unlock,Check-In" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
+                    <button name="view_sale" string="View Transaction" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service,oehealth_idn.group_cashier,oehealth.group_oeh_medical_manager"/>
+                    <button name="create_reference" string="Create Reference" attrs="{'invisible': [('type', '==', 'Medical Support')]}" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
+                    <button name="set_lock" string="Lock" states="Unlock" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
+                    <button name="set_unlock" string="Unlock" states="Lock" type="object" class="oe_highlight" groups="oehealth.group_medical_service"/>
+                    <field name="state" widget="statusbar" statusbar_visible="Scheduled,Completed,Invoiced" statusbar_colors="{&quot;Scheduled&quot;:&quot;blue&quot;,&quot;Completed&quot;:&quot;green&quot;,&quot;Invoiced&quot;:&quot;grey&quot;}"/>
+                </header>
+                <sheet>
+                    <field name="is_blacklist" invisible="1"/>
+                    <div attrs="{'invisible': [('is_blacklist', '=', False)]}" style="padding:0 !important;" role="alert" class="alert alert-dismissible alert-danger">
+                        <div style="font-size:20px; padding-top:5px;">
+                            <marquee>Patient status is <strong>Blacklist !</strong></marquee>
+                        </div>
+                    </div>
+                    <div class="oe_button_box" name="buttons">
+                        <t attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
+                            <button type="object" class="oe_stat_button" name="set_to_hospitalized" states="Unlock" icon="fa-building-o">
+                                <label string="Check-In"/>
+                            </button>
+                            <button type="object" class="oe_stat_button" name="set_to_discharged" states="Check-In" icon="fa-pencil-square-o">
+                                <label string="Check-Out"/>
+                            </button>
+                        </t>
+                    </div>
+                    <div class="oe_left" style="width: 500px;">
+                        <div class="oe_title" style="width: 390px;">
+                            <label class="oe_edit_only" for="arrival_id" string="Arrival ID #"/><br/>
+                            <field name="arrival_id" class="oe_inline"/>
+                            <field name="arrival_txt" class="oe_inline"/>
+                            <br/>
+                            <label class="oe_edit_only" for="name" string="Registration ID #"/>
+                            <h1><field name="name" class="oe_inline"/></h1>
+                            <label for="patient" class="oe_edit_only"/>
+                            <field name="patient" required="1"/>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="queue"/>
+                            <field name="queue_no" invisible="1"/>
+                            <field name="type" invisible="1"/>
+                            <field name="unit" required="1" domain="[('type', '=', type)]"/>
+                            <field name="doctor" attrs="{'required': [('is_medical_record','=',True)]}" domain="['|', ('unit_ids', '=', unit), ('id', '=', doctor_reference)]"/>
+                            <field name="is_medical_record" invisible="1"/>
+                            <label for="payment" string="Payment Guarantor"/>
+                            <div>
+                                <field name="payment" class="oe_inline" nolabel="1"/>
+                                <span style="margin-right:10px"/>
+                                <field name="company" placeholder="Company" domain="[('is_company','=',True), ('customer','=',True)]" attrs="{'invisible': [('payment','!=','Corporate')], 'required': [('payment','=','Corporate')]}" class="oe_inline" nolabel="1"/>
+                                <field name="insurance" placeholder="Insurance" domain="[('patient','=',patient), ('state','=','Active')]" context="{'default_patient': patient, 'default_state': 'Active'}" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')]}" class="oe_inline" nolabel="1"/>
+                            </div>
+                            <field name="remarks" placeholder="Remarks"/>
+                        </group>
+                        <group attrs="{'invisible': [('type', '!=', 'Out-Patient')]}">
+                            <field name="schedule" invisible="1"/>
+                            <field name="date" placeholder="Date"/>
+                        </group>
+                        <group attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
+                            <field name="admission_reason"/>
+                            <field name="class_id" placeholder="Class Name" attrs="{'required': [('type', '=', 'In-Patient')]}" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="room_id" placeholder="Room Name" domain="[('class_id','=',class_id), ('unit','=',unit)]" attrs="{'required': [('type', '=', 'In-Patient')]}" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="charge_id" readonly="0" placeholder="Charge Type" attrs="{'required': [('type', '=', 'In-Patient')]}" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="bed" domain="[('ward','=',room_id), ('state','=','Free')]" attrs="{'required': [('type', '=', 'In-Patient')]}" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group attrs="{'invisible': [('type', '!=', 'Medical Support')]}">
+                            <field name="request_id" domain="[('type','=','service'), ('unit_ids','=','unit')]" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="reference_id" domain="[('type','!=','Medical Support')]"/>
+                            <field name="doctor_reference" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Dates" attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
+                        <group>
+                            <field name="admission_date"/>
+                            <label for="control_date" string="Date Control"/>
+                            <div>
+                                <field name="control_date" class="oe_inline"/>
+                                <field name="is_control" class="oe_inline"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="discharge_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Transactions">
+                            <field name="sale_ids" readonly="1" context="{'default_patient_id': patient}">
+                                <tree string="Sales Orders" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'" colors="red:is_blacklist;green:state=='sale';gray:state=='done';" create="0">
+                                    <field name="message_needaction" invisible="1"/>
+                                    <field name="name" string="Order Number"/>
+                                    <field name="date_order"/>
+                                    <field name="doctor_id"/>
+                                    <field name="patient_id"/>
+                                    <field name="is_blacklist"/>
+                                    <field name="partner_invoice_id"/>
+                                    <field name="user_id"/>
+                                    <field name="amount_total" sum="Total Tax Included" widget="monetary"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="invoice_status"/>
+                                    <field name="invoice_check"/>
+                                    <field name="invoice_paid" sum="Total Invoice Paid" widget="monetary"/>
+                                    <field name="state" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Action / Diagnostic">
+                            <group>
+                                <group string="General">
+                                    <div class="oe_button_box" style="float:left; text-align:left;">
+                                        <button string="Evaluation" name="action_evaluation" attrs="{'invisible': [('evaluation_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="evaluation_id" invisible="1"/>
+                                        <button string="Evaluation" name="action_evaluation" attrs="{'invisible': [('evaluation_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+
+                                        <button string="Lab Tests" name="action_lab" attrs="{'invisible': [('lab_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="lab_id" invisible="1"/>
+                                        <button string="Lab Tests" name="action_lab" attrs="{'invisible': [('lab_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+
+                                        <button string="Imaging Tests" name="action_imaging" attrs="{'invisible': [('imaging_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="imaging_id" invisible="1"/>
+                                        <button string="Imaging Tests" name="action_imaging" attrs="{'invisible': [('imaging_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+
+                                        <button string="Prescriptions" name="action_prescription" attrs="{'invisible': [('prescription_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="prescription_id" invisible="1"/>
+                                        <button string="Prescriptions" name="action_prescription" attrs="{'invisible': [('prescription_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+
+                                        <button string="Gynecology" name="action_gynecology" attrs="{'invisible': [('gynecology_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="gynecology_id" invisible="1"/>
+                                        <button string="Gynecology" name="action_gynecology" attrs="{'invisible': [('gynecology_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+
+                                        <button string="Ophthalmology" name="action_ophthalmology" attrs="{'invisible': [('ophthalmology_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="ophthalmology_id" invisible="1"/>
+                                        <button string="Ophthalmology" name="action_ophthalmology" attrs="{'invisible': [('ophthalmology_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+                                    </div>
+                                </group>
+                                <group string="Pediatrics">
+                                    <div class="oe_button_box" style="float:left; text-align:left;">
+                                        <button string="Newborns" name="action_newborn" attrs="{'invisible': [('newborn_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="newborn_id" invisible="1"/>
+                                        <button string="Newborns" name="action_newborn" attrs="{'invisible': [('newborn_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+
+                                        <button string="Symptom" name="action_symptom" attrs="{'invisible': [('symptom_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="symptom_id" invisible="1"/>
+                                        <button string="Symptom" name="action_symptom" attrs="{'invisible': [('symptom_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+                                    </div>
+                                </group>
+                                <group string="Surgeries">
+                                    <div class="oe_button_box" style="float:left; text-align:left;">
+                                        <button string="Cardiac" name="action_cardiac" attrs="{'invisible': [('cardiac_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="cardiac_id" invisible="1"/>
+                                        <button string="Cardiac" name="action_cardiac" attrs="{'invisible': [('cardiac_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+
+                                        <button string="Surgeries" name="action_surgery" attrs="{'invisible': [('surgery_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="surgery_id" invisible="1"/>
+                                        <button string="Surgeries" name="action_surgery" attrs="{'invisible': [('surgery_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+                                    </div>
+                                </group>
+                                <group string="Nursing">
+                                    <div class="oe_button_box" style="float:left; text-align:left;">
+                                        <button string="Roundings" name="action_rounding" attrs="{'invisible': [('rounding_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="rounding_id" invisible="1"/>
+                                        <button string="Roundings" name="action_rounding" attrs="{'invisible': [('rounding_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+
+                                        <button string="Ambulatory" name="action_ambulatory" attrs="{'invisible': [('ambulatory_id', '!=', False)]}" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
+                                        <field name="ambulatory_id" invisible="1"/>
+                                        <button string="Ambulatory" name="action_ambulatory" attrs="{'invisible': [('ambulatory_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Details" attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
+                            <group>
+                                <field name="admission_condition"/>
+                                <field name="nursing_plan"/>
+                                <field name="discharge_plan"/>
+                            </group>
+                        </page>
+                        <page string="Extra Information" attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
+                            <field name="extra_info" placeholder="Extra Information"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="unit_registration_tree_view">
+        <field name="name">unit_registration_tree_view</field>
+        <field name="model">unit.registration</field>
+        <field name="arch" type="xml">
+            <tree colors="red:is_blacklist">
+                <field name="name"/>
+                <field name="queue"/>
+                <field name="date"/>
+                <field name="unit" string="Unit Name"/>
+                <field name="patient"/>
+                <field name="age"/>
+                <field name="is_blacklist"/>
+                <field name="doctor"/>
+                <field name="payment"/>
+                <field name="state"/>
+                <field name="remarks"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="next_patient_tree_view">
+        <field name="name">unit_registration_tree_view</field>
+        <field name="model">unit.registration</field>
+        <field name="arch" type="xml">
+            <tree create="0" colors="blue:queue_state=='Now'; gray:queue_state=='Done'">
+                <field name="name"/>
+                <field name="queue"/>
+                <field name="date"/>
+                <field name="unit" string="Unit Name"/>
+                <field name="patient"/>
+                <field name="doctor"/>
+                <field name="queue_state"/>
+                <field name="state" invisible="1"/>
+                <button type="object" name="set_now" string="Now" class="oe_highlight" attrs="{'invisible': [('queue_state','!=','Waiting')]}"/>
+                <button type="object" name="set_now" string="Re-Call" class="oe_highlight" attrs="{'invisible': [('queue_state','!=','Now')]}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="unit_registration_pivot_view">
+        <field name="name">unit_registration_pivot_view</field>
+        <field name="model">unit.registration</field>
+        <field name="arch" type="xml">
+            <pivot>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_clinic_registration" model="ir.actions.act_window">
+        <field name="name">Out-Patient Care</field>
+        <field name="res_model">unit.registration</field>
+        <field name="domain">[('type','=','Out-Patient')]</field>
+        <field name="context">{'default_type': 'Out-Patient', 'search_default_running': 1}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_unit_registration" model="ir.actions.act_window">
+        <field name="name">In-Patient Care</field>
+        <field name="res_model">unit.registration</field>
+        <field name="domain">[('type','=','In-Patient')]</field>
+        <field name="context">{'default_type': 'In-Patient', 'search_default_running': 1}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_emergency_registration" model="ir.actions.act_window">
+        <field name="name">Emergency Care</field>
+        <field name="res_model">unit.registration</field>
+        <field name="domain">[('type','=','Emergency')]</field>
+        <field name="context">{'default_type': 'Emergency', 'search_default_running': 1}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_support_registration" model="ir.actions.act_window">
+        <field name="name">Medical Support</field>
+        <field name="res_model">unit.registration</field>
+        <field name="domain">[('type','=','Medical Support')]</field>
+        <field name="context">{'default_type': 'Medical Support', 'search_default_running': 1}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_report_all_unit" model="ir.actions.act_window">
+        <field name="name">Report All Units</field>
+        <field name="res_model">unit.registration</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">pivot,tree,form</field>
+    </record>
+
+    <record id="action_next_patient" model="ir.actions.act_window">
+        <field name="name">Next Patient</field>
+        <field name="res_model">unit.registration</field>
+        <field name="domain">[('queue_state','!=','Done'), ('type','!=','In-Patient')]</field>
+        <!-- <field name="context">{"search_default_group_unit":1, "search_default_group_doctor":1}</field> -->
+        <field name="context">{}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_next_patient_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="next_patient_tree_view"/>
+        <field name="act_window_id" ref="action_next_patient"/>
+    </record>
+
+</odoo>

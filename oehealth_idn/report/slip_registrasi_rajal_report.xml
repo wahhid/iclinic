@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_slip_registrasi">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="oe_structure">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <table style="width:50%;">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center"><strong style="font-size:13px">SLIP REGISTRASI</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><strong style="font-size:13px"><span t-field="o.name"/></strong></td>
+                                        </tr>
+                                        <tr class="border-black">
+                                            <td style="font-size:12px"><span t-field="o.patient.medical_record"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px"><span t-field="o.patient.name"/></td>
+                                        </tr>
+                                                                <tr>
+                                            <td style="font-size:12px"><span t-field="o.clinic_ids.name"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px"><span t-field="o.patient.dob" t-field-options="{&quot;format&quot;: &quot;dd/MM/YYYY&quot;}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px"><span t-field="o.clinic_ids.unit"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px"><span t-field="o.clinic_ids.doctor"/></td>
+                                        </tr>
+                                        <tr class="border-black">
+                                            <td style="font-size:12px"><span t-field="o.date" t-field-options="{&quot;format&quot;: &quot;dd/MM/YYYY&quot;}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size:12px"><span t-field="o.date" t-field-options="{&quot;format&quot;: &quot;h:m&quot;}"/></td>
+                                        </tr>
+                                        <tr class="border-black">
+                                            <td/>
+                                        </tr>
+                                        <tr>
+                                            <td><img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.medical_record, 600, 100)" style="width:150px;height:25px;"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>    
+                        </div>        
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

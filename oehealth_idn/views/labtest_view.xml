@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Lab Test -->
+    <record model="ir.ui.view" id="oeh_medical_lab_test_form_inherit">
+        <field name="name">oeh_medical_lab_test_form_inherit</field>
+        <field name="model">oeh.medical.lab.test</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_lab_test_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_lab_invoice_create']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">Draft,Test In Progress,Completed</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_oeh_medical_lab_test_filter_inherit">
+        <field name="name">view_oeh_medical_lab_test_filter_inherit</field>
+        <field name="model">oeh.medical.lab.test</field>
+        <field name="inherit_id" ref="oehealth.view_oeh_medical_lab_test_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="patient" select="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

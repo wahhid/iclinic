@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Doctor and Operating Unit -->
+    <record id="unit_registration_group_physician" model="ir.rule">
+        <field name="name">Physician can only see own patient</field>
+        <field name="model_id" ref="model_unit_registration"/>
+        <field name="domain_force">['|', ('doctor', '=', False), ('doctor.oeh_user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4,ref('oehealth.group_oeh_medical_physician'))]"/>
+    </record>
+
+    <record id="unit_registration_group_physician" model="ir.rule">
+        <field name="name">Nurse can only see doctor in own poly</field>
+        <field name="model_id" ref="model_oeh_medical_physician"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('oehealth_extra_addons.group_oeh_medical_nurse'))]"/>
+    </record>
+
+    <record id="patient_group_cs" model="ir.rule">
+        <field name="name">See All Patient/Partner</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('group_customer_service')), (4,ref('group_medical_service')), (4,ref('group_cashier')), (4,ref('group_medrec'))]"/>
+    </record>
+
+    <record id="employee_group_cs" model="ir.rule">
+        <field name="name">See All Doctor/Employee</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <!-- <field name="global" eval="True"/> -->
+        <field name="groups" eval="[(4,ref('group_customer_service')), (4,ref('group_medical_service')), (4,ref('group_medrec'))]"/>
+    </record>
+
+    <!-- Medical Operation - Dimatikan Supaya Bisa Create Reference -->
+    <!-- <record id="unit_registration_group_unit" model="ir.rule">
+        <field name="name">See Only Own Operating Unit</field>
+        <field name="model_id" ref="model_unit_registration"/>
+        <field name="domain_force">['|',('unit.operating_id','=',False),('unit.operating_id','in',[g.id for g in user.operating_unit_ids])]</field>
+        <field name="groups" eval="[(4,ref('group_medical_service'))]"/>
+    </record> -->
+
+    <record id="sale_order_group_medical" model="ir.rule">
+        <field name="name">See All Sale Order</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('group_medical_service'))]"/>
+    </record>
+
+    <record id="sale_order_line_group_medical" model="ir.rule">
+        <field name="name">See All Sale Order Line</field>
+        <field name="model_id" ref="model_sale_order_line"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('group_medical_service'))]"/>
+    </record>
+
+    <!-- Product Medical and General -->
+    <record id="product_product_group_logistic" model="ir.rule">
+        <field name="name">See Only Product Medical Item Type</field>
+        <field name="model_id" ref="product.model_product_product"/>
+        <field name="domain_force">['|', ('type','=','service'), ('item_type', 'in', [('Medicine'),('Medical Item')])]</field>
+        <field name="groups" eval="[(4,ref('group_product_medical'))]"/>
+    </record>
+
+    <record id="product_template_group_logistic" model="ir.rule">
+        <field name="name">See Only Product Template Medical Item Type</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="domain_force">['|', ('type','=','service'), ('item_type', 'in', [('Medicine'),('Medical Item')])]</field>
+        <field name="groups" eval="[(4,ref('group_product_medical'))]"/>
+    </record>
+
+    <record id="product_product_group_logistic_general" model="ir.rule">
+        <field name="name">See Only Product General Item Type</field>
+        <field name="model_id" ref="product.model_product_product"/>
+        <field name="domain_force">[('item_type', 'in', [('General Item')])]</field>
+        <field name="groups" eval="[(4,ref('group_product_general'))]"/>
+    </record>
+
+    <record id="product_template_group_logistic_general" model="ir.rule">
+        <field name="name">See Only Product Template General Item Type</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="domain_force">[('item_type', 'in', [('General Item')])]</field>
+        <field name="groups" eval="[(4,ref('group_product_general'))]"/>
+    </record>
+
+    <record id="product_product_group_logistic_boga" model="ir.rule">
+        <field name="name">See Only Product Boga Item Type</field>
+        <field name="model_id" ref="product.model_product_product"/>
+        <field name="domain_force">[('item_type', 'in', [('Food Item')])]</field>
+        <field name="groups" eval="[(4,ref('group_product_boga'))]"/>
+    </record>
+
+    <record id="product_template_group_logistic_boga" model="ir.rule">
+        <field name="name">See Only Product Template Boga Item Type</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="domain_force">[('item_type', 'in', [('Food Item')])]</field>
+        <field name="groups" eval="[(4,ref('group_product_boga'))]"/>
+    </record>
+
+    <!-- Vendor Medical and Non-Medical -->
+    <record id="vendor_group_medical" model="ir.rule">
+        <field name="name">See Only Vendor Medical Type</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="domain_force">[('vendor_type', 'in', [('Medical')])]</field>
+        <field name="groups" eval="[(4,ref('group_product_medical'))]"/>
+    </record>
+
+    <record id="vendor_group_non_medical" model="ir.rule">
+        <field name="name">See Only Vendor Non-Medical Type</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="domain_force">[('vendor_type', 'in', [('Non-Medical')])]</field>
+        <field name="groups" eval="[(4,ref('group_product_boga')), (4,ref('group_product_general'))]"/>
+    </record>
+
+    <!-- Re-format Rule Allow Operating Unit for Customer Service -->
+    <record id="operating_unit.ir_rule_operating_unit_allowed_operating_units" model="ir.rule">
+        <field name="groups" eval="[(4,ref('group_product_medical')), (4,ref('group_product_general'))]"/>
+    </record>
+
+    <!-- Re-format Invoice dapat dibuka semua user -->
+    <record id="portal_sale.portal_account_invoice_user_rule" model="ir.rule">
+        <field name="active">False</field>
+    </record>
+</odoo>

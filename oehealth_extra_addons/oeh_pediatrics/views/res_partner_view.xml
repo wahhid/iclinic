@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_res_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="oehealth.view_res_partner_form"/>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <!-- Modify By Baim # 23/09/2018 -->
+                <xpath expr="//notebook/page/group/field[@name='is_pharmacy']" position="after">
+                    <field name="is_baby" />
+                </xpath>
+                <!-- <notebook position="inside">
+                    <page string="Health" groups="oehealth.group_oeh_medical_manager">
+                        <group>
+                            <field name="is_baby" />
+                        </group>
+                    </page>
+                </notebook> -->
+                <!-- End of Modify By Baim # 23/09/2018 -->
+            </field>
+        </record>
+
+    </data>
+</openerp>

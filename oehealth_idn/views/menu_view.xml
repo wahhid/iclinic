@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Transaction -->
+    <menuitem id="customer_service_menu" name="Customer Service" parent="oehealth.oeh_medical_menu" sequence="2" groups="group_customer_service"/>
+    <menuitem id="mr_regis_menu" parent="customer_service_menu" sequence="1" action="action_patient_medical_record"/>
+    <menuitem id="patient_regis_menu" parent="customer_service_menu" action="action_patient_registration" sequence="2"/>
+    <menuitem id="oehealth.oeh_medical_appointment_list" parent="customer_service_menu" action="oehealth.oeh_medical_appointment_action_tree" sequence="3"/>
+    <menuitem id="monitoring_beds_menu" parent="customer_service_menu" action="action_monitoring_beds" sequence="4"/>
+    <menuitem id="doctor_schedule_menu" parent="customer_service_menu" action="action_doctor_schedule" sequence="5"/>
+
+    <menuitem id="medical_service_menu" name="Medical Service" parent="oehealth.oeh_medical_menu" sequence="2" groups="group_medical_service"/>
+    <menuitem id="patient_medical_menu" parent="medical_service_menu" name="Patient" sequence="1"/>
+    <menuitem id="non_mr_regis_menu" parent="patient_medical_menu" sequence="1" action="action_patient_non_medical_record"/>
+    <menuitem id="next_patient_menu" parent="patient_medical_menu" action="action_next_patient" sequence="2" groups="group_out_patient,group_emergency,group_support"/>
+    <menuitem id="regis_medical_menu" parent="medical_service_menu" name="Registration" sequence="2"/>
+    <menuitem id="out_patient_care_menu" parent="regis_medical_menu" action="action_clinic_registration" sequence="3" groups="group_out_patient"/>
+    <menuitem id="in_patient_care_menu" parent="regis_medical_menu" action="action_unit_registration" sequence="4" groups="group_in_patient"/>
+    <menuitem id="emergency_care_menu" parent="regis_medical_menu" action="action_emergency_registration" sequence="5" groups="group_emergency"/>
+    <menuitem id="support_care_menu" parent="regis_medical_menu" action="action_support_registration" sequence="6" groups="group_support"/>
+    <menuitem id="report_medical_menu" parent="medical_service_menu" name="Reports" sequence="3"/>
+    <menuitem id="report_all_unit_menu" parent="report_medical_menu" action="action_report_all_unit" sequence="7"/>
+    <menuitem id="monitoring_beds2_menu" parent="report_medical_menu" action="action_monitoring_beds" sequence="8"/>
+
+    <menuitem id="cashier_menu" name="Cashier" parent="oehealth.oeh_medical_menu" sequence="3" groups="group_cashier"/>
+    <menuitem id="general_cashier_menu" name="General Cashier" parent="cashier_menu" sequence="1" action="action_sale_order"/>
+    <menuitem id="customer_invoice_menu" name="Customer Invoice" parent="cashier_menu" sequence="2" action="account.action_invoice_tree1"/>
+    <menuitem id="report_cashier_menu" name="Report Cashier" parent="cashier_menu" sequence="4" action="account.action_account_payments"/>
+
+    <!-- Action -->
+    <menuitem id="pharmacy_line_menu" parent="oehealth.oeh_medical_appointment_menu" sequence="4" action="action_pharmacy_line"/>
+
+    <!-- Profit Sharing -->
+    <menuitem id="profit_sharing_menu" parent="sales_team.menu_sale_report" sequence="11" action="action_sale_order_line"/>
+    <menuitem id="medical_fee_invoice_menu" name="Medical Fee Invoice" parent="sales_team.menu_sale_report" sequence="12" action="account.action_invoice_tree2"/>
+
+    <!-- Master Data -->
+    <menuitem id="class_menu" parent="oehealth.oeh_medical_hospital_menu" action="action_class" groups="oehealth.group_oeh_medical_manager"/>
+
+    <!-- Product -->
+    <menuitem id="product_attribute_line_menu" parent="sale.prod_config_main" action="action_product_attribute_line" sequence="10"/>
+    <menuitem id="product_attribute_price_menu" parent="sale.prod_config_main" action="action_product_attribute_price" sequence="10"/>
+    <menuitem id="product_pricelist_item_menu" parent="sale.menu_product_pricelist_main" action="action_product_pricelist_item" sequence="10"/>
+
+    <!-- Reformat Menu -->
+    <record id="oehealth.oeh_medical_healthcenters_ward_action_tree" model="ir.actions.act_window">
+        <field name="name">Rooms</field>
+    </record>
+    <record id="oehealth.oeh_medical_healthcenters_ward_list" model="ir.ui.menu">
+        <field name="name">Rooms</field>
+    </record>
+    <record id="oehealth.oeh_medical_physician_list" model="ir.ui.menu">
+        <field name="parent" ref="oehealth.oeh_medical_conf_physician"/>
+    </record>
+    <record id="stock.menu_stock_proc_schedulers" model="ir.ui.menu">
+        <field name="name">Auto Purchase Request</field>
+    </record>
+
+    <!-- Re-Groups Menu -->
+    <record id="oehealth.oeh_medical_action" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('oehealth_idn.group_medical_service'))]"/>
+    </record>
+    <record id="oehealth.oeh_medical_conf_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(4, ref('oehealth_idn.group_medical_service'))]"/>
+    </record>
+    <!-- Delete Groups Inventory User Access Inventory Menu -->
+    <!-- <record id="stock.menu_stock_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0, [ref('stock.group_stock_manager')])]"/>
+    </record> -->
+
+    <menuitem id="oehealth.oeh_medical_hospital_menu" parent="oehealth.oeh_medical_conf_menu" name="Health Centers"/>
+    <menuitem id="oehealth.oeh_medical_physician_list" parent="oehealth.oeh_medical_conf_physician" name="Physicians" action="oehealth.oeh_medical_physician_action_tree"/>
+</odoo>

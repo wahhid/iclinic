@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_salinan_resep">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="oe_structure">
+                             <div class="row">
+                                <p style="font-size:24px;text-align:center;font-weight:bold;">Salinan Resep</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div>
+                                        <strong>No. RM / No. Arrival:</strong>
+                                        <p><span t-field="o.arrival_id.patient.medical_record"/> / <span t-field="o.arrival_id.name"/></p>
+                                    </div>
+                                    <div>
+                                        <strong>No. Registrasi:</strong>
+                                        <p t-field="o.reg_id.name"/>
+                                    </div>
+                                    <div>
+                                        <strong>Nama Pasien:</strong>
+                                        <p t-field="o.arrival_id.patient.name"/>
+                                    </div>
+                                    <div>
+                                        <strong>Tanggal Lahir:</strong>
+                                        <p t-field="o.arrival_id.patient.dob" t-field-options='{"format": "d MMMM y"}'/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div>
+                                        <strong>Dokter:</strong>
+                                        <p><span t-field="o.doctor_id"/></p>
+                                    </div>
+                                    <div>
+                                        <strong>Tanggal Masuk:</strong>
+                                        <p t-field="o.arrival_id.date" t-field-options='{"format": "d MMMM y"}'/>
+                                    </div>
+                                    <div>
+                                        <strong>Unit:</strong>
+                                        <p t-field="o.reg_id.unit.name"/>
+                                    </div>
+                                    <div>
+                                        <strong>No Resep:</strong>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <table class="table table-condensed mt32">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">Nama Barang</th>
+                                        <th class="text-center">Jumlah Barang</th>
+                                        <th class="text-center"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="invoice_tbody">
+                                    <tr t-foreach="o.order_line" t-as="s" t-if="s.product_id.item_type=='Medicine'" type="I">
+                                        <td class="text-left">
+                                            <span t-field="s.product_id"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <p><span t-field="s.product_uom_qty"/> <span t-field="s.product_uom"/></p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p>det <span t-field="s.product_uom_qty"/> <span t-field="s.product_uom"/></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

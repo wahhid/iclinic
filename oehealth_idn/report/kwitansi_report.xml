@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_kwitansi">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="oe_structure">
+                            <div class="row">
+                                <p style="font-size:24px;text-align:center;font-weight:bold;">Kwitansi</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div>
+                                        <strong>No. RM / No. Arrival:</strong>
+                                        <p><span t-field="o.arrival_id.patient.medical_record"/> / <span t-field="o.arrival_id.name"/></p>
+                                    </div>
+                                    <div>
+                                        <strong>Nama pasien:</strong>
+                                        <p><span t-field="o.arrival_id.patient.name"/></p>
+                                    </div>
+                                    <div>
+                                        <strong>Penjamin Bayar:</strong>
+                                        <p>belum tau</p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div>
+                                        <strong>No Invoice:</strong>
+                                        <p><span t-field="o.number"/></p>
+                                    </div>
+                                    <div>
+                                        <strong>Instansi:</strong>
+                                        <strong><br>-</br></strong>
+                                    </div>
+                                    <div>
+                                        <strong>Dokter: </strong>
+                                        <p>belum tau</p>
+                                    </div>
+                                </div>    
+                            </div>
+                            <table class="table table-condensed mt32">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">No.</th>
+                                        <th class="text-center">Keterangan</th>
+                                        <th class="text-center">Offset</th>
+                                        <th class="text-center">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="invoice_tbody">
+                                        
+                                        <tr>
+                                            <td class="text-left">
+                                                
+                                            </td>
+                                            <td class="text-center">
+                                                <p><span t-field="o.payments_widget"/></p>
+                                            </td>
+                                            <td class="text-center">
+                                                <p style="font-weight:bold">-</p>
+                                            </td>
+                                            <td class="text-center">
+                                                <p></p>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

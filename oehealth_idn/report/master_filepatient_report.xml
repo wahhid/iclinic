@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_master_filepatient">
+        <t t-call="report.html_container">
+            <t t-call="report.internal_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <H2 style="text-align:center;font-weight:bold">Master File Pasien</H2>
+                            <hr style="border-width:2px;border-color:black" />
+                        </div>
+                        <div class="row">
+                            <p style="text-align:left;font-weight:bold">Data Pribadi</p>
+                        </div>
+                        <div class="table">
+                            <div class="row mb8">
+                                <div class="col-md-6">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Medical Record</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.medical_record"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Nama Pasien</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.name"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Tempat Lahir</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Tanggal Lahir</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.dob" t-field-options='{"format": "d MMMM y"}'/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Gender</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.sex"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Alamat</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p><span t-field="o.street"/> <span t-field="o.blok"/> <span t-field="o.nomor"/></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Kecamatan / Kodepos</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p><span t-field="o.city"/> <span t-field="o.state_id"/> <span t-field="o.zip"/></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>E-mail</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.email"/></td>
+                                            </tr>
+                                            <tr t-if="o.phone">
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Telephone</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.phone"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>No HP</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.mobile"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>No KTP/SIM/KIMS</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Pendidikan</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Pekerjaan</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.function"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Agama</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.religion"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Status Nikah</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.marital_status"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Gol Darah</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.blood_type"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Kebangsaan</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="o.country_id"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <p style="text-align:left;font-weight:bold">Emergency Contact Person</p>
+                            </div>
+                            <div class="table">
+                                <div class="row mb8">
+                                <div class="col-md-6">
+                                    <table>
+                                        <tbody t-foreach="o.family" t-as="f">
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Nama</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="f.name"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Relasi</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="f.relation"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Umur</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p><span t-field="f.age"/></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Telephone</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p t-field="f.mobile"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p style="text-align:left;font-weight:bold">Ayah</p>
+                        </div>
+                        <div class="table">
+                            <div class="row mb8">
+                                <div class="col-md-6">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Nama</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Alamat</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p></p></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p style="text-align:left;font-weight:bold">Ibu</p>
+                        </div>
+                        <div class="table">
+                            <div class="row mb8">
+                                <div class="col-md-6">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Nama</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p></p></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px; width: 30%; font-weight: 15px"><p>Alamat</p></td>
+                                                <td><p>:</p></td>
+                                                <td style="padding: 5px 5px 5px 5px; border: 0px"><p></p></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

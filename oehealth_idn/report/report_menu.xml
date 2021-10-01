@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Patient Report Menu -->
+    <report id="stiker_pasien_report_menu" string="Stiker Pasien"
+        model="oeh.medical.patient" report_type="qweb-pdf"
+        name="oehealth_idn.report_stiker_pasien" menu="True"
+        />
+
+    <report id="master_filepatient_report_menu" string="Master File Patient"
+        model="oeh.medical.patient" report_type="qweb-pdf"
+        name="oehealth_idn.report_master_filepatient" menu="True"
+        />
+
+    <!-- Registration Report Menu -->
+    <report id="slip_registrasi_report_menu" string="Slip Registrasi Rajal"
+        model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf"
+        name="oehealth_idn.report_slip_registrasi" menu="True"
+        attachment_use="True" attachment="'Slip Registrasi - %s' % ((object.name or '').replace('/','')+'.pdf')"
+        />
+
+    <report id="slip_registrasi_penunjang_report_menu" string="Slip Registrasi Penunjang"
+        model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf"
+        name="oehealth_idn.report_slip_registrasi_penunjang" menu="True"
+        attachment_use="True" attachment="'Slip Registrasi - %s' % ((object.name or '').replace('/','')+'.pdf')"
+        />
+
+    <report id="slip_registrasi_igd_report_menu" string="Slip Registrasi IGD"
+        model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf"
+        name="oehealth_idn.report_slip_registrasi_igd" menu="True"
+        attachment_use="True" attachment="'Slip Registrasi - %s' % ((object.name or '').replace('/','')+'.pdf')"
+        />
+
+    <!-- Action Report Menu -->
+    <report id="etiket_report_menu" string="e-tiket"
+        model="oeh.medical.prescription" report_type="qweb-pdf"
+        name="oehealth_idn.report_etiket" menu="True"
+        attachment_use="True" attachment="'E-tiket - %s' % ((object.patient.name or '').replace('/','')+'.pdf')"
+        />
+
+    <!-- Sale Order Report Menu -->
+    <report id="nota_resep_report_menu" string="Nota Resep"
+        model="sale.order" report_type="qweb-pdf"
+        name="oehealth_idn.report_nota_resep" menu="True"
+        />
+
+    <report id="salinan_resep_report_menu" string="Salinan Resep"
+        model="sale.order" report_type="qweb-pdf"
+        name="oehealth_idn.report_salinan_resep" menu="True"
+        />
+
+    <report id="daftar_transaksi_report_menu" string="Daftar Transaksi"
+        model="sale.order" report_type="qweb-pdf"
+        name="oehealth_idn.report_daftar_transaksi" menu="True"
+        />
+
+    <report id="daftar_transaksi_detail_report_menu" string="Daftar Transaksi Detail"
+        model="sale.order" report_type="qweb-pdf"
+        name="oehealth_idn.report_daftar_transaksi_detail" menu="True"
+        />
+
+    <!-- Account Invoice Report Menu -->
+    <report id="kwitansi_report_menu" string="Kwitansi"
+        model="account.invoice" report_type="qweb-pdf"
+        name="oehealth_idn.report_kwitansi" menu="True"
+        attachment_use="True" attachment="'Kwitansi - %s' % ((object.number or '').replace('/','')+'.pdf')"
+        />
+
+    <record model="ir.actions.report.xml" id="kwitansi_report_menu">
+        <field name="print_report_name">'Kwitansi - %s' % ((object.number or '').replace('/','')+'.pdf')</field>
+    </record>
+
+    <report id="detail_transaksi_invoice_report_menu" string="Detail Transaksi Invoice"
+        model="account.invoice" report_type="qweb-pdf"
+        name="oehealth_idn.report_detail_transaksi_invoice" menu="True"
+        />
+
+    <!-- Set Paper Format for the Patient Card Report -->
+    <record id="patient_card_paperformat" model="report.paperformat">
+        <field name="name">Patient Card Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">55</field>
+        <field name="page_width">80</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field> 
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+        <field name="report_ids" eval="[
+            (4, ref('oehealth.action_report_patient_label')),
+            (4, ref('oehealth_idn.stiker_pasien_report_menu')),
+            (4, ref('oehealth_idn.slip_registrasi_report_menu')),
+            (4, ref('oehealth_idn.slip_registrasi_penunjang_report_menu')),
+            (4, ref('oehealth_idn.slip_registrasi_igd_report_menu')),
+            (4, ref('oehealth_idn.etiket_report_menu'))
+        ]"/>
+    </record>
+
+</odoo>

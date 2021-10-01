@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Account Invoice Inherit -->
+    <record model="ir.ui.view" id="invoice_form_inherit">
+        <field name="name">invoice_form_inherit</field>   
+        <field name="model">account.invoice</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='other_info']/group/group[2]/field[@name='name']" position="after">
+                <field name="arrival_id" readonly="1"/>
+                <field name="reg_id" readonly="1"/>
+            </xpath>
+            <xpath expr="//page/field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+                <field name="patient_id" readonly="1"/>
+                <field name="reg_id" readonly="1"/>
+            </xpath>
+            <!-- <xpath expr="//field[@name='comment']" position="before">
+                <group class="oe_left">
+                    <field name="amount_pay"/>
+                    <field name="amount_change"/>
+                </group>
+            </xpath> -->
+        </field>
+    </record>
+
+    <!-- Account Payment Inherit -->
+    <record model="ir.ui.view" id="view_account_payment_invoice_form_inherit">
+        <field name="name">view_account_payment_invoice_form_inherit</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_method_code" position="after">
+                <field name="amount_pay" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+            </field>
+            <xpath expr="//div[@name='amount_div']" position="after">
+                <field name="amount_change"/>
+            </xpath>
+       </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_payment_form_inherit">
+        <field name="name">view_account_payment_form_inherit</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <field name="payment_method_code" position="after">
+                <field name="amount_pay" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+            </field>
+            <xpath expr="//div[@name='amount_div']" position="after">
+                <field name="amount_change"/>
+            </xpath>
+       </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_payment_tree_inherit">
+        <field name="name">view_account_payment_tree_inherit</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_tree"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="create_uid"/>
+            </field>
+       </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_account_payment_search_inherit">
+        <field name="name">view_account_payment_search_inherit</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter string="Today" name="today" domain="[('payment_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('payment_date', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
+                <filter string="Yesterday" domain="[('payment_date','&gt;=', ((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d')))]"/>
+                <separator/>
+                <filter string="User" domain="[]" context="{'group_by': 'create_uid'}"/>
+            </xpath>
+       </field>
+    </record>
+
+</odoo>

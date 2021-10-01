@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Master Data -->
+    <menuitem id="unit_menu" parent="base.menu_users" action="action_unit"/>
+
+</odoo>

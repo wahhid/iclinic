@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="product_template_form_view_inherit">
+        <field name="name">product_template_form_view_inherit</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="unit_ids" widget="many2many_tags" attrs="{'invisible': [('type', '!=', 'service')]}"/>
+                <field name="item_type" attrs="{'invisible': [('type', '=', 'service')], 'required': [('type', '!=', 'service')]}"/>
+                <field name="is_concoction"/>
+            </field>
+            <field name="uom_po_id" position="after">
+                <field name="zat_uom" attrs="{'invisible': [('item_type', '!=', 'Medicine')]}"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_template_tree_view_inherit">
+        <field name="name">product_template_tree_view_inherit</field>
+        <field name="model">product.template</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="reordering_min_qty"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_normal_form_view_inherit">
+        <field name="name">product_normal_form_view_inherit</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="barcode" position="after">
+                <field name="auto_billing" groups="base.group_system"/>
+                <field name="admin_fee" groups="base.group_system"/>
+            </field>
+            <xpath expr="//notebook" position="inside">
+                <page string="Stock Location">
+                    <field name="stock_ids">
+                        <tree>
+                            <field name="product_id"/>
+                            <field name="qty"/>
+                            <field name="product_uom_id"/>
+                            <field name="location_id"/>
+                            <field name="in_date"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_pricelist_view_inherit">
+        <field name="name">product_pricelist_view_inherit</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <field name="discount_policy" position="after">
+                <field name="attribute_value"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_attribute_line_tree_view">
+        <field name="name">product_attribute_line_tree_view</field>
+        <field name="model">product.attribute.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_tmpl_id"/>
+                <field name="attribute_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_product_template" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <record id="action_product_attribute_line" model="ir.actions.act_window">
+        <field name="name">Product Attribute Line</field>
+        <field name="res_model">product.attribute.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="product_attribute_price_tree_view">
+        <field name="name">product_attribute_price_tree_view</field>
+        <field name="model">product.attribute.price</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_tmpl_id"/>
+                <field name="value_id"/>
+                <field name="price_extra"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_product_attribute_price" model="ir.actions.act_window">
+        <field name="name">Product Attribute Price</field>
+        <field name="res_model">product.attribute.price</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="product_pricelist_item_tree_view">
+        <field name="name">product_pricelist_item_tree_view</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Pricelist Items">
+                <field name="name" string="Applicable On"/>
+                <field name="min_quantity"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="price" string="Price"/>
+                <field name="base" invisible="0"/>
+                <field name="sequence" invisible="0"/>
+                <field name="price_discount" invisible="0"/>
+                <field name="applied_on" invisible="0"/>
+                <field name="compute_price" invisible="0"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_product_pricelist_item" model="ir.actions.act_window">
+        <field name="name">Product Pricelist Item</field>
+        <field name="res_model">product.pricelist.item</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

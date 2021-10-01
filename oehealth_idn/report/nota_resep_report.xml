@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_nota_resep">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <div class="oe_structure">
+                            <div class="row">
+                                <p style="font-size:24px;text-align:center;font-weight:bold;">Nota Resep</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div>
+                                        <strong>No. RM / No. Arrival:</strong>
+                                        <p><span t-field="o.arrival_id.patient.medical_record"/> / <span t-field="o.arrival_id.name"/></p>
+                                    </div>
+                                    <div>
+                                        <strong>No. Registrasi:</strong>
+                                        <p t-field="o.reg_id.name"/>
+                                    </div>
+                                    <div>
+                                        <strong>Nama Pasien:</strong>
+                                        <p t-field="o.arrival_id.patient.name"/>
+                                    </div>
+                                    <div>
+                                        <strong>Tanggal Lahir:</strong>
+                                        <p t-field="o.arrival_id.patient.dob" t-field-options='{"format": "d MMMM y"}'/>
+                                    </div>
+                                    <div>
+                                        <strong>Jenis Kelamin / Umur:</strong>
+                                        <p><span t-field="o.arrival_id.patient.sex"/> / <span t-field="o.arrival_id.patient.age"/></p>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div>
+                                        <strong>Alamat:</strong>
+                                        <p><span t-field="o.arrival_id.patient.street"/> <span t-field="o.arrival_id.patient.blok"/> <span t-field="o.arrival_id.patient.nomor"/> <span t-field="o.arrival_id.patient.city"/></p>
+                                    </div>
+                                    <div>
+                                        <strong>Dokter: </strong>
+                                        <p t-field="o.doctor_id"/>
+                                    </div>
+                                    <div>
+                                        <strong>Tanggal Masuk: </strong>
+                                        <p t-field="o.arrival_id.date"/>
+                                    </div>
+                                    <div>
+                                        <strong>Unit: </strong>
+                                        <p t-field="o.reg_id.unit"/>
+                                    </div>
+                                    <div>
+                                        <strong>No. Resep: </strong>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <table class="table table-condensed mt32">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">Nama Barang</th>
+                                        <th class="text-center">Harga</th>
+                                        <th class="text-center">Jumlah Barang</th>
+                                        <th class="text-center">Diskon %</th>
+                                        <th class="text-right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="invoice_tbody">
+                                    <t t-set="total" t-value="0"/>
+                                    <tr t-foreach="o.order_line" t-as="s" t-if="s.product_id.item_type=='Medicine'">
+                                        <td class="text-left">
+                                            <span t-field="s.product_id"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="s.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.pricelist_id.currency_id}"/>
+                                        </td>
+                                        <td class="text-center">
+                                            <p><span t-field="s.product_uom_qty"/> <span t-field="s.product_uom"/></p>
+                                        </td>
+                                        <td class="text-center">
+                                            <span t-field="s.discount"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="s.price_total"/>
+                                        </td>
+                                        <t t-set="total" t-value="total + s.price_total"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="col-xs-4 pull-right">
+                                    <table class="table table-condensed">
+                                        <tr class="border-black">
+                                            <td><strong>Grand Total</strong></td>
+                                            <td class="text-right">
+                                                <strong><span t-esc="total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.pricelist_id.currency_id}"/></strong>
+                                            </td>      
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2 pull-right">
+                                    <table>
+                                        <tr>
+                                            <td class="text-center">
+                                                <p class="mt64 mb32">Kasir</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right">
+                                                <p class="mt64 mb32"><span t-field="o.user_id"/></p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

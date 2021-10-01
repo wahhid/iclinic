@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="unit_form_view">
+        <field name="name">unit_form_view</field>
+        <field name="model">unit.administration</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="operating_id"/>
+                            <field name="type" required="1"/>
+                        </group>
+                        <group>
+                            <!-- <field name="partner_id"/> -->
+                            <field name="code"/>
+                            <field name="unit_remarks"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Attributes">
+                            <group>
+                                <field name="is_pharmacy"/>
+                                <field name="is_radiology"/>
+                                <field name="is_laboratorium"/>
+                                <field name="is_perina"/>
+                                <field name="have_doctor"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="unit_tree_view">
+        <field name="name">unit_tree_view</field>
+        <field name="model">unit.administration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="unit_remarks"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_unit" model="ir.actions.act_window">
+        <field name="name">Unit Administration</field>
+        <field name="res_model">unit.administration</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Inherit Operting Unit 
+    <record model="ir.ui.view" id="view_operating_unit_tree_inherit">
+        <field name="name">view_operating_unit_tree_inherit</field>
+        <field name="model">operating.unit</field>
+        <field name="inherit_id" ref="operating_unit.view_operating_unit_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="type"/>
+            </field>
+        </field>
+    </record>
+    -->
+
+    <record model="ir.ui.view" id="view_operating_unit_form_inherit">
+        <field name="name">view_operating_unit_form_inherit</field>
+        <field name="model">operating.unit</field>
+        <field name="inherit_id" ref="operating_unit.view_operating_unit_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="unit_administration_ids">
+                    <tree>
+                        <field name="name"/>
+                        <field name="type"/>
+                    </tree>
+                </field>
+            </field>
+        </field>
+    </record>
+
+</odoo>

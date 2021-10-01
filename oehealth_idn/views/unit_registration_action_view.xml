@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Unit Registration -->
+    <record model="ir.ui.view" id="unit_registration_form_view_inherit_action">
+        <field name="name">unit_registration_form_view_inherit_action</field>
+        <field name="model">unit.registration</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="oehealth_idn.unit_registration_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button type="object" class="oe_stat_button" name="view_picking" icon="fa-list">
+                    <label string="View Picking"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Prescription -->
+    <record model="ir.ui.view" id="oeh_medical_prescription_view_inherit_action">
+        <field name="name">oeh_medical_prescription_view_inherit_action</field>
+        <field name="model">oeh.medical.prescription</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_prescription_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pharmacy']" position="after">
+                <field name="unit_id" readonly="1"/>
+                <field name="reg_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Imaging Test -->
+    <record model="ir.ui.view" id="oeh_medical_imaging_test_form">
+        <field name="name">oeh_medical_imaging_test_form</field>   
+        <field name="model">oeh.medical.imaging</field>
+        <field name="inherit_id" ref="oehealth_extra_addons.oeh_medical_imaging_test_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[2]" position="attributes">
+                <attribute name="autofocus">autofocus</attribute>
+            </xpath>
+            <field name="requestor" position="after">
+                <field name="doctor_analyzing"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="oeh_medical_imaging_test_type_tree">
+        <field name="name">oeh_medical_imaging_test_type_tree</field>   
+        <field name="model">oeh.medical.imaging.test.type</field>
+        <field name="inherit_id" ref="oehealth_extra_addons.oeh_medical_imaging_test_type_tree"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="analysis"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

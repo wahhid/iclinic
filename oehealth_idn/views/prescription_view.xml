@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Prescription -->
+    <record model="ir.ui.view" id="oeh_medical_prescription_view_inherit">
+        <field name="name">oeh_medical_prescription_view_inherit</field>
+        <field name="model">oeh.medical.prescription</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_prescription_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_prescription_invoice_create']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">Draft,Sent to Pharmacy</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[1]/field[@name='prescription_line']" position="attributes">
+                <attribute name="context">{'default_patient' : patient}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Health Center Pharmacy -->
+    <record model="ir.ui.view" id="oeh_medical_healthcenters_pharmacy_view_inherit">
+        <field name="name">oeh_medical_healthcenters_pharmacy_view_inherit</field>
+        <field name="model">oeh.medical.health.center.pharmacy</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_healthcenters_pharmacy_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[1]/field[@name='pharmacy_lines']/form/header/button[@name='action_prescription_invoice_create']" position="replace">
+                <button confirm="Are you sure you want to create the transaction?" name="create_sale" states="Draft" string="Create Transaction" type="object" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//field[@name='doctor']" position="after">
+                <field name="unit_id" readonly="1"/>
+                <!-- <field name="reg_id" readonly="1"/> -->
+                <field name="reg_ids" readonly="1"/>
+            </xpath>
+            <xpath expr="//notebook/page[1]/field[@name='prescription_lines']/tree/field[@name='name']" position="after">
+                <field name="qty_available"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Health Center Pharmacy Line -->
+    <record model="ir.ui.view" id="oeh_medical_healthcenters_pharmacy_line_tree_view">
+        <field name="name">oeh_medical_healthcenters_pharmacy_line_tree_view</field>
+        <field name="model">oeh.medical.health.center.pharmacy.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Prescriptions" nolabel="1" colors="grey:state=='Invoiced';blue:state=='Draft'">
+                <field name="name"/>
+                <field name="patient"/>
+                <field name="doctor"/>
+                <field name="amount_total" sum="Prescription Total"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="oeh_medical_healthcenters_pharmacy_line_form_view">
+        <field name="name">oeh_medical_healthcenters_pharmacy_line_form_view</field>
+        <field name="model">oeh.medical.health.center.pharmacy.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Prescriptions" nolabel="1">
+                <header>
+                    <button confirm="Are you sure you want to create the transaction?" name="create_sale" states="Draft" string="Create Transaction" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="Draft,Invoiced" statusbar_colors="{&quot;Draft&quot;:&quot;blue&quot;,&quot;Invoiced&quot;:&quot;grey&quot;}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" on_change="onchange_prescription_id(name)" options="{'no_create': True}"/>
+                            <field name="doctor" options="{'no_create': True}"/>
+                            <field name="unit_id" readonly="1"/>
+                            <!-- <field name="reg_id" readonly="1"/> -->
+                            <field name="reg_ids" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="patient"/>
+                            <field name="amount_total" sum="Prescription Total"/>
+                            <field name="sale_order_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Prescription Lines">
+                            <field name="prescription_lines" nolabel="1">
+                                <tree string="Prescription Lines" nolabel="1" editable="bottom">
+                                    <field name="name" on_change="onchange_medicine_id(name)"/>
+                                    <field name="qty_available"/>
+                                    <field name="indication"/>
+                                    <field name="qty" readonly="1"/>
+                                    <field name="actual_qty" on_change="onchange_qty_and_price(actual_qty,price_unit)"/>
+                                    <field name="price_unit" on_change="onchange_qty_and_price(actual_qty,price_unit)"/>
+                                    <field name="price_subtotal"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Concoction Lines">
+                            
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_line" model="ir.actions.act_window">
+        <field name="name">Pharmacy Order</field>
+        <field name="res_model">oeh.medical.health.center.pharmacy.line</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

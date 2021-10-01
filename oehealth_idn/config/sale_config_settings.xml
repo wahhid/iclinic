@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_sales_config_inherit" model="ir.ui.view">
+            <field name="name">view.sales.config.inherit</field>
+            <field name="model">sale.config.settings</field>
+            <field name="inherit_id" ref="sale.view_sales_config" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='main']/group[1]" position="after">
+                    <group string="Medical Fee Account">
+                        <field name="medical_fee_account" options="{'no_create': True}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

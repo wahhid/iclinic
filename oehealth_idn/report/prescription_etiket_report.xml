@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_etiket">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="oe_structure">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <t t-foreach="o.prescription_line" t-as="p">
+                                    <table style="width:125%;">
+                                        <tbody>
+                                            <tr>
+                                                <td><span t-field="o.date" t-field-options="{&quot;format&quot;: &quot;d/MM/YYYY&quot;}"/></td>
+                                                <td></td>
+                                                <td class="text-right"><span t-field="o.name"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span><strong t-field="o.reg_id.patient.name"/></span></td>
+                                                <td></td>
+                                                <td class="text-right"><span t-field="o.reg_id.patient.dob" t-field-options="{&quot;format&quot;: &quot;d/MM/YYYY&quot;}"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>No RM : <span t-field="o.reg_id.patient.medical_record"/></td>
+                                                <td class="text-right"><span/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong><span t-field="p.name.name"/></strong></td>
+                                                <td class="text-center"><span t-field="p.qty"/></td>
+                                                <td class="text-right"><span t-field="p.dose_form"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong><span t-field="p.common_dosage"/></strong></td>
+                                                <td class="text-center"><span t-field="p.dose"/></td>
+                                                <td class="text-right"><span t-field="p.dose_form"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left"><span t-field="o.doctor"/></td>
+                                            </tr>
+                                            <tr>
+                                                <p></p>
+                                            </tr>
+                                            <tr>
+                                                <p></p>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </t>
+        </t>
+    </template>
+</odoo>

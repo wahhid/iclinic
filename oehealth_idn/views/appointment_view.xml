@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="oeh_medical_appointment_view">
+        <field name="name">oeh_medical_appointment_view</field>
+        <field name="model">oeh.medical.appointment</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_appointment_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="replace">
+                <header>
+                    <button confirm="Are you sure you want to mark appointment as canceled?" name="set_to_cancel" states="Scheduled" string="Mark as Canceled" type="object" class="oe_highlight" groups="oehealth_idn.group_customer_service"/>
+                    <button confirm="Are you sure you want to mark appointment as visited?" name="set_to_visited" states="Scheduled" string="Mark as Visited" type="object" class="oe_highlight" groups="oehealth_idn.group_customer_service"/>
+                    <field name="state" widget="statusbar" statusbar_visible="Scheduled,Visited" statusbar_colors="{&quot;Scheduled&quot;:&quot;blue&quot;,&quot;Completed&quot;:&quot;green&quot;,&quot;Invoiced&quot;:&quot;grey&quot;}"/>
+                </header>
+            </xpath>
+
+            <xpath expr="//field[@name='patient_status']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='patient_status']" position="after">
+                <field name="unit" required="1" domain="[('type', '=', patient_status)]"/>
+            </xpath>
+       </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_oeh_medical_appointment_filter_inherit">
+        <field name="name">view_oeh_medical_appointment_filter_inherit</field>
+        <field name="model">oeh.medical.appointment</field>
+        <field name="inherit_id" ref="oehealth.view_oeh_medical_appointment_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <filter string="Today" name="today" domain="[('appointment_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('appointment_date', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]"/>
+                <filter string="Yesterday" domain="[('appointment_date','&gt;=', ((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d')))]"/>
+                <separator/>
+                <filter string="Scheduled" name="scheduled" domain="[('state','=','Scheduled')]"/>
+            </xpath>
+       </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="oehealth.oeh_medical_appointment_action_tree">
+        <field name="context">{'search_default_scheduled':1, 'search_default_today':1}</field>
+    </record>
+
+    <!-- Unit Registration Form Inherit -->
+    <record model="ir.ui.view" id="unit_registration_form_view_inherit_appointment">
+        <field name="name">unit_registration_form_view_inherit_appointment</field>
+        <field name="model">unit.registration</field>
+        <field name="inherit_id" ref="oehealth_idn.unit_registration_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='schedule']" position="after">
+                <field name="appointment_id" readonly="1" attrs="{'invisible': [('appointment_id', '=', False)]}"/>
+            </xpath>
+       </field>
+    </record>
+
+</odoo>

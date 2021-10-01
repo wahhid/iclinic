@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Wards / Rooms -->
+    <record model="ir.ui.view" id="oeh_medical_healthcenters_ward_view_inherit">
+        <field name="name">Wards Inherit</field>
+        <field name="model">oeh.medical.health.center.ward</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_healthcenters_ward_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button type="object" name="generate_bed" string="Generate Beds" class="oe_highlight"/>
+                <!-- <button type="object" name="update_price_bed" string="Update Price" class="oe_highlight"/> -->
+            </xpath>
+            <xpath expr="//field[@name='private']" position="after">
+                <field name="class_id" required="1"/>
+                <field name="unit" domain="[('type','=','In-Patient')]" required="1"/>
+            </xpath>
+            <xpath expr="//field[@name='bio_hazard']" position="after">
+                <field name="bed_capacity"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Beds -->
+    <record model="ir.ui.view" id="oeh_medical_healthcenters_bed_view_inherit">
+        <field name="name">Beds Inherit</field>
+        <field name="model">oeh.medical.health.center.beds</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_healthcenters_bed_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='change_bed_status']" position="after">
+                <field name="patient" readonly="1"/>
+                <field name="admission_date" readonly="1"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="Patient History">
+                        <field name="reg_ids" readonly="1">
+                            <tree>
+                                <field name="name"/>
+                                <field name="patient"/>
+                                <field name="unit"/>
+                                <field name="doctor"/>
+                                <field name="admission_date"/>
+                                <field name="discharge_date"/>
+                                <field name="control_date"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="oeh_medical_healthcenters_bed_tree_inherit">
+        <field name="name">Beds Inherit</field>
+        <field name="model">oeh.medical.health.center.beds</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_healthcenters_bed_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='institution']" position="replace">
+                <field name="patient"/>
+                <field name="doctor"/>
+                <field name="unit"/>
+                <field name="admission_date"/>
+            </xpath>
+            <xpath expr="//field[@name='building']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_medical_healthcenters_bed_filter_inherit">
+        <field name="name">Beds Inherit</field>
+        <field name="model">oeh.medical.health.center.beds</field>
+        <field name="inherit_id" ref="oehealth.view_medical_healthcenters_bed_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="patient"/>
+                <field name="doctor"/>
+                <field name="unit"/>
+                <field name="admission_date"/>
+                <separator/>
+                <filter name="free" string="Free" domain="[('state','=','Free')]"/>
+                <filter name="occupied" string="Occupied" domain="[('state','=','Occupied')]"/>
+            </xpath>
+            <xpath expr="//group/filter[2]" position="replace">
+                <filter string="Room" name="group_room" domain="[]" context="{'group_by':'ward'}"/>
+                <filter string="Doctor" name="group_doctor" domain="[]" context="{'group_by':'doctor'}"/>
+                <filter string="Unit" name="group_unit" domain="[]" context="{'group_by':'unit'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_monitoring_beds" model="ir.actions.act_window">
+        <field name="name">Monitoring Rooms</field>
+        <field name="res_model">oeh.medical.health.center.beds</field>
+        <field name="domain">[]</field>
+        <field name="context">{"search_default_group_room":1}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_stiker_pasien">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="row">
+                        <div class="col-xs-8 align-right">
+                            <p>Nama : <span t-field="o.name"/></p>
+                            <p>Medrec : <span t-field="o.medical_record"/></p>
+                            <p>DOB : <span t-field="o.dob" t-field-options='{"format": "d MMMM y"}'/></p>
+                            <p>Kelamin : <span t-field="o.sex"/></p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

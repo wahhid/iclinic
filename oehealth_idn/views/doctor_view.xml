@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="oeh_medical_physician_view_inherit">
+        <field name="name">oeh_medical_physician_view_inherit</field>
+        <field name="model">oeh.medical.physician</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_physician_view"/>
+        <field name="arch" type="xml">
+            <field name="is_pharmacist" position="after">
+                <field name="unit_ids" widget="many2many_tags"/>
+            </field>
+            <field name="code" position="after">
+                <field name="queue_code"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="oeh_medical_physician_walkin_view_inherit">
+        <field name="name">oeh_medical_physician_walkin_view_inherit</field>
+        <field name="model">oeh.medical.physician</field>
+        <field name="inherit_id" ref="oehealth_extra_addons.oeh_medical_physician_walkin_view"/>
+        <field name="arch" type="xml">
+            <field name="end_date" position="after">
+                <field name="replacement_doctor" required="1"/>
+            </field>
+            <xpath expr="//page[4]" position="attributes">
+                <attribute name="string">Daily Schedule</attribute>
+            </xpath>
+            <xpath expr="//div[@name='buttons']" position="inside">
+                <button type="object" class="oe_stat_button" string="Daily Schedule" name="view_schedule" context="{'search_default_physician_id': active_id,'default_physician_id': active_id}" icon="fa-list"/>
+                <button name="toggle_active" type="object" groups="hr.group_hr_user" class="oe_stat_button" icon="fa-archive">
+                    <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_doctor_schedule" model="ir.actions.act_window">
+        <field name="name">Doctor Schedule</field>
+        <field name="res_model">oeh.medical.physician</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="oeh_medical_physician_walkin_schedule_tree">
+        <field name="name">oeh_medical_physician_walkin_schedule_tree</field>
+        <field name="model">oeh.medical.physician.walkin.schedule</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="physician_id" invisible="1"/>
+                <field name="name"/>
+                <field name="end_date"/>
+                <field name="replacement_doctor"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
