@@ -96,3 +96,42 @@ class register_walkin(models.Model):
     @api.multi
     def print_patient_stiker(self):
         return self.patient.print_patient_stiker()
+
+
+    @api.multi
+    def onchange_patient(self, patient):
+        if patient:
+            patient = self.env['oeh.medical.patient'].browse(patient)
+            if patient.is_employee:
+                return {
+                    'value': {
+                        'dob': patient.dob, 
+                        'sex': patient.sex, 
+                        'marital_status': 
+                        patient.marital_status, 
+                        'blood_type': patient.blood_type, 
+                        'rh': patient.rh
+                    },
+                    'warning': {
+                        'title': _('Warning'),
+                        'message': _('This Pasien is employee')
+                    }
+                }
+            elif patient.is_have_parent:
+                return {
+                    'value': {
+                        'dob': patient.dob, 
+                        'sex': patient.sex, 
+                        'marital_status': 
+                        patient.marital_status, 
+                        'blood_type': patient.blood_type, 
+                        'rh': patient.rh
+                    },
+                    'warning': {
+                        'title': _('Warning'),
+                        'message': _('This Pasien have relation with employee')
+                    }
+                }
+            else:
+                return {'value': {'dob': patient.dob, 'sex': patient.sex, 'marital_status': patient.marital_status, 'blood_type': patient.blood_type, 'rh': patient.rh}}
+        return {}

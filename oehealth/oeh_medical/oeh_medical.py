@@ -36,7 +36,6 @@ class OeHealthFamily(models.Model):
     deceased = fields.Boolean(string='Deceased?', help='Mark if the family member has died')
     patient_id = fields.Many2one('oeh.medical.patient', 'Patient', required=True, ondelete='cascade', index=True)
 
-
 class OeHealthPatient(models.Model):
     _name = 'oeh.medical.patient'
     _inherits = {'res.partner': 'partner_id'}
@@ -190,6 +189,7 @@ class OeHealthPatient(models.Model):
     invoice_count = fields.Integer(compute=_invoice_count, string='Invoices')
     oeh_patient_user_id = fields.Many2one('res.users', string='Responsible ERP User')
     prescription_line = fields.One2many('oeh.medical.prescription.line', 'patient', string='Medicines', readonly=True)
+    
     _sql_constraints = [
      ('code_oeh_patient_userid_uniq', 'unique (oeh_patient_user_id)', "Selected 'Responsible' user is already assigned to another patient !")]
 

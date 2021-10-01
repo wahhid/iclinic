@@ -76,7 +76,25 @@
             <xpath expr="//notebook/page[2]/group[2]/field/tree/field[@name='relation']" position="after">
                 <field name="mobile"/>
                 <field name="address"/>
+                <field name="patient_id" string="Parent #"/>
+                <field name="family_patient_id"/>
             </xpath>
+            <xpath expr="//notebook/page[1]" position="after">
+                <page string="Employee">
+                    <group>
+                        <group>
+                            <field name="is_employee"/>
+                            <field name="employee_number" attrs="{'invisible': [('is_employee','=', False)]}"/>
+                            <field name="is_have_parent"/>
+                            <field name="parent_id" attrs="{'invisible': [('is_have_parent','=', False)]}"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+
         </field>
     </record>
 

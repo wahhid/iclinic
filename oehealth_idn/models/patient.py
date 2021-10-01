@@ -71,6 +71,12 @@ class oeh_medical_patient(models.Model):
     current_insurance = fields.Many2one('medical.insurance', string='Insurance', domain="[('patient','=', active_id),('state','=','Active')]", index=True, help='Insurance information. You may choose from the different insurances belonging to the patient')
     inpatient_count = fields.Integer(compute=_inpatient_count, string='Admission / Discharge')
     is_medical_record = fields.Boolean(string='Patient with Medical Record')
+        
+    #Additional
+    is_employee = fields.Boolean('Is Employee', default=False)
+    employee_number = fields.Char('Employee Number', size=100)
+    is_have_parent = fields.Boolean('Has Parent', default=False)
+    parent_id = fields.Many2one('oeh.medical.patient', 'Parent#')
 
     @api.model
     def create(self, vals):
@@ -120,5 +126,8 @@ class oeh_medical_patient(models.Model):
 
 class oeh_medical_patient_family(models.Model):
     _inherit = 'oeh.medical.patient.family'
+
     mobile = fields.Char(string='Mobile')
     address = fields.Text(string='Address')
+    family_patient_id = fields.Many2one('oeh.medical.patient', 'Patient #')
+    
