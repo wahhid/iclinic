@@ -10,10 +10,14 @@ import datetime, requests, json
 
 class register_walkin(models.Model):
     _inherit = 'oeh.medical.appointment.register.walkin'
+    
     PAYMENT_TYPE = [
      ('Personal', 'Personal'),
      ('Corporate', 'Corporate'),
-     ('Insurance', 'Insurance')]
+     ('Insurance', 'Insurance'),
+     ('Employee', 'Employee')
+    ]
+
     WALKIN_STATUS = [
      ('Draft', 'Draft'),
      ('Scheduled', 'Scheduled'),
@@ -37,6 +41,7 @@ class register_walkin(models.Model):
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
+    employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
     unit = fields.Many2one(comodel_name='unit.administration', string='Unit', track_visibility='onchange')
     admission_reason = fields.Many2one('oeh.medical.pathology', string='Reason for Admission', help='Reason for Admission', required=False, readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     have_register = fields.Boolean(string='Have Register ?')
@@ -100,17 +105,25 @@ class register_walkin(models.Model):
 
     @api.multi
     def onchange_patient(self, patient):
-        if patient:
+        if patient:  
+            # is_has_parent = False
+            # domain = [('family_patient_id', '=', patient)]
+            # family_patient_id = self.env['oeh.medical.patient.family'].search(domain,limit=1)
+            # if family_patient_id:
+            #     is_has_parent = True
+            #     parent_id = family_patient_id.patient_id
+            
             patient = self.env['oeh.medical.patient'].browse(patient)
             if patient.is_employee:
                 return {
                     'value': {
                         'dob': patient.dob, 
                         'sex': patient.sex, 
-                        'marital_status': 
-                        patient.marital_status, 
+                        'marital_status': patient.marital_status, 
                         'blood_type': patient.blood_type, 
-                        'rh': patient.rh
+                        'rh': patient.rh,
+                        'payment': 'Insurance',
+                        'insurance': patient.current_insurance.id 
                     },
                     'warning': {
                         'title': _('Warning'),
@@ -122,14 +135,15 @@ class register_walkin(models.Model):
                     'value': {
                         'dob': patient.dob, 
                         'sex': patient.sex, 
-                        'marital_status': 
-                        patient.marital_status, 
+                        'marital_status': patient.marital_status, 
                         'blood_type': patient.blood_type, 
-                        'rh': patient.rh
+                        'rh': patient.rh,
+                        'payment': 'Employee',
+                        'employee_id': patient.parent_id.id 
                     },
                     'warning': {
                         'title': _('Warning'),
-                        'message': _('This Pasien have relation with employee')
+                        'message': _('This Pasien have relation with employee (' + patient.parent_id.name + ')')
                     }
                 }
             else:

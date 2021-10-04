@@ -125,10 +125,15 @@ class unit_registration_action(models.Model):
         if not field_id:
             return self.create_poly(model, val_obj, field_labels)
         else:
-            context = {'default_reg_id': self.id, 
-               'default_walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
-               'default_patient': self.patient.id, 
-               'default_doctor': self.doctor.id}
+            context = {
+                'default_reg_id': self.id, 
+                'default_walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
+                'default_patient': self.patient.id, 
+                'default_doctor': self.doctor.id,
+                'payment': self.payment,
+                'company': self.company.id,
+                'insurance': self.insurance.id
+            }
             return self.view_poly(model, self.id, context)
 
     gynecology_id = fields.Many2one(comodel_name='oeh.medical.gyneco', string='Gynecology', copy=False, readonly=True)

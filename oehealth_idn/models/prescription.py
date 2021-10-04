@@ -8,12 +8,30 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
 import datetime
 
+
+#Prescription
 class oeh_medical_prescription(models.Model):
     _inherit = 'oeh.medical.prescription'
+
+    PAYMENT_TYPE = [
+        ('Personal', 'Personal'),
+        ('Corporate', 'Corporate'),
+        ('Insurance', 'Insurance'),
+        ('Employee', 'Employee')
+    ]
+
+    payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
+    concoction_ids = fields.One2many('medical.concoction', 'prescription_id', copy=True, string='Concoction')
 
     def action_prescription_send_to_pharmacy(self):
         pharmacy_obj = self.env['oeh.medical.health.center.pharmacy.line']
         pharmacy_line_obj = self.env['oeh.medical.health.center.pharmacy.prescription.line']
+        medical_concoction_obj = self.env['medical.concoction']
+        medical_concoction_detail_obj = self.env['medical.concoction.detail']
+
         res = {}
         for pres in self:
             if not pres.pharmacy:
@@ -25,20 +43,52 @@ class oeh_medical_prescription(models.Model):
                    'pharmacy_id': pres.pharmacy.id, 
                    'state': 'Draft', 
                    'arrival_id': pres.walkin.id, 
-                   'reg_id': pres.reg_id.id}
-                phy_ids = pharmacy_obj.create(curr_pres)
-                if phy_ids:
+                   'reg_id': pres.reg_id.id,
+                   'payment': pres.payment,
+                   'company': pres.company.id,
+                   'insurance': pres.insurance.id}
+                phy_id = pharmacy_obj.create(curr_pres)
+                
+                if phy_id:
+                    #Prescription Line
                     if pres.prescription_line:
                         for ps in pres.prescription_line:
-                            curr_pres_line = {'name': ps.name.id, 'indication': ps.indication.id, 
-                               'price_unit': ps.name.list_price, 
-                               'qty': ps.qty, 
-                               'actual_qty': ps.qty, 
-                               'prescription_id': phy_ids.id, 
-                               'state': 'Draft'}
+                            curr_pres_line = {
+                                'name': ps.name.id, 
+                                'indication': ps.indication.id, 
+                                'price_unit': ps.name.list_price, 
+                                'qty': ps.qty, 
+                                'actual_qty': ps.qty, 
+                                'prescription_id': phy_id.id,
+                                'state': 'draft'
+                            }
                             pharmacy_line_obj.create(curr_pres_line)
+                    #Concoction Line
+                    if pres.concoction_ids:
+                        for cn in pres.concoction_ids:
+                            #cn.prescription_line_id = phy_ids.id
+                            cur_cn_lines = []
+                            for detail_id in cn.concoction_detail_ids:
+                                vals = {
+                                    'product_id': detail_id.product_id.id,
+                                    'big_qty': detail_id.big_qty, 
+                                    'qty': detail_id.qty,
+                                    'zat_qty': detail_id.zat_qty
+                                }
+                                cur_cn_lines.append(vals)
+                            cur_cn = {
+                                'prescription_line_id': phy_id.id, 
+                                'product_id': cn.product_id.id, 
+                                'item_type': cn.item_type,
+                                'doctor_id': cn.doctor_id.id, 
+                                'qty': cn.qty,
+                                'qty_unit': cn.qty_unit,
+                                'product_uom': cn.product_uom.id, 
+                                'price': cn.price
+                            }
+                            medical_concoction_id = medical_concoction_obj.create(cur_cn)
 
-                res = self.write({'state': 'Sent to Pharmacy'})
+                res = pres.write({'state': 'Sent to Pharmacy'})
 
         return True
 
@@ -48,14 +98,29 @@ class oeh_medical_prescription_line(models.Model):
     name = fields.Many2one('product.product', string='Medicines', help='Prescribed Medicines', domain=[('item_type', '=', 'Medicine')], required=True)
 
 
+#Pharmacy Order
 class oeh_medical_health_center_pharmacy_line(models.Model):
     _inherit = 'oeh.medical.health.center.pharmacy.line'
     
+    PAYMENT_TYPE = [
+        ('Personal', 'Personal'),
+        ('Corporate', 'Corporate'),
+        ('Insurance', 'Insurance'),
+        ('Employee', 'Employee')
+    ]
+     
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Queue #')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reference Reg ID')
     unit_id = fields.Many2one(comodel_name='unit.administration', related='reg_id.unit', string='Reference Unit')
     reg_ids = fields.Many2one(comodel_name='unit.registration', string='Registration')
     sale_order_id = fields.Many2one('sale.order', string='Order#')
+     
+    payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
+    concoction_ids = fields.One2many('medical.concoction', 'prescription_line_id', copy=True, string='Concoction')
+
 
     @api.multi
     def create_sale(self):

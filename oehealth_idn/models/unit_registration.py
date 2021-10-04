@@ -14,10 +14,13 @@ class unit_registration(models.Model):
     _name = 'unit.registration'
     _inherit = ['mail.thread']
     _order = 'name desc'
+    
     PAYMENT_TYPE = [
-     ('Personal', 'Personal'),
-     ('Corporate', 'Corporate'),
-     ('Insurance', 'Insurance')]
+        ('Personal', 'Personal'),
+        ('Corporate', 'Corporate'),
+        ('Insurance', 'Insurance'),
+        ('Employee', 'Employee')
+    ]
     CLINIC_STATUS = [
      ('Draft', 'Draft'),
      ('Unlock', 'Unlock'),

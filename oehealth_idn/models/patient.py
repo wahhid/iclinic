@@ -9,6 +9,11 @@ from dateutil.relativedelta import relativedelta
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DSDF, DEFAULT_SERVER_DATETIME_FORMAT
+import logging
+
+
+_logger = logging.getLogger(__name__)
+
 
 class oeh_medical_patient(models.Model):
     _inherit = 'oeh.medical.patient'
@@ -37,7 +42,20 @@ class oeh_medical_patient(models.Model):
             if len(idnum_str) == 9:
                 record.medical_record = idnum_str[:3] + '-' + idnum_str[3:6] + '-' + idnum_str[6:9]
             else:
-                record.medical_record = idnum_str
+                record.medical_record = idnum_str  
+    
+    def _check_has_parent(self):
+        for rec in self:
+            _logger.info("Check Parent")
+            _logger.info(rec.name)
+            domain = [('family_patient_id','=', rec.id)]
+            patient_family_id = self.env['oeh.medical.patient.family'].search(domain, limit=1)
+            if patient_family_id:
+                rec.is_have_parent = True
+                rec.parent_id = patient_family_id.patient_id.id
+            else:
+                _logger.info("Parent not found")
+                rec.is_have_parent = False
 
     @api.constrains('dob')
     def _check_birthday(self):
@@ -75,8 +93,8 @@ class oeh_medical_patient(models.Model):
     #Additional
     is_employee = fields.Boolean('Is Employee', default=False)
     employee_number = fields.Char('Employee Number', size=100)
-    is_have_parent = fields.Boolean('Has Parent', default=False)
-    parent_id = fields.Many2one('oeh.medical.patient', 'Parent#')
+    is_have_parent = fields.Boolean('Has Parent', compute=_check_has_parent, readonly=True)
+    parent_id = fields.Many2one('oeh.medical.patient', 'Parent#', readonly=True)
 
     @api.model
     def create(self, vals):
