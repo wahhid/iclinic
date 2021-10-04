@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <!-- Sales Order Inherit -->
+    <!-- Sales Order Inherit 
     <record model="ir.ui.view" id="view_order_concoction_form_inherit">
         <field name="name">view_order_concoction_form_inherit</field>   
         <field name="model">sale.order</field>
@@ -52,7 +52,6 @@
                                             <field name="zat_qty"/>
                                             <field name="zat_uom" readonly="1"/>
                                             <field name="total"/>
-                                            <!-- <field name="depot_id"/> -->
                                         </tree>
                                     </field>
                                 </page>
@@ -63,5 +62,6 @@
             </xpath>
         </field>
     </record>
+    -->
 
 </odoo>

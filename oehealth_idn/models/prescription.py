@@ -37,16 +37,19 @@ class oeh_medical_prescription(models.Model):
             if not pres.pharmacy:
                 raise UserError(_('No pharmacy selected !!'))
             else:
-                curr_pres = {'name': pres.id, 
-                   'patient': pres.patient.id, 
-                   'doctor': pres.doctor.id, 
-                   'pharmacy_id': pres.pharmacy.id, 
-                   'state': 'Draft', 
-                   'arrival_id': pres.walkin.id, 
-                   'reg_id': pres.reg_id.id,
-                   'payment': pres.payment,
-                   'company': pres.company.id,
-                   'insurance': pres.insurance.id}
+                curr_pres = {
+                    'name': pres.id, 
+                    'reg_ids': pres.reg_id.id,
+                    'patient': pres.patient.id, 
+                    'doctor': pres.doctor.id, 
+                    'pharmacy_id': pres.pharmacy.id, 
+                    'state': 'Draft', 
+                    'arrival_id': pres.walkin.id, 
+                    'reg_id': pres.reg_id.id,
+                    'payment': pres.payment,
+                    'company': pres.company.id,
+                    'insurance': pres.insurance.id,
+                    'employee_id': pres.employee_id.id}
                 phy_id = pharmacy_obj.create(curr_pres)
                 
                 if phy_id:
@@ -69,12 +72,12 @@ class oeh_medical_prescription(models.Model):
                             #cn.prescription_line_id = phy_ids.id
                             cur_cn_lines = []
                             for detail_id in cn.concoction_detail_ids:
-                                vals = {
+                                vals = (0,0,{
                                     'product_id': detail_id.product_id.id,
                                     'big_qty': detail_id.big_qty, 
                                     'qty': detail_id.qty,
                                     'zat_qty': detail_id.zat_qty
-                                }
+                                })
                                 cur_cn_lines.append(vals)
                             cur_cn = {
                                 'prescription_line_id': phy_id.id, 
@@ -84,7 +87,8 @@ class oeh_medical_prescription(models.Model):
                                 'qty': cn.qty,
                                 'qty_unit': cn.qty_unit,
                                 'product_uom': cn.product_uom.id, 
-                                'price': cn.price
+                                'price': cn.price,
+                                'concoction_detail_ids': cur_cn_lines
                             }
                             medical_concoction_id = medical_concoction_obj.create(cur_cn)
 
@@ -132,42 +136,49 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
         arrival = 0
         for acc in self:
             user_unit = self.env['unit.administration'].search([('operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id
-            if user_unit:
-                val_obj2 = {
-                    'reference_id': acc.reg_id.id, 
-                    'support_walkin_id': acc.arrival_id.id, 
-                    'patient': acc.patient.id or acc.arrival_id.patient.id, 
-                    'type': 'Medical Support', 
-                    'payment': acc.reg_id.payment, 
-                    'company': acc.reg_id.company.id, 
-                    'insurance': acc.reg_id.insurance.id, 
-                    'doctor': acc.doctor.id, 
-                    'unit': user_unit, 
-                    'date': datetime.datetime.now()
-                }
-                reg_ids = obj2.create(val_obj2)
-                acc.reg_ids = reg_ids
-            else:
+            # if user_unit:
+            #     val_obj2 = {
+            #         'reference_id': acc.reg_id.id, 
+            #         'support_walkin_id': acc.arrival_id.id, 
+            #         'patient': acc.patient.id or acc.arrival_id.patient.id, 
+            #         'type': 'Medical Support', 
+            #         'payment': acc.reg_id.payment, 
+            #         'company': acc.reg_id.company.id, 
+            #         'insurance': acc.reg_id.insurance.id,  
+            #         'employee_id': acc.reg_id.employee_id.id, 
+            #         'doctor': acc.doctor.id, 
+            #         'unit': user_unit, 
+            #         'date': datetime.datetime.now()
+            #     }
+            #     reg_ids = obj2.create(val_obj2)
+            #     acc.reg_ids = reg_ids
+            # else:
+            #     raise UserError(_('Configuration Error! \n Could not Find default Operating Unit in User : ' + self.env.user.name))
+            if not user_unit:
                 raise UserError(_('Configuration Error! \n Could not Find default Operating Unit in User : ' + self.env.user.name))
-            
-            if reg_ids:
-                if reg_ids.payment == 'Insurance':
-                    guarantor = reg_ids.insurance.ins_type.partner_id.id
-                elif reg_ids.payment == 'Corporate':
-                    guarantor = reg_ids.company.id
+
+            if acc.reg_ids:
+                if acc.payment == 'Insurance':
+                    guarantor = acc.insurance.ins_type.partner_id.id
+                elif acc.payment == 'Corporate':
+                    guarantor = acc.company.id
+                elif acc.payment == 'Employee':
+                    guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
                 else:
-                    guarantor = reg_ids.patient.partner_id.id
+                    guarantor = acc.patient.partner_id.id
                 
-                val_obj = {'reg_id': reg_ids.id, 
-                   'arrival_id': acc.arrival_id.id, 
-                   'patient_id': reg_ids.patient.id, 
-                   'doctor_id': reg_ids.doctor.id, 
-                   'partner_id': reg_ids.patient.partner_id.id, 
-                   'partner_invoice_id': guarantor, 
-                   'partner_shipping_id': reg_ids.patient.partner_id.id, 
-                   'pricelist_id': reg_ids.charge_id.pricelist.id or reg_ids.patient.partner_id.property_product_pricelist.id, 
-                   'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
+                val_obj = {
+                    'reg_id': acc.reg_ids.id, 
+                    'arrival_id': acc.arrival_id.id, 
+                    'patient_id': acc.patient.id, 
+                    'doctor_id': acc.doctor.id, 
+                    'partner_id': acc.patient.partner_id.id, 
+                    'partner_invoice_id': guarantor, 
+                    'partner_shipping_id': acc.patient.partner_id.id, 
+                    #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
+                    'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
                 inv_ids = obj.create(val_obj)
+                
                 if inv_ids:
                     inv_id = inv_ids.id
                     if self.arrival_id and not self.arrival_id.have_register:
@@ -182,16 +193,35 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
 
                         arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)
                         arrival.write({'have_register': True})
+                    
                     if acc.prescription_lines:
                         for ps in acc.prescription_lines:
-                            vals = {'order_id': inv_id, 
-                               'product_id': ps.name.id, 
-                               'name': ps.name.name, 
-                               'prescribe_qty': ps.qty, 
-                               'product_uom_qty': ps.actual_qty, 
-                               'product_uom': ps.name.uom_id.id, 
-                               'price_unit': ps.price_unit}
+                            vals = {
+                                'order_id': inv_id, 
+                                'product_id': ps.name.id, 
+                                'name': ps.name.name, 
+                                'prescribe_qty': ps.qty, 
+                                'product_uom_qty': ps.actual_qty, 
+                                'product_uom': ps.name.uom_id.id, 
+                                'price_unit': ps.price_unit
+                            }
                             line_obj.create(vals)
+
+                    if acc.concoction_ids:
+                        for cn in acc.concoction_ids:
+                            for cnd in cn.concoction_detail_ids:
+                                vals = {
+                                    'order_id': inv_id, 
+                                    'product_id': cnd.product_id.id, 
+                                    'name': cnd.product_id.name, 
+                                    'is_concoction': True,
+                                    'medical_concoction_id': cn.id,
+                                    'prescribe_qty': cnd.qty, 
+                                    'product_uom_qty': cnd.qty, 
+                                    'product_uom': cnd.uom_id.id, 
+                                    #'price_unit': cnd.price_unit
+                                }
+                                line_obj.create(vals)
 
                 self.write(
                     {

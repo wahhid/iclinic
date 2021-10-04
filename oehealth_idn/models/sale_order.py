@@ -9,6 +9,7 @@ from odoo.exceptions import Warning
 
 class sale_order(models.Model):
     _inherit = 'sale.order'
+
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID')
     arrival_txt = fields.Char(compute='set_arrival_id', string='Arrival #', store=True)
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID')
@@ -61,6 +62,8 @@ class sale_order_line(models.Model):
     fee_state = fields.Selection(related='inv_line_id.invoice_id.state', string='Fee State', store=True)
     consultancy_fee = fields.Float('Consultancy Fee (%)', default=0.0)
     bpjs_price =  fields.Float('Bpsj Charge', default=0.0)
+    is_concoction = fields.Boolean('Concoction', default=False, readonly=True)
+    medical_concoction_id = fields.Many2one('medical.concoction', 'Concoction #') 
 
     @api.multi
     def _prepare_invoice_line(self, qty):

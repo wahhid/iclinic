@@ -121,7 +121,11 @@ class unit_registration_action(models.Model):
         val_obj = {'reg_id': self.id, 
            'walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
            'patient': self.patient.id, 
-           'doctor': self.doctor.id}
+           'doctor': self.doctor.id,
+            'payment': self.payment,
+            'company': self.company.id,
+            'insurance': self.insurance.id,
+            'employee_id': self.employee_id.id}
         if not field_id:
             return self.create_poly(model, val_obj, field_labels)
         else:
@@ -130,9 +134,10 @@ class unit_registration_action(models.Model):
                 'default_walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
                 'default_patient': self.patient.id, 
                 'default_doctor': self.doctor.id,
-                'payment': self.payment,
-                'company': self.company.id,
-                'insurance': self.insurance.id
+                'default_payment': self.payment,
+                'default_company': self.company.id,
+                'default_insurance': self.insurance.id,
+                'default_employee_id': self.employee_id.id
             }
             return self.view_poly(model, self.id, context)
 

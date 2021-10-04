@@ -143,6 +143,7 @@
             <!-- Order Line Tree -->
             <xpath expr="//page/field[@name='order_line']/tree/field[@name='name']" position="replace">
                 <field name="name"/>
+                <field name="is_concoction"/>
                 <field name="patient_id" invisible="1"/>
                 <field name="doctor_id" invisible="1"/>
                 <field name="qty_available"/>

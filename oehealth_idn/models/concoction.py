@@ -53,6 +53,8 @@ class medical_concoction(models.Model):
     prescription_id = fields.Many2one('oeh.medical.prescription', 'Prescription #')
     prescription_line_id = fields.Many2one('oeh.medical.health.center.pharmacy.line', 'Prescription Line #')
     product_id = fields.Many2one(comodel_name='product.product', string='Item', states={'done': [('readonly', True)]})
+    is_concoction = fields.Boolean('Concoction', default=False, readonly=True)
+
     item_type = fields.Selection(related='product_id.item_type', string='Type')
     date = fields.Datetime(string='Date', default=datetime.datetime.now())
     doctor_id = fields.Many2one(comodel_name='oeh.medical.physician', string='Doctor', states={'done': [('readonly', True)]})

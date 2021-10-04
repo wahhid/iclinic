@@ -58,7 +58,7 @@
                     </group>
                     <notebook>
                         <page string="Out-Patient Care Registration">
-                            <field name="clinic_ids" context="{'default_patient':patient, 'default_type': 'Out-Patient', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance}"/>
+                            <field name="clinic_ids" context="{'default_patient':patient, 'default_type': 'Out-Patient', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_employee_id': employee_id}"/>
                         </page>
                         <page string="In-Patient Care Registration">
                             <field name="unit_ids" context="{'default_patient':patient, 'default_type': 'In-Patient', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_admission_reason': admission_reason}"/>

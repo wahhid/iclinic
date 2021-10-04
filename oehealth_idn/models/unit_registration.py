@@ -75,6 +75,7 @@ class unit_registration(models.Model):
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
     remarks = fields.Text(string='Remarks', readonly=True, states={'Unlock': [('readonly', False)]}, track_visibility='onchange')
     reference_id = fields.Many2one(comodel_name='unit.registration', string='Reference ID', readonly=True, states={'Draft': [('readonly', False)], 'Unlock': [('readonly', False)]}, track_visibility='onchange')
     doctor_reference = fields.Many2one(comodel_name='oeh.medical.physician', related='reference_id.doctor', string='Doctor Reference', help='Doctor Reference', readonly=True)
@@ -172,6 +173,8 @@ class unit_registration(models.Model):
                     guarantor = acc.insurance.ins_type.partner_id.id
                 elif acc.payment == 'Corporate':
                     guarantor = acc.company.id
+                elif acc.payment == 'Employee':
+                    guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
                 else:
                     guarantor = acc.patient.partner_id.id
                 val_obj = {'reg_id': acc.id, 
@@ -184,6 +187,7 @@ class unit_registration(models.Model):
                    'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
                    'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
                    'operating_unit_id': acc.unit.operating_id.id or False}
+
                 inv_ids = obj.create(val_obj)
                 if inv_ids:
                     inv_id = inv_ids.id
