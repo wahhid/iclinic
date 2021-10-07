@@ -9,6 +9,9 @@ from odoo.exceptions import UserError, Warning
 import requests, json, datetime
 from datetime import timedelta
 import pytz
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class unit_registration(models.Model):
     _name = 'unit.registration'
@@ -76,6 +79,7 @@ class unit_registration(models.Model):
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
+    payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount')
     remarks = fields.Text(string='Remarks', readonly=True, states={'Unlock': [('readonly', False)]}, track_visibility='onchange')
     reference_id = fields.Many2one(comodel_name='unit.registration', string='Reference ID', readonly=True, states={'Draft': [('readonly', False)], 'Unlock': [('readonly', False)]}, track_visibility='onchange')
     doctor_reference = fields.Many2one(comodel_name='oeh.medical.physician', related='reference_id.doctor', string='Doctor Reference', help='Doctor Reference', readonly=True)
@@ -126,9 +130,55 @@ class unit_registration(models.Model):
         for data in get_no_max:
             if data['no_max']:
                 queue_no = int(data['no_max']) + 1
-
         vals['queue_no'] = queue_no
-        return super(unit_registration, self).create(vals)
+        res = super(unit_registration, self).create(vals)
+        if res.payment == 'Personal':
+            #Personal
+            domain = [
+                ('payment','=', 'Personal')
+            ]
+            payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_quarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            res.payment_quarantor_discount_id = payment_quarantor_discount_id
+        elif res.payment == 'Corporate':
+            #Corporate
+            _logger.info('Corporate')
+            domain = [
+                ('payment','=', 'Corporate'),
+                ('company','=', res.company.id)
+            ]
+            _logger.info(domain)
+            payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_guarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            _logger.info(payment_guarantor_discount_id.description)
+            res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
+
+        elif res.payment == 'Insurance':
+            #Insurance
+            _logger.info('Insurance')
+            domain = [
+                ('payment','=', 'Insurance'),
+                ('insurance_type_id','=', res.insurance.ins_type.id)
+            ]
+            _logger.info(domain)
+            payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_guarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            _logger.info(payment_guarantor_discount_id.description)
+            res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
+        else:
+            #Employee
+            domain = [
+                ('payment','=', 'Employee')
+            ]
+            payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_quarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            res.payment_quarantor_discount_id = payment_quarantor_discount_id
+
+        return res
 
     def get_queue(self):
         for row in self:
@@ -177,6 +227,7 @@ class unit_registration(models.Model):
                     guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
                 else:
                     guarantor = acc.patient.partner_id.id
+
                 val_obj = {'reg_id': acc.id, 
                    'arrival_id': acc.clinic_walkin_id.id or acc.unit_walkin_id.id or acc.emergency_walkin_id.id or acc.support_walkin_id.id, 
                    'patient_id': acc.patient.id, 
@@ -194,12 +245,35 @@ class unit_registration(models.Model):
                     if self.arrival_id and not self.arrival_id.have_register:
                         product = self.env['product.product'].search([('auto_billing', '!=', False)])
                         for p in product:
-                            vals = {'order_id': inv_id, 'product_id': p.id, 
-                               'name': p.name, 
-                               'product_uom_qty': 1, 
-                               'product_uom': p.uom_id.id, 
-                               'price_unit': p.lst_price, 
-                               'doctor_id': False}
+                            # discount_type = False
+                            # discount = 0.0
+                            # if acc.payment == 'Insurance':
+                            #     domain = [
+                            #         ('payment', '=', 'Insurance'),
+                            #         ('insurance_type_id', '=', )
+                            #     ]
+                            # elif acc.payment == 'Corporate':
+                            #     domain = [
+                            #         ('payment', '=', 'Coorporate'),
+                            #         ('company', '=', acc.company.id)
+                            #     ]
+                            # elif acc.payment == 'Employee':
+                            #     domain = [
+                                    
+                            #     ]
+                            # else:
+                            #     guarantor = acc.patient.partner_id.id
+
+                            vals = {
+                                'order_id': inv_id, 
+                                'product_id': p.id, 
+                                'name': p.name, 
+                                'product_uom_qty': 1, 
+                                'product_uom': p.uom_id.id, 
+                                'price_unit': p.lst_price, 
+                                'doctor_id': False
+                            }
+                            
                             line_obj.create(vals)
 
                         arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)

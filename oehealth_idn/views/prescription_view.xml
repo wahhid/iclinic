@@ -196,6 +196,7 @@
                                                 <field name="qty_unit" class="oe_inline" style="width:18% !important"/>
                                                 <field name="product_uom" class="oe_inline" style="width:47% !important"/>
                                             </div>
+                                            <field name="remark"/>
                                         </group>
                                         <group/>
                                     </group>

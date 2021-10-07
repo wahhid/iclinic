@@ -109,6 +109,7 @@
                 <field name="arrival_id" readonly="1"/>
                 <field name="reg_id" readonly="1"/>
                 <field name="unit_id" readonly="1"/>
+                <field name="payment_guarantor_discount_id" readonly="1"/>
             </field>
             <xpath expr="//group[@name='sale_pay']/field[@name='invoice_status']" position="after">
                 <field name="invoice_check" readonly="1"/>

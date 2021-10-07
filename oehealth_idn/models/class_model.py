@@ -7,6 +7,7 @@
 from odoo import models, fields, api, _
 
 class class_administration(models.Model):
+    
     _name = 'class.administration'
     name = fields.Char(string='Class Name')
     type = fields.Selection([('Out-Patient', 'Out-Patient'), ('In-Patient', 'In-Patient')], 'Unit Type')

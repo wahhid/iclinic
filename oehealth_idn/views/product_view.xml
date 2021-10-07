@@ -140,4 +140,98 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+
+    <menuitem name="Payment Guarantor" id="oeh_medical_conf_payment_guarantor" parent="oehealth.oeh_medical_conf_menu" sequence="3"/>
+
+
+    <!-- payment.guarantor.discount -->
+    <record model="ir.ui.view" id="payment_guarantor_discount_form_view">
+        <field name="name">Payment Guarantor Discount Form</field>
+        <field name="model">payment.guarantor.discount</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Payment Guarantor Discount">
+                <!--
+                <header>
+                    <button name="make_active" confirm="Are you sure you want to mark insurance as Active?" states="Draft" string="Make Active" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="Draft,Active,Expired" statusbar_colors='{"Draft":"blue","Active":"red","Expired":"grey"}'/>
+                </header>
+                -->
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="description"/>
+                            <field name="payment"/>
+                            <field name="company" attrs="{'invisible':[('payment','!=','Corporate')]}"/>
+                            <field name="insurance_type_id" attrs="{'invisible':[('payment','!=','Insurance')]}"/>
+                        </group>
+                        <group>
+                            <field name="general_item" />
+                            <field name="medical_item"/>
+                            <field name="food_item" />
+                            <field name="medicine"/>
+                            <field name="doctor" />
+                            <field name="nurse"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="payment_guarantor_discount_tree">
+        <field name="name">Payment Guarantor Discount Tree</field>
+        <field name="model">payment.guarantor.discount</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string='Insurances'>
+                <field name="description"/>
+                <field name="payment"/>
+                <field name="company" invisible="1"/>
+                <field name="insurance_type_id" invisible="1"/>
+                <field name="general_item" />
+                <field name="medical_item"/>
+                <field name="food_item" />
+                <field name="medicine"/>
+                <field name="doctor" />
+                <field name="nurse"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_payment_guarantor_discount_filter" model="ir.ui.view">
+        <field name="name">Payment Guarantor Discount Search</field>
+        <field name="model">payment.guarantor.discount</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <search string="Payment Guarantor Discount">
+                <field name="description"/>
+                <field name="payment"/>
+                <field name="company"/>
+                <newline />
+            </search>
+        </field>
+    </record>
+
+    <record id="payment_guarantor_discount_action_tree" model="ir.actions.act_window">
+        <field name="name">Payment Guarantor Discount</field>
+        <field name="res_model">payment.guarantor.discount</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="view_id" eval="False"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new payment guarantor discount records.
+            </p>
+        </field>
+    </record>
+
+    <menuitem 
+        action="payment_guarantor_discount_action_tree" 
+        id="action_payment_guarantor_discount_tree" 
+        parent="oeh_medical_conf_payment_guarantor" 
+        sequence="1"/>
+
 </odoo>

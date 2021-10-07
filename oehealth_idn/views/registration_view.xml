@@ -61,13 +61,13 @@
                             <field name="clinic_ids" context="{'default_patient':patient, 'default_type': 'Out-Patient', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_employee_id': employee_id}"/>
                         </page>
                         <page string="In-Patient Care Registration">
-                            <field name="unit_ids" context="{'default_patient':patient, 'default_type': 'In-Patient', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_admission_reason': admission_reason}"/>
+                            <field name="unit_ids" context="{'default_patient':patient, 'default_type': 'In-Patient', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_admission_reason': admission_reason, 'default_employee_id': employee_id}"/>
                         </page>
                         <page string="Emergency Care Registration">
-                            <field name="emergency_ids" context="{'default_patient':patient, 'default_type': 'Emergency', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance}"/>
+                            <field name="emergency_ids" context="{'default_patient':patient, 'default_type': 'Emergency', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_employee_id': employee_id}"/>
                         </page>
                         <page string="Medical Support Registration">
-                            <field name="support_ids" context="{'default_patient':patient, 'default_type': 'Medical Support', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance}"/>
+                            <field name="support_ids" context="{'default_patient':patient, 'default_type': 'Medical Support', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_employee_id': employee_id}"/>
                         </page>
                         <page string="Comments">
                             <group>

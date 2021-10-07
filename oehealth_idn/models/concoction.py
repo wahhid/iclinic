@@ -60,6 +60,7 @@ class medical_concoction(models.Model):
     qty_unit = fields.Float(string='Quantity Unit', states={'done': [('readonly', True)]})
     product_uom = fields.Many2one(comodel_name='product.uom', string='UoM', states={'done': [('readonly', True)]})
     price = fields.Float(string='Price', compute='get_total_price')
+    remark = fields.Text('Remarks')
     concoction_detail_ids = fields.One2many('medical.concoction.detail', 'concoction_id', copy=True, string='Concoction Detail', states={'done': [('readonly', True)]})
     state = fields.Selection([
      ('draft', 'Draft'),
