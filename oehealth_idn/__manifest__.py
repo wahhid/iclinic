@@ -25,6 +25,7 @@
         "security/ir.rule.xml",
         "security/ir.model.access.csv",
 
+        "views/medical_evaluation_view.xml",
         "views/class_view.xml",
         "views/room_view.xml",
         "views/insurance_view.xml",

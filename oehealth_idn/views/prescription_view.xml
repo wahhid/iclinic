@@ -72,7 +72,7 @@
 
             </xpath>
 
-            <field name="walkin" position="after">
+            <!-- <field name="reg_id" position="after">
                 <label for="payment" string="Payment Guarantor"/>
                 <div>
                     <field name="payment" class="oe_inline" nolabel="1"/>
@@ -81,7 +81,7 @@
                     <field name="insurance" placeholder="Insurance" domain="[('patient','=',patient), ('state','=','Active')]" context="{'default_patient': patient, 'default_state': 'Active'}" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')]}" class="oe_inline" nolabel="1"/>
                     <field name="employee_id" placeholder="Employee" domain="[('patient','=',patient), ('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
                 </div>
-            </field>
+            </field> -->
 
         </field>
     </record>
