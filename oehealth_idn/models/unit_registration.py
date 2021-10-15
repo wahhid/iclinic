@@ -107,6 +107,7 @@ class unit_registration(models.Model):
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', compute='set_arrival_id', string='Arrival ID #')
     arrival_txt = fields.Char(compute='set_arrival_id', string='Arrival #')
     sale_ids = fields.One2many(comodel_name='sale.order', inverse_name='reg_id', string='Transactions')
+    diagnostic_ids = fields.One2many(comodel_name='oeh.multi.diagnostic', inverse_name='reg_id', string='Diagnostic')
     state = fields.Selection(CLINIC_STATUS, string='State', default='Draft', track_visibility='onchange')
     queue_state = fields.Selection(QUEUE_STATUS, string='Queue State', default='Waiting', copy=False, readonly=True, track_visibility='onchange')
     _sql_constraints = [
