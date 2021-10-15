@@ -27,6 +27,7 @@ class sale_order(models.Model):
     invoice_paid = fields.Float(string='Invoice Paid', compute='_get_invoiced_check', readonly=True, store=False)
     is_blacklist = fields.Boolean(related='patient_id.is_blacklist')
     partner_invoice_type = fields.Selection(related='partner_invoice_id.customer_type', store=True)
+    payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', compute='get_payment', readonly=True)
 
     @api.depends('reg_id')
     def set_arrival_id(self):
