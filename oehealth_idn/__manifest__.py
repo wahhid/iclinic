@@ -16,7 +16,8 @@
         "bm_operating_unit_health",
         "sale_stock_location",
         "vit_kelurahan",
-        "sale_margin"
+        "sale_margin",
+        "stock"
     ],
     "init_xml": [],
     "data": [
@@ -43,6 +44,7 @@
         "views/prescription_view.xml",
         "views/opthalmology_view.xml",
         "views/account_invoice_view.xml",
+        "views/stock_pack_operation_views.xml",
         "views/menu_view.xml",
 
         "config/sale_config_settings.xml",

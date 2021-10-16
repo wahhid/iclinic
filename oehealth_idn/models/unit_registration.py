@@ -57,8 +57,9 @@ class unit_registration(models.Model):
 
     @api.onchange('patient')
     def get_insurance(self):
-        for row in self:
-            row.insurance = row.patient.current_insurance
+        pass
+        # for row in self:
+        #     row.insurance = row.patient.current_insurance
 
     name = fields.Char(string='Reg ID #', required=True, readonly=True, default=lambda *a: '/')
     queue = fields.Char(string='Queue #', compute='get_queue', readonly=True)
@@ -104,6 +105,7 @@ class unit_registration(models.Model):
     unit_walkin_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Unit Walkin')
     emergency_walkin_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Emergency Walkin')
     support_walkin_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Support Walkin')
+
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', compute='set_arrival_id', string='Arrival ID #')
     arrival_txt = fields.Char(compute='set_arrival_id', string='Arrival #')
     sale_ids = fields.One2many(comodel_name='sale.order', inverse_name='reg_id', string='Transactions')
@@ -177,7 +179,7 @@ class unit_registration(models.Model):
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
                 raise UserError(_('Payment Guarantor Discount not found'))
-            res.payment_quarantor_discount_id = payment_quarantor_discount_id
+            res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
 
         return res
 
@@ -228,6 +230,7 @@ class unit_registration(models.Model):
                     guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
                 else:
                     guarantor = acc.patient.partner_id.id
+                    #guarantor = acc.company.id
 
                 val_obj = {'reg_id': acc.id, 
                    'arrival_id': acc.clinic_walkin_id.id or acc.unit_walkin_id.id or acc.emergency_walkin_id.id or acc.support_walkin_id.id, 

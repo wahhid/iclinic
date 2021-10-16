@@ -85,7 +85,7 @@
                                 <field name="payment" class="oe_inline" nolabel="1"/>
                                 <span style="margin-right:10px"/>
                                 <field name="company" placeholder="Company" domain="[('is_company','=',True), ('customer','=',True)]" attrs="{'invisible': [('payment','!=','Corporate')], 'required': [('payment','=','Corporate')]}" class="oe_inline" nolabel="1"/>
-                                <field name="insurance" placeholder="Insurance" domain="[('patient','=',patient), ('state','=','Active')]" context="{'default_patient': patient, 'default_state': 'Active'}" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')]}" class="oe_inline" nolabel="1"/>
+                                <field name="insurance" placeholder="Insurance" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')]}" class="oe_inline" nolabel="1"/>
                                 <field name="employee_id" placeholder="Employee" domain="[('patient','=',patient), ('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
                             </div>
                             <field name="remarks" placeholder="Remarks"/>
@@ -122,8 +122,8 @@
                     </group>
                     <notebook>
                         <page string="Transactions">
-                            <field name="sale_ids" readonly="1" context="{'default_patient_id': patient}">
-                                <tree string="Sales Orders" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'" colors="red:is_blacklist;green:state=='sale';gray:state=='done';" create="0">
+                            <field name="sale_ids" readonly="0" context="{'default_patient_id': patient}">
+                                <tree string="Sales Orders" decoration-bf="message_needaction==True" decoration-muted="state=='cancel'" colors="red:is_blacklist;green:state=='sale';gray:state=='done';" create="0" edit="0">
                                     <field name="message_needaction" invisible="1"/>
                                     <field name="name" string="Order Number"/>
                                     <field name="date_order"/>

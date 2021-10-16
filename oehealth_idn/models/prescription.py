@@ -7,7 +7,9 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
 import datetime
+import logging
 
+_logger = logging.getLogger(__name__)
 
 #Prescription
 class oeh_medical_prescription(models.Model):
@@ -112,13 +114,38 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
         ('Insurance', 'Insurance'),
         ('Employee', 'Employee')
     ]
-     
+
+    @api.multi
+    def view_picking(self, context):
+        '''
+        This function returns an action that display existing delivery orders
+        of given sales order ids. It can either be a in a list or in a form
+        view, if there is only one delivery order to show.
+        '''
+        action = self.env.ref('stock.action_picking_tree_all').read()[0]
+
+        pickings = self.sale_order_id.mapped('picking_ids')
+        _logger.info(pickings)
+        if not pickings:
+            _logger.info("No Picking")
+            return False
+        if len(pickings) > 1:
+            action['domain'] = [('id', 'in', pickings.ids)]
+        elif pickings:
+            action['views'] = [(self.env.ref('stock.view_picking_form').id, 'form')]
+            action['res_id'] = pickings.id
+        return action
+    
+    name = fields.Many2one('oeh.medical.prescription', string='Prescription #', required=False, ondelete='cascade', readonly=True, states={'Draft': [('readonly', False)]})
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Queue #')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reference Reg ID')
     unit_id = fields.Many2one(comodel_name='unit.administration', related='reg_id.unit', string='Reference Unit')
     reg_ids = fields.Many2one(comodel_name='unit.registration', string='Registration')
-    sale_order_id = fields.Many2one('sale.order', string='Order#')
-     
+    sale_order_id = fields.Many2one('sale.order', string='Order#', readonly=True)
+   
+
+    is_public = fields.Boolean('Is Public', default=False)
+    remark = fields.Text('Remark')
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
@@ -157,23 +184,90 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
             if not user_unit:
                 raise UserError(_('Configuration Error! \n Could not Find default Operating Unit in User : ' + self.env.user.name))
 
-            if acc.reg_ids:
-                if acc.payment == 'Insurance':
-                    guarantor = acc.insurance.ins_type.partner_id.id
-                elif acc.payment == 'Corporate':
-                    guarantor = acc.company.id
-                elif acc.payment == 'Employee':
-                    guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
+            if not acc.is_public:
+                if acc.reg_ids:
+                    if acc.payment == 'Insurance':
+                        guarantor = acc.insurance.ins_type.partner_id.id
+                    elif acc.payment == 'Corporate':
+                        guarantor = acc.company.id
+                    elif acc.payment == 'Employee':
+                        guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
+                    else:
+                        guarantor = acc.patient.partner_id.id
+                    
+                    val_obj = {
+                        'reg_id': acc.reg_ids.id, 
+                        'arrival_id': acc.arrival_id.id, 
+                        'patient_id': acc.patient.id, 
+                        'doctor_id': acc.doctor.id, 
+                        'partner_id': acc.patient.partner_id.id, 
+                        'partner_invoice_id': guarantor, 
+                        'partner_shipping_id': acc.patient.partner_id.id, 
+                        #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
+                        'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
+                    inv_ids = obj.create(val_obj)
+                    
+                    if inv_ids:
+                        inv_id = inv_ids.id
+                        if self.arrival_id and not self.arrival_id.have_register:
+                            product = self.env['product.product'].search([('auto_billing', '!=', False)])
+                            for p in product:
+                                vals = {'order_id': inv_id, 'product_id': p.id, 
+                                'name': p.name, 
+                                'product_uom_qty': 1, 
+                                'product_uom': p.uom_id.id, 
+                                'price_unit': p.lst_price}
+                                line_obj.create(vals)
+
+                            arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)
+                            arrival.write({'have_register': True})
+                        
+                        if acc.prescription_lines:
+                            for ps in acc.prescription_lines:
+                                vals = {
+                                    'order_id': inv_id, 
+                                    'product_id': ps.name.id, 
+                                    'name': ps.name.name, 
+                                    'prescribe_qty': ps.qty, 
+                                    'product_uom_qty': ps.actual_qty, 
+                                    'product_uom': ps.name.uom_id.id, 
+                                    'price_unit': ps.price_unit
+                                }
+                                line_obj.create(vals)
+
+                        if acc.concoction_ids:
+                            for cn in acc.concoction_ids:
+                                for cnd in cn.concoction_detail_ids:
+                                    vals = {
+                                        'order_id': inv_id, 
+                                        'product_id': cnd.product_id.id, 
+                                        'name': cnd.product_id.name, 
+                                        'is_concoction': True,
+                                        'medical_concoction_id': cn.id,
+                                        'prescribe_qty': cnd.qty, 
+                                        'product_uom_qty': cnd.qty, 
+                                        'product_uom': cnd.uom_id.id, 
+                                        #'price_unit': cnd.price_unit
+                                    }
+                                    line_obj.create(vals)
+
+                    self.write(
+                        {
+                            'state': 'Invoiced',
+                            'sale_order_id': inv_id
+                        }
+                    )
+                    inv_ids.action_confirm()
                 else:
-                    guarantor = acc.patient.partner_id.id
-                
+                    raise UserError(_('Configuration Error! \n Could not Find Registration to Create the Transactions !'))
+            else:
                 val_obj = {
-                    'reg_id': acc.reg_ids.id, 
-                    'arrival_id': acc.arrival_id.id, 
+                    #'reg_id': acc.reg_ids.id, 
+                    #'arrival_id': acc.arrival_id.id, 
                     'patient_id': acc.patient.id, 
                     'doctor_id': acc.doctor.id, 
                     'partner_id': acc.patient.partner_id.id, 
-                    'partner_invoice_id': guarantor, 
+                    'partner_invoice_id': acc.patient.partner_id.id, 
                     'partner_shipping_id': acc.patient.partner_id.id, 
                     #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
                     'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
@@ -181,19 +275,6 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                 
                 if inv_ids:
                     inv_id = inv_ids.id
-                    if self.arrival_id and not self.arrival_id.have_register:
-                        product = self.env['product.product'].search([('auto_billing', '!=', False)])
-                        for p in product:
-                            vals = {'order_id': inv_id, 'product_id': p.id, 
-                               'name': p.name, 
-                               'product_uom_qty': 1, 
-                               'product_uom': p.uom_id.id, 
-                               'price_unit': p.lst_price}
-                            line_obj.create(vals)
-
-                        arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)
-                        arrival.write({'have_register': True})
-                    
                     if acc.prescription_lines:
                         for ps in acc.prescription_lines:
                             vals = {
@@ -229,11 +310,10 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'sale_order_id': inv_id
                     }
                 )
-            else:
-                raise UserError(_('Configuration Error! \n Could not Find Registration to Create the Transactions !'))
-
+                inv_ids.action_confirm()
 
 class oeh_medical_health_center_pharmacy_prescription_line(models.Model):
     _inherit = 'oeh.medical.health.center.pharmacy.prescription.line'
+    
     name = fields.Many2one('product.product', string='Medicines', help='Prescribed Medicines', domain=[('item_type', '=', 'Medicine')], required=True)
     qty_available = fields.Float(related='name.qty_available')

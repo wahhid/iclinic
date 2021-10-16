@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Form view of Patient -->
+    <record model="ir.ui.view" id="oeh_medical_patient_view_inherit">
+        <field name="name">oeh_medical_patient_view_inherit</field>
+        <field name="model">oeh.medical.patient</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_patient_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button type="object" name="create_registration" string="Save &amp; Register Service" class="oe_highlight" groups="oehealth_idn.group_customer_service,oehealth_idn.group_medical_service"/>
+            </xpath>
+            <xpath expr="//sheet/div[@name='buttons']/button[4]" position="replace">
+                <button type="action" class="oe_stat_button" name="%(oehealth_idn.action_report_all_unit)d" context="{'search_default_patient': active_id, 'default_patient': active_id}" icon="fa-building-o">
+                    <field string="Admissions" name="inpatient_count" widget="statinfo"/>
+                </button>
+            </xpath>
+            <field name="oeh_patient_user_id" position="attributes">
+                <attribute name="groups">oehealth.group_oeh_medical_manager</attribute>
+            </field>
+            <field name="marital_status" position="attributes">
+                <attribute name="required">0</attribute>
+            </field>
+            <field name="street" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+            <field name="mobile" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+            <field name="current_insurance" position="attributes">
+                <attribute name="context">{'form_view_ref':'oehealth_idn.oeh_medical_insurance_view_ref', 'default_patient': active_id, 'default_state': 'Active'}</attribute>
+            </field>
+            <field name="identification_code" position="replace">
+                <field name="medical_record"/>
+                <field name="is_medical_record" invisible="1"/>
+            </field>
+            <field name="sex" position="after">
+                <field name="patient_member"/>
+                <field name="religion"/>
+                <field name="category_id" widget="many2many_tags" string="Groups / Tags"/>
+            </field>
+            <field name="dob" position="before">
+                <field name="place_birth"/>
+            </field>
+            <field name="street2" position="replace">
+                <div class="address_format">
+                    <field name="komplek" placeholder="Komplek" style="width:20%"/>
+                    <field name="blok" placeholder="Blok" style="width:20%"/>
+                    <field name="nomor" placeholder="Nomor" style="width:20%"/>
+                    <field name="rt" placeholder="RT" style="width:20%"/>
+                    <field name="rw" placeholder="RW" style="width:20%"/>
+                </div>
+            </field>
+            <field name="country_id" position="after">
+                <field name="kota_id" placeholder="Kota/Kab" domain="[('state_id','=', state_id)]" class="oe_no_button" options="{'no_open': True, 'no_create': True}"/>
+                <field name="kecamatan_id" placeholder="Kecamatan" domain="[('kota_id','=', kota_id)]" class="oe_no_button" options="{'no_open': True, 'no_create': True}"/>
+                <field name="kelurahan_id" placeholder="Kelurahan" domain="[('kecamatan_id','=', kecamatan_id)]" class="oe_no_button" options="{'no_open': True, 'no_create': True}"/>
+            </field>
+            <field name="email" position="after">
+                <field name="identity"/>
+                <field name="education"/>
+                <field name="nationality"/>
+            </field>
+            <field name="website" position="after">
+                <field name="alamat_lengkap" string="Complete Address"/>
+            </field>
+            <field name="deceased" position="after">
+                <field name="is_blacklist"/>
+                <field name="blacklist_reason" attrs="{'invisible': [('is_blacklist', '=', False)]}"/>
+            </field>
+            <!-- Family Detail -->
+            <xpath expr="//notebook/page[2]/group[2]/field[@name='family']" position="attributes">
+                <attribute name="context">{'default_address': alamat_lengkap}</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[2]/group[2]/field/tree/field[@name='relation']" position="after">
+                <field name="mobile"/>
+                <field name="address"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Tree view of Patient -->
+    <record model="ir.ui.view" id="oeh_medical_patient_tree_inherit">
+        <field name="name">oeh_medical_patient_tree_inherit</field>
+        <field name="model">oeh.medical.patient</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_patient_tree"/>
+        <field name="arch" type="xml">
+            <field name="identification_code" position="replace">
+                <field name="medical_record"/>
+            </field>
+            <field name="deceased" position="after">
+                <field name="alamat_lengkap"/>
+                <field name="is_blacklist"/>
+            </field>
+            <xpath expr="//tree" position="attributes">
+                <attribute name="colors">green:is_blacklist</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Kanban view of Patient -->
+    <record model="ir.ui.view" id="oeh_medical_patient_kanban_view_inherit">
+        <field name="name">oeh_medical_patient_kanban_view_inherit</field>
+        <field name="model">oeh.medical.patient</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_patient_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div/div[1]" position="before">
+                <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+            </xpath>
+            <xpath expr="//ul/li[1]" position="replace">
+                <li t-if="record.medical_record.raw_value"><field name="medical_record"/></li>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Search view of Patient -->
+    <record model="ir.ui.view" id="view_oeh_medical_patient_filter_inherit">
+        <field name="name">view_oeh_medical_patient_filter_inherit</field>
+        <field name="model">oeh.medical.patient</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="oehealth.view_oeh_medical_patient_filter"/>
+        <field name="arch" type="xml">
+            <field name="ssn" position="replace">
+                <field name="dob"/>
+                <field name="alamat_lengkap"/>
+            </field>
+            <field name="identification_code" position="replace">
+                <field name="medical_record"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Form view of Patient Custom -->
+    <record model="ir.ui.view" id="oeh_medical_patient_view_custom">
+        <field name="name">oeh_medical_patient_view_custom</field>
+        <field name="model">oeh.medical.patient</field>
+        <field name="priority">15</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Patient">
+                <header>
+                    <button name="print_patient_label" string="Patient Card" type="object" class="oe_highlight"/>
+                    <button type="object" name="create_registration" string="Save &amp; Register Service" class="oe_highlight" groups="oehealth_idn.group_customer_service,oehealth_idn.group_medical_service"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="buttons">
+                        <button type="object" name="view_medical_record" class="oe_stat_button" icon="fa-calendar">
+                            <label string="View E.M.R"/>
+                        </button>
+                    </div>
+                    <div>
+                        <field name="image" widget="image" class="oe_left oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+                        <div class="oe_title">
+                           <label string="Full Name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                            <field name="identification_code"/>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="is_medical_record" invisible="1"/>
+                            <field name="age"/>
+                            <field name="blood_type"/>
+                            <field name="sex" required="1"/>
+                            <field name="patient_member"/>
+                            <field name="religion"/>
+                            <field name="category_id" widget="many2many_tags" string="Groups / Tags"/>
+                        </group>
+                        <group>
+                            <field name="place_birth"/>
+                            <field name="dob" required="1"/>
+                            <field name="marital_status" required="1"/>
+                            <field name="rh"/>
+                            <field name="doctor" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <p class="oe_grey">
+                            This field will allow to connect oeHealth patient with your preferred ERP native user. Please note that the user you choose here must not related to any other patient.
+                        </p>
+                    </group>
+                    <group>
+                        <field name="oeh_patient_user_id" options="{'no_create': True}"/>
+                    </group>
+                    <notebook>
+                        <page string="Personal">
+                            <group>
+                                <group>
+                                    <label for="street" string="Address"/>
+                                    <div>
+                                        <field name="street" placeholder="Street..." attrs="{'required': [('is_medical_record', '!=', False)]}"/>
+                                        <field name="street2"/>
+                                        <div class="address_format">
+                                            <field name="city" placeholder="City" style="width: 40%"/>
+                                            <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%" options="{&quot;no_open&quot;: True}" on_change="onchange_state(state_id)"/>
+                                            <field name="zip" placeholder="ZIP" style="width: 20%"/>
+                                        </div>
+                                        <field name="country_id" placeholder="Country" class="oe_no_button" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"/>
+                                    </div>
+                                    <field name="website" widget="url" placeholder="e.g. www.domain.com"/>
+                                </group>
+                                <group>
+                                    <field name="function" string="Profession" placeholder="e.g. Sales Director"/>
+                                    <field name="phone" placeholder="e.g. +32.81.81.37.00"/>
+                                    <field name="mobile" required="1"/>
+                                    <field name="fax"/>
+                                    <field name="email" widget="email"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="deceased"/>
+                                    <field name="cod" attrs="{'invisible':[('deceased','=',False)]}"/>
+                                </group>
+                                <group>
+                                    <field name="dod" attrs="{'invisible':[('deceased','=',False)],'required':[('deceased','=',True)]}"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Critical Information">
+                                    <field name="critical_info" nolabel="1"/>
+                                </group>
+                                <group string="Extra Information">
+                                    <field name="general_info" nolabel="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Family &amp; Insurance">
+                            <group>
+                                <group>
+                                    <field name="ethnic_group" options="{'no_create': True}"/>
+                                    <field name="genetic_risks" widget="many2many_tags" options="{'no_create': True}"/>
+                                </group>
+                                <group>
+                                    <field name="current_insurance" context="{'default_patient': active_id, 'default_state': 'Active'}"/>
+                                </group>
+                            </group>
+                            <group string="Family">
+                                <field name="family" nolabel="1">
+                                    <tree string="Family" editable="bottom" nolabel="1">
+                                        <field name="name"/>
+                                        <field name="relation"/>
+                                        <field name="age"/>
+                                        <field name="deceased"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Patient Medical Record Action -->
+    <record id="action_patient_medical_record" model="ir.actions.act_window">
+        <field name="name">Medical Record Registration</field>
+        <field name="res_model">oeh.medical.patient</field>
+        <field name="view_type">form</field>
+        <field name="domain">[('is_medical_record','=',True)]</field>
+        <field name="context">{'default_is_medical_record': True}</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <!-- Patient Without Medical Record Action -->
+    <record id="action_patient_non_medical_record" model="ir.actions.act_window">
+        <field name="name">Patient Without Medical Record</field>
+        <field name="res_model">oeh.medical.patient</field>
+        <field name="view_type">form</field>
+        <field name="domain">[('is_medical_record','=',False)]</field>
+        <field name="context">{'default_is_medical_record': False}</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+</odoo>
