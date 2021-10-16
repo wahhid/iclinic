@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="oeh_medical_lab_test_form_inherit" name="Lab Test Form Inherit" inherit_id="oehealth.oeh_medical_lab_test_form">
+        <xpath expr="//button[@name='set_to_test_inprogress']" position="before">
+            <button confirm="Are you sure you want to start the test?" name="create_sale" string="Create Transaction" type="object" class="oe_highlight" groups="oehealth.group_oeh_medical_physician,oehealth.group_oeh_medical_manager"/>
+        </xpath>
+    </template>
+
+</odoo>

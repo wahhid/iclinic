@@ -14,6 +14,7 @@ class OeHealthPharmacy(models.Model):
     _name = 'oeh.medical.health.center.pharmacy'
     _description = 'Information about the pharmacy'
     _inherits = {'res.partner': 'partner_id'}
+    
     partner_id = fields.Many2one('res.partner', string='Related Partner', required=True, ondelete='cascade', help='Partner-related data of the hospitals')
     pharmacist_name = fields.Many2one('oeh.medical.physician', string='Pharmacist Name', domain=[('is_pharmacist', '=', True)], required=True)
     institution = fields.Many2one('oeh.medical.health.center', string='Health Center')

@@ -15,3 +15,5 @@ from . import registration
 from . import unit_registration
 from . import unit_registration_action
 from . import appointment
+from . import lab
+from . import stock_operation_pack

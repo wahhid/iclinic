@@ -82,10 +82,12 @@ class unit_registration_action(models.Model):
         model = 'oeh.medical.lab.test'
         field_id = self.lab_id
         field_labels = 'lab_id'
-        context = {'default_reg_id': self.id, 
-           'default_walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
-           'default_patient': self.patient.id, 
-           'default_requestor': self.doctor.id}
+        context = {
+            'default_reg_id': self.id, 
+            'default_walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id or self.lab_test_walkin_id.id, 
+            'default_patient': self.patient.id, 
+            'default_requestor': self.doctor.id
+        }
         return self.view_poly(model, self.id, context)
 
     imaging_id = fields.Many2one(comodel_name='oeh.medical.imaging', string='Imaging Tests', copy=False, readonly=True)

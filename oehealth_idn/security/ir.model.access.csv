@@ -12,7 +12,7 @@ access_unit_registration_nurse,unit.registration,model_unit_registration,oehealt
 access_unit_registration_customer_service,unit.registration,model_unit_registration,group_customer_service,1,1,1,1
 access_unit_registration_medical_service,unit.registration,model_unit_registration,group_medical_service,1,1,1,1
 access_unit_registration_cashier,unit.registration,model_unit_registration,group_cashier,1,1,1,1
-access_unit_registration_physician,unit.registration,model_unit_registration,oehealth.group_oeh_medical_physician,1,1,1,1
+access_unit_registration_physician,unit.registration,model_unit_registration,oehealth.group_oeh_medical_physician,1,1,0,0
 access_unit_registration_manager,unit.registration,model_unit_registration,oehealth.group_oeh_medical_manager,1,1,1,1
 ,,,,,,,
 access_medical_insurance_patient,medical.insurance,model_medical_insurance,oehealth.group_oeh_medical_patient,1,0,0,0

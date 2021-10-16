@@ -7,6 +7,10 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
 import datetime, requests, json
+import logging
+
+
+_logger = logging.getLogger(__name__)
 
 class register_walkin(models.Model):
     _inherit = 'oeh.medical.appointment.register.walkin'
@@ -34,10 +38,12 @@ class register_walkin(models.Model):
 
         return res
 
+
     clinic_ids = fields.One2many(comodel_name='unit.registration', inverse_name='clinic_walkin_id', string='Out-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     unit_ids = fields.One2many(comodel_name='unit.registration', inverse_name='unit_walkin_id', string='In-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     emergency_ids = fields.One2many(comodel_name='unit.registration', inverse_name='emergency_walkin_id', string='Emergency Registration', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     support_ids = fields.One2many(comodel_name='unit.registration', inverse_name='support_walkin_id', string='Medical Support Registration', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
+    lab_test_ids = fields.One2many(comodel_name='oeh.medical.lab.test', inverse_name='walkin', string='Lab Test Registration', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
@@ -59,7 +65,7 @@ class register_walkin(models.Model):
     @api.onchange('patient', 'dob')
     def check_registration(self):
         count = self.env['oeh.medical.appointment.register.walkin'].search([('patient', '=', self.patient.id), ('state', '=', 'Scheduled')])
-        self.insurance = self.patient.current_insurance.id
+        #self.insurance = self.patient.current_insurance.id
         if count:
             raise Warning('The patient already has an active registration! \n Please Check Arrival ID # ' + count.name)
 
@@ -123,7 +129,7 @@ class register_walkin(models.Model):
                         'blood_type': patient.blood_type, 
                         'rh': patient.rh,
                         'payment': 'Insurance',
-                        'insurance': patient.current_insurance.id 
+                        'insurance': patient.current_insurance.id
                     },
                     'warning': {
                         'title': _('Warning'),
@@ -131,6 +137,7 @@ class register_walkin(models.Model):
                     }
                 }
             elif patient.is_have_parent:
+                _logger.info(patient.parent_id.current_insurance.id)
                 return {
                     'value': {
                         'dob': patient.dob, 
@@ -138,8 +145,8 @@ class register_walkin(models.Model):
                         'marital_status': patient.marital_status, 
                         'blood_type': patient.blood_type, 
                         'rh': patient.rh,
-                        'payment': 'Employee',
-                        'employee_id': patient.parent_id.id 
+                        'payment': 'Insurance',
+                        'insurance': patient.parent_id.current_insurance.id
                     },
                     'warning': {
                         'title': _('Warning'),
@@ -147,5 +154,17 @@ class register_walkin(models.Model):
                     }
                 }
             else:
-                return {'value': {'dob': patient.dob, 'sex': patient.sex, 'marital_status': patient.marital_status, 'blood_type': patient.blood_type, 'rh': patient.rh}}
+                return {
+                    'value': {
+                        'dob': patient.dob, 
+                        'sex': patient.sex, 
+                        'marital_status': patient.marital_status, 
+                        'blood_type': patient.blood_type, 
+                        'rh': patient.rh,
+                        'payment': 'Personal',
+                        'insurance': False,
+                        'company': False,
+                        'employee_id': False
+                    }
+                }
         return {}
