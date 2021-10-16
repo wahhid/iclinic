@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="oeh_medical_evaluation_inherit">
+        <field name="name">oeh_medical_evaluation_inherit</field>   
+        <field name="model">oeh.medical.evaluation</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_evaluation_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[2]/group[1]" position="before">
+                <group string="Subjective">
+                    <field name="subjective"/>
+                </group>
+            </xpath>
+            <!-- <field name="symptom_pain" position="before">
+                <group string="Subjective">
+                    <field name="subjective"/>
+                </group>
+            </field> -->
+            <notebook position="inside">
+                <page string="Allergy">
+                    <field name="allergy_history"/>
+                </page>
+            </notebook>
+            
+        </field>
+    </record>
+</odoo>

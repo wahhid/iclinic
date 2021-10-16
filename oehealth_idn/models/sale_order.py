@@ -12,6 +12,10 @@ _logger = logging.getLogger(__name__)
 
 class sale_order(models.Model):
     _inherit = 'sale.order'
+    PAYMENT_TYPE = [
+        ('Personal', 'Personal'),
+        ('Corporate', 'Corporate'),
+        ('Insurance', 'Insurance')]
 
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID')
     arrival_txt = fields.Char(compute='set_arrival_id', string='Arrival #', store=True)
@@ -27,7 +31,14 @@ class sale_order(models.Model):
     invoice_paid = fields.Float(string='Invoice Paid', compute='_get_invoiced_check', readonly=True, store=False)
     is_blacklist = fields.Boolean(related='patient_id.is_blacklist')
     partner_invoice_type = fields.Selection(related='partner_invoice_id.customer_type', store=True)
+    payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', compute='get_payment', readonly=True)
 
+    
+    @api.one
+    def get_payment(self):
+        for data in self:
+            self.payment = data.reg_id.payment
+    
     @api.depends('reg_id')
     def set_arrival_id(self):
         for data in self:

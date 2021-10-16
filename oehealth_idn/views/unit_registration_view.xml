@@ -141,7 +141,7 @@
                                 </tree>
                             </field>
                         </page>
-                        <page string="Action / Diagnostic">
+                        <page string="Action">
                             <group>
                                 <group string="General">
                                     <div class="oe_button_box" style="float:left; text-align:left;">
@@ -214,6 +214,13 @@
                         </page>
                         <page string="Extra Information" attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
                             <field name="extra_info" placeholder="Extra Information"/>
+                        </page>
+                        <page string="Diagnostic">
+                            <field name="diagnostic_ids">
+                                <tree string="Multi Diagnostic">
+                                    <field name="pathology_id"/>
+                                </tree>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>

@@ -101,6 +101,7 @@
                 <attribute name="groups">oehealth_idn.group_cashier</attribute>
             </xpath>
             <field name="partner_id" position="after">
+                <field name="payment"/>
                 <field name="patient_id" readonly="1"/>
                 <field name="doctor_id"/>
                 <field name="attribute_value" invisible="1"/>
