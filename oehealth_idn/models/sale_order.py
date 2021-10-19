@@ -22,7 +22,8 @@ class sale_order(models.Model):
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID')
     unit_id = fields.Many2one(comodel_name='unit.administration', related='reg_id.unit', string='Unit')
     payment = fields.Selection(related='reg_id.payment', store=True)
-    payment_guarantor_discount_id = fields.Many2one(related='reg_id.payment_guarantor_discount_id')
+    #payment_guarantor_discount_id = fields.Many2one(related='reg_id.payment_guarantor_discount_id')
+    payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount')
     patient_id = fields.Many2one(comodel_name='oeh.medical.patient', string='Patient')
     doctor_id = fields.Many2one(comodel_name='oeh.medical.physician', string='Doctor', readonly=True, states={'draft': [('readonly', False)]})
     medical_record = fields.Char(string='Medical Record', related='patient_id.identification_code')
@@ -64,53 +65,54 @@ class sale_order(models.Model):
 class sale_order_line(models.Model):
     _inherit = 'sale.order.line'
 
-    @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id')
-    def _compute_amount(self):
-        """
-        Compute the amounts of the SO line.
-        """
-        for line in self:
-            line.discount = 0.0
-            line.discount_type = False
-            _logger.info(line.product_id.name)
-            if line.product_id.item_type == 'General Item':
-                line.discount = line.order_id.payment_guarantor_discount_id.general_item
-                line.discount_type = 'percent'
-                price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            elif line.product_id.item_type == 'Medical Item':
-                line.discount = line.order_id.payment_guarantor_discount_id.medical_item
-                line.discount_type = 'percent'
-                price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            elif line.product_id.item_type == 'Food Item':
-                line.discount = line.order_id.payment_guarantor_discount_id.food_item
-                line.discount_type = 'percent'
-                price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            elif line.product_id.item_type == 'Medicine':
-                line.discount = line.order_id.payment_guarantor_discount_id.medicine
-                line.discount_type = 'percent'
-                price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            elif line.product_id.item_type == 'Doctor':
-                line.discount = line.order_id.payment_guarantor_discount_id.doctor
-                line.discount_type = 'percent'
-                payment = line.order_id.payment_guarantor_discount_id.payment
-                line.price_unit = self.order_id.doctor_id.consultancy_price
-                if payment == 'Insurance':
-                    insurance_type_id = line.order_id.payment_guarantor_discount_id.insurance_type_id
-                    if insurance_type_id.is_bpjs:
-                        line.price_unit = self.order_id.doctor_id.bpjs_price
-                price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+    # @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id')
+    # def _compute_amount(self):
+    #     """
+    #     Compute the amounts of the SO line.
+    #     """
+    #     for line in self:
+    #         line.discount = 0.0
+    #         line.discount_type = False
+    #         _logger.info(line.product_id.name)
+    #         if line.product_id.item_type == 'General Item':
+    #             #line.discount = line.order_id.payment_guarantor_discount_id.general_item
+    #             #line.discount_type = 'percent'
+    #             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+    #         elif line.product_id.item_type == 'Medical Item':
+    #             #line.discount = line.order_id.payment_guarantor_discount_id.medical_item
+    #             #line.discount_type = 'percent'
+    #             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+    #         elif line.product_id.item_type == 'Food Item':
+    #             #line.discount = line.order_id.payment_guarantor_discount_id.food_item
+    #             #line.discount_type = 'percent'
+    #             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+    #         elif line.product_id.item_type == 'Medicine':
+    #             #line.discount = line.order_id.payment_guarantor_discount_id.medicine
+    #             #line.discount_type = 'percent'
+    #             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+    #         elif line.product_id.item_type == 'Doctor':
+    #             #line.discount = line.order_id.payment_guarantor_discount_id.doctor
+    #             #line.discount_type = 'percent'
+    #             payment = line.order_id.payment_guarantor_discount_id.payment
+    #             line.price_unit = self.order_id.doctor_id.consultancy_price
+    #             if payment == 'Insurance':
+    #                 insurance_type_id = line.order_id.payment_guarantor_discount_id.insurance_type_id
+    #                 if insurance_type_id.is_bpjs:
+    #                     line.price_unit = self.order_id.doctor_id.bpjs_price
+    #             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
                     
-            elif line.product_id.item_type == 'Nurse':
-                line.discount = line.order_id.payment_guarantor_discount_id.nurse
-                line.discount_type = 'percent'
+    #         elif line.product_id.item_type == 'Nurse':
+    #             #line.discount = line.order_id.payment_guarantor_discount_id.nurse
+    #             #line.discount_type = 'percent'
+    #             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
            
-            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.product_uom_qty, product=line.product_id, partner=line.order_id.partner_shipping_id)
-            line.update({
-                'price_tax': taxes['total_included'] - taxes['total_excluded'],
-                'price_total': taxes['total_included'],
-                'price_subtotal': taxes['total_excluded'],
-            })
+    #         price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+    #         taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.product_uom_qty, product=line.product_id, partner=line.order_id.partner_shipping_id)
+    #         line.update({
+    #             'price_tax': taxes['total_included'] - taxes['total_excluded'],
+    #             'price_total': taxes['total_included'],
+    #             'price_subtotal': taxes['total_excluded'],
+    #         })
 
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID', related='order_id.arrival_id')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID', related='order_id.reg_id')
