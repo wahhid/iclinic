@@ -120,6 +120,7 @@ class oeh_medical_prescription(models.Model):
                                 'state': 'draft'
                             }
                             pharmacy_line_obj.create(curr_pres_line)
+                            
                     #Concoction Line
                     if pres.concoction_ids:
                         for cn in pres.concoction_ids:
@@ -133,6 +134,7 @@ class oeh_medical_prescription(models.Model):
                                     'zat_qty': detail_id.zat_qty
                                 })
                                 cur_cn_lines.append(vals)
+
                             cur_cn = {
                                 'prescription_line_id': phy_id.id, 
                                 'product_id': cn.product_id.id, 
@@ -256,6 +258,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
 
     @api.multi
     def create_sale(self):
+        _logger.info('Create Sale')
         obj = self.env['sale.order']
         obj2 = self.env['unit.registration']
         line_obj = self.env['sale.order.line']
@@ -264,24 +267,6 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
         arrival = 0
         for acc in self:
             user_unit = self.env['unit.administration'].search([('operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id
-            # if user_unit:
-            #     val_obj2 = {
-            #         'reference_id': acc.reg_id.id, 
-            #         'support_walkin_id': acc.arrival_id.id, 
-            #         'patient': acc.patient.id or acc.arrival_id.patient.id, 
-            #         'type': 'Medical Support', 
-            #         'payment': acc.reg_id.payment, 
-            #         'company': acc.reg_id.company.id, 
-            #         'insurance': acc.reg_id.insurance.id,  
-            #         'employee_id': acc.reg_id.employee_id.id, 
-            #         'doctor': acc.doctor.id, 
-            #         'unit': user_unit, 
-            #         'date': datetime.datetime.now()
-            #     }
-            #     reg_ids = obj2.create(val_obj2)
-            #     acc.reg_ids = reg_ids
-            # else:
-            #     raise UserError(_('Configuration Error! \n Could not Find default Operating Unit in User : ' + self.env.user.name))
             if not user_unit:
                 raise UserError(_('Configuration Error! \n Could not Find default Operating Unit in User : ' + self.env.user.name))
 
@@ -311,18 +296,18 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                     
                     if inv_ids:
                         inv_id = inv_ids.id
-                        if self.arrival_id and not self.arrival_id.have_register:
-                            product = self.env['product.product'].search([('auto_billing', '!=', False)])
-                            for p in product:
-                                vals = {'order_id': inv_id, 'product_id': p.id, 
-                                'name': p.name, 
-                                'product_uom_qty': 1, 
-                                'product_uom': p.uom_id.id, 
-                                'price_unit': p.lst_price}
-                                line_obj.create(vals)
+                        # if self.arrival_id and not self.arrival_id.have_register:
+                        #     product = self.env['product.product'].search([('auto_billing', '!=', False)])
+                        #     for p in product:
+                        #         vals = {'order_id': inv_id, 'product_id': p.id, 
+                        #         'name': p.name, 
+                        #         'product_uom_qty': 1, 
+                        #         'product_uom': p.uom_id.id, 
+                        #         'price_unit': p.lst_price}
+                        #         line_obj.create(vals)
 
-                            arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)
-                            arrival.write({'have_register': True})
+                        arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)
+                        arrival.write({'have_register': True})
                         
                         if acc.prescription_lines:
                             for ps in acc.prescription_lines:
@@ -353,11 +338,27 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                                     #product_uom': ps.name.uom_id.id, 
                                     'price_unit': ps.price_unit
                                 }
+                                _logger.info(vals)
                                 line_obj.create(vals)
 
                         if acc.concoction_ids:
                             for cn in acc.concoction_ids:
                                 for cnd in cn.concoction_detail_ids:
+                                    discount = 0.0
+                                    product_id = ps.name
+                                    if acc.payment_guarantor_discount_id:
+                                        if product_id.item_type == 'General Item':
+                                            discount = acc.payment_guarantor_discount_id.general_item
+                                        elif product_id.item_type == 'Medical Item':        
+                                            discount = acc.payment_guarantor_discount_id.medical_item
+                                        elif product_id.item_type == 'Food Item':        
+                                            discount = acc.payment_guarantor_discount_id.food_item
+                                        elif product_id.item_type == 'Medicine':        
+                                            discount = acc.payment_guarantor_discount_id.medicine
+                                        elif product_id.item_type == 'Doctor':        
+                                            discount = acc.payment_guarantor_discount_id.doctor
+                                        elif product_id.item_type == 'Nurse':        
+                                            discount = acc.payment_guarantor_discount_id.nurse
                                     vals = {
                                         'order_id': inv_id, 
                                         'product_id': cnd.product_id.id, 

@@ -229,57 +229,57 @@ class unit_registration(models.Model):
                     guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
                 else:
                     guarantor = acc.patient.partner_id.id
-                    #guarantor = acc.company.id
 
-                val_obj = {'reg_id': acc.id, 
-                   'arrival_id': acc.clinic_walkin_id.id or acc.unit_walkin_id.id or acc.emergency_walkin_id.id or acc.support_walkin_id.id, 
-                   'patient_id': acc.patient.id, 
-                   'doctor_id': acc.doctor.id, 
-                   'partner_id': acc.patient.partner_id.id, 
-                   'partner_invoice_id': guarantor, 
-                   'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
-                   'partner_shipping_id': acc.patient.partner_id.id, 
-                   'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
-                   'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
-                   'operating_unit_id': acc.unit.operating_id.id or False}
-
+                val_obj = {
+                    'reg_id': acc.id, 
+                    'arrival_id': acc.clinic_walkin_id.id or acc.unit_walkin_id.id or acc.emergency_walkin_id.id or acc.support_walkin_id.id, 
+                    'patient_id': acc.patient.id, 
+                    'doctor_id': acc.doctor.id, 
+                    'partner_id': acc.patient.partner_id.id, 
+                    'partner_invoice_id': guarantor, 
+                    'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
+                    'partner_shipping_id': acc.patient.partner_id.id, 
+                    'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
+                    'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
+                    'operating_unit_id': acc.unit.operating_id.id or False
+                }
+                #Create Sale Order
                 inv_ids = obj.create(val_obj)
+
                 if inv_ids:
                     inv_id = inv_ids.id
                     if self.arrival_id and not self.arrival_id.have_register:
                         product = self.env['product.product'].search([('auto_billing', '!=', False)])
-                        for p in product:
-                            # discount_type = False
-                            # discount = 0.0
-                            # if acc.payment == 'Insurance':
-                            #     domain = [
-                            #         ('payment', '=', 'Insurance'),
-                            #         ('insurance_type_id', '=', )
-                            #     ]
-                            # elif acc.payment == 'Corporate':
-                            #     domain = [
-                            #         ('payment', '=', 'Coorporate'),
-                            #         ('company', '=', acc.company.id)
-                            #     ]
-                            # elif acc.payment == 'Employee':
-                            #     domain = [
-                                    
-                            #     ]
-                            # else:
-                            #     guarantor = acc.patient.partner_id.id
-
+                        for product_id in product:
+                            discount = 0.0
+                            if acc.payment_guarantor_discount_id:
+                                if product_id.item_type == 'General Item':
+                                    discount = acc.payment_guarantor_discount_id.general_item
+                                elif product_id.item_type == 'Medical Item':        
+                                    discount = acc.payment_guarantor_discount_id.medical_item
+                                elif product_id.item_type == 'Food Item':        
+                                    discount = acc.payment_guarantor_discount_id.food_item
+                                elif product_id.item_type == 'Medicine':        
+                                    discount = acc.payment_guarantor_discount_id.medicine
+                                elif product_id.item_type == 'Doctor':        
+                                    discount = acc.payment_guarantor_discount_id.doctor
+                                elif product_id.item_type == 'Nurse':        
+                                    discount = acc.payment_guarantor_discount_id.nurse
                             vals = {
                                 'order_id': inv_id, 
-                                'product_id': p.id, 
-                                'name': p.name, 
+                                'product_id': product_id.id, 
+                                'name': product_id.name, 
                                 'product_uom_qty': 1, 
-                                'product_uom': p.uom_id.id, 
-                                'price_unit': p.lst_price, 
+                                'product_uom': product_id.uom_id.id, 
+                                'price_unit': product_id.lst_price,
+                                'discount_type': 'percent',
+                                'discount': discount or False,
                                 'doctor_id': False
                             }
-                            
+                            #create sale order line
                             line_obj.create(vals)
-
+                        
+                        #Set Have Register Status
                         arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)
                         arrival.write({'have_register': True})
             else:
@@ -295,12 +295,13 @@ class unit_registration(models.Model):
     def view_sale(self):
         tree_view_id = self.env.ref('oehealth_idn.sale_order_health_tree_view').id
         form_view_id = self.env.ref('sale.view_order_form').id
-        return {'domain': "[('reg_id','=', " + str(self.id) + ')]', 
+        return {
+            'domain': "[('reg_id','=', " + str(self.id) + ')]', 
            'name': 'Transactions', 
            'view_type': 'form', 
            'view_mode': 'tree,form', 
            'views': [
-                   [
+                    [
                     tree_view_id, 'tree'],
                    [
                     form_view_id, 'form']], 
