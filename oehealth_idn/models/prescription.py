@@ -26,7 +26,59 @@ class oeh_medical_prescription(models.Model):
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
+    payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount')
     concoction_ids = fields.One2many('medical.concoction', 'prescription_id', copy=True, string='Concoction')
+
+    @api.model
+    def create(self, vals):
+        res = super(oeh_medical_prescription, self).create(vals)
+        if res.payment == 'Personal':
+            #Personal
+            domain = [
+                ('payment','=', 'Personal')
+            ]
+            payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_quarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            res.payment_quarantor_discount_id = payment_quarantor_discount_id
+        elif res.payment == 'Corporate':
+            #Corporate
+            _logger.info('Corporate')
+            domain = [
+                ('payment','=', 'Corporate'),
+                ('company','=', res.company.id)
+            ]
+            _logger.info(domain)
+            payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_guarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            _logger.info(payment_guarantor_discount_id.description)
+            res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
+        elif res.payment == 'Insurance':
+            #Insurance
+            _logger.info('Insurance')
+            domain = [
+                ('payment','=', 'Insurance'),
+                ('insurance_type_id','=', res.insurance.ins_type.id)
+            ]
+            _logger.info(domain)
+            payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_guarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            _logger.info(payment_guarantor_discount_id.description)
+            res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
+        else:
+            #Employee
+            domain = [
+                ('payment','=', 'Employee')
+            ]
+            payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_quarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
+        
+        return res
+
 
     def action_prescription_send_to_pharmacy(self):
         pharmacy_obj = self.env['oeh.medical.health.center.pharmacy.line']
@@ -98,11 +150,9 @@ class oeh_medical_prescription(models.Model):
 
         return True
 
-
 class oeh_medical_prescription_line(models.Model):
     _inherit = 'oeh.medical.prescription.line'
     name = fields.Many2one('product.product', string='Medicines', help='Prescribed Medicines', domain=[('item_type', '=', 'Medicine')], required=True)
-
 
 #Pharmacy Order
 class oeh_medical_health_center_pharmacy_line(models.Model):
@@ -150,8 +200,59 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
+    payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount')
     concoction_ids = fields.One2many('medical.concoction', 'prescription_line_id', copy=True, string='Concoction')
 
+
+    @api.model
+    def create(self, vals):
+        res = super(oeh_medical_health_center_pharmacy_line, self).create(vals)
+        if res.payment == 'Personal':
+            #Personal
+            domain = [
+                ('payment','=', 'Personal')
+            ]
+            payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_quarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            res.payment_quarantor_discount_id = payment_quarantor_discount_id
+        elif res.payment == 'Corporate':
+            #Corporate
+            _logger.info('Corporate')
+            domain = [
+                ('payment','=', 'Corporate'),
+                ('company','=', res.company.id)
+            ]
+            _logger.info(domain)
+            payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_guarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            _logger.info(payment_guarantor_discount_id.description)
+            res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
+        elif res.payment == 'Insurance':
+            #Insurance
+            _logger.info('Insurance')
+            domain = [
+                ('payment','=', 'Insurance'),
+                ('insurance_type_id','=', res.insurance.ins_type.id)
+            ]
+            _logger.info(domain)
+            payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_guarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            _logger.info(payment_guarantor_discount_id.description)
+            res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
+        else:
+            #Employee
+            domain = [
+                ('payment','=', 'Employee')
+            ]
+            payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_quarantor_discount_id:
+                raise UserError(_('Payment Guarantor Discount not found'))
+            res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
+        
+        return res
 
     @api.multi
     def create_sale(self):
@@ -203,6 +304,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'partner_id': acc.patient.partner_id.id, 
                         'partner_invoice_id': guarantor, 
                         'partner_shipping_id': acc.patient.partner_id.id, 
+                        'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                         #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
                         'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
                     inv_ids = obj.create(val_obj)
@@ -224,6 +326,21 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         
                         if acc.prescription_lines:
                             for ps in acc.prescription_lines:
+                                discount = 0.0
+                                product_id = ps.name
+                                if acc.payment_guarantor_discount_id:
+                                    if product_id.item_type == 'General Item':
+                                        discount = acc.payment_guarantor_discount_id.general_item
+                                    elif product_id.item_type == 'Medical Item':        
+                                        discount = acc.payment_guarantor_discount_id.medical_item
+                                    elif product_id.item_type == 'Food Item':        
+                                        discount = acc.payment_guarantor_discount_id.food_item
+                                    elif product_id.item_type == 'Medicine':        
+                                        discount = acc.payment_guarantor_discount_id.medicine
+                                    elif product_id.item_type == 'Doctor':        
+                                        discount = acc.payment_guarantor_discount_id.doctor
+                                    elif product_id.item_type == 'Nurse':        
+                                        discount = acc.payment_guarantor_discount_id.nurse
                                 vals = {
                                     'order_id': inv_id, 
                                     'product_id': ps.name.id, 
@@ -231,6 +348,9 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                                     'prescribe_qty': ps.qty, 
                                     'product_uom_qty': ps.actual_qty, 
                                     'product_uom': ps.name.uom_id.id, 
+                                    'discount_type': 'percent',
+                                    'discount': discount,
+                                    #product_uom': ps.name.uom_id.id, 
                                     'price_unit': ps.price_unit
                                 }
                                 line_obj.create(vals)

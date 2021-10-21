@@ -157,7 +157,6 @@ class unit_registration(models.Model):
                 raise UserError(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
-
         elif res.payment == 'Insurance':
             #Insurance
             _logger.info('Insurance')
@@ -238,6 +237,7 @@ class unit_registration(models.Model):
                    'doctor_id': acc.doctor.id, 
                    'partner_id': acc.patient.partner_id.id, 
                    'partner_invoice_id': guarantor, 
+                   'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                    'partner_shipping_id': acc.patient.partner_id.id, 
                    'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
                    'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
