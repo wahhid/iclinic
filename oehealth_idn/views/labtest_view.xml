@@ -9,13 +9,16 @@
         <field name="inherit_id" ref="oehealth.oeh_medical_lab_test_form"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='set_to_test_inprogress']" position="before">
-                <button confirm="Are you sure you want to start the test?" name="create_sale" string="Create Transaction" type="object" class="oe_highlight"/>
+                <button confirm="Are you sure you want to start the test?" name="create_sale" string="Create Transaction" type="object" class="oe_highlight" states="Draft"/>
+            </xpath>
+            <xpath expr="//button[@name='set_to_test_inprogress']" position="after">
+                <button confirm="Are you sure you want to Cancelled?" name="cancelled_lab" string="Cancelled" type="object" states="Draft"/>
             </xpath>
             <xpath expr="//button[@name='action_lab_invoice_create']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//field[@name='state']" position="attributes">
-                <attribute name="statusbar_visible">Draft,Test In Progress,Completed</attribute>
+                <attribute name="statusbar_visible">Draft,Test In Progress,Completed,Cancelled</attribute>
             </xpath>
             <xpath expr="//field[@name='date_analysis']" position="after">
                 <label for="payment" string="Payment Guarantor"/>
