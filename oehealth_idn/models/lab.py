@@ -22,7 +22,8 @@ class OehMedicalLabTest(models.Model):
      ('Draft', 'Draft'),
      ('Test In Progress', 'Test In Progress'),
      ('Completed', 'Completed'),
-     ('Invoiced', 'Invoiced'), ('Cancelled', 'Cancelled')]
+     ('Invoiced', 'Invoiced'), ('Cancelled', 'Cancelled'), ('Unlock', 'Unlock'),
+     ('Lock', 'Lock')]
 
     @api.one
     def cancelled_lab(self):
@@ -36,7 +37,7 @@ class OehMedicalLabTest(models.Model):
         guarantor = 0
         arrival = 0
         for acc in self:
-            if acc.payment != 'Personal' AND acc.state not in ['Draft', 'Test In Progress']:
+            if acc.payment != 'Personal' and acc.state not in ['Draft', 'Test In Progress']:
                 if acc.patient:
                     if acc.payment == 'Insurance':
                         guarantor = acc.insurance.ins_type.partner_id.id
@@ -102,5 +103,11 @@ class OehMedicalLabTest(models.Model):
     employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
     payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount')
     state = fields.Selection(LABTEST_STATE, string='State', readonly=True, default=lambda *a: 'Draft')
+
+    def set_lock(self):
+        self.write({'state': 'Lock'})
+
+    def set_unlock(self):
+        self.write({'state': 'Unlock'})
   
    

@@ -34,7 +34,10 @@ class sale_order(models.Model):
     labtest_id = fields.Many2one(comodel_name='oeh.medical.lab.test', string='Lab Test')
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', compute='get_payment', readonly=True)
 
-    
+    @api.one
+    def set_unlock(self):
+        self.write({'state': 'sale'})
+        
     @api.one
     def get_payment(self):
         for data in self:
