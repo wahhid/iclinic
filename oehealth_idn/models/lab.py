@@ -18,6 +18,16 @@ class OehMedicalLabTest(models.Model):
         ('Employee', 'Employee')
     ]
 
+    LABTEST_STATE = [
+     ('Draft', 'Draft'),
+     ('Test In Progress', 'Test In Progress'),
+     ('Completed', 'Completed'),
+     ('Invoiced', 'Invoiced'), ('Cancelled', 'Cancelled')]
+
+    @api.one
+    def cancelled_lab(self):
+        self.state = "Cancelled"
+
     @api.multi
     def create_sale(self):
         obj = self.env['sale.order']
@@ -38,6 +48,7 @@ class OehMedicalLabTest(models.Model):
                         guarantor = acc.patient.partner_id.id
                         #guarantor = acc.company.id
 
+
                     val_obj = {
                         #'reg_id': acc.id, 
                         'arrival_id': acc.walkin.id, 
@@ -55,6 +66,7 @@ class OehMedicalLabTest(models.Model):
                     
                     if inv_ids:
                         inv_id = inv_ids.id
+
                         discount = 0.0
                         product_id = self.env['product.product'].browse(360)
                         if acc.payment_guarantor_discount_id:
@@ -92,7 +104,6 @@ class OehMedicalLabTest(models.Model):
                     inv_ids.action_confirm()
                 else:
                     raise UserError(_('Configuration error! \n Could not find any patient to create the transactions !'))
-
                 return {
                     'name': 'Transactions', 
                     'view_type': 'form', 
@@ -108,6 +119,8 @@ class OehMedicalLabTest(models.Model):
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
     payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount')
+
+    state = fields.Selection(LABTEST_STATE, string='State', readonly=True, default=lambda *a: 'Draft')
     sale_order_id = fields.Many2one('sale.order', string='Order#', readonly=True)
 
     @api.model
