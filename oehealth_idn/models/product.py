@@ -16,6 +16,7 @@ class product_template(models.Model):
     ITEM_TYPE = [
         ('General Item', 'General Item'),
         ('Medical Item', 'Medical Item'),
+        ('Lab Item','Lab Item'),
         ('Food Item', 'Food Item'),
         ('Medicine', 'Medicine'),
         ('Doctor', 'Doctor'),
