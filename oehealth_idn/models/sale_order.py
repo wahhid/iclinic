@@ -75,6 +75,14 @@ class sale_order_line(models.Model):
         """
         Compute the amounts of the SO line.
         """
+        product_stock = self.env['stock.quant'].search([('product_id', '=', self.product_id.id)])
+        tgl = datetime.now()
+        str_tgl = str(tgl.year) + "-" + str(tgl.month).zfill(2) + "-" + str(tgl.day).zfill(2)
+        for data in product_stock:
+            alert_date = datetime.strptime(data.lot_id.alert_date, "%Y-%m-%d %H:%M:%S")
+            if alert_date >= tgl:
+                 raise ValidationError(_(self.product_id.name,' expired date ', data.lot_id.use_date))
+
         for line in self:
             line.discount = 0.0
             line.discount_type = False
@@ -142,14 +150,14 @@ class sale_order_line(models.Model):
         return res
 
     
-    @api.multi
-    def alert_expired_date(self):
-        product_stock = self.env['stock.quant'].search([('product_id', '=', self.product_id.id)])
-        tgl = datetime.now()
-        for data in product_stock:
-            if data.lot_id.alert_date >= tgl:
-                 raise ValidationError(_(self.product_id.name,' expired date ', data.lot_id.use_date))
-        return super(sale_order_line, self).alert_expired_date()
+    # @api.multi
+    # def alert_expired_date(self):
+    #     product_stock = self.env['stock.quant'].search([('product_id', '=', self.product_id.id)])
+    #     tgl = datetime.now()
+    #     for data in product_stock:
+    #         if data.lot_id.alert_date >= tgl:
+    #              raise ValidationError(_(self.product_id.name,' expired date ', data.lot_id.use_date))
+    #     return super(sale_order_line, self).alert_expired_date()
 
 
 class SaleReport(models.Model):
