@@ -86,9 +86,6 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <!-- <field name="groups_id" eval="[(4, ref('group_medical_service')), (4, ref('group_cashier'))]"/> -->
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='action_done']" position="after">
-                <button name="set_unlock" string="Unlock" states="done" type="object" groups="oehealth_idn.group_cashier"/>
-            </xpath>
             <xpath expr="//sheet/*" position="before">
                 <field name="is_blacklist" invisible="1"/>
                 <div attrs="{'invisible': [('is_blacklist', '=', False)]}" style="padding:0 !important;" role="alert" class="alert alert-dismissible alert-danger">

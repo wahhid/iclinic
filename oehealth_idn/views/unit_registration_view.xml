@@ -216,7 +216,13 @@
                         <page string="Extra Information" attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
                             <field name="extra_info" placeholder="Extra Information"/>
                         </page>
-                        
+                        <page string="Diagnostic">
+                            <field name="diagnostic_ids">
+                                <tree string="Multi Diagnostic">
+                                    <field name="pathology_id"/>
+                                </tree>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
                 <div class="oe_chatter">

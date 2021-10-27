@@ -6,7 +6,6 @@
 # Compiled at: 2019-04-29 01:37:36
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError, Warning
-from datetime import datetime, timedelta, date
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -36,10 +35,7 @@ class sale_order(models.Model):
     labtest_id = fields.Many2one(comodel_name='oeh.medical.lab.test', string='Lab Test')
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', compute='get_payment', readonly=True)
 
-    @api.one
-    def set_unlock(self):
-        self.write({'state': 'sale'})
-        
+    
     @api.one
     def get_payment(self):
         for data in self:
@@ -75,14 +71,6 @@ class sale_order_line(models.Model):
         """
         Compute the amounts of the SO line.
         """
-        product_stock = self.env['stock.quant'].search([('product_id', '=', self.product_id.id)])
-        tgl = datetime.now()
-        str_tgl = str(tgl.year) + "-" + str(tgl.month).zfill(2) + "-" + str(tgl.day).zfill(2)
-        for data in product_stock:
-            alert_date = datetime.strptime(data.lot_id.alert_date, "%Y-%m-%d %H:%M:%S")
-            if alert_date >= tgl:
-                 raise ValidationError(_(self.product_id.name,' expired date ', data.lot_id.use_date))
-
         for line in self:
             line.discount = 0.0
             line.discount_type = False
@@ -148,16 +136,6 @@ class sale_order_line(models.Model):
         res = super(sale_order_line, self)._prepare_invoice_line(qty)
         res.update({'patient_id': self.reg_id.patient.id, 'reg_id': self.reg_id.id, 'arrival_id': self.arrival_id.id})
         return res
-
-    
-    # @api.multi
-    # def alert_expired_date(self):
-    #     product_stock = self.env['stock.quant'].search([('product_id', '=', self.product_id.id)])
-    #     tgl = datetime.now()
-    #     for data in product_stock:
-    #         if data.lot_id.alert_date >= tgl:
-    #              raise ValidationError(_(self.product_id.name,' expired date ', data.lot_id.use_date))
-    #     return super(sale_order_line, self).alert_expired_date()
 
 
 class SaleReport(models.Model):

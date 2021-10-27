@@ -22,8 +22,7 @@ class OehMedicalLabTest(models.Model):
      ('Draft', 'Draft'),
      ('Test In Progress', 'Test In Progress'),
      ('Completed', 'Completed'),
-     ('Invoiced', 'Invoiced'), ('Cancelled', 'Cancelled'), ('Unlock', 'Unlock'),
-     ('Lock', 'Lock')]
+     ('Invoiced', 'Invoiced'), ('Cancelled', 'Cancelled')]
 
     @api.one
     def cancelled_lab(self):
@@ -37,7 +36,7 @@ class OehMedicalLabTest(models.Model):
         guarantor = 0
         arrival = 0
         for acc in self:
-            if acc.payment != 'Personal' and acc.state not in ['Draft', 'Test In Progress']:
+            if not acc.sale_order_id:
                 if acc.patient:
                     if acc.payment == 'Insurance':
                         guarantor = acc.insurance.ins_type.partner_id.id
@@ -104,7 +103,7 @@ class OehMedicalLabTest(models.Model):
                     )
                     inv_ids.action_confirm()
                 else:
-                    raise UserError(_('Can not create the transactions because Payment Guarantor is Personal !'))
+                    raise UserError(_('Configuration error! \n Could not find any patient to create the transactions !'))
                 return {
                     'name': 'Transactions', 
                     'view_type': 'form', 
@@ -120,14 +119,9 @@ class OehMedicalLabTest(models.Model):
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
     payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount')
+
     state = fields.Selection(LABTEST_STATE, string='State', readonly=True, default=lambda *a: 'Draft')
     sale_order_id = fields.Many2one('sale.order', string='Order#', readonly=True)
-    
-    def set_lock(self):
-        self.write({'state': 'Lock'})
-
-    def set_unlock(self):
-        self.write({'state': 'Unlock'})
 
     @api.model
     def create(self, vals):

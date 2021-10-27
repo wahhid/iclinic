@@ -48,8 +48,7 @@
         "views/menu_view.xml",
 
         "config/sale_config_settings.xml",
-        # "wizard/sale_order_line_make_account_invoice_view.xml",
-        "wizard/ms_report_stock_wizard.xml",
+        "wizard/sale_order_line_make_account_invoice_view.xml",
 
         "report/patient_card_report.xml",
         "report/stiker_pasien_report.xml",
