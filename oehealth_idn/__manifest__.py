@@ -17,7 +17,8 @@
         "sale_stock_location",
         "vit_kelurahan",
         "sale_margin",
-        "stock"
+        "stock",
+        "jakc_queue"
     ],
     "init_xml": [],
     "data": [

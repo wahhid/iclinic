@@ -10,6 +10,12 @@ class unit_administration(models.Model):
     _name = 'unit.administration'
     #_inherits = {'operating.unit': 'operating_id'}
 
+    def name_get(self):
+        result = []
+        for rec in self:
+            result.append((rec.id, '%s - %s' % (rec.name,rec.operating_id.name)))
+        return result
+
     name = fields.Char('Name', size=200)
     code = fields.Char('Code', size=20)
     operating_id = fields.Many2one('operating.unit', string='Operating Units', required=True, ondelete='cascade')

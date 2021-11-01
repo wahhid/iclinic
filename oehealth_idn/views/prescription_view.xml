@@ -32,7 +32,9 @@
                         </tree>
                         <form>
                             <header>
+                                <!--
                                 <button type="object" name="confirm_order" string="Confirm Order" states="draft" class="oe_highlight"/>
+                                -->
                                 <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
                             </header>
                             <group>
@@ -46,7 +48,9 @@
                                         <field name="product_uom" class="oe_inline" style="width:47% !important"/>
                                     </div>
                                 </group>
-                                <group/>
+                                <group>
+                                    <field name="remark"/>
+                                </group>
                             </group>
                             <notebook>
                                 <page string="Ingredients">
@@ -190,8 +194,11 @@
                                 </tree>
                                 <form>
                                     <header>
+                                        <!--
                                         <button type="object" name="confirm_order" string="Confirm Order" states="draft" class="oe_highlight"/>
+                                        -->
                                         <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                                    
                                     </header>
                                     <group>
                                         <group>
@@ -203,9 +210,10 @@
                                                 <field name="qty_unit" class="oe_inline" style="width:18% !important"/>
                                                 <field name="product_uom" class="oe_inline" style="width:47% !important"/>
                                             </div>
+                                        </group>
+                                        <group>
                                             <field name="remark"/>
                                         </group>
-                                        <group/>
                                     </group>
                                     <notebook>
                                         <page string="Ingredients">

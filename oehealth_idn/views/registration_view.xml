@@ -42,6 +42,8 @@
                     <group string="General Information">
                         <group>
                             <field name="date" attrs="{'readonly': [('state','not in',('Draft'))]}"/>
+                            <field name="operating_unit_id"/>
+                            <field name="queue_trans_id"/>
                             <field name="admission_reason" attrs="{'readonly': [('state','not in',('Draft', 'Scheduled'))]}"/>
                         </group>
                         <group>
@@ -52,7 +54,7 @@
                                 <span style="margin-right:10px"/>
                                 <field name="company" placeholder="Company" domain="[('is_company','=',True), ('customer','=',True)]" attrs="{'invisible': [('payment','!=','Corporate')], 'required': [('payment','=','Corporate')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
                                 <field name="insurance" placeholder="Insurance" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
-                                <field name="employee_id" placeholder="Employee" domain="[('patient','=',patient), ('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
+                                <field name="employee_id" placeholder="Employee" domain="[('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
                             </div>
                         </group>
                     </group>

@@ -166,7 +166,7 @@ class OeHealthPatient(models.Model):
     partner_id = fields.Many2one('res.partner', string='Related Partner', required=True, ondelete='cascade', help='Partner-related data of the patient')
     family = fields.One2many('oeh.medical.patient.family', 'patient_id', string='Family')
     ssn = fields.Char(size=256, string='SSN')
-    current_insurance = fields.Many2one('oeh.medical.insurance', string='Insurance', domain="[('patient','=', active_id),('state','=','Active')]", help='Insurance information. You may choose from the different insurances belonging to the patient')
+    current_insurance = fields.Many2one('oeh.medical.insurance', string='Insurance', help='Insurance information. You may choose from the different insurances belonging to the patient')
     doctor = fields.Many2one('oeh.medical.physician', string='Family Physician', help='Current primary care physician / family doctor', domain=[('is_pharmacist', '=', False)])
     dob = fields.Date(string='Date of Birth')
     age = fields.Char(compute=_patient_age, size=32, string='Patient Age', help='It shows the age of the patient in years(y), months(m) and days(d).\nIf the patient has died, the age shown is the age at time of death, the age corresponding to the date on the death certificate. It will show also "deceased" on the field')
