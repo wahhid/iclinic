@@ -139,7 +139,7 @@ class OehMedicalLabTest(models.Model):
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id
         elif res.payment == 'Corporate':
             #Corporate
@@ -151,7 +151,7 @@ class OehMedicalLabTest(models.Model):
             _logger.info(domain)
             payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_guarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         elif res.payment == 'Insurance':
@@ -164,7 +164,7 @@ class OehMedicalLabTest(models.Model):
             _logger.info(domain)
             payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_guarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         else:
@@ -174,7 +174,7 @@ class OehMedicalLabTest(models.Model):
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
 
         return res

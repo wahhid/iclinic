@@ -39,7 +39,7 @@ class oeh_medical_prescription(models.Model):
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id
         elif res.payment == 'Corporate':
             #Corporate
@@ -51,7 +51,7 @@ class oeh_medical_prescription(models.Model):
             _logger.info(domain)
             payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_guarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         elif res.payment == 'Insurance':
@@ -64,7 +64,7 @@ class oeh_medical_prescription(models.Model):
             _logger.info(domain)
             payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_guarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         else:
@@ -74,7 +74,7 @@ class oeh_medical_prescription(models.Model):
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
         
         return res
@@ -155,6 +155,8 @@ class oeh_medical_prescription(models.Model):
 class oeh_medical_prescription_line(models.Model):
     _inherit = 'oeh.medical.prescription.line'
     name = fields.Many2one('product.product', string='Medicines', help='Prescribed Medicines', domain=[('item_type', '=', 'Medicine')], required=True)
+    product_template_categ_id = fields.Many2one('product.template.category', related='name.product_template_categ_id')
+    qty_available = fields.Float(related='name.qty_available')
 
 #Pharmacy Order
 class oeh_medical_health_center_pharmacy_line(models.Model):
@@ -216,7 +218,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id
         elif res.payment == 'Corporate':
             #Corporate
@@ -228,7 +230,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
             _logger.info(domain)
             payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_guarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         elif res.payment == 'Insurance':
@@ -241,7 +243,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
             _logger.info(domain)
             payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_guarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         else:
@@ -251,7 +253,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
         
         return res

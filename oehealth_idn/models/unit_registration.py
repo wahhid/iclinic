@@ -125,6 +125,7 @@ class unit_registration(models.Model):
 
     @api.model
     def create(self, vals):
+        warning_mess = False
         sequence = self.env['ir.sequence'].next_by_code('unit.registration')
         vals['name'] = sequence
         vals['state'] = 'Unlock'
@@ -143,7 +144,7 @@ class unit_registration(models.Model):
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise  Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id
         elif res.payment == 'Corporate':
             #Corporate
@@ -155,7 +156,12 @@ class unit_registration(models.Model):
             _logger.info(domain)
             payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_guarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                warning_mess = {
+                        'title': _('Payment Guarantor Discount'),
+                        'message': 'Payment Guarantor Discount not found'
+                }
+                return {'warning': warning_mess}
+                #raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         elif res.payment == 'Insurance':
@@ -168,7 +174,7 @@ class unit_registration(models.Model):
             _logger.info(domain)
             payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_guarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         else:
@@ -178,8 +184,11 @@ class unit_registration(models.Model):
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
+
+        if warning_mess:
+            res.update({'warning': warning_mess})
 
         return res
 

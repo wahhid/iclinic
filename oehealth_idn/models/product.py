@@ -6,7 +6,7 @@
 # Compiled at: 2019-01-08 14:54:26
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from odoo import models, fields, api, _
+from odoo import models, fields, api, tools, _
 
 
 
@@ -31,6 +31,9 @@ class product_template(models.Model):
     list_price = fields.Float(index=True)
     uom_id = fields.Many2one(index=True)
     uom_po_id = fields.Many2one(index=True)
+    product_template_categ_id = fields.Many2one(
+        'product.template.category', string='Product Template Category',
+        help="Those categories are used to group similar products for point of sale.")
 
 
 class product_product(models.Model):
@@ -48,6 +51,8 @@ class product_pricelist(models.Model):
 
 class PaymentGuarantorDiscount(models.Model):
     _name  = 'payment.guarantor.discount'
+    _decscription = 'Payment Guarantor Discount'
+    _rec_name = 'description'
 
     PAYMENT_TYPE = [
         ('Personal', 'Personal'),
@@ -87,8 +92,51 @@ class PaymentGuarantorDiscount(models.Model):
 
 
 
+class ProductTemplateCategory(models.Model):
+    _name = "product.template.category"
+    _description = "Public Category"
+    _order = "sequence, name"
 
+    @api.constrains('parent_id')
+    def _check_category_recursion(self):
+        if not self._check_recursion():
+            raise ValueError(_('Error ! You cannot create recursive categories.'))
 
+    name = fields.Char(required=True, translate=True)
+    parent_id = fields.Many2one('product.template.category', string='Parent Category', index=True)
+    child_id = fields.One2many('product.template.category', 'parent_id', string='Children Categories')
+    sequence = fields.Integer(help="Gives the sequence order when displaying a list of product categories.")
+    # NOTE: there is no 'default image', because by default we don't show
+    # thumbnails for categories. However if we have a thumbnail for at least one
+    # category, then we display a default image on the other, so that the
+    # buttons have consistent styling.
+    image = fields.Binary(attachment=True,
+        help="This field holds the image used as image for the cateogry, limited to 1024x1024px.")
+    image_medium = fields.Binary(string="Medium-sized image", attachment=True,
+        help="Medium-sized image of the category. It is automatically "
+             "resized as a 128x128px image, with aspect ratio preserved. "
+             "Use this field in form views or some kanban views.")
+    image_small = fields.Binary(string="Small-sized image", attachment=True,
+        help="Small-sized image of the category. It is automatically "
+             "resized as a 64x64px image, with aspect ratio preserved. "
+             "Use this field anywhere a small image is required.")
 
-    
+    @api.model
+    def create(self, vals):
+        tools.image_resize_images(vals)
+        return super(ProductTemplateCategory, self).create(vals)
 
+    @api.multi
+    def write(self, vals):
+        tools.image_resize_images(vals)
+        return super(ProductTemplateCategory, self).write(vals)
+
+    @api.multi
+    def name_get(self):
+        def get_names(cat):
+            res = []
+            while cat:
+                res.append(cat.name)
+                cat = cat.parent_id
+            return res
+        return [(cat.id, " / ".join(reversed(get_names(cat)))) for cat in self]

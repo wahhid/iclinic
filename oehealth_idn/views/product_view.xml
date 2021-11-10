@@ -8,6 +8,7 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <field name="categ_id" position="after">
+                <field name="product_template_categ_id"/>
                 <field name="unit_ids" widget="many2many_tags" attrs="{'invisible': [('type', '!=', 'service')]}"/>
                 <field name="item_type" attrs="{'invisible': [('type', '=', 'service')], 'required': [('type', '!=', 'service')]}"/>
                 <field name="is_concoction"/>
@@ -233,5 +234,60 @@
         id="action_payment_guarantor_discount_tree" 
         parent="oeh_medical_conf_payment_guarantor" 
         sequence="1"/>
+
+    <menuitem name="Products" id="oeh_medical_conf_product" parent="oehealth.oeh_medical_conf_menu" sequence="3"/>
+
+    <record id="product_template_category_form_view" model="ir.ui.view">
+        <field name="name">product.template.category.form</field>
+        <field name="model">product.template.category</field>
+        <field name="arch" type="xml">
+            <form string="Pos Categories">
+                <sheet>
+                    <field name="image_medium" widget='image' class="oe_avatar"/>
+                    <div class="oe_left">
+                        <group>
+                            <field name="name"/>
+                            <field name="parent_id"/>
+                            <field name="sequence"/>
+                        </group>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="product_template_category_tree_view" model="ir.ui.view">
+        <field name="name">product.template.category.tree</field>
+        <field name="model">product.template.category</field>
+        <field name="field_parent" eval="False"/>
+        <field name="arch" type="xml">
+            <tree string="Product Product Categories">
+                <field name="sequence" widget="handle"/>
+                <field name="display_name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="product_template_category_action" model="ir.actions.act_window">
+        <field name="name">Product Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template.category</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to define a new category.
+            </p><p>
+                Categories are used to browse your products through the
+                touchscreen interface.
+            </p><p>
+                If you put a photo on the category, the layout of the
+                touchscreen interface will automatically. We suggest not to put
+                a photo on categories for small (1024x768) screens.
+            </p>
+        </field>
+    </record>
+
+    
+    <menuitem id="menu_product_template_category" action="product_template_category_action" parent="oeh_medical_conf_product" sequence="1" />
 
 </odoo>

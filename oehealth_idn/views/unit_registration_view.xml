@@ -74,8 +74,10 @@
                     </div>
                     <group>
                         <group>
+                            <!--
                             <field name="queue"/>
                             <field name="queue_no" invisible="1"/>
+                            -->
                             <field name="type" invisible="1"/>
                             <field name="operating_unit_id" invisible="1"/>
                             <field name="unit" required="1" domain="[('type', '=', type),('operating_id','=', operating_unit_id)]"/>
@@ -234,7 +236,7 @@
         <field name="arch" type="xml">
             <tree colors="red:is_blacklist">
                 <field name="name"/>
-                <field name="queue"/>
+                <!--<field name="queue"/>-->
                 <field name="date"/>
                 <field name="unit" string="Unit Name"/>
                 <field name="patient"/>
@@ -254,7 +256,7 @@
         <field name="arch" type="xml">
             <tree create="0" colors="blue:queue_state=='Now'; gray:queue_state=='Done'">
                 <field name="name"/>
-                <field name="queue"/>
+                <!--<field name="queue"/>-->
                 <field name="date"/>
                 <field name="unit" string="Unit Name"/>
                 <field name="patient"/>

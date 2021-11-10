@@ -43,6 +43,77 @@ class register_walkin(models.Model):
     #     res = super(register_walkin, self).default_get(fields_list)
     #     res.update({'operating_unit_id': self.env.user.default_operating_unit_id.id})
 
+    @api.model
+    def find_payment_guarantor_discount(self):
+        if self.payment == 'Personal':
+            #Personal
+            domain = [
+                ('payment','=', 'Personal')
+            ]
+            payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_quarantor_discount_id:
+                raise  Warning(_('Payment Guarantor Discount not found'))
+            self.payment_quarantor_discount_id = payment_quarantor_discount_id
+        elif self.payment == 'Corporate':
+            #Corporate
+            _logger.info('Corporate')
+            domain = [
+                ('payment','=', 'Corporate'),
+                ('company','=', self.company.id)
+            ]
+            _logger.info(domain)
+            payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_guarantor_discount_id:
+                _logger.info('Payment Guarantor not found!')
+                # warning_mess = {
+                #         'title': _('Payment Guarantor Discount'),
+                #         'message': 'Payment Guarantor Discount not found'
+                # }
+                # return {'warning': warning_mess}
+                raise Warning(_('Payment Guarantor Discount not found'))
+            _logger.info('Description')
+            _logger.info(payment_guarantor_discount_id.description)
+            self.payment_guarantor_discount_id = payment_guarantor_discount_id.id
+        elif self.payment == 'Insurance':
+            #Insurance
+            _logger.info('Insurance')
+            domain = [
+                ('payment','=', 'Insurance'),
+                ('insurance_type_id','=', self.insurance.ins_type.id)
+            ]
+            _logger.info(domain)
+            payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_guarantor_discount_id:
+                raise Warning(_('Payment Guarantor Discount not found'))
+            _logger.info(payment_guarantor_discount_id.description)
+            self.payment_guarantor_discount_id = payment_guarantor_discount_id.id
+        else:
+            #Employee
+            domain = [
+                ('payment','=', 'Employee')
+            ]
+            payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+            if not payment_quarantor_discount_id:
+                raise Warning(_('Payment Guarantor Discount not found'))
+            self.payment_quarantor_discount_id = payment_quarantor_discount_id.id
+
+    @api.onchange('insurance')
+    def onchange_for_insurance(self):
+        _logger.info("On Change Insurance")
+        self.find_payment_guarantor_discount()
+
+    @api.onchange('company')
+    def onchange_for_company(self):
+        _logger.info("On Change Company")
+        self.find_payment_guarantor_discount()
+
+    @api.onchange('employee_id')
+    def onchange_for_employee(self):
+        _logger.info("On Change Employee")
+        self.find_payment_guarantor_discount()
+
+
+
     clinic_ids = fields.One2many(comodel_name='unit.registration', inverse_name='clinic_walkin_id', string='Out-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     unit_ids = fields.One2many(comodel_name='unit.registration', inverse_name='unit_walkin_id', string='In-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     emergency_ids = fields.One2many(comodel_name='unit.registration', inverse_name='emergency_walkin_id', string='Emergency Registration', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
@@ -52,6 +123,7 @@ class register_walkin(models.Model):
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
+    payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount', readonly=False)
     operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit', default=lambda self: self.env.user.default_operating_unit_id.id)
     unit = fields.Many2one(comodel_name='unit.administration', string='Unit', track_visibility='onchange')
     admission_reason = fields.Many2one('oeh.medical.pathology', string='Reason for Admission', help='Reason for Admission', required=False, readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
@@ -63,10 +135,19 @@ class register_walkin(models.Model):
     @api.model
     def create(self, vals):
         vals['state'] = 'Scheduled'
+        if 'payment_guarantor_discount_id' in vals:
+            vals.update({'payment_guarantor_discount_id': vals.get('payment_guarantor_discount_id')})
         count = self.env['oeh.medical.appointment.register.walkin'].search([('patient', '=', vals['patient']), ('state', '=', 'Scheduled')])
         if count:
             raise Warning('The patient already has an active registration! \n Please Check Arrival ID # ' + count.name)
+        
         return super(register_walkin, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        if 'payment_guarantor_discount_id' in vals:
+            vals.update({'payment_guarantor_discount_id': vals.get('payment_guarantor_discount_id')})
+        return super(register_walkin, self).write(vals)
 
     @api.onchange('patient', 'dob')
     def check_registration(self):

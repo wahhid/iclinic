@@ -17,7 +17,14 @@
             <xpath expr="//notebook/page[1]/field[@name='prescription_line']" position="attributes">
                 <attribute name="context">{'default_patient' : patient}</attribute>
             </xpath>
-
+            
+            <xpath expr="//notebook/page[1]/field[@name='prescription_line']/tree[1]/field[@name='name']" position="after">
+                <field name="qty_available"/>
+            </xpath>
+            <xpath expr="//notebook/page[1]/field[@name='prescription_line']/form[1]/group[1]/group[1]/field[@name='name']" position="after">
+                <field name="product_template_categ_id" readonly="1"/>
+                <field name="qty_available"/>
+            </xpath>
             <xpath expr="//notebook/page[1]" position="after">
                 <page string="Concoctions">
                     <field name="concoction_ids" context="{'default_doctor_id': doctor}">
