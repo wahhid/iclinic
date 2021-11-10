@@ -38,6 +38,10 @@ class register_walkin(models.Model):
 
         return res
 
+    # @api.model
+    # def default_get(self, fields_list):
+    #     res = super(register_walkin, self).default_get(fields_list)
+    #     res.update({'operating_unit_id': self.env.user.default_operating_unit_id.id})
 
     clinic_ids = fields.One2many(comodel_name='unit.registration', inverse_name='clinic_walkin_id', string='Out-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     unit_ids = fields.One2many(comodel_name='unit.registration', inverse_name='unit_walkin_id', string='In-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
@@ -48,10 +52,12 @@ class register_walkin(models.Model):
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
+    operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit', default=lambda self: self.env.user.default_operating_unit_id.id)
     unit = fields.Many2one(comodel_name='unit.administration', string='Unit', track_visibility='onchange')
     admission_reason = fields.Many2one('oeh.medical.pathology', string='Reason for Admission', help='Reason for Admission', required=False, readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     have_register = fields.Boolean(string='Have Register ?')
     is_blacklist = fields.Boolean(related='patient.is_blacklist')
+    queue_trans_id = fields.Many2one('queue.trans','Queue')
     state = fields.Selection(WALKIN_STATUS, string='State', readonly=True, states={'Scheduled': [('readonly', False)]}, default=lambda *a: 'Draft')
 
     @api.model

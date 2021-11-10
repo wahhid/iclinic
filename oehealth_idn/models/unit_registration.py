@@ -6,8 +6,8 @@
 # Compiled at: 2019-07-28 17:50:56
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
-import requests, json, datetime
-from datetime import timedelta
+import requests, json
+from datetime import datetime, timedelta
 import pytz
 import logging
 
@@ -75,6 +75,7 @@ class unit_registration(models.Model):
      ('Logistic', 'Logistic'),
      ('Non-Medis', 'Non-Medis')], 'Unit Type', readonly=True, states={'Draft': [('readonly', False)]})
     unit = fields.Many2one(comodel_name='unit.administration', string='Unit', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit', default=lambda self: self.env.user.default_operating_unit_id.id)
     doctor = fields.Many2one(comodel_name='oeh.medical.physician', string='Doctor', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
@@ -85,7 +86,7 @@ class unit_registration(models.Model):
     reference_id = fields.Many2one(comodel_name='unit.registration', string='Reference ID', readonly=True, states={'Draft': [('readonly', False)], 'Unlock': [('readonly', False)]}, track_visibility='onchange')
     doctor_reference = fields.Many2one(comodel_name='oeh.medical.physician', related='reference_id.doctor', string='Doctor Reference', help='Doctor Reference', readonly=True)
     schedule = fields.Selection([('No', 'Not Appointment'), ('Yes', 'Appointment')], string='Schedule', default='No', readonly=True, states={'Unlock': [('readonly', False)]}, track_visibility='onchange')
-    date = fields.Datetime(string='Date', default=fields.Datetime.now(), readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    date = fields.Datetime(string='Date', default=lambda *a: datetime.now(), readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     class_id = fields.Many2one(comodel_name='class.administration', readonly=True, states={'Draft': [('readonly', False)]}, string='Class Name')
     room_id = fields.Many2one(comodel_name='oeh.medical.health.center.ward', readonly=True, states={'Draft': [('readonly', False)]}, string='Room Name')
     charge_id = fields.Many2one(comodel_name='class.administration', string='Charge Type', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
@@ -240,8 +241,9 @@ class unit_registration(models.Model):
                     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                     'partner_shipping_id': acc.patient.partner_id.id, 
                     'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
-                    'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
-                    'operating_unit_id': acc.unit.operating_id.id or False
+                    #'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
+                    'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).id
+                    #'operating_unit_id': acc.unit.operating_id.id or False
                 }
                 #Create Sale Order
                 inv_ids = obj.create(val_obj)

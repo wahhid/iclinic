@@ -87,25 +87,27 @@ class sale_order_line(models.Model):
             line.discount = 0.0
             line.discount_type = False
             _logger.info(line.product_id.name)
+            _logger.info(line.order_id.payment_guarantor_discount_id.medical_item)
             if line.product_id.item_type == 'General Item':
-                #line.discount = line.order_id.payment_guarantor_discount_id.general_item
-                #line.discount_type = 'percent'
+                line.discount = line.order_id.payment_guarantor_discount_id.general_item
+                line.discount_type = 'percent'
                 price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
             elif line.product_id.item_type == 'Medical Item':
-                #line.discount = line.order_id.payment_guarantor_discount_id.medical_item
-                #line.discount_type = 'percent'
+                _logger.info('Medical Item')
+                line.discount = line.order_id.payment_guarantor_discount_id.medical_item
+                line.discount_type = 'percent'
                 price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
             elif line.product_id.item_type == 'Food Item':
-                #line.discount = line.order_id.payment_guarantor_discount_id.food_item
-                #line.discount_type = 'percent'
+                line.discount = line.order_id.payment_guarantor_discount_id.food_item
+                line.discount_type = 'percent'
                 price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
             elif line.product_id.item_type == 'Medicine':
-                #line.discount = line.order_id.payment_guarantor_discount_id.medicine
-                #line.discount_type = 'percent'
+                line.discount = line.order_id.payment_guarantor_discount_id.medicine
+                line.discount_type = 'percent'
                 price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
             elif line.product_id.item_type == 'Doctor':
-                #line.discount = line.order_id.payment_guarantor_discount_id.doctor
-                #line.discount_type = 'percent'
+                line.discount = line.order_id.payment_guarantor_discount_id.doctor
+                line.discount_type = 'percent'
                 payment = line.order_id.payment_guarantor_discount_id.payment
                 line.price_unit = self.order_id.doctor_id.consultancy_price
                 if payment == 'Insurance':
@@ -115,8 +117,8 @@ class sale_order_line(models.Model):
                 price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
                     
             elif line.product_id.item_type == 'Nurse':
-                #line.discount = line.order_id.payment_guarantor_discount_id.nurse
-                #line.discount_type = 'percent'
+                line.discount = line.order_id.payment_guarantor_discount_id.nurse
+                line.discount_type = 'percent'
                 price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
            
             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
@@ -126,6 +128,8 @@ class sale_order_line(models.Model):
                 'price_total': taxes['total_included'],
                 'price_subtotal': taxes['total_excluded'],
             })
+
+   
 
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID', related='order_id.arrival_id')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID', related='order_id.reg_id')
@@ -165,6 +169,7 @@ class SaleReport(models.Model):
     doctor_id = fields.Many2one('oeh.medical.physician', string='Doctor', readonly=True)
     partner_invoice_type = fields.Selection([('Personal', 'Personal'), ('Company', 'Company'), ('Insurance', 'Insurance')], string='Customer Type', store=True)
 
+    
     def _select(self):
         return super(SaleReport, self)._select() + ', l.doctor_id as doctor_id, s.partner_invoice_type as partner_invoice_type'
 
