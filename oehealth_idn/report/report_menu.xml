@@ -54,6 +54,26 @@
         name="oehealth_idn.report_daftar_transaksi" menu="True"
         />
 
+    <report id="konsultasi_rujukan_report_menu" string="Rujukan Konsultasi"
+        model="sale.order" report_type="qweb-pdf"
+        name="oehealth_idn.report_konsultasi_rujukan" menu="True"
+        />
+    
+    <report id="rujukan_radiologi_report_menu" string="Rujukan Radiologi"
+        model="sale.order" report_type="qweb-pdf"
+        name="oehealth_idn.report_rujukan_radiologi" menu="True"
+        />
+
+    <report id="rujukan_pasien_report_menu" string="Rujukan Pasien"
+        model="sale.order" report_type="qweb-pdf"
+        name="oehealth_idn.report_rujukan_pasien" menu="True"
+        />
+    
+    <report id="persetujuan_tindakan_report_menu" string="Persetujuan Tindakan"
+        model="sale.order" report_type="qweb-pdf"
+        name="oehealth_idn.report_persetujuan_tindakan" menu="True"
+        />
+
     <report id="daftar_transaksi_detail_report_menu" string="Daftar Transaksi Detail"
         model="sale.order" report_type="qweb-pdf"
         name="oehealth_idn.report_daftar_transaksi_detail" menu="True"
@@ -98,6 +118,24 @@
             (4, ref('oehealth_idn.slip_registrasi_igd_report_menu')),
             (4, ref('oehealth_idn.etiket_report_menu'))
         ]"/>
+    </record>
+
+    <!-- Set Paper Format for the Patient Card Report -->
+    <record id="radiologi_paperformat" model="report.paperformat">
+        <field name="name">Radiologi Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A6</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field> 
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+        <field name="report_ids" eval="[(4, ref('oehealth_idn.rujukan_radiologi_report_menu'))]"/>
     </record>
 
 </odoo>

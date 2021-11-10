@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_rujukan_radiologi">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                            <div class="oe_structure">
+                                <div class="row">
+                                        <div >
+                                            <p><br/></p>
+                                            <p><br/></p>
+                                        </div>
+                                        <div>
+                                            <p><br/></p>
+                                            <p><br/></p>
+                                        </div>
+                                    <p style="font-size:20px;text-align:center;font-weight:bold;">Rujukan Radiologi</p>
+                                        <div>
+                                            <p><br/></p>
+                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <div>
+                                            <strong>No. Arrival / No. RM:</strong>
+                                            <p><span t-field="o.arrival_id.name"/> / <span t-field="o.arrival_id.patient.medical_record"/></p>
+                                        </div>
+                                        <div>
+                                            <strong>Kepada Yth,</strong>
+                                            <strong><p>Bagian Radiologi</p></strong>
+                                        </div>
+                                        <div >
+                                            <p><br/></p>
+                                        </div>
+                                        <div>
+                                            <strong>Mohon dilakukan pemeriksaan :</strong>
+                                            <p>___________________________________</p>
+                                        </div>
+                                         <div>
+                                            <p><br/></p>
+                                        </div>
+                                        <div>
+                                            <strong>Nama pasien: </strong>
+                                            <p t-field="o.arrival_id.patient.name"/>
+                                        </div>
+                                        <div>
+                                            <strong>Tanggal Lahir:</strong>
+                                            <p t-field="o.arrival_id.patient.dob" t-field-options='{"format": "d MMMM y"}'/>
+                                        </div>
+                                        <div >
+                                            <p><br/></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    <p style="text-align:center;">_______,_________________ </p>
+                                        <div >
+                                            <p><br/></p>
+                                            <p><br/></p>
+                                        </div>
+                                    <p style="text-align:center;">Dr. <span t-field="o.doctor_id.name"/> </p>
+                                </div>
+
+                                </div>
+                         
+                            </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
