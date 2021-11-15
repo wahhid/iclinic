@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_queuereceipt_document">
+            <div class="page">
+                 <div class="row">
+                    <span><![CDATA[&nbsp;]]></span>
+                </div>
+                <div class="text-center" style="text-align: center;">
+                    <img t-if="res_company.logo" t-att-src="'data:image/png;base64,%s' %res_company.logo" width="200px;"/>
+                </div>
+                <div class="row" style="text-align: center;">
+                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
+                </div>
+                <div class="row" style="text-align: center;">
+                    <strong><span style="font-size:24px">Mal Taman Anggrek</span></strong>
+                </div>
+                <div class="row">
+                    <span><![CDATA[&nbsp;]]></span>
+                </div>
+                <div class="row" style="text-align: center;">
+                    <span  t-esc="o.trans_id" style="font-size:68px;"/>
+                </div>
+                <div class="row">
+                    <span><![CDATA[&nbsp;]]></span>
+                </div>
+                <div class="row" style="text-align: center;">
+                    <strong><span style="font-size:24px"><t t-esc="o.type_id.name"/></span></strong>
+                </div>
+                <div class="row">
+                    <span><![CDATA[&nbsp;]]></span>
+                </div>
+                 <div class="row" style="text-align: center;">
+                     <span style="font-size:24px">.</span>
+                </div>
+                <div class="row" style="text-align: center;">
+                    <img t-att-src="'report/barcode/Code128/%s' % 'FEEFAFD'"/>
+                </div>
+                <div class="row">
+                    <span><![CDATA[&nbsp;]]></span>
+                </div>
+                <div class="row">
+                    <span><![CDATA[&nbsp;]]></span>
+                </div>
+                <div class="row">
+                    <span><![CDATA[&nbsp;]]></span>
+                </div>
+                <div class="row">
+                    <span><![CDATA[&nbsp;]]></span>
+                </div>
+                <div class="row">
+                    <span><![CDATA[&nbsp;]]></span>
+                </div>
+                <div class="row">
+                    <span><![CDATA[&nbsp;]]></span>
+                </div>
+            </div>
+        </template>
+
+        <template id="report_queuereceipt">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="jakc_queue.report_queuereceipt_document"/>
+            </t>
+        </template>
+    </data>
+</odoo>

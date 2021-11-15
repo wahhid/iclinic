@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "counter_name": "Customer Service",
+      "current_trans": "202",
+      "counter_bg": "bg-red",
+      "counter_fa": "fa-users",
+      "counter_code": "0001"
+    },
+    {
+      "counter_name": "Teller",
+      "current_trans": "303",
+      "counter_bg": "bg-red",
+      "counter_fa": "fa-bank",
+      "counter_code": "0002"
+    },
+    {
+      "counter_name": "Not Available",
+      "current_trans": "---",
+      "counter_bg": "bg-black",
+      "counter_fa": "fa-ban",
+      "counter_code": ""
+    }
+  ]
+}

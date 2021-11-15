@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<odoo>
+    <data>
+    	<template id="index">
+    		<html class="full">            
+            <head>
+	            <t t-set="title">Queue Display</t>
+			    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+			    <!-- Latest compiled and minified CSS -->
+				<link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap.min.css"></link>
+			   	<link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap-theme.min.css"></link>
+			   	<link rel="stylesheet" href="/jakc_queue/static/src/css/grid.css"></link>
+			   	<link rel="stylesheet" href="/jakc_queue/static/src/css/displayui.css"></link>
+			
+				<!-- jQuery library -->
+				<script type="text/javascript" src="/jakc_queue/static/src/js/jquery-1.11.2.min.js"></script>
+				<script type="text/javascript" src="/jakc_queue/static/src/js/bootstrap.min.js"></script>
+	      	</head>		 				 				 			  			      		
+	      	<body>
+	      	  <input id="displaycode" type="hidden" t-att-value="displaycode"/>
+		      <div class="container">      			       			
+		      	<div class="row">
+		      		<div class="col-xs-12 col-md-12">
+		      			<div class="text-center">
+							<img id="first"/>
+			      			<img id="second"/>
+			      			<img id="third"/>
+		      			</div>
+		      		</div>      		
+		      	</div>
+		      	<div class="row">
+		      		<div class="col-xs-6 col-md-6">      				
+		      			<div class="text-center">
+		      				<img id="displaycodefirst" />
+			      			<img id="displaycodesecond" />
+			      			<img id="displaycodethird" />      			
+		      			</div>
+		      		</div>      		
+		      		<div class="col-xs-6 col-md-6">      				
+		      			<div class="text-center">
+		      				<img src="/jakc_queue/static/src/images/0_100px.png"/>
+			      			<img src="/jakc_queue/static/src/images/0_100px.png"/>
+			      			<img src="/jakc_queue/static/src/images/0_100px.png"/>
+		      			</div>
+		      		</div>      		      		
+		      	</div>
+		      </div>      		
+    		  <script type="text/javascript" src="/jakc_queue/static/src/js/displayui.js"></script>	
+            </body>    
+            </html>                               		    
+        </template>
+        
+        <template id="routeui">
+    		<html class="full">            
+            <head>
+	            <t t-set="title">Queue Display</t>
+			    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+			      		
+			    <!-- Latest compiled and minified CSS -->
+				<link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap.min.css"></link>
+			   	<link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap-theme.min.css"></link>
+			   	<link rel="stylesheet" href="/jakc_queue/static/src/css/grid.css"></link>
+			   	<link rel="stylesheet" href="/jakc_queue/static/src/css/routeui.css"></link>
+			
+				<!-- jQuery library -->
+				<script type="text/javascript" src="/jakc_queue/static/src/js/jquery-1.11.2.min.js"></script>
+				<script type="text/javascript" src="/jakc_queue/static/src/js/bootstrap.min.js"></script>
+	      	</head>		 				 				 			  			      		
+	      	<body>
+		      <div clsass="container">
+		      	<div class="row">
+		      		<div class="col-xs-12 col-md-12">
+		      			<div class="text-center">
+		      				Col 01
+		      			</div>
+		      		</div>
+		      	</div>      	
+				<div class="row">
+		      		<div class="col-xs-4 col-md-4">
+		      			<div class="text-center">      						
+				      			<img src="/jakc_queue/static/src/images/0_30px.png"/>
+					      		<img src="/jakc_queue/static/src/images/0_30px.png"/>
+					      		<img src="/jakc_queue/static/src/images/0_30px.png"/>      							      					    		      		
+		      			</div>
+		      		</div>
+		      		<div class="col-xs-4 col-md-4">
+		      			<div class="text-center">      						
+				      			<img src="/jakc_queue/static/src/images/0_30px.png"/>
+					      		<img src="/jakc_queue/static/src/images/0_30px.png"/>
+					      		<img src="/jakc_queue/static/src/images/0_30px.png"/>      							      					    		      		
+		      			</div>		      			
+		      		</div>
+		      		<div class="col-xs-4 col-md-4">
+		      			<div class="text-center">      						
+				      			<img src="/jakc_queue/static/src/images/0_30px.png"/>
+					      		<img src="/jakc_queue/static/src/images/0_30px.png"/>
+					      		<img src="/jakc_queue/static/src/images/0_30px.png"/>      							   			    		      		
+		      			</div>		      			
+		      		</div>		      		
+		      	</div>		      			       			
+		      	<div class="row">		      	
+		      		<div class="col-xs-12 col-md-12">
+		      			<div class="text-center">
+							<img src="/jakc_queue/static/src/images/0_300px.png"/>
+			      			<img src="/jakc_queue/static/src/images/0_300px.png"/>
+			      			<img src="/jakc_queue/static/src/images/0_300px.png"/>
+		      			</div>
+		      		</div>      
+		      	</div>				      	
+		      </div>      		
+    		  <script type="text/javascript" src="/jakc_queue/static/src/js/routeui.js"></script>	
+            </body>    
+            </html>                               		    
+        </template>
+        
+        <template id="mpickupui">
+        	
+        </template>
+        
+        <template id="pickupui">
+        	<html>
+        	<title>Pickup UI</title>
+        	<head>
+      		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+      		
+      		<!-- Latest compiled and minified CSS -->
+			<link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap.min.css"></link>
+            <link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap-theme.min.css"></link>
+            <link rel="stylesheet" href="/jakc_queue/static/src/css/pickupui.css"></link>
+
+			<!-- jQuery library -->
+			<script src="/jakc_queue/static/src/js/jquery-1.11.2.min.js"></script>
+ 			<script type="text/javascript" src="/jakc_queue/static/src/js/bootstrap.min.js"></script>			 				 			  			      		
+      		</head>
+      		<body>		 
+		 	<style> 
+		 		    
+      		</style>
+		      <div class="container my-container" id="pickuplist">
+		      		<div class="row">      			
+		      			<t t-foreach="pickups" t-as="pickup">
+		      			<div class="col-xs-4 col-md-4">
+			           		<h1>Pickup Code : <t t-esc="pickup.name"/></h1>	           			           			           		
+			              	<p>Display Code: <t t-esc="pickup.display_id.name"/></p>
+			              	<p>Status : </p>
+			              	<button type="button" class="btn btn-primary" onclick="pickup_app(this.value)" t-att-value="pickup.name">Select</button>
+			            </div>	              				  	   			      			      		
+		      			</t>
+		      		</div>             					      	      
+		      </div><!-- End Container -->
+		      
+		      <div class="container" id="pickupapp" hidden="hidden">
+		      	<div class="row">
+		      		<div class="col-xs-6 col-md-6">
+		      			<button class="btn btn-primary btn-block" data-toggle="modal" data-target="#confirm-back">Back</button>		      				      					      					      	
+		      		</div>
+		      		<div class="col-xs-6 col-md-6">
+		      			<button type="button" class="btn btn-primary btn-block" height="100px">Refresh</button>
+		      		</div>
+		      	</div>
+		      	<div class="row">
+		      		<div class="col-xs-12 col-md-12 text-center">
+		      			<img id="first" src="/jakc_queue/static/src/images/0_100px.png"/>
+			      		<img id="second" src="/jakc_queue/static/src/images/0_100px.png"/>
+			      		<img id="third" src="/jakc_queue/static/src/images/0_100px.png"/>  		      			
+		      		</div>		      			      		
+		      	</div>		      		
+		      	<div class="row">
+		      		<div class="col-xs-6 col-md-6 text-center">
+		      			<div id="pickup_code">
+		      				000
+		      			</div>		      			
+		      		</div>
+		      		<div class="col-xs-6 col-md-6 text-center">
+		      			<button type="button" id="btnpickup" class="btn btn-primary btn-block" onclick="pickup(this.value)">Pickup</button>
+		      		</div>		      				      			      				      				      
+		      	</div>     
+		      	<div class="row">
+		      		<div class="col-xs-12 col-md-12 text-center">
+		      			<div id="pickup-message">
+		      				Waiting...
+		      			</div>		      			
+		      		</div>
+		      	</div>
+		      </div>
+		      
+		      <div class="modal fade" id="confirm-back" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			        <div class="modal-dialog">
+			            <div class="modal-content">			            
+			                <div class="modal-header">			                    
+			                    <h4 class="modal-title" id="myModalLabel">Confirm Back</h4>
+			                </div>			            
+			                <div class="modal-body">
+			                    <p>You are about to delete one track, this procedure is irreversible.</p>
+			                    <p>Do you want to proceed?</p>
+			                    <p class="debug-url"></p>
+			                </div>
+			                
+			                <div class="modal-footer">
+			                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			                    <a class="btn btn-danger btn-ok" onclick="pickup_list(this.value)" value="0" data-dismiss="modal">Continue</a>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+
+      		<script type="text/javascript" src="/jakc_queue/static/src/js/pickupui.js"></script>	
+      		</body>
+      		</html>      		
+        </template>
+        
+      	<template id="pickup">
+      		<title>Pickcup Software</title>
+      		<head>
+      		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+      		
+      		<link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap.min.css"></link>
+            <link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap-theme.min.css"></link>
+            
+ 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+ 			<script type="text/javascript" src="/jakc_queue/static/src/js/bootstrap.min.js"></script>
+ 			<script type="text/javascript" src="/jakc_queue/static/src/js/script.js"></script> 			 			 	
+      		</head>
+      		<body>
+      		<div class="container-fluid">
+      			<p>000</p>
+      		</div>
+      		</body>      		 			 			 			 			    
+      	</template>
+      	
+      	<template id="appui">
+      		<title>Application</title>
+      		<head>
+      			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+      			      		
+      			<link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap.min.css"></link>
+            	<link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap-theme.min.css"></link>
+            	<link rel="stylesheet" href="/jakc_queue/static/src/css/app.css"></link>
+            	
+            	            
+ 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+ 				<script type="text/javascript" src="/jakc_queue/static/src/js/bootstrap.min.js"></script> 				 			 			 	      	
+      		</head>
+      		<body>
+      			<div class="container">
+				    <div class="row">
+				        <div class="col-md-12">
+				            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">                
+				                <div class="carousel-inner">			
+				               		<div class="item active">
+						           		<img src="http://placehold.it/1200x500/3498db/2980b9"/>
+						               	<div class="carousel-caption">
+						               		<h3>Queue Management System</h3>
+						               	</div>
+						          	</div>			            			
+				              		<t t-foreach="types" t-as="type">
+				              				<div class="item">
+						                        <img src="http://placehold.it/1200x500/3498db/2980b9"/>
+						                        <div class="carousel-caption">
+						                            <h3><t t-esc="type.name"/></h3>
+						                            <p>
+						                            	<div>
+							                            	<button type="button" class="btn btn-primary btn-lg" onclick="request_app(this.value)" t-att-value="type.id">
+			  													Select
+															</button>
+						                            	</div>					                            	
+						                            </p>
+						                        </div>
+						                   </div>				                								                					                	
+				              		</t>              						                	            				                    						                	            				                				             					                    				                   
+				                </div><!-- Inner -->
+				                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+				                    <span class="glyphicon glyphicon-chevron-left"></span>
+				                </a>
+				                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+				                 	<span class="glyphicon glyphicon-chevron-right"></span>
+				                </a>
+				            </div><!-- Carousel -->
+				            <div class="main-text hidden-xs">
+				                <div class="col-md-12 text-center">
+				                    <h1 id="message"></h1>
+				                    <h3>
+				                       	Jakc Labs
+				                    </h3>
+				                </div>
+				            </div><!-- End Main Text -->
+				        </div><!-- End Col -->
+				    </div><!-- End Row -->
+				</div><!-- End Container -->
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+				        <h4 class="modal-title" id="myModalLabel">Information</h4>
+				      </div>
+				      <div class="modal-body">
+				      	
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary">Save changes</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+      			<script type="text/javascript" src="/jakc_queue/static/src/js/appui.js"></script> 	
+      		</body>      		      	
+      	</template>
+    </data>
+</odoo>
