@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': 'Jakc Labs - Account Voucher Enhancement',
+    'name': 'WEHA - Account Voucher Enhancement',
     'version': '10.0.0.1.0',
     'category': 'General',
     'license': 'AGPL-3',
     'summary': 'Account Voucher Enchancement',
-    'author': "Jakc Labs",
-    'website': 'http://www.jakc-labs.com/',
+    'author': "WEHA Consultant",
+    'website': 'http://www.weha-id.com/',
     'depends': [
         'account_voucher'
     ],
