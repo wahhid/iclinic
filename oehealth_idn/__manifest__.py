@@ -58,6 +58,7 @@
         "report/daftar_transaksi_report.xml",
         "report/nota_resep_report.xml",
         "report/salinan_resep_report.xml",
+        "report/resep_report.xml",
         "report/detail_transaksi_invoice_report.xml",
         "report/kwitansi_report.xml",
         "report/slip_registrasi_rajal_report.xml",

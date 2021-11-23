@@ -6,4 +6,4 @@ class inherit_medical_evaluation(models.Model):
     
     subjective = fields.Text(string='Subjective')
     allergy_history = fields.Text(string='Allergy History')
-    diagnostic_ids = fields.One2many(comodel_name='oeh.multi.diagnostic', inverse_name='eval_id', string='Diagnostic')
+    diagnostic_ids = fields.Many2many(comodel_name='oeh.multi.diagnostic', string='Diagnostic')

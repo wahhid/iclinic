@@ -44,9 +44,13 @@
         name="oehealth_idn.report_nota_resep" menu="True"
         />
 
-    <report id="salinan_resep_report_menu" string="Salinan Resep"
-        model="sale.order" report_type="qweb-pdf"
+    <report id="salinan_resep_report_menu" string="Form copy Resep"
+        model="oeh.medical.prescription" report_type="qweb-pdf"
         name="oehealth_idn.report_salinan_resep" menu="True"
+        />
+    <report id="resep_report_menu" string="Form Resep"
+        model="oeh.medical.prescription" report_type="qweb-pdf"
+        name="oehealth_idn.report_resep" menu="True"
         />
 
     <report id="daftar_transaksi_report_menu" string="Daftar Transaksi"
@@ -54,23 +58,23 @@
         name="oehealth_idn.report_daftar_transaksi" menu="True"
         />
 
-    <report id="konsultasi_rujukan_report_menu" string="Rujukan Konsultasi"
-        model="sale.order" report_type="qweb-pdf"
+    <!-- <report id="konsultasi_rujukan_report_menu" string="Rujukan Konsultasi"
+        model="unit.registration" report_type="qweb-pdf"
         name="oehealth_idn.report_konsultasi_rujukan" menu="True"
-        />
+        /> -->
     
     <report id="rujukan_radiologi_report_menu" string="Rujukan Radiologi"
-        model="sale.order" report_type="qweb-pdf"
+        model="oeh.medical.lab.test" report_type="qweb-pdf"
         name="oehealth_idn.report_rujukan_radiologi" menu="True"
         />
 
     <report id="rujukan_pasien_report_menu" string="Rujukan Pasien"
-        model="sale.order" report_type="qweb-pdf"
+        model="unit.registration" report_type="qweb-pdf"
         name="oehealth_idn.report_rujukan_pasien" menu="True"
         />
     
     <report id="persetujuan_tindakan_report_menu" string="Persetujuan Tindakan"
-        model="sale.order" report_type="qweb-pdf"
+        model="unit.registration" report_type="qweb-pdf"
         name="oehealth_idn.report_persetujuan_tindakan" menu="True"
         />
 

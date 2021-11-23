@@ -12,7 +12,7 @@
                 <button confirm="Are you sure you want to start the test?" name="create_sale" string="Create Transaction" type="object" class="oe_highlight" states="Draft"/>
             </xpath>
             <xpath expr="//button[@name='set_to_test_inprogress']" position="after">
-                <button confirm="Are you sure you want to Cancelled?" name="cancelled_lab" string="Cancelled" type="object" states="Draft"/>
+                <button confirm="Are you sure you want to Cancelled?" name="cancelled_lab" string="Cancelled" type="object" states="Draft,Test In Progress"/>
                 <button name="set_lock" string="Lock" states="Unlock" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     <button name="set_unlock" string="Unlock" states="Lock" type="object" class="oe_highlight" groups="oehealth.group_medical_service"/>
             </xpath>

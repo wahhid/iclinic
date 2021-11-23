@@ -9,7 +9,7 @@
                             <div class="row">
                                 <div>
                                   <strong>No. Arrival / No. RM:</strong>
-                                  <p><span t-field="o.arrival_id.name"/> / <span t-field="o.arrival_id.patient.medical_record"/></p>
+                                  <p><span t-field="o.name"/> / <span t-field="o.patient.medical_record"/></p>
                                 </div>
                             </div>
                             <div class="row mt32">
@@ -23,7 +23,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="invoice_tbody">
-                                    <tr t-foreach="o.reg_id.evaluation_id.diagnostic_ids" t-as="l" >
+                                    <tr t-foreach="o.evaluation_id.diagnostic_ids" t-as="l" >
                                         <td class="text-left">
                                             <span t-field="l.product_id.name"/>
                                         </td>
@@ -38,23 +38,27 @@
                             <table class="table table-condensed">
                                 <thead>
                                     <tr>
-                                        <th class="text-left">Nama Tindakan</th>
-                                        <th class="text-center">Dokter</th>
-                                        <th class="text-center">Tanggal</th>
+                                        <th class="text-left">Obat</th>
+                                            <th class="text-center">Dosis</th>
+                                            <th class="text-center">QTY</th>
+                                            <th class="text-center">Duration</th>
                                         
                                     </tr>
                                 </thead>
                                 <tbody class="invoice_tbody">
-                                    <tr t-foreach="o.order_line" t-as="s" >
+                                    <tr t-foreach="o.patient.prescription_line" t-as="s" >
                                         <td class="text-left">
-                                            <span t-field="s.product_id"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <span t-field="o.doctor_id"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <span t-field="o.confirmation_date" t-field-options='{"format": "d MMMM y"}'/>
-                                        </td>
+                                                <span t-field="s.name"/>
+                                            </td>
+                                            <td class="text-left">
+                                                <span t-field="s.dose"/>
+                                            </td>
+                                            <td class="text-left">
+                                                <span t-field="s.qty"/>
+                                            </td>
+                                            <td class="text-left">
+                                                <span t-field="s.duration"/>
+                                            </td>
                                     
                                     </tr>
                                 </tbody>

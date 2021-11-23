@@ -11,6 +11,7 @@ from datetime import timedelta
 
 class multi_diagnostic(models.Model):
     _name = 'oeh.multi.diagnostic'
+    _rec_name = 'pathology_id'
 
     pathology_id = fields.Many2one('oeh.medical.pathology', string='Pathology')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID #')

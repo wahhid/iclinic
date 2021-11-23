@@ -6,26 +6,14 @@
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
                             <div class="oe_structure">
-                                <div class="row">
-                                        <div >
-                                            <p><br/></p>
-                                            <p><br/></p>
-                                        </div>
-                                        <div>
-                                            <p><br/></p>
-                                            <p><br/></p>
-                                        </div>
-                                    <p style="font-size:20px;text-align:center;font-weight:bold;">Rujukan Radiologi</p>
-                                        <div>
-                                            <p><br/></p>
-                                        </div>
-                                </div>
+                                <p><br/></p>
+                                <p><br/></p>
+                                    <p><br/></p>
+                                <p><br/></p>
+                                    <p><br/></p>
+                                <p><br/></p>
                                 <div class="row">
                                     <div class="col-xs-8">
-                                        <div>
-                                            <strong>No. Arrival / No. RM:</strong>
-                                            <p><span t-field="o.arrival_id.name"/> / <span t-field="o.arrival_id.patient.medical_record"/></p>
-                                        </div>
                                         <div>
                                             <strong>Kepada Yth,</strong>
                                             <strong><p>Bagian Radiologi</p></strong>
@@ -34,22 +22,29 @@
                                             <p><br/></p>
                                         </div>
                                         <div>
-                                            <strong>Mohon dilakukan pemeriksaan :</strong>
-                                            <p>___________________________________</p>
+                                            <strong>Mohon dilakukan pemeriksaan : </strong>
+                                            <p t-field="o.test_type"/>
                                         </div>
                                          <div>
                                             <p><br/></p>
                                         </div>
                                         <div>
                                             <strong>Nama pasien: </strong>
-                                            <p t-field="o.arrival_id.patient.name"/>
+                                            <p t-field="o.patient"/>
                                         </div>
                                         <div>
                                             <strong>Tanggal Lahir:</strong>
-                                            <p t-field="o.arrival_id.patient.dob" t-field-options='{"format": "d MMMM y"}'/>
+                                            <p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}'/>
+                                        </div>
+                                        <div>
+                                            <strong>Umur: </strong>
+                                            <p t-field="o.patient.age"/>
                                         </div>
                                         <div >
                                             <p><br/></p>
+                                        </div>
+                                         <div >
+                                            <p>Demikian, Terima Kasih</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -58,7 +53,7 @@
                                             <p><br/></p>
                                             <p><br/></p>
                                         </div>
-                                    <p style="text-align:center;">Dr. <span t-field="o.doctor_id.name"/> </p>
+                                    <p style="text-align:center;">Dr. <span t-field="o.requestor"/> </p>
                                 </div>
 
                                 </div>
