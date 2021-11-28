@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="report_perintah_rawat_inap">
+    <t t-call="report.html_container">
+      <t t-call="report.external_layout">
+        <t t-foreach="docs" t-as="o">
+          <div class="page">
+            <style>
+
+th, td {
+  padding: 7px;
+}
+</style>
+            <div class="oe_structure">
+              <table border="1" style="width:100%;">
+                <tr>
+                  <th style="border: 1px solid black; height: 30px; text-align:center">SURAT PERINTAH RAWAT</th>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid black;">
+                    <table border="0" style="width:100%;">
+                      <tbody>
+                        <tr>
+                          <td>Nama</td>
+                          <td>:</td>
+                          <td>_________________</td>
+                        </tr>
+                        <tr>
+                          <td>Jabatan</td>
+                          <td>:</td>
+                          <td>_________________</td>
+                        </tr>
+                        <tr>
+
+                          <td>Alamat</td>
+
+                          <td>:</td>
+
+                          <td>_________________</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td>Tempat Tugas</td>
+
+                          <td>:</td>
+
+                          <td>_________________</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td colspan="3">Merekomendasikan pasien di bawah ini :</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td>Nama</td>
+
+                          <td>:</td>
+
+                          <td>_________________</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td>Tanggal Lahir</td>
+
+                          <td>:</td>
+
+                          <td>_________________</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td>Umur</td>
+
+                          <td>:</td>
+
+                          <td>_________________.</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td>No. Kartu Asuransi</td>
+
+                          <td>:</td>
+
+                          <td>_________________</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td>Tanggal Pelayanan</td>
+
+                          <td>:</td>
+
+                          <td>_________________</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td colspan="3">Untuk di berikan layanan rawat inap</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td style="text-align: right;" colspan="3">________,________________</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td style="text-align: right;" colspan="3">Pemberi pelayanan,</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td colspan="3">
+                            <t t-raw="foo" />
+                          </td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td colspan="3">
+                            <t t-raw="foo" />
+                          </td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td colspan="3">
+                            <t t-raw="foo" />
+                          </td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td style="text-align: right;" colspan="3">(___________________)</td>
+
+                        </tr>
+
+                        <tr>
+
+                          <td colspan="3">
+                            <t t-raw="foo" />
+                          </td>
+
+                        </tr>
+
+                      </tbody>
+
+                    </table>
+                  </td>
+                </tr>
+
+
+              </table>
+
+
+              <table border="1" style="width:100%;">
+                <tr>
+                  <th style="border: 1px solid black; height: 30px; text-align:center">BUKTI PENERIMAAN LAYANAN</th>
+                </tr>
+                <tr>
+                  <td style="border: 1px solid black;">
+                    <table border="0" style="width:100%;">
+                      <tbody>
+                        <tr>
+                          <td colspan="3">Yang bertanda tangan di bawah ini saya :</td>
+                        </tr>
+                        <tr>
+                          <td>Nama</td>
+                          <td>:</td>
+                          <td>_________________.</td>
+                        </tr>
+                        <tr>
+                          <td>Tanggal Lahir</td>
+                          <td>:</td>
+                          <td>_________________</td>
+                        </tr>
+                        <tr>
+                          <td>Umur</td>
+                          <td>:</td>
+                          <td>_________________</td>
+                        </tr>
+                        <tr>
+                          <td>No. Kartu Asuransi</td>
+                          <td>:</td>
+                          <td>_________________</td>
+                        </tr>
+                        <tr>
+                          <td>Alamat</td>
+                          <td>:</td>
+                          <td>_________________</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">Dengan ini menyatakan bahwa benar saya telah menerima pelayanan _________________.... pada tanggal _________________...... demikian surat ini dibuat dengan sebenarnya dan digunakan sebagaimana mestinya.</td>
+                        </tr>
+                        <tr>
+                          <td style="text-align: right;" colspan="3">________,________________</td>
+                        </tr>
+                        <tr>
+                          <td style="text-align: right;" colspan="3">Yang menyatakan,</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">
+                            <t t-raw="foo" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">
+                            <t t-raw="foo" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">
+                            <t t-raw="foo" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="text-align: right;" colspan="3">(____________________)</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">
+                            <t t-raw="foo" />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>
