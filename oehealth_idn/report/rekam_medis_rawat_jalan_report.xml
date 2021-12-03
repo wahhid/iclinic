@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_rekam_medis_rawat_jalan">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+
+th, td {
+  padding: 5px;
+}
+</style>
+                        <div class="oe_structure">
+                            <h2 style="text-align:center;">REKAM MEDIS RAWAT JALAN</h2>
+
+                            <table style="width:100%">
+                                <tr>
+                                    <td>No.RM : _________________</td>
+                                    <td></td>
+                                    <td>No.NPP : ____________________</td>
+                                    <th rowspan="3" style="border:1px solid black;">
+                                        RIWAYAT ALERGI
+                                        <br />
+                                        <br />
+                                        _______________
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>Nama Lengkap : ___________________</td>
+                                    <td></td>
+                                    <td>Jenis Kelamin : L/P*</td>
+                                </tr>
+                                <tr>
+                                    <td>TTL : ________________</td>
+                                    <td></td>
+                                    <td>Umur : ______________________</td>
+                                </tr>
+                            </table>
+                            <table style="width:100%">
+                                <tr>
+                                    <th style="border:1px solid black;">TANGGAL POLI</th>
+                                    <th style="border:1px solid black;">ASUHAN KEPERAWATAN DNA KEBIDANAN SOAP</th>
+                                    <th style="border:1px solid black;">PERAWAT BIDAN</th>
+                                    <th style="border:1px solid black;">ANAMNESA DAN DIAGNOSA</th>
+                                    <th style="border:1px solid black;">PEMERIKSAAN PENUNJANG</th>
+                                    <th style="border:1px solid black;">TERAPI/TINDAKAN</th>
+                                    <th style="border:1px solid black;">DOKTER</th>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

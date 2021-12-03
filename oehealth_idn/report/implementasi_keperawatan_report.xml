@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_rekam_medis">
+    <template id="report_implementasi_keperawatan">
         <t t-call="report.html_container">
             <t t-call="report.external_layout">
                 <t t-foreach="docs" t-as="o">

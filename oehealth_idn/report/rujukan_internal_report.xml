@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_rujukan_internal">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+table, th, td {
+  padding: 5px;
+}
+</style>
+                        <div class="oe_structure">
+                            <table style="width:100%;">
+                                <tr>
+                                    <th style="border: 1px solid black; text-align:center;">LEMBAR KONSULTASI</th>
+                                    <th style="border: 1px solid black">
+                                        <table style="width:100%; text-align:left;">
+                                            <tr>
+                                                <td>CM/</td>
+                                                <td> : </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nama</td>
+                                                <td> : </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Diagnosa</td>
+                                                <td> : </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="border: 1px solid black">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Kepada TS : dr.______________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Dengan ini kami konsulkan pasien.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Riwayat Penyakit : _____________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Obat dan tindakan yang diberikan : _______________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Terimakasih atas bantuan dan kerjasamanya.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table style="width:100%">
+                                                        <tr>
+                                                            <td style="border:1px solid black;"></td>
+                                                            <td>Mohon konsultasi satu kali</td>
+                                                            <td style="border: 1px solid black"></td>
+                                                            <td>Mohon untuk rawat bersama</td>
+                                                            <td style="border: 1px solid black"></td>
+                                                            <td>Mohon alih rawat</td>
+                                                        </tr>
+
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"> Dokter yang merawat,</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"> Tanggal : ____________ Jam : ___________</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                            <table style="width:100%;">
+                                <tr>
+                                    <th style="border: 1px solid black; text-align:center;">BALASAN KONSULTASI</th>
+                                    <th style="border: 1px solid black">
+                                        <table style="width:100%; text-align:left;">
+                                            <tr>
+                                                <td>CM/</td>
+                                                <td> : </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nama</td>
+                                                <td> : </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Diagnosa</td>
+                                                <td> : </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="border: 1px solid black">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Pemeriksaan : ______________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Diagnosa : _____________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Saran Terapi : _______________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Terimakasih atas  kerjasamanya.</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"> Dokter yang merawat,</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"> Tanggal : ____________ Jam : ___________</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_cppt">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+
+th, td {
+  padding: 5px;
+}
+</style>
+                        <div class="oe_structure">
+                            <table style="width:100%; border : 1px solid black;">
+                                <tr>
+                                    <td>
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>No.RM : _______________</td>
+                                                <td>Ruang Perawat : II/I/VIV Kamar : ____________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nama Pasien : ________________</td>
+                                                <td>Jenis Kelamin : Laki-laki/wanita</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table style="width:100%">
+                                <tr>
+                                    <th style="border : 1px solid black;">Tgl/Jam</th>
+                                    <th style="border : 1px solid black;">Proposional Pemberi Asuhan (PPA)</th>
+                                    <th style="border : 1px solid black;">Hasil Assesment dan Pemberi Pelayanan (S.O.A.P)
+    DPJP harus membaca seluruh rencana perawat
+    </th>
+                                    <th style="border : 1px solid black;">Verifikasi DPJP (bubuhkan stempel,nama,paraf,tgl,jam)</th>
+                                </tr>
+                                <tr>
+                                    <td style="border : 1px solid black;"></td>
+                                    <td style="border : 1px solid black;"></td>
+                                    <td style="border : 1px solid black;">
+                                        S :
+                                        <br />
+                                        <br />
+                                        <br />
+                                        O :
+                                        <br />
+                                        <br />
+                                        <br />
+                                        A :
+                                        <br />
+                                        <br />
+                                        <br />
+                                        P :
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        Edukasi :
+                                        <br />
+                                        <br />
+                                    </td>
+                                    <td style="border : 1px solid black;"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
