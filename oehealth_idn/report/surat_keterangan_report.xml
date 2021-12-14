@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_surat_keterangan">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+table, th, td {
+  padding: 5px;
+}
+</style>
+                        <div class="oe_structure">
+                            <h2 style="text-align:center;">SURAT KETERANGAN</h2>
+                            <p style="text-align:center;">No. /MK/SKI/ /20</p>
+
+                            <table style="width:100%">
+                                <tr>
+                                    <td colspan="3">Dokter yang bertanda tangan di bawah ini menerangkan, bahwa</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Nama</td>
+                                    <td> : </td>
+                                    <td>_______________________________________</td>
+                                </tr>
+                                <tr>
+                                    <td>Umur</td>
+                                    <td> : </td>
+                                    <td>_______________________________________</td>
+                                </tr>
+                                <tr>
+                                    <td>Pekerjaan/Sekolah</td>
+                                    <td> : </td>
+                                    <td>_______________________________________</td>
+                                </tr>
+                                <tr>
+                                    <td>Alamat</td>
+                                    <td> : </td>
+                                    <td>_______________________________________</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+    Setelah diperiksa kesehatannya dalam keadaan sakit, harus istirahat selama (___________) hari
+    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+    Terhitung Tanggal _________________ s/d_______________
+    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+    Demikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.
+    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+    ________,__________________
+  
+                                </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        Pemeriksa,
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+    dr._________
+  
+                                
+                                </td>
+
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

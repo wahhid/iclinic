@@ -1,64 +1,91 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_rujukan_radiologi">
         <t t-call="report.html_container">
             <t t-call="report.external_layout">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
-                            <div class="oe_structure">
-                                <p><br/></p>
-                                <p><br/></p>
-                                    <p><br/></p>
-                                <p><br/></p>
-                                    <p><br/></p>
-                                <p><br/></p>
-                                <div class="row">
-                                    <div class="col-xs-8">
-                                        <div>
-                                            <strong>Kepada Yth,</strong>
-                                            <strong><p>Bagian Radiologi</p></strong>
-                                        </div>
-                                        <div >
-                                            <p><br/></p>
-                                        </div>
-                                        <div>
-                                            <strong>Mohon dilakukan pemeriksaan : </strong>
-                                            <p t-field="o.test_type"/>
-                                        </div>
-                                         <div>
-                                            <p><br/></p>
-                                        </div>
-                                        <div>
-                                            <strong>Nama pasien: </strong>
-                                            <p t-field="o.patient"/>
-                                        </div>
-                                        <div>
-                                            <strong>Tanggal Lahir:</strong>
-                                            <p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}'/>
-                                        </div>
-                                        <div>
-                                            <strong>Umur: </strong>
-                                            <p t-field="o.patient.age"/>
-                                        </div>
-                                        <div >
-                                            <p><br/></p>
-                                        </div>
-                                         <div >
-                                            <p>Demikian, Terima Kasih</p>
-                                        </div>
+                        <div class="oe_structure">
+                            <p>
+                                <br />
+                            </p>
+                            <p>
+                                <br />
+                            </p>
+                            <p>
+                                <br />
+                            </p>
+                            <p>
+                                <br />
+                            </p>
+                            <p>
+                                <br />
+                            </p>
+                            <p>
+                                <br />
+                            </p>
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <div>
+                                        <strong>Kepada Yth,</strong>
+                                        <strong>
+                                            <p>Bagian Radiologi</p>
+                                        </strong>
                                     </div>
-                                    <div class="row">
+                                    <div>
+                                        <p>
+                                            <br />
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <strong>Mohon dilakukan pemeriksaan : </strong>
+                                        <!-- <p t-field="o.test_type" /> -->
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <br />
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <strong>Nama pasien: </strong>
+                                        <p t-field="o.patient" />
+                                    </div>
+                                    <div>
+                                        <strong>Tanggal Lahir:</strong>
+                                        <p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' />
+                                    </div>
+                                    <div>
+                                        <strong>Umur: </strong>
+                                        <p t-field="o.patient.age" />
+                                    </div>
+                                    <div>
+                                        <p>
+                                            <br />
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p>Demikian, Terima Kasih</p>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <p style="text-align:center;">_______,_________________ </p>
-                                        <div >
-                                            <p><br/></p>
-                                            <p><br/></p>
-                                        </div>
-                                    <p style="text-align:center;">Dr. <span t-field="o.requestor"/> </p>
+                                    <div>
+                                        <p>
+                                            <br />
+                                        </p>
+                                        <p>
+                                            <br />
+                                        </p>
+                                    </div>
+                                    <p style="text-align:center;">
+                                        Dr.
+                                        <span t-field="o.doctor" />
+                                    </p>
                                 </div>
 
-                                </div>
-                         
                             </div>
+
+                        </div>
                     </div>
                 </t>
             </t>

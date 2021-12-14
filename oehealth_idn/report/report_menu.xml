@@ -29,13 +29,13 @@
         name="oehealth_idn.report_konsultasi_rujukan" menu="True"
         /> -->
 
-    <report id="rujukan_radiologi_report_menu" string="Rujukan Radiologi" model="oeh.medical.lab.test" report_type="qweb-pdf" name="oehealth_idn.report_rujukan_radiologi" menu="True" />
+    <report id="rujukan_radiologi_report_menu" string="Rujukan Radiologi" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_rujukan_radiologi" menu="True" />
 
-    <report id="rujukan_pasien_report_menu" string="Rujukan Pasien" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_rujukan_pasien" menu="True" />
+    <report id="rujukan_pasien_report_menu" string="Rujukan External" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_rujukan_pasien" menu="True" />
 
     <report id="perintah_rawat_inap_report_menu" string="Perintah Rawat Inap" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_perintah_rawat_inap" menu="True" />
 
-    <report id="pengkajian_report_menu" string="Form Pengkajian" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian" menu="True" />
+    <report id="pengkajian_report_menu" string="Form Pengkajian Awal Klinis Rawat Jalan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian" menu="True" />
 
     <report id="pengkajian_rawat_inap_report_menu" string="Form Pengkajian Rawat Inap" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian_rawat_inap" menu="True" />
 
@@ -45,11 +45,21 @@
 
     <report id="implementasi_keperawatan_report_menu" string="Form Implementasi Keperawatan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_implementasi_keperawatan" menu="True" />
 
+    <report id="observasi_terapi_pasien_report_menu" string="Observasi Terapi Pasien" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_observasi_terapi_pasien" menu="True" />
+
     <report id="catatan_asuhan_gizi_report_menu" string="Form Catatan Asuhan Gizi" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_catatan_asuhan_gizi" menu="True" />
 
     <report id="persetujuan_tindakan_report_menu" string="Persetujuan Tindakan" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_persetujuan_tindakan" menu="True" />
 
+    <report id="rujukan_poli_gigi_report_menu" string="Rujukan Poli Gigi" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_rujukan_poli_gigi" menu="True" />
+
+    <report id="pemeriksaan_poli_gigi_report_menu" string="Pemeriksaan Poli Gigi" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_pemeriksaan_poli_gigi" menu="True" />
+
     <report id="rujukan_internal_report_menu" string="Rujukan Internal" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_rujukan_internal" menu="True" />
+
+    <report id="surat_keterangan_report_menu" string="Surat Keterangan" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_surat_keterangan" menu="True" />
+
+    <report id="catatan_registrasi_pasien_report_menu" string="Catatan Registrasi Pasien" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_catatan_registrasi_pasien" menu="True" />
 
     <report id="daftar_transaksi_detail_report_menu" string="Daftar Transaksi Detail" model="sale.order" report_type="qweb-pdf" name="oehealth_idn.report_daftar_transaksi_detail" menu="True" />
 
@@ -103,6 +113,23 @@
         <field name="header_spacing">0</field>
         <field name="dpi">90</field>
         <field name="report_ids" eval="[(4, ref('oehealth_idn.rujukan_radiologi_report_menu'))]" />
+    </record>
+
+    <record id="observasi_terapi_pasien_paperformat" model="report.paperformat">
+        <field name="name">Observasi Format</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+        <field name="report_ids" eval="[(4, ref('oehealth_idn.observasi_terapi_pasien_report_menu'))]" />
     </record>
 
 </odoo>

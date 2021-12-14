@@ -221,49 +221,31 @@ table, th, td {
                     <td>SAKSI,</td>
                   </tr>
                   <tr>
-                    <td>
+                    <td rowspan="4">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
                       <br />
                     </td>
-                    <td>
+                    <td rowspan="4">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
                       <br />
                     </td>
-                    <td>
+                    <td rowspan="4">
                       <br />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
                       <br />
-                    </td>
-                    <td>
                       <br />
-                    </td>
-                    <td>
                       <br />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <br />
-                    </td>
-                    <td>
-                      <br />
-                    </td>
-                    <td>
                       <br />
                     </td>
                   </tr>
-                  <tr>
-                    <td>
-                      <br />
-                    </td>
-                    <td>
-                      <br />
-                    </td>
-                    <td>
-                      <br />
-                    </td>
-                  </tr>
+                  <tr></tr>
+                  <tr></tr>
+                  <tr></tr>
                   <tr>
                     <td>   (...................................)   </td>
                     <td>   (...................................)   </td>
@@ -352,49 +334,31 @@ table, th, td {
                     <td>SAKSI,</td>
                   </tr>
                   <tr>
-                    <td>
+                    <td rowspan="4">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
                       <br />
                     </td>
-                    <td>
+                    <td rowspan="4">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
                       <br />
                     </td>
-                    <td>
+                    <td rowspan="4">
                       <br />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
                       <br />
-                    </td>
-                    <td>
                       <br />
-                    </td>
-                    <td>
                       <br />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <br />
-                    </td>
-                    <td>
-                      <br />
-                    </td>
-                    <td>
                       <br />
                     </td>
                   </tr>
-                  <tr>
-                    <td>
-                      <br />
-                    </td>
-                    <td>
-                      <br />
-                    </td>
-                    <td>
-                      <br />
-                    </td>
-                  </tr>
+                  <tr></tr>
+                  <tr></tr>
+                  <tr></tr>
                   <tr>
                     <td>   (...................................)   </td>
                     <td>   (...................................)   </td>
