@@ -16,7 +16,7 @@
         </field>
     </record>
 
-    <!-- Prescription -->
+    <!-- Prescription 
     <record model="ir.ui.view" id="oeh_medical_prescription_view_inherit_action">
         <field name="name">oeh_medical_prescription_view_inherit_action</field>
         <field name="model">oeh.medical.prescription</field>
@@ -29,6 +29,7 @@
             </xpath>
         </field>
     </record>
+    -->
 
     <!-- Imaging Test -->
     <record model="ir.ui.view" id="oeh_medical_imaging_test_form">

@@ -24,11 +24,7 @@
                     <field name="allergy_history"/>
                 </page>
                 <page string="Diagnostic">
-                    <field name="diagnostic_ids">
-                        <tree string="Multi Diagnostic">
-                            <field name="pathology_id"/>
-                        </tree>
-                    </field>
+                    <field name="diagnostic_ids" widget="many2many_tags"/>
                 </page>
             </notebook>
             

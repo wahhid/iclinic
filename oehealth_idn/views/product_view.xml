@@ -14,7 +14,12 @@
                 <field name="is_concoction"/>
             </field>
             <field name="uom_po_id" position="after">
-                <field name="zat_uom" attrs="{'invisible': [('item_type', '!=', 'Medicine')]}"/>
+                <label for="zat_uom" string="Alt Uom"/>
+                <div>
+                    <field name="zat_uom" attrs="{'invisible': [('item_type', '!=', 'Medicine')]}"/>
+                    <span style="margin-right:10px"/>
+                    <field name="zat_qty" attrs="{'invisible': [('item_type', '!=', 'Medicine')]}"/>
+                </div>
             </field>
         </field>
     </record>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_registration_receipt">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t>
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row text-center">
+                                        <img t-if="res_company.logo" style="width:150px;height:150px;" t-att-src="'data:image/png;base64,%s' %res_company.logo"/>
+                                    </div>
+                                    <div class="row text-center">
+                                        <div class="col-xs-12">
+                                            <span style="font-size:56px;" t-field="o.queue_trans_id"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <span>Arrival #</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <span t-field="o.name"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <span>NIK</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <span>Nama</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <span t-field="o.patient.name"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <span>Tanggal Lahir</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <span t-field="o.patient.dob"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <span>Poli</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <t t-foreach="o.clinic_ids" t-as="clinic_id">
+                                                <span t-field="clinic_id.unit"/>                                                
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <span>Asuransi</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <t t-if="o.payment=='Insurance'">
+                                                <span t-field="o.insurance.ins_type"/>
+                                            </t>
+                                            <t t-if="o.payment=='Personal'">
+                                                <span>Personal</span>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center" styles="margin-top:30px;">
+                                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:50px"/>                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+        
+        <report
+            string="Registration Receipt"
+            id="action_report_registration_receipt"
+            model="oeh.medical.appointment.register.walkin"
+            report_type="qweb-pdf"
+            name="oehealth_idn.report_registration_receipt"
+            file="oehealth_idn.report_registration_receipt"
+        />
+    </data>
+</openerp>

@@ -75,28 +75,33 @@ class oeh_medical_appointment(models.Model):
                         emergency_ids = arv_ids.id
                     elif acc.patient_status == 'Medical Support':
                         support_ids = arv_ids.id
-                    val_obj2 = {'appointment_id': acc.id, 
-                       'clinic_walkin_id': clinic_ids, 
-                       'unit_walkin_id': unit_ids, 
-                       'emergency_walkin_id': emergency_ids, 
-                       'support_walkin_id': support_ids, 
-                       'patient': acc.patient.id, 
-                       'type': acc.patient_status, 
-                       'unit': acc.unit.id, 
-                       'doctor': acc.doctor.id, 
-                       'schedule': 'Yes', 
-                       'date': datetime.datetime.now()}
+                    val_obj2 = {
+                        'appointment_id': acc.id, 
+                        'clinic_walkin_id': clinic_ids, 
+                        'unit_walkin_id': unit_ids, 
+                        'emergency_walkin_id': emergency_ids, 
+                        'support_walkin_id': support_ids, 
+                        'patient': acc.patient.id, 
+                        'type': acc.patient_status, 
+                        'unit': acc.unit.id, 
+                        'doctor': acc.doctor.id, 
+                        'schedule': 'Yes', 
+                        'date': datetime.datetime.now()
+                    }
                     reg_ids = obj2.create(val_obj2)
                     if reg_ids:
                         self.state = 'Visited'
             else:
                 raise UserError(_('Configuration error! \n Could not find any patient to create the registration !'))
 
-        return {'name': 'Transactions', 'view_type': 'form', 
-           'view_mode': 'form', 
-           'res_id': reg_ids.id, 
-           'res_model': 'unit.registration', 
-           'type': 'ir.actions.act_window'}
+        return {
+            'name': 'Transactions', 
+            'view_type': 'form', 
+            'view_mode': 'form', 
+            'res_id': arv_ids.id, 
+            'res_model': 'oeh.medical.appointment.register.walkin', 
+            'type': 'ir.actions.act_window'
+        }
 
     @api.model
     def create(self, vals):

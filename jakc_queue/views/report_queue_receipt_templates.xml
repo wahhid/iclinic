@@ -13,7 +13,10 @@
                     <link rel="stylesheet" href="/jakc_queue/static/src/js/paper.css"/>
                     <!-- Set page size here: A5, A4 or A3 -->
                     <!-- Set also "landscape" if you need -->
-                    <style>@page { size: A5 portrait }</style>
+                    <style>
+                        @page { size: A5 portrait }
+                        body {color:black;}
+                    </style>
 
                     <!-- Custom styles for this document -->
                     <link href='https://fonts.googleapis.com/css?family=Tangerine:700' rel='stylesheet' type='text/css'/>

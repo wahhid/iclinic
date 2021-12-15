@@ -7,7 +7,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
 import requests, json
-from datetime import datetime, timedelta
+import datetime
 import pytz
 import logging
 
@@ -32,6 +32,7 @@ class unit_registration(models.Model):
      ('Check-In', 'Check-In'),
      ('Check-Out', 'Check-Out'),
      ('Cancelled', 'Cancelled')]
+
     QUEUE_STATUS = [
      ('Waiting', 'Waiting'),
      ('Now', 'Now'),
@@ -61,6 +62,19 @@ class unit_registration(models.Model):
         # for row in self:
         #     row.insurance = row.patient.current_insurance
 
+    def action_next(self):
+        if self.queue_trans_id.type_id.unit_administration_id.id == self.env.user.default_unit_administration_id.id:
+            next_type_id = self.queue_trans_id.type_id.next_type_id
+            self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})        
+            self.state = 'Unlock'
+        else:
+            raise Warning('Queue have different unit administration')
+
+    def get_user_unit_administration(self):
+        for row in self:
+            _logger.info(self.env.user.default_unit_administration_id.id)
+            row.user_unit_administration_id = self.env.user.default_unit_administration_id.id
+
     name = fields.Char(string='Reg ID #', required=True, readonly=True, default=lambda *a: '/')
     queue = fields.Char(string='Queue #', compute='get_queue', readonly=True)
     queue_no = fields.Integer(string='Queue No.', readonly=True)
@@ -68,25 +82,27 @@ class unit_registration(models.Model):
     is_blacklist = fields.Boolean(related='patient.is_blacklist')
     dob = fields.Date(string='Date of Birth', related='patient.dob', store=True)
     age = fields.Char(related='patient.age')
-    type = fields.Selection([('Out-Patient', 'Out-Patient'),
-     ('In-Patient', 'In-Patient'),
-     ('Emergency', 'Emergency'),
-     ('Medical Support', 'Medical Support'),
-     ('Logistic', 'Logistic'),
-     ('Non-Medis', 'Non-Medis')], 'Unit Type', readonly=True, states={'Draft': [('readonly', False)]})
+    type = fields.Selection([
+        ('Out-Patient', 'Out-Patient'),
+        ('In-Patient', 'In-Patient'),
+        ('Emergency', 'Emergency'),
+        ('Medical Support', 'Medical Support'),
+        ('Logistic', 'Logistic'),
+        ('Non-Medis', 'Non-Medis')
+     ], 'Unit Type', readonly=True, states={'Draft': [('readonly', False)]})
     unit = fields.Many2one(comodel_name='unit.administration', string='Unit', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit', default=lambda self: self.env.user.default_operating_unit_id.id)
     doctor = fields.Many2one(comodel_name='oeh.medical.physician', string='Doctor', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
-    payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
-    company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
-    insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
-    employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
+    payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=False, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=False, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=False, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=False)
     payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount')
     remarks = fields.Text(string='Remarks', readonly=True, states={'Unlock': [('readonly', False)]}, track_visibility='onchange')
     reference_id = fields.Many2one(comodel_name='unit.registration', string='Reference ID', readonly=True, states={'Draft': [('readonly', False)], 'Unlock': [('readonly', False)]}, track_visibility='onchange')
     doctor_reference = fields.Many2one(comodel_name='oeh.medical.physician', related='reference_id.doctor', string='Doctor Reference', help='Doctor Reference', readonly=True)
     schedule = fields.Selection([('No', 'Not Appointment'), ('Yes', 'Appointment')], string='Schedule', default='No', readonly=True, states={'Unlock': [('readonly', False)]}, track_visibility='onchange')
-    date = fields.Datetime(string='Date', default=lambda *a: datetime.now(), readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
+    date = fields.Datetime(string='Date', default=lambda *a: datetime.datetime.now(), readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     class_id = fields.Many2one(comodel_name='class.administration', readonly=True, states={'Draft': [('readonly', False)]}, string='Class Name')
     room_id = fields.Many2one(comodel_name='oeh.medical.health.center.ward', readonly=True, states={'Draft': [('readonly', False)]}, string='Room Name')
     charge_id = fields.Many2one(comodel_name='class.administration', string='Charge Type', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
@@ -112,7 +128,14 @@ class unit_registration(models.Model):
     sale_ids = fields.One2many(comodel_name='sale.order', inverse_name='reg_id', string='Transactions')
     diagnostic_ids = fields.One2many(comodel_name='oeh.multi.diagnostic', inverse_name='reg_id', string='Diagnostic')
     state = fields.Selection(CLINIC_STATUS, string='State', default='Draft', track_visibility='onchange')
+    
+    queue_trans_id = fields.Many2one('queue.trans','Queue', domain=[('unit','','')])
+    type_id = fields.Many2one('queue.type', related="queue_trans_id.type_id", readonly=True)
+    user_unit_administration_id = fields.Many2one('unit.administration', compute="get_user_unit_administration")
+    is_on_unit_administration = fields.Boolean('', compute="get_user_unit_administration")
+
     queue_state = fields.Selection(QUEUE_STATUS, string='Queue State', default='Waiting', copy=False, readonly=True, track_visibility='onchange')
+    
     _sql_constraints = [
      ('full_name_uniq', 'unique (name)', 'The Queue Number must be unique')]
 
@@ -129,67 +152,67 @@ class unit_registration(models.Model):
         sequence = self.env['ir.sequence'].next_by_code('unit.registration')
         vals['name'] = sequence
         vals['state'] = 'Unlock'
-        self.env.cr.execute("\n                            SELECT\n                                MAX(s.queue_no) AS no_max \n                            FROM\n                                unit_registration s\n                            WHERE\n                                to_char ( s.create_date, 'YYYY-MM-DD' ) = to_char ( CURRENT_DATE, 'YYYY-MM-DD' )\n                                AND s.type = %s AND s.unit = %s AND s.doctor = %s\n                            ", (vals['type'], vals['unit'], vals['doctor']))
-        get_no_max = self.env.cr.dictfetchall()
-        queue_no = 1
-        for data in get_no_max:
-            if data['no_max']:
-                queue_no = int(data['no_max']) + 1
-        vals['queue_no'] = queue_no
+        #self.env.cr.execute("\n                            SELECT\n                                MAX(s.queue_no) AS no_max \n                            FROM\n                                unit_registration s\n                            WHERE\n                                to_char ( s.create_date, 'YYYY-MM-DD' ) = to_char ( CURRENT_DATE, 'YYYY-MM-DD' )\n                                AND s.type = %s AND s.unit = %s AND s.doctor = %s\n                            ", (vals['type'], vals['unit'], vals['doctor']))
+        #get_no_max = self.env.cr.dictfetchall()
+        #queue_no = 1
+        #for data in get_no_max:
+        #    if data['no_max']:
+        #        queue_no = int(data['no_max']) + 1
+        #vals['queue_no'] = queue_no
+        _logger.info(vals)
         res = super(unit_registration, self).create(vals)
-        if res.payment == 'Personal':
-            #Personal
-            domain = [
-                ('payment','=', 'Personal')
-            ]
-            payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
-            if not payment_quarantor_discount_id:
-                raise  Warning(_('Payment Guarantor Discount not found'))
-            res.payment_quarantor_discount_id = payment_quarantor_discount_id
-        elif res.payment == 'Corporate':
-            #Corporate
-            _logger.info('Corporate')
-            domain = [
-                ('payment','=', 'Corporate'),
-                ('company','=', res.company.id)
-            ]
-            _logger.info(domain)
-            payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
-            if not payment_guarantor_discount_id:
-                warning_mess = {
-                        'title': _('Payment Guarantor Discount'),
-                        'message': 'Payment Guarantor Discount not found'
-                }
-                return {'warning': warning_mess}
-                #raise Warning(_('Payment Guarantor Discount not found'))
-            _logger.info(payment_guarantor_discount_id.description)
-            res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
-        elif res.payment == 'Insurance':
-            #Insurance
-            _logger.info('Insurance')
-            domain = [
-                ('payment','=', 'Insurance'),
-                ('insurance_type_id','=', res.insurance.ins_type.id)
-            ]
-            _logger.info(domain)
-            payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
-            if not payment_guarantor_discount_id:
-                raise Warning(_('Payment Guarantor Discount not found'))
-            _logger.info(payment_guarantor_discount_id.description)
-            res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
-        else:
-            #Employee
-            domain = [
-                ('payment','=', 'Employee')
-            ]
-            payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
-            if not payment_quarantor_discount_id:
-                raise Warning(_('Payment Guarantor Discount not found'))
-            res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
+        # if res.payment == 'Personal':
+        #     #Personal
+        #     domain = [
+        #         ('payment','=', 'Personal')
+        #     ]
+        #     payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+        #     if not payment_quarantor_discount_id:
+        #         raise  Warning(_('Payment Guarantor Discount not found'))
+        #     res.payment_quarantor_discount_id = payment_quarantor_discount_id
+        # elif res.payment == 'Corporate':
+        #     #Corporate
+        #     _logger.info('Corporate')
+        #     domain = [
+        #         ('payment','=', 'Corporate'),
+        #         ('company','=', res.company.id)
+        #     ]
+        #     _logger.info(domain)
+        #     payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+        #     if not payment_guarantor_discount_id:
+        #         warning_mess = {
+        #                 'title': _('Payment Guarantor Discount'),
+        #                 'message': 'Payment Guarantor Discount not found'
+        #         }
+        #         return {'warning': warning_mess}
+        #         #raise Warning(_('Payment Guarantor Discount not found'))
+        #     _logger.info(payment_guarantor_discount_id.description)
+        #     res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
+        # elif res.payment == 'Insurance':
+        #     #Insurance
+        #     _logger.info('Insurance')
+        #     domain = [
+        #         ('payment','=', 'Insurance'),
+        #         ('insurance_type_id','=', res.insurance.ins_type.id)
+        #     ]
+        #     _logger.info(domain)
+        #     payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+        #     if not payment_guarantor_discount_id:
+        #         raise Warning(_('Payment Guarantor Discount not found'))
+        #     _logger.info(payment_guarantor_discount_id.description)
+        #     res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
+        # else:
+        #     #Employee
+        #     domain = [
+        #         ('payment','=', 'Employee')
+        #     ]
+        #     payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
+        #     if not payment_quarantor_discount_id:
+        #         raise Warning(_('Payment Guarantor Discount not found'))
+        #     res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
 
         if warning_mess:
             res.update({'warning': warning_mess})
-
         return res
 
     def get_queue(self):
@@ -250,9 +273,7 @@ class unit_registration(models.Model):
                     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                     'partner_shipping_id': acc.patient.partner_id.id, 
                     'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
-                    #'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
                     'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).id
-                    #'operating_unit_id': acc.unit.operating_id.id or False
                 }
                 #Create Sale Order
                 inv_ids = obj.create(val_obj)
@@ -276,17 +297,38 @@ class unit_registration(models.Model):
                                     discount = acc.payment_guarantor_discount_id.doctor
                                 elif product_id.item_type == 'Nurse':        
                                     discount = acc.payment_guarantor_discount_id.nurse
-                            vals = {
-                                'order_id': inv_id, 
-                                'product_id': product_id.id, 
-                                'name': product_id.name, 
-                                'product_uom_qty': 1, 
-                                'product_uom': product_id.uom_id.id, 
-                                'price_unit': product_id.lst_price,
-                                'discount_type': 'percent',
-                                'discount': discount or False,
-                                'doctor_id': False
-                            }
+                            
+                            if product_id.item_type == 'Doctor':
+                                lst_price = acc.doctor.consultancy_price
+                            else:
+                                lst_price = product_id.lst_price
+                            _logger.info(lst_price)
+                            if product_id.item_type == 'Doctor':
+                                _logger.info("Product Doctor")
+                                vals = {
+                                    'order_id': inv_id, 
+                                    'product_id': product_id.id, 
+                                    'name': product_id.name, 
+                                    'product_uom_qty': 1, 
+                                    'product_uom': product_id.uom_id.id, 
+                                    'price_unit': lst_price,
+                                    'discount_type': 'percent',
+                                    'discount': discount,
+                                    'doctor_id': False
+                                }
+                            else:
+                                _logger.info("Product non Doctor")
+                                vals = {
+                                    'order_id': inv_id, 
+                                    'product_id': product_id.id, 
+                                    'name': product_id.name, 
+                                    'product_uom_qty': 1, 
+                                    'product_uom': product_id.uom_id.id, 
+                                    'price_unit': lst_price,
+                                    'discount_type': 'percent',
+                                    'discount': discount,
+                                    'doctor_id': False
+                                }
                             #create sale order line
                             line_obj.create(vals)
                         
@@ -296,11 +338,14 @@ class unit_registration(models.Model):
             else:
                 raise UserError(_('Configuration error! \n Could not find any patient to create the transactions !'))
 
-        return {'name': 'Transactions', 'view_type': 'form', 
-           'view_mode': 'form', 
-           'res_id': inv_id, 
-           'res_model': 'sale.order', 
-           'type': 'ir.actions.act_window'}
+        return {
+            'name': 'Transactions', 
+            'view_type': 'form', 
+            'view_mode': 'form', 
+            'res_id': inv_id, 
+            'res_model': 'sale.order', 
+            'type': 'ir.actions.act_window'
+        }
 
     @api.multi
     def view_sale(self):
@@ -323,8 +368,10 @@ class unit_registration(models.Model):
         if self.type == 'In-Patient':
             if self.is_control and not self.control_date:
                 raise UserError(_('Locking Error! \n Date Control must be set !'))
+        
         if not self.sale_ids:
             raise UserError(_('Locking Error! \n Transaction empty !'))
+
         for line in self.sale_ids:
             if line.state not in ('sale', 'done'):
                 raise UserError(_('Locking Error! \n Transaction # ' + line.name + ' must be confirm first !'))
@@ -339,8 +386,10 @@ class unit_registration(models.Model):
             self.env.cr.execute("\n                                UPDATE\n                                    unit_registration\n                                SET\n                                    queue_state = 'Done'\n                                WHERE\n                                    doctor = %s AND id != %s AND queue_state = 'Now'\n                                ", (row.doctor.id, row.id))
             self.queue_state = 'Now'
 
-        return {'type': 'ir.actions.client', 
-           'tag': 'reload'}
+        return {
+            'type': 'ir.actions.client', 
+            'tag': 'reload'
+        }
 
     @api.multi
     def set_to_hospitalized(self):

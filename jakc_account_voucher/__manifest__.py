@@ -12,6 +12,7 @@
         'account_voucher'
     ],
     'data': [
+        'wizard/wizard_account_voucher_view.xml',
         'views/jakc_account_voucher_view.xml',
         'views/jakc_res_users_view.xml',
         'report/account_voucher_report.xml',

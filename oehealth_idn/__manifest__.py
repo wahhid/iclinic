@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-
 {
-    "name" : "Indonesia Hospital Management System",
-    "version" : "2.0",
-    "author" :"Permata Technology, Ibrahim",
+    "name" : "Hospital Management System",
+    "version" : "10.0.2.0",
+    "author" :"WEHA Consultant",
     "category": "Medical",
     "description" :
     '''
@@ -18,7 +17,8 @@
         "vit_kelurahan",
         "sale_margin",
         "stock",
-        "jakc_queue"
+        "jakc_queue",
+        "operating_unit"
     ],
     "init_xml": [],
     "data": [
@@ -26,7 +26,6 @@
         "security/res.groups.xml",
         "security/ir.rule.xml",
         "security/ir.model.access.csv",
-
         "views/medical_evaluation_view.xml",
         "views/class_view.xml",
         "views/room_view.xml",
@@ -46,12 +45,12 @@
         "views/opthalmology_view.xml",
         "views/account_invoice_view.xml",
         "views/stock_pack_operation_views.xml",
+        "views/jakc_queue_view.xml",
+        "views/res_users_view.xml",
         "views/menu_view.xml",
-
         "config/sale_config_settings.xml",
         # "wizard/sale_order_line_make_account_invoice_view.xml",
         "wizard/ms_report_stock_wizard.xml",
-
         "report/patient_card_report.xml",
         "report/stiker_pasien_report.xml",
         "report/master_filepatient_report.xml",
@@ -69,6 +68,7 @@
         "report/rujukan_radiologi_report.xml",
         "report/rujukan_pasien_report.xml",
         "report/persetujuan_tindakan_report.xml",
+        "report/registration_reciept.xml",
         "report/report_menu.xml",
     ],
     "installable": True,

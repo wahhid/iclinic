@@ -57,7 +57,7 @@
                 <tree string="Counter">
 	            	<field name="name"/>
 	              	<field name="display_type"/>
-	              	<field name="font_size"/>	                        	                       
+	              	<field name="font_size"/>	                       	                       
 					<field name="state"/>	                                                   
                 </tree>
             </field>
@@ -78,6 +78,8 @@
 	                        <field name="number"/>
                             <field name="queue_display_id"/>
                             <field name="bg_color"/>
+                            <field name="sequence_id"/>
+                            <field name="next_type_id"/>
 	                        <field name="state"/>	                                                   
 	                    </group>	                		                	
                 	</sheet>  
@@ -95,6 +97,8 @@
                     <field name="queue_display_id"/>
 	            	<field name="number"/>
                     <field name="bg_color"/>
+                    <field name="sequence_id"/>
+                    <field name="next_type_id"/> 
 	                <field name="state"/>	                                                   
                 </tree>
             </field>
@@ -204,6 +208,10 @@
             <field name="type">form</field>						
             <field name="arch" type="xml">
                 <form string="Queue Transaction" version="7.0">
+                    <header>
+                        <button name="action_close" type="object" string="Close" states="draft,open" class="btn btn-primary"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
                 	<sheet>
 	                    <group>                            
 				            <field name="trans_id"/>				            
@@ -215,8 +223,7 @@
 				            <field name="pickup_date_time"/>				            
 				            <field name="end_date_time"/>	
                             <field name="vaccine_type"/>		
-                            <field name="time_schedule"/>	            
-				            <field name="state"/>	                                                   
+                            <field name="time_schedule"/>	                          
 	                    </group>	                		                	
                 	</sheet>  
                 </form>
@@ -275,6 +282,37 @@
             </field>
         </record>   
         
+        <!-- QUEUE/SEQUENCE -->
+        <record model="ir.ui.view" id="view_queue_sequence_form">
+            <field name="name">queue.sequence.form</field>
+            <field name="model">queue.sequence</field>							
+            <field name="type">form</field>						
+            <field name="arch" type="xml">
+                <form string="Sequence">
+                	<sheet>
+	                    <group>                 
+	                        <field name="name"/>
+                            <field name="code"/>
+                            <field name="sequence_id"/>           
+	                    </group>	                		                	
+                	</sheet>  
+                </form>
+            </field>
+        </record>
+		
+        <record model="ir.ui.view" id="view_queue_sequence_tree">
+            <field name="name">queue.sequence.tree</field>
+            <field name="model">queue.sequence</field>			
+            <field name="type">tree</field>						
+            <field name="arch" type="xml">
+                <tree string="Sequence">
+                    <field name="name"/>
+                    <field name="code"/>
+	            	<field name="sequence_id"/>                                                   
+                </tree>
+            </field>
+        </record>
+
 		<!-- ACTION -->
 
         <!-- KIOSK -->
@@ -340,6 +378,18 @@
 			<field name="context">{'search_default_status_new':1,'search_default_status_open':1,'search_default_group_status': 1}</field>                        
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">Create the first transaction
+                </p>
+            </field>
+        </record>
+
+         <!-- SEQUENCE -->
+		<record model="ir.actions.act_window" id="queue_sequence_action">
+            <field name="name">queue.sequence.action</field>
+            <field name="res_model">queue.sequence</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create the first sequence
                 </p>
             </field>
         </record>

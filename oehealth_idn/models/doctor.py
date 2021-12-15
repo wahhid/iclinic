@@ -24,6 +24,7 @@ class oeh_medical_physician(models.Model):
     queue_code = fields.Char(string='Queue Code')
     consultancy_fee = fields.Float('Consultancy Fee (%)', default=0.0)
     bpjs_price =  fields.Float('Bpsj Charge', default=0.0)
+    is_pathology = fields.Boolean('Pathology ?', default=False)
 
     @api.multi
     def view_schedule(self):

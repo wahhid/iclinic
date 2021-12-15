@@ -107,12 +107,12 @@
                                         <span style="font-size:14px" t-field="l.name"/>
                                     </td>
                                     <td class="text-right">
-                                        <span style="font-size:14px" t-field="l.price_subtotal" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                        <span style="font-size:14px" t-field="l.price_subtotal" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="3" class="text-right">
-                                        <span style="font-size:14px" t-field="doc.amount" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                        <span style="font-size:14px" t-field="doc.amount" />
                                     </td>
                                 </tr>
                             </tbody>
@@ -122,25 +122,43 @@
                         <![CDATA[&nbsp;&nbsp;]]><span t-esc="doc.narration"/>
                         <br/>
                         <br/>
-                        <table border="2" width="100%">
-                            <tr>
-                                <td class="text-center">Dibuat oleh</td>
-                                <td class="text-center">Diperiksa oleh</td>
-                                <td class="text-center">Disetujui oleh</td>
-                                <td class="text-center">Diterima oleh</td>
-                            </tr>
-                            <tr>
-                                <td height="50"></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <table style="border: 1px solid black;" width="100%">
+                                    <tr style="border: 1px solid black;">
+                                        <td class="text-center" style="border: 1px solid black;">Pemohon</td>
+                                        <td class="text-center" style="border: 1px solid black;">Kasir</td>
+                                        <td class="text-center" style="border: 1px solid black;">Disetujui</td>
+                                        <td class="text-center" style="border: 1px solid black;">Akuntansi</td>
+                                    </tr>
+                                    <tr style="border: 1px solid black;">
+                                        <td height="50" style="border: 1px solid black;"></td>
+                                        <td style="border: 1px solid black;"></td>
+                                        <td style="border: 1px solid black;"></td>
+                                        <td style="border: 1px solid black;"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-xs-6 text-center">
+                                <div class="row">
+                                    <span>Kijang, 15 November 2021</span>
+                                </div>
+                                <div class="row">
+                                    <span>Penerima</span>
+                                </div>
+                                <div class="row">
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <span>............</span>
+                                </div> 
+                            </div>
+                        </div>
+                        
                         </div>
                 </div>
             </t>
         </template>
-
 
         <template id="report_accountvoucher">
             <t t-call="report.html_container">
@@ -149,5 +167,6 @@
                 </t>
             </t>
         </template>
+
     </data>
 </openerp>

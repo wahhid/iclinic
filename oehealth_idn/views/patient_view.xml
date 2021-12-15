@@ -8,9 +8,11 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="oehealth.oeh_medical_patient_view"/>
         <field name="arch" type="xml">
+            <!--
             <xpath expr="//header" position="inside">
                 <button type="object" name="create_registration" string="Save &amp; Register Service" class="oe_highlight" groups="oehealth_idn.group_customer_service,oehealth_idn.group_medical_service"/>
             </xpath>
+            -->
             <xpath expr="//sheet/div[@name='buttons']/button[4]" position="replace">
                 <button type="action" class="oe_stat_button" name="%(oehealth_idn.action_report_all_unit)d" context="{'search_default_patient': active_id, 'default_patient': active_id}" icon="fa-building-o">
                     <field string="Admissions" name="inpatient_count" widget="statinfo"/>

@@ -18,7 +18,6 @@ class sale_order_concoction(models.Model):
         for line in self.concoction_ids:
             if line.state == 'draft':
                 line.confirm_order()
-
         return res
 
     @api.multi
@@ -44,7 +43,6 @@ class sale_order_concoction(models.Model):
                 inv_line.create(vals)
 
             return res
-
 
 class medical_concoction(models.Model):
     _name = 'medical.concoction'
@@ -79,7 +77,6 @@ class medical_concoction(models.Model):
             for line in row.concoction_detail_ids:
                 subtotal = line.product_id.lst_price * line.total
                 total += subtotal
-
             row.price = total
 
     @api.multi
@@ -102,61 +99,72 @@ class medical_concoction(models.Model):
 
             data.state = 'done'
 
-
 class medical_concoction_detail(models.Model):
     _name = 'medical.concoction.detail'
     _rec_name = 'product_id'
     concoction_id = fields.Many2one(comodel_name='medical.concoction', string='Concoction ID')
     product_id = fields.Many2one(comodel_name='product.product', string='Name')
     item_type = fields.Selection(related='product_id.item_type', string='Type')
-    big_qty = fields.Float(string='Big Qty', digits=(16, 3))
-    uom_po_id = fields.Many2one(related='product_id.uom_po_id', string='Big Unit')
+    # big_qty = fields.Float(string='Big Qty', digits=(16, 3))
+    # uom_po_id = fields.Many2one(related='product_id.uom_po_id', string='Big Unit')
+    is_alt_uom = fields.Boolean('Alt Unit', default=False)
     qty = fields.Float(string='Quantity', digits=(16, 3))
     uom_id = fields.Many2one(related='product_id.uom_id', string='Small Unit')
-    zat_qty = fields.Float(string='Zat Aktif', digits=(16, 3))
     zat_uom = fields.Many2one(related='product_id.zat_uom', string='Zat Aktif Unit')
-    total = fields.Float(string='Total Qty', compute='get_total')
+    zat_qty = fields.Float(string='Zat Aktif', digits=(16, 3))
+    #total = fields.Float(string='Total Qty', compute='get_total')
+    total = fields.Float(string='Total Qty')
 
-    @api.onchange('product_id')
-    def check_product_id(self):
-        for row in self:
-            if not row.concoction_id.product_id:
-                raise UserError('Product Item not set. Please select one!')
-            elif not row.concoction_id.qty:
-                raise UserError('Quantity is zero. Please set quantity!')
+    # @api.onchange('product_id')
+    # def check_product_id(self):
+    #     for row in self:
+    #         if not row.concoction_id.product_id:
+    #             raise UserError('Product Item not set. Please select one!')
+    #         elif not row.concoction_id.qty:
+    #             raise UserError('Quantity is zero. Please set quantity!')
 
-    @api.depends('qty')
+    #@api.depends('qty', 'zat_qty')
     def get_total(self):
         for row in self:
-            total = math.ceil(row.concoction_id.qty * row.qty)
-            row.total = total
+            if not row.is_alt_uom:
+                #total = math.ceil(row.concoction_id.qty * row.qty)
+                total = row.qty
+                total =  row.concoction_id.qty * row.qty
+                row.total = total
+            else:
+                #total = math.ceil(row.concoction_id.qty * row.zat_qty)
+                value =  (row.concoction_id.qty * row.zat_qty) // row.product_id.zat_qty
+                residual = (row.concoction_id.qty * row.zat_qty) % row.product_id.zat_qty
+                total =  value
+                if residual > 0:
+                    total = total + 1
+                row.total = total
 
-    @api.onchange('big_qty')
-    def onchange_big_qty(self):
-        for row in self:
-            if row.uom_id:
-                qty = row.uom_po_id._compute_quantity(row.big_qty, row.uom_id)
-                row.qty = qty
-            if row.zat_uom:
-                zat = row.uom_po_id._compute_quantity(row.big_qty, row.zat_uom)
-                row.zat_qty = zat
+    # @api.onchange('big_qty')
+    # def onchange_big_qty(self):
+    #     for row in self:
+    #         if row.uom_id:
+    #             qty = row.uom_po_id._compute_quantity(row.big_qty, row.uom_id)
+    #             row.qty = qty
+    #         if row.zat_uom:
+    #             zat = row.uom_po_id._compute_quantity(row.big_qty, row.zat_uom)
+    #             row.zat_qty = zat
 
     @api.onchange('qty')
     def onchange_qty(self):
         for row in self:
-            if row.uom_po_id:
-                big = row.uom_id._compute_quantity(row.qty, row.uom_po_id)
-                row.big_qty = big
-            if row.zat_uom:
-                zat = row.uom_id._compute_quantity(row.qty, row.zat_uom)
-                row.zat_qty = zat
+            if not row.is_alt_uom:
+                row.zat_qty = row.qty *  row.product_id.zat_qty
+                row.get_total()
 
     @api.onchange('zat_qty')
     def onchange_zat_qty(self):
         for row in self:
-            if row.uom_po_id:
-                big = row.zat_uom._compute_quantity(row.zat_qty, row.uom_po_id)
-                row.big_qty = big
-            if row.uom_id:
-                qty = row.zat_uom._compute_quantity(row.zat_qty, row.uom_id)
-                row.qty = qty
+            if row.is_alt_uom:
+                value =  row.zat_qty // row.product_id.zat_qty
+                residual = row.zat_qty % row.product_id.zat_qty
+                total =  value
+                if residual > 0:
+                    total = total + 1
+                row.qty = total
+                row.get_total()

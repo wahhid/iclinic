@@ -79,6 +79,7 @@ class QueueKiosk(models.Model):
     code = fields.Char('Code', size=4, required=True)
     queue_type_ids =  fields.Many2many('queue.type', 'kiosk_queue_type_rel', 'queue_kiosk_id', 'queue_type_id',string='Types')
 
+
 class QueueDisplay(models.Model):
     _name = 'queue.display'
 
@@ -106,6 +107,8 @@ class QueueType(models.Model):
     bg_color = fields.Selection(AVAILABLE_BG_COLOR, 'Bg Color', default='bg-red')
     mod_bg_color = fields.Char("Bg Color (String)", size=100, readonly=True)
     is_active = fields.Boolean('Active', default=False) 
+    sequence_id = fields.Many2one('queue.sequence', 'Sequence #', required=True)
+    next_type_id = fields.Many2one('queue.type', 'Next Step')
     state = fields.Selection(AVAILABLE_STATES, 'Status', size=16 , readonly=True, default='open')
 
 
@@ -213,6 +216,10 @@ class QueueTrans(models.Model):
         print("Random string of length", length, "is:", result_str)
         return result_str
 
+    def action_close(self):
+        self.state = 'done'
+
+
     trans_id = fields.Char('Transaction ID', size=4, required=False, readonly=True)
     trans_date = fields.Date('Date', required=True , default=fields.Date.today)
     code = fields.Char('Code', size=16, readonly=True)
@@ -235,11 +242,9 @@ class QueueTrans(models.Model):
     def create(self,values):
         queue_type_obj = self.env['queue.type']
         queue_trans_obj = self.env['queue.trans']
-
-        seq = self.env['ir.sequence']
-        if 'company_id' in values:
-            seq = seq.with_context(force_company=values['company_id'])
-        values['trans_id'] = seq.next_by_code('jakc.queue.trans.sequence')
+        #if 'company_id' in values:
+        #    seq = seq.with_context(force_company=values['company_id'])
+        #values['trans_id'] = seq.next_by_id('jakc.queue.trans.sequence')
         # trans_id = '000'
         # if 'type_id' in values.keys():
         #     trans_args = [('type_id', '=', values.get('type_id')), ('trans_date', '=', datetime.now().strftime('%Y-%m-%d'))]
@@ -253,6 +258,10 @@ class QueueTrans(models.Model):
         code = self.get_random_string(16)
         values.update({'code': code})
         result = super(QueueTrans,self).create(values)
+        #seq = self.env['ir.sequence'].browse(result.type_id.sequence_id.sequence_id.id)
+        _logger.info(result.type_id.sequence_id.code)
+        seq = self.env['ir.sequence'].next_by_code(result.type_id.sequence_id.code)
+        result.trans_id = seq
         # trans_data = {}
         # trans_data.update({'trans_id': result.id})
         # self.env['queue.trans.print'].create(trans_data)
@@ -272,3 +281,29 @@ class QueueTransSound(models.Model):
     trans_id = fields.Many2one('queue.trans', 'Transaction ID', index=True)
     trans_date_time = fields.Datetime('Date and Time', default=fields.Datetime.now)
     state = fields.Selection(AVAILABLE_STATES, 'Status', size=16, readonly=True, default='open')
+
+class QueueSequence(models.Model):
+
+    _name = 'queue.sequence'
+
+    def action_reset_sequence(self):
+        queue_sequence_ids = self.env['queue.sequence'].search([])
+        for queue_sequence_id in queue_sequence_ids:
+            _logger.info("Reset : " + queue_sequence_id.name)
+            queue_sequence_id.sequence_id.number_next_actual = 1
+
+    name = fields.Char('Name', size=100, required=True)
+    code = fields.Char('Code', size=100, required=True)
+    reset_sequence = fields.Selection([('daily','Daily'),('monthly','Monthly'),('yearly','Yearly')],'Reset Sequence', default="daily")
+    sequence_id = fields.Many2one('ir.sequence', 'Sequence #')
+
+    def create(self, vals):
+        IrSequenceSudo = self.env['ir.sequence'].sudo()
+        sequence_vals = {
+            'name': vals.get('name') + " Sequence",
+            'padding': 3}
+        sequence_id = IrSequenceSudo.create(sequence_vals)
+        vals.update({'sequence_id': sequence_id.id})
+        vals.update({'code': vals.get('code').lower().replace(' ','.')})
+        res = super(QueueSequence, self).create(vals)
+        return res

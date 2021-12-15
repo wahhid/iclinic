@@ -26,6 +26,7 @@ class product_template(models.Model):
     item_type = fields.Selection(ITEM_TYPE, string='Item Type')
     is_concoction = fields.Boolean(string='Is Concoction ?')
     zat_uom = fields.Many2one('product.uom', string='Zat Active UoM')
+    zat_qty = fields.Float('Zat Active Qty')
     unit_ids = fields.Many2many('unit.administration', 'unit_product_rel', 'product_id', 'unit_id', string='Units')
     default_code = fields.Char(index=True)
     list_price = fields.Float(index=True)
@@ -38,6 +39,7 @@ class product_template(models.Model):
 
 class product_product(models.Model):
     _inherit = 'product.product'
+
     auto_billing = fields.Boolean(string='Auto Billing ?', help='Auto add item in sale order line each arrival customer')
     admin_fee = fields.Boolean(string='Admin Fee ?', help='Reference product for invoice line each inpatient registration')
     stock_ids = fields.One2many('stock.quant', 'product_id', string='Qty On Hand')

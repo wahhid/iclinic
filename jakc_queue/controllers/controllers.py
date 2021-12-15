@@ -221,8 +221,9 @@ class Queue_display(http.Controller):
         queue_display_obj = http.request.env['queue.display']
 
         queue_display_id =  queue_display_obj.sudo().search([('name','=', display_code)], limit=1)
-        queue_type_id = queue_type_obj.sudo().search([('queue_display_id','=',queue_display_id.id)], limit=1)
-        trans_args = [('start_date_time','>', datetime.now().strftime('%Y-%m-%d') + " 00:00:00"),('type_id','=',queue_type_id.id),('state', '=', 'draft')]
+        #queue_type_id = queue_type_obj.sudo().search([('queue_display_id','=',queue_display_id.id)], limit=1)
+        #trans_args = [('start_date_time','>', datetime.now().strftime('%Y-%m-%d') + " 00:00:00"),('type_id','=',queue_type_id.id),('state', '=', 'draft')]
+        trans_args = [('display_id','=',queue_display_id.id), ('state', '=', 'draft')]
         trans_ids = queue_trans_obj.sudo().search(trans_args, order="write_date")
         trans_list = []
         for trans_id in trans_ids:
@@ -261,7 +262,6 @@ class Queue_display(http.Controller):
         queue_trans_id.iface_recall = False
         return json.dumps({'status': True, 'counter_trans': queue_trans_id.trans_id, 'counter_number': queue_trans_id.pickup_id.name})
       
-
 class Queue_type(http.Controller):
     
     @http.route('/queue/type/listall', auth='public')
@@ -277,7 +277,6 @@ class Queue_type(http.Controller):
             type_data.update({'counter_fa': 'fa-users'})
             types.append(type_data)
         return json.dumps(types)
-
 
 class Queue_app(http.Controller):
 
@@ -332,8 +331,6 @@ class Queue_app(http.Controller):
             ('code', '=', kiosk_code)
         ]
         queue_kiosk =  http.request.env['queue.kiosk'].search(domain)
-        #queue_type = http.request.env['queue.type']
-        #type_ids = queue_type.sudo().search([])
         for type in queue_kiosk.queue_type_ids:
             type.mod_bg_color = 'btn3d btn btn-danger btn-lg btn-block'
         return request.render('jakc_queue.kioskscreen', {'types': queue_kiosk.queue_type_ids})
