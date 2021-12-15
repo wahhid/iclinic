@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="report_salinan_resep">
+    <template id="report_resep">
         <t t-call="report.html_container">
             <t t-call="report.external_layout">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
                         <div class="oe_structure">
                              <div class="row">
-                                <p style="font-size:24px;text-align:center;font-weight:bold;">Salinan Resep</p>
+                                <p style="font-size:24px;text-align:center;font-weight:bold;">RESEP</p>
                             </div>
                             <div class="row">
                                 <div class="col-xs-8">

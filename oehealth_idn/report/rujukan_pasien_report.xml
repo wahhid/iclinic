@@ -1,117 +1,187 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_rujukan_pasien">
         <t t-call="report.html_container">
             <t t-call="report.external_layout">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
-                            <div class="oe_structure">
-                                <div class="row">
-                                    <p style="font-size:24px;text-align:center;font-weight:bold;">RUJUKAN KONSULTASI</p>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-8">
-                                        <div>
-                                            <strong>No. Arrival / No. RM:</strong>
-                                            <p><span t-field="o.arrival_id.name"/> / <span t-field="o.arrival_id.patient.medical_record"/></p>
-                                        </div>
-                                        <div>
-                                            <strong>Nama pasien:</strong>
-                                            <p t-field="o.arrival_id.patient.name"/>
-                                        </div>
-                                        <div>
-                                            <strong>Tanggal Lahir:</strong>
-                                            <p t-field="o.arrival_id.patient.dob" t-field-options='{"format": "d MMMM y"}'/>
-                                        </div>
-                                        <div>
-                                            <strong>Umur:</strong>
-                                            <p t-field="o.patient_id.age"/>
-                                        </div>
-                                    </div>
+                        <style>
 
-                                </div>
-                                <div class="row">
-                                    <div class="row mt32">
-                                        <p style="font-size:20px;text-align:left;font-weight:bold">VITAL SIGNS</p>
-                                    </div>
-                                    <div class="col-xs-8">
-                                        <div>
-                                            <strong>Temperature (celsius):</strong>
-                                            <p t-field="o.reg_id.evaluation_id.temperature"/>
-                                        </div>
-                                        <div>
-                                            <strong>Diastolic Pressure:</strong>
-                                            <p t-field="o.reg_id.evaluation_id.diastolic" />
-                                        </div>
-                                        <div>
-                                            <strong>Respiratory Rate :</strong>
-                                            <p t-field="o.reg_id.evaluation_id.respiratory_rate"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <div>
-                                            <strong>Systolic Pressure:</strong>
-                                            <p t-field="o.reg_id.evaluation_id.systolic"/>
-                                        </div>
-                                        <div>
-                                            <strong>Heart Rate:</strong>
-                                            <p t-field="o.reg_id.evaluation_id.bpm" />
-                                        </div>
-                                        <div>
-                                            <strong>Oxygen Saturation  :</strong>
-                                            <p t-field="o.reg_id.evaluation_id.osat"/>
-                                        </div>
-                                    </div>
-                                </div>
+th, td {
+  padding: 5px;
+}
+</style>
+                        <div class="oe_structure">
+                            <h2 style="text-align:center;">FORMULIR RUJUKAN PASIEN</h2>
+                            <p style="text-align:right;">
+                                Kepada Yth, TS
+                                <br />
+                                __________________
+                                <br />
+                                __________________
+                                <br />
+                                <br />
+                                Di Tempat
+                            </p>
 
-                                <div class="row mt32">
-                                    <p style="font-size:20px;text-align:left;font-weight:bold">DIAGNOSA</p>
-                                </div>
-                                <table class="table table-condensed">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-left">Pathology</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody class="invoice_tbody">
-                                        <tr t-foreach="o.reg_id.evaluation_id.diagnostic_ids" t-as="l" >
-                                            <td class="text-left">
-                                                <span t-field="l.product_id.name"/>
-                                            </td>
-                                            
-                                        
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                 <div class="row mt32">
-                                    <p style="font-size:20px;text-align:left;font-weight:bold">TERAPI YANG SUDAH DI BERIKAN</p>
-                                </div>
-                                <table class="table table-condensed">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-left">Nama Tindakan</th>
-                                            <th class="text-center">Dokter</th>
-                                            <th class="text-center">Tanggal</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody class="invoice_tbody">
-                                        <tr t-foreach="o.order_line" t-as="s" >
-                                            <td class="text-left">
-                                                <span t-field="s.product_id"/>
-                                            </td>
-                                            <td class="text-center">
-                                                <span t-field="o.doctor_id"/>
-                                            </td>
-                                            <td class="text-center">
-                                                <span t-field="o.confirmation_date" t-field-options='{"format": "d MMMM y"}'/>
-                                            </td>
-                                        
-                                        </tr>
-                                    </tbody>
-                                </table>                       
-                            </div>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="border: 1px solid black;">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td colspan="3">IDENTITAS PASIEN</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nama Pasien</td>
+                                                <td> : </td>
+                                                <td>____________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Umur</td>
+                                                <td> : </td>
+                                                <td>____________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Penanggung Biaya</td>
+                                                <td> : </td>
+                                                <td>____________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Diagnisa Medis</td>
+                                                <td> : </td>
+                                                <td>____________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">TANDA-TANDA VITAL</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tekanan Darah</td>
+                                                <td> : </td>
+                                                <td>____________mmHg</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Suhu</td>
+                                                <td> : </td>
+                                                <td>__________C</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nadi</td>
+                                                <td> : </td>
+                                                <td>_____________x/m (Regular/Ireguler)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Penapasan</td>
+                                                <td> : </td>
+                                                <td>_____________x/m (Regular/Ireguler)</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Saturasi</td>
+                                                <td> : </td>
+                                                <td>___________%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>GCS</td>
+                                                <td> : </td>
+                                                <td>E_______V_________M_________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total GCS</td>
+                                                <td> : </td>
+                                                <td>____________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>GDS</td>
+                                                <td> : </td>
+                                                <td>_________________mg/dl</td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    TINDAKAN YANG SUDAH DI LAKUKAN :
+                                                    <br />
+                                                    ________________________________________
+                                                    <br />
+                                                    ________________________________________
+                                                    <br />
+                                                    ________________________________________
+                                                    <br />
+                                                    ________________________________________
+                                                    <br />
+                                                    ________________________________________
+                                                    <br />
+                                                    ________________________________________
+                                                    <br />
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td style="border: 1px solid black;vertical-align: top;">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td colspan="4">TERAPI YANG SUDAH DIBERIKAN : </td>
+                                            </tr>
+                                            <tr>
+                                                <th style="border: 1px solid black;">No</th>
+                                                <th style="border: 1px solid black;">Waktu</th>
+                                                <th style="border: 1px solid black;">Obat</th>
+                                                <th style="border: 1px solid black;">Rute</th>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 1px solid black;"></td>
+                                                <td style="border: 1px solid black;"></td>
+                                                <td style="border: 1px solid black;"></td>
+                                                <td style="border: 1px solid black;"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p>Atas kerjasamanya, kami mengucapkan terimakasih</p>
+                            <p style="text-align:right;">________,_____/____/_____</p>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td>PETUGAS PENGANTAR</td>
+                                    <td>PETUGAS PENERIMA</td>
+                                    <td>DOKTER PEMERIKSA</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </td>
+                                    <td>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </td>
+                                    <td>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>(_______________________)</td>
+                                    <td>(_______________________)</td>
+                                    <td>(_______________________)</td>
+                                </tr>
+                            </table>
+                            <p>
+                                Lampiran :
+                                <br />
+                                1. RS Rujukan
+                                <br />
+                                2. Rekam Medis
+                                <br />
+                            </p>
+                        </div>
                     </div>
                 </t>
             </t>

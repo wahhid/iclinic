@@ -1,248 +1,377 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_persetujuan_tindakan">
-        <t t-call="report.html_container">
-            <t t-call="report.external_layout">
-                <t t-foreach="docs" t-as="o">
-                    <div class="page">
-                        <div class="oe_structure">
-                            <div class="row">
-                                <div>
-                                  <strong>No. Arrival / No. RM:</strong>
-                                  <p><span t-field="o.arrival_id.name"/> / <span t-field="o.arrival_id.patient.medical_record"/></p>
-                                </div>
-                            </div>
-                            <div class="row mt32">
-                                <p style="font-size:20px;text-align:left;font-weight:bold">DIAGNOSA</p>
-                            </div>
-                            <table class="table table-condensed">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">Pathology</th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody class="invoice_tbody">
-                                    <tr t-foreach="o.reg_id.evaluation_id.diagnostic_ids" t-as="l" >
-                                        <td class="text-left">
-                                            <span t-field="l.product_id.name"/>
-                                        </td>
-                                        
-                                    
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="row mt32">
-                                <p style="font-size:20px;text-align:left;font-weight:bold">TERAPI YANG SUDAH DI BERIKAN</p>
-                            </div>
-                            <table class="table table-condensed">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">Nama Tindakan</th>
-                                        <th class="text-center">Dokter</th>
-                                        <th class="text-center">Tanggal</th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody class="invoice_tbody">
-                                    <tr t-foreach="o.order_line" t-as="s" >
-                                        <td class="text-left">
-                                            <span t-field="s.product_id"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <span t-field="o.doctor_id"/>
-                                        </td>
-                                        <td class="text-center">
-                                            <span t-field="o.confirmation_date" t-field-options='{"format": "d MMMM y"}'/>
-                                        </td>
-                                    
-                                    </tr>
-                                </tbody>
-                            </table>
+  <template id="report_persetujuan_tindakan">
+    <t t-call="report.html_container">
+      <t t-call="report.external_layout">
+        <t t-foreach="docs" t-as="o">
+          <div class="page">
+            <style>
 
-                            <p style="page-break-after:always;page-break-inside: avoid;"></p>
+table, th, td {
+  padding: 5px;
+  border:1px solid black;
+}
+</style>
+            <div class="oe_structure">
+              <table style="width:100%">
+                <tr>
+                  <th rowspan="6">TINDAKAN KEDOKTERAN</th>
+                  <td>Nama  : </td>
+                </tr>
+                <tr>
+                  <td>Tanggal Lahir  : </td>
+                </tr>
+                <tr>
+                  <td>No.RM  : </td>
+                </tr>
+                <tr>
+                  <td>Jenis Kelamin  : ________________________ Ruang  : </td>
+                </tr>
+                <tr>
+                  <td>Tanggal Masuk  : _______________________ Kelas  : </td>
+                </tr>
+                <tr>
+                  <td>DPJP  : </td>
+                </tr>
+              </table>
+              <table style="width:100%">
+                <tr>
+                  <th>PEMBERIAN INFORMASI</th>
+                </tr>
+                <tr>
+                  <td>Dokter pelaksana tindakan  : </td>
+                </tr>
+                <tr>
+                  <td>Pemberi informasi  : </td>
+                </tr>
+                <tr>
+                  <td>Penerima informasi/Pemberi Persetujuan  : </td>
+                </tr>
+                <tr>
+                  <td>Diberikan pada tanggal/jam  : </td>
+                </tr>
 
-                            <div class="row">
-                                <p style="font-size:24px;text-align:center;font-weight:bold;">PERSETUJUAN TINDAKAN KEDOKTERAN</p>
-                            </div>
-                            
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-sm-4">
-                                    <p><strong>Nama: ________________________</strong></p>                  
-                                    <p><strong>Alamat: _______________________</strong></p>
-                                    <p><strong>Umur: ________________________</strong></p>
-                                </div>
-                                <div class="col-sm-4"></div>
-                                <div class="col-sm-4"></div>
-                              </div>
-                            </div>
+              </table>
 
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-sm-12">
-                                  <p>Dengan ini menyatakan SETUJU untuk dilakukan tindakan _________________________</p>
-                                  <p>Terhadap Saya,</p>
-                                </div>
-                              </div>
-                            </div>
+              <table style="width:100%">
+                <tr>
+                  <th>No</th>
+                  <th>JENIS INFORMASI</th>
+                  <th>ISI INFORMASI</th>
+                  <th>Paraf Penerima Informasi</th>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>Diagnosis (diagnosis kerja dan diagnosis banding)</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Dasar diagnosis</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Tindakan kedokteran</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Indikasi tindakan</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Tata Cara</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>Tujuan</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>Resiko</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>Komplikasi</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>Prognosis</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td>Alternatif dan Resiko</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>11</td>
+                  <td>Lain-lain</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td colspan="3">Dengan ini menyatakan bahwa saya telah menerangkan hal-hal diatas secara benar dan jelas dan memberikan kesempatan untuk bertanya dan / berdiskusi</td>
+                  <td>Tanda tangan Dokter</td>
+                  >
+                </tr>
+                <tr>
+                  <td colspan="3">Dengan ini menyatakan bahwa saya telah menerima informasi sebagaimana diatas yang saya beri tanda/paraf di kolom kanannya dan telah memahaminya</td>
+                  <td>Tanda tangan penerima informasi</td>
+                  >
+                </tr>
+                <tr>
+                  <th colspan="4">Bila pasien tidak berkompeten atau tidak mau menerima informasi, maka penerima informasi adalah wali atau keluarga terdekat</th>
+                </tr>
+              </table>
 
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-sm-4">
-                                  <p><strong>Nama: ________________________</strong></p>                  
-                                  <p><strong>Alamat: _______________________</strong></p>                
-                                  <p><strong>Umur: ________________________</strong></p>
-                                </div>
-                                <div class="col-sm-4"></div>
-                                <div class="col-sm-4"></div>
-                              </div>
-                            </div>
+              <p style="page-break-after:always;page-break-inside: avoid;"></p>
 
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-sm-12">
-                                  <p>Saya memahami perlunya dan manfaat tindakan tersebut sebagaimana telah dijelaskan
+              <div class="row">
+                <p style="font-size:24px;text-align:center;font-weight:bold;">PERSETUJUAN TINDAKAN KEDOKTERAN</p>
+              </div>
+
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <p>
+                      <strong>Nama: ________________________</strong>
+                    </p>
+                    <p>
+                      <strong>Alamat: _______________________</strong>
+                    </p>
+                    <p>
+                      <strong>Umur: ________________________</strong>
+                    </p>
+                  </div>
+                  <div class="col-sm-4"></div>
+                  <div class="col-sm-4"></div>
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Dengan ini menyatakan SETUJU untuk dilakukan tindakan _________________________</p>
+                    <p>Terhadap Saya,</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <p>
+                      <strong>Nama: ________________________</strong>
+                    </p>
+                    <p>
+                      <strong>Alamat: _______________________</strong>
+                    </p>
+                    <p>
+                      <strong>Umur: ________________________</strong>
+                    </p>
+                  </div>
+                  <div class="col-sm-4"></div>
+                  <div class="col-sm-4"></div>
+                </div>
+              </div>
+
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Saya memahami perlunya dan manfaat tindakan tersebut sebagaimana telah dijelaskan
                                   seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
-                                  <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
+                    <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
                                   kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
-                                  <p >_________,__________________</p>
-                                  <p><br/></p>
-                                  <p><br/></p>
-                                  <p><br/></p>
-                                </div>
-                              </div>
-                            </div>
+                    <p>_________,__________________</p>
+                    <p>
+                      <br />
+                    </p>
+                    <p>
+                      <br />
+                    </p>
+                    <p>
+                      <br />
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-                            <center>
-                              <table style="text-align:center;">
-                                <tr>
-                                  <td>YANG MENYATAKAN,</td>
-                                  <td>DOKTER,</td>
-                                  <td>SAKSI,</td>
-                                </tr>
-                                <tr>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                </tr>
-                                <tr>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                </tr>
-                                <tr>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                </tr>
-                                <tr>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                </tr>
-                                <tr>
-                                  <td>   (...................................)   </td>
-                                  <td>   (...................................)   </td>
-                                  <td>   (...................................)   </td>
-                                </tr>
-                              </table>
-                            </center>
+              <center>
+                <table style="text-align:center;">
+                  <tr>
+                    <td>YANG MENYATAKAN,</td>
+                    <td>DOKTER,</td>
+                    <td>SAKSI,</td>
+                  </tr>
+                  <tr>
+                    <td rowspan="4">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                    </td>
+                    <td rowspan="4">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                    </td>
+                    <td rowspan="4">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                    </td>
+                  </tr>
+                  <tr></tr>
+                  <tr></tr>
+                  <tr></tr>
+                  <tr>
+                    <td>   (...................................)   </td>
+                    <td>   (...................................)   </td>
+                    <td>   (...................................)   </td>
+                  </tr>
+                </table>
+              </center>
 
-                            <p style="page-break-after:always;page-break-inside: avoid;"></p>
+              <p style="page-break-after:always;page-break-inside: avoid;"></p>
 
-                            <div class="row mt32">
-                                <p style="font-size:20px;text-align:left;font-weight:bold">PENOLAKAN TINDAKAN KEDOKTERAN</p>
-                            </div>
+              <div class="row mt32">
+                <p style="font-size:20px;text-align:left;font-weight:bold">PENOLAKAN TINDAKAN KEDOKTERAN</p>
+              </div>
 
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-sm-4">
-                                    <p><strong>Nama: ________________________</strong></p>                  
-                                    <p><strong>Alamat: _______________________</strong></p>
-                                    <p><strong>Umur: ________________________</strong></p>
-                                </div>
-                                <div class="col-sm-4"></div>
-                                <div class="col-sm-4"></div>
-                              </div>
-                            </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <p>
+                      <strong>Nama: ________________________</strong>
+                    </p>
+                    <p>
+                      <strong>Alamat: _______________________</strong>
+                    </p>
+                    <p>
+                      <strong>Umur: ________________________</strong>
+                    </p>
+                  </div>
+                  <div class="col-sm-4"></div>
+                  <div class="col-sm-4"></div>
+                </div>
+              </div>
 
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-sm-12">
-                                  <p>Dengan ini menyatakan TIDAK SETUJU untuk dilakukan tindakan _________________________</p>
-                                  <p>Terhadap Saya,</p>
-                                </div>
-                              </div>
-                            </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Dengan ini menyatakan TIDAK SETUJU untuk dilakukan tindakan _________________________</p>
+                    <p>Terhadap Saya,</p>
+                  </div>
+                </div>
+              </div>
 
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-sm-4">
-                                  <p><strong>Nama: ________________________</strong></p>                  
-                                  <p><strong>Alamat: _______________________</strong></p>                
-                                  <p><strong>Umur: ________________________</strong></p>
-                                </div>
-                                <div class="col-sm-4"></div>
-                                <div class="col-sm-4"></div>
-                              </div>
-                            </div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <p>
+                      <strong>Nama: ________________________</strong>
+                    </p>
+                    <p>
+                      <strong>Alamat: _______________________</strong>
+                    </p>
+                    <p>
+                      <strong>Umur: ________________________</strong>
+                    </p>
+                  </div>
+                  <div class="col-sm-4"></div>
+                  <div class="col-sm-4"></div>
+                </div>
+              </div>
 
-                            <div class="container">
-                              <div class="row">
-                                <div class="col-sm-12">
-                                  <p>Saya memahami perlunya dan manfaat tindakan tersebut sebagaimana telah dijelaskan
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <p>Saya memahami perlunya dan manfaat tindakan tersebut sebagaimana telah dijelaskan
                                   seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
-                                  <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
+                    <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
                                   kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
-                                  <p >_________,__________________</p>
-                                  <p><br/></p>
-                                  <p><br/></p>
-                                  <p><br/></p>
-                                </div>
-                              </div>
-                            </div>
+                    <p>_________,__________________</p>
+                    <p>
+                      <br />
+                    </p>
+                    <p>
+                      <br />
+                    </p>
+                    <p>
+                      <br />
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-                            <center>
-                              <table style="text-align:center;">
-                                <tr>
-                                  <td>YANG MENYATAKAN,</td>
-                                  <td>DOKTER,</td>
-                                  <td>SAKSI,</td>
-                                </tr>
-                                <tr>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                </tr>
-                                <tr>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                </tr>
-                                <tr>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                </tr>
-                                <tr>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                  <td><br/></td>
-                                </tr>
-                                <tr>
-                                  <td>   (...................................)   </td>
-                                  <td>   (...................................)   </td>
-                                  <td>   (...................................)   </td>
-                                </tr>
-                              </table>
-                            </center>
+              <center>
+                <table style="text-align:center;">
+                  <tr>
+                    <td>YANG MENYATAKAN,</td>
+                    <td>DOKTER,</td>
+                    <td>SAKSI,</td>
+                  </tr>
+                  <tr>
+                    <td rowspan="4">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                    </td>
+                    <td rowspan="4">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                    </td>
+                    <td rowspan="4">
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                    </td>
+                  </tr>
+                  <tr></tr>
+                  <tr></tr>
+                  <tr></tr>
+                  <tr>
+                    <td>   (...................................)   </td>
+                    <td>   (...................................)   </td>
+                    <td>   (...................................)   </td>
+                  </tr>
+                </table>
+              </center>
 
-                                                  
-                        </div>
-                    </div>
-                </t>
-            </t>
+
+            </div>
+          </div>
         </t>
-    </template>
+      </t>
+    </t>
+  </template>
 </odoo>

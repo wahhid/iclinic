@@ -6,8 +6,13 @@
 # Compiled at: 2019-07-28 17:50:56
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
+<<<<<<< HEAD
 import requests, json
 import datetime
+=======
+import requests, json, datetime
+from datetime import timedelta
+>>>>>>> origin/10.0-yogi
 import pytz
 import logging
 
@@ -91,7 +96,6 @@ class unit_registration(models.Model):
         ('Non-Medis', 'Non-Medis')
      ], 'Unit Type', readonly=True, states={'Draft': [('readonly', False)]})
     unit = fields.Many2one(comodel_name='unit.administration', string='Unit', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
-    operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit', default=lambda self: self.env.user.default_operating_unit_id.id)
     doctor = fields.Many2one(comodel_name='oeh.medical.physician', string='Doctor', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=False, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=False, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
@@ -273,7 +277,12 @@ class unit_registration(models.Model):
                     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                     'partner_shipping_id': acc.patient.partner_id.id, 
                     'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
+<<<<<<< HEAD
                     'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).id
+=======
+                    'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
+                    'operating_unit_id': acc.unit.operating_id.id or False
+>>>>>>> origin/10.0-yogi
                 }
                 #Create Sale Order
                 inv_ids = obj.create(val_obj)

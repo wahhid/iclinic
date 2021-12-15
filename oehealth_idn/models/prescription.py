@@ -346,12 +346,18 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'partner_invoice_id': guarantor, 
                         'partner_shipping_id': guarantor, 
                         'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
+<<<<<<< HEAD
                         'operating_unit_id': self.env.user.default_operating_unit_id.id,
                         #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id,
                         'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
                         #'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit_id.id))], limit=1).id
                     }
                     inv_ids = obj.sudo().create(val_obj)
+=======
+                        #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
+                        'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
+                    inv_ids = obj.create(val_obj)
+>>>>>>> origin/10.0-yogi
                     
                     if inv_ids:
                         inv_id = inv_ids.id
@@ -442,27 +448,23 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                 else:
                     raise UserError(_('Configuration Error! \n Could not Find Registration to Create the Transactions !'))
             else:
-                _logger.info("Create Public")
-
-                if acc.payment == 'Insurance':
-                    guarantor = acc.insurance.ins_type.partner_id.id
-                elif acc.payment == 'Corporate':
-                    guarantor = acc.company.id
-                elif acc.payment == 'Employee':
-                    guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
-                else:
-                    guarantor = acc.patient.partner_id.id
-                
                 val_obj = {
                     'reg_id': False, 
                     'arrival_id': False, 
                     'patient_id': acc.patient.id, 
                     'doctor_id': acc.doctor.id, 
+<<<<<<< HEAD
                     'partner_id': guarantor, 
                     'partner_invoice_id': guarantor, 
                     'partner_shipping_id': guarantor, 
                     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id,
                     'operating_unit_id': self.env.user.default_operating_unit_id.id,
+=======
+                    'partner_id': acc.patient.partner_id.id, 
+                    'partner_invoice_id': acc.patient.partner_id.id, 
+                    'partner_shipping_id': acc.patient.partner_id.id, 
+                    #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
+>>>>>>> origin/10.0-yogi
                     'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
                 inv_ids = obj.create(val_obj)
                 
@@ -470,21 +472,6 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                     inv_id = inv_ids.id
                     if acc.prescription_lines:
                         for ps in acc.prescription_lines:
-                            discount = 0.0
-                            product_id = ps.name
-                            if acc.payment_guarantor_discount_id:
-                                if product_id.item_type == 'General Item':
-                                    discount = acc.payment_guarantor_discount_id.general_item
-                                elif product_id.item_type == 'Medical Item':        
-                                    discount = acc.payment_guarantor_discount_id.medical_item
-                                elif product_id.item_type == 'Food Item':        
-                                    discount = acc.payment_guarantor_discount_id.food_item
-                                elif product_id.item_type == 'Medicine':        
-                                    discount = acc.payment_guarantor_discount_id.medicine
-                                elif product_id.item_type == 'Doctor':        
-                                    discount = acc.payment_guarantor_discount_id.doctor
-                                elif product_id.item_type == 'Nurse':        
-                                    discount = acc.payment_guarantor_discount_id.nurse
                             vals = {
                                 'order_id': inv_id, 
                                 'product_id': ps.name.id, 
@@ -492,14 +479,11 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                                 'prescribe_qty': ps.qty, 
                                 'product_uom_qty': ps.actual_qty, 
                                 'product_uom': ps.name.uom_id.id, 
-                                'discount_type': 'percent',
-                                'discount': discount,
-                                #product_uom': ps.name.uom_id.id, 
                                 'price_unit': ps.price_unit
                             }
-                            _logger.info(vals)
                             line_obj.create(vals)
 
+<<<<<<< HEAD
                         if acc.concoction_ids:
                             for cn in acc.concoction_ids:
                                 for cnd in cn.concoction_detail_ids:
@@ -532,14 +516,31 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                                         'price_unit': cnd.product_id.lst_price
                                     }
                                     line_obj.create(vals)
+=======
+                    if acc.concoction_ids:
+                        for cn in acc.concoction_ids:
+                            for cnd in cn.concoction_detail_ids:
+                                vals = {
+                                    'order_id': inv_id, 
+                                    'product_id': cnd.product_id.id, 
+                                    'name': cnd.product_id.name, 
+                                    'is_concoction': True,
+                                    'medical_concoction_id': cn.id,
+                                    'prescribe_qty': cnd.qty, 
+                                    'product_uom_qty': cnd.qty, 
+                                    'product_uom': cnd.uom_id.id, 
+                                    #'price_unit': cnd.price_unit
+                                }
+                                line_obj.create(vals)
+>>>>>>> origin/10.0-yogi
 
-                    self.write(
-                        {
-                            'state': 'Invoiced',
-                            'sale_order_id': inv_id
-                        }
-                    )
-                    inv_ids.action_confirm()
+                self.write(
+                    {
+                        'state': 'Invoiced',
+                        'sale_order_id': inv_id
+                    }
+                )
+                inv_ids.action_confirm()
 
 class oeh_medical_health_center_pharmacy_prescription_line(models.Model):
     _inherit = 'oeh.medical.health.center.pharmacy.prescription.line'

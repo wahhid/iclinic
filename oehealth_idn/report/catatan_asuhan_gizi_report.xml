@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_catatan_asuhan_gizi">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+
+th, td {
+  padding: 5px;
+}
+</style>
+                        <div class="oe_structure">
+                            <table style="width:100%">
+                                <tr>
+                                    <td style="border:1px solid black;">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>No.Rekam Medis</td>
+                                                <td> : </td>
+                                                <td>__________________________________</td>
+                                                <td>Ruang</td>
+                                                <td> : </td>
+                                                <td>__________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nama</td>
+                                                <td> : </td>
+                                                <td>__________________________________LK/P</td>
+                                                <td>Tanggal Lahir</td>
+                                                <td> : </td>
+                                                <td>__________________________________</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:100%">
+                                <tr>
+                                    <th style="border:1px solid black;" colspan="2">ASESMEN GIZI LANJUT</th>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;">Riwayat Klien</th>
+                                    <td style="border:1px solid black;">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Umur : __________th</td>
+                                                <td>Jenis Kelamin : L/P</td>
+                                                <td>Agama : </td>
+                                                <td>Kemampuan Baca : Bisa/Tidak</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Pekerjaan : ______________</td>
+                                                <td>Pendidikan TS/SD/SLTP/SLTA/PT, </td>
+                                                <td>Peran dalam keluarga: ______________ : </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Keterbatasan Fisik : ______________</td>
+                                                <td>Mobilitas : _______________ </td>
+                                                <td>Perokok: Ya/Tidak/Pasif </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>
+                                                    Riwayat medis / kesehatan pasien / keluarga :
+                                                    <br />
+                                                    <br />
+                                                    Diagnosa Dokter :
+                                                    <br />
+                                                    <br />
+                                                </td>
+                                                <td>
+                                                    Riwayat Sosial Ekonomi
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>RIWAYAT DIET</td>
+                                                <td>Alergi Makanan: </td>
+                                                <td>Ketidaksukaan Makanan : </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pantangan makanan : </td>
+                                                <td></td>
+                                                <td>
+                                                    Pengalaman diet/konseling sebelumnya : ada/tidak
+                                                    <br />
+                                                    Bila ada,___________________________________
+                                                    <br />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <th>ANTROPOMETRI</th>
+                                                <td>BB saat ini: ______________ </td>
+                                                <td>PB/TB : ____________cm</td>
+                                                <td>IMT : </td>
+                                                <td>Status Gizi : </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Riwayat penurunan BB</td>
+                                                <td>BB Biasanya : ______________kg </td>
+                                                <td>Penurunan : ____________%</td>
+                                                <td>dalam : ________mgg bln</td>
+                                                <td>Status Gizi : </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+        Pengukuran Lainnya
+        </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>BIOKIMIA TERKAIT GIZI : </td>
+                                                <td>Prosedur :  </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>FISIK KLINIS GIZI </td>
+                                                <td>Atropi otot lengan : Ada/Tidak </td>
+                                                <td>Hilang lemak sub kutan </td>
+                                                <td>Udem : Ada/Tidak </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Nafsu Makan : Baik/Tidak </td>
+                                                <td>Mual : Ada/Tidak</td>
+                                                <td>Muntah : Ada/Tidak </td>
+                                                <td>Kembung : Ada/Tidak </td>
+                                                <td>Konstipasi : Ada/Tidak </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Diare : Baik/Tidak </td>
+                                                <td>Kulit : </td>
+                                                <td>Kepala dan mata :  </td>
+                                                <td>Gigi geligi : </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Ganguan menelan : Ada/Tidak </td>
+                                                <td>Ganguan mengunyah : Ada/Tidak </td>
+                                                <td>Ganguan menghisap : Ada/Tidak </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+        Tanda-tanda Vital : 
+        </td>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+        Lain-lain : 
+        </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;" colspan="2">
+        DIAGNOSA GIZI
+        </th>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+        
+_________
+        </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;" colspan="2">
+        INTERVENSI GIZI
+        </th>
+                                </tr>
+                                <tr>
+                                    <td style="border:1px solid black;" colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Tujuan : </td>
+                                                <td>Target :  </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Diet : </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Bentuk :
+                                                    <br />
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;" colspan="2">
+        RENCANA MONITORING EVALUASI GIZI
+        </th>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;" rowspan="3">
+                                        <br />
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;">
+        PEMBERIAN BERTAHAP
+        </th>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;">
+                                        <br />
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td>Tanggal : __________ </td>
+                                                <td>Jam : ___________ </td>
+                                                <td>Tanda tangan dan nama Dietisien : __________ </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

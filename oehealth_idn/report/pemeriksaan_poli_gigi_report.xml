@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="report_pemeriksaan_poli_gigi">
+    <t t-call="report.html_container">
+      <t t-call="report.external_layout">
+        <t t-foreach="docs" t-as="o">
+          <div class="page">
+            <style>
+
+th, td {
+  padding: 5px;
+}
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.text-center {
+  border: 1px solid black; text-align:center;
+}
+</style>
+            <div class="oe_structure">
+              <h2 style="text-align:center;">FORMULIR PEMERIKSAAN ODONTOGRAM</h2>
+              <br />
+              <br />
+              <table style="width:80%" class="center">
+                <tr>
+                  <td>NAMA LENGKAP : _________________________</td>
+                  <td>JENIS KELAMIN : L/P </td>
+                </tr>
+                <tr>
+                  <td>NIK/KTP : _________________________</td>
+                  <td>TTL : _________________________ </td>
+                </tr>
+              </table>
+              <br />
+              <br />
+              <table style="width:70%" class="center">
+                <tr>
+                  <td class="text-center">11 [51]</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">61 [21]</td>
+                </tr>
+                <tr>
+                  <td class="text-center">12 [52]</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">62 [22]</td>
+                </tr>
+                <tr>
+                  <td class="text-center">13 [53]</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">63 [23]</td>
+                </tr>
+                <tr>
+                  <td class="text-center">14 [54]</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">64 [24]</td>
+                </tr>
+                <tr>
+                  <td class="text-center">15 [55]</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">65 [25]</td>
+                </tr>
+                <tr>
+                  <td class="text-center">16</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">26</td>
+                </tr>
+                <tr>
+                  <td class="text-center">17</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">27</td>
+                </tr>
+                <tr>
+                  <td class="text-center">18</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">28</td>
+                </tr>
+              </table>
+              <br />
+              <br />
+              <br />
+              <br />
+
+              <table style="width:70%" class="center">
+                <tr>
+                  <td class="text-center">48</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">38</td>
+                </tr>
+                <tr>
+                  <td class="text-center">47</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">37</td>
+                </tr>
+                <tr>
+                  <td class="text-center">46</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">36</td>
+                </tr>
+                <tr>
+                  <td class="text-center">45 [85]</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">75 [35]</td>
+                </tr>
+                <tr>
+                  <td class="text-center">44 [84]</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">74 [34]</td>
+                </tr>
+                <tr>
+                  <td class="text-center">43 [83]</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">73 [33]</td>
+                </tr>
+                <tr>
+                  <td class="text-center">42 [82]</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">72 [32]</td>
+                </tr>
+                <tr>
+                  <td class="text-center">41 [81]</td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
+                  <td class="text-center">71 [31]</td>
+                </tr>
+              </table>
+              <br />
+
+              <table style="width:70%" class="center">
+                <tr>
+                  <td>Occlusi</td>
+                  <td> : </td>
+                  <td>Normal Bite / Cross Bite / Steep Bite</td>
+                </tr>
+                <tr>
+                  <td>Torus Platinus</td>
+                  <td> : </td>
+                  <td>Tidak ada / Kecil / Sedang</td>
+                </tr>
+                <tr>
+                  <td>Besar / Multiple Torus Mandibularis</td>
+                  <td> : </td>
+                  <td>Tidak ada / Sisi kiri / Sisi Kanan / Kedua Sisi</td>
+                </tr>
+                <tr>
+                  <td>Palatum</td>
+                  <td> : </td>
+                  <td>Dalam / Sedang / Rendah</td>
+                </tr>
+                <tr>
+                  <td>Diastema</td>
+                  <td> : </td>
+                  <td>Tidak ada / Ada : _____________________</td>
+                </tr>
+                <tr>
+                  <td>Gigi anomali</td>
+                  <td> : </td>
+                  <td>Tidak ada / Ada : _____________________</td>
+                </tr>
+                <tr>
+                  <td>Lain-Lain</td>
+                  <td> : </td>
+                  <td>_______________________________________</td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    D:_________ M:___________ F:___________
+                    <br />
+                    <br />
+                    Jumlah Photo yang diambil:_______ (digital/intraoral)*
+                    <br />
+                    <br />
+                    Jumlah rontgen foto yang diambil : (Dental/PA/OPG/Ceph)*
+                    <br />
+                    <br />
+                  </td>
+                </tr>
+              </table>
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <table style="width:100%;" class="center">
+                <tr>
+                  <td class="text-center">DIPERIKSA OLEH</td>
+                  <td class="text-center">TANGGAL PERIKSA</td>
+                  <td class="text-center">TTD PEMERIKSA</td>
+                </tr>
+                <tr>
+                  <td class="text-center">
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                  </td>
+                  <td class="text-center">
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                  </td>
+                  <td class="text-center">
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="text-center">(Drg._____________________)</td>
+                  <td class="text-center">(______/______/_________)</td>
+                  <td class="text-center">(_______________________)</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_implementasi_keperawatan">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+
+th, td {
+  padding: 5px;
+}
+.border{
+    border: 1px solid black;
+}
+</style>
+                        <div class="oe_structure">
+                            <h2 style="text-align:center;">IMPLEMENTASI KEPERAWATAN</h2>
+
+                            <table style="width:100%">
+                                <tr class="border">
+                                    <td>No.RM</td>
+                                    <td> : </td>
+                                    <td></td>
+                                </tr>
+                                <tr class="border">
+                                    <td>Nama Pasien</td>
+                                    <td> : </td>
+                                    <td></td>
+                                </tr>
+                                <tr class="border">
+                                    <td>Tanggal Lahir </td>
+                                    <td> : </td>
+                                    <td></td>
+                                </tr>
+                                <tr class="border">
+                                    <td>DPJP</td>
+                                    <td> : </td>
+                                    <td></td>
+                                </tr>
+                                <tr class="border">
+                                    <td>Ruang</td>
+                                    <td> : </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <br />
+                            <table style="width:100%">
+                                <tr>
+                                    <th class="border">Hari/TGL</th>
+                                    <th class="border">Jam</th>
+                                    <th class="border">Tindakan</th>
+                                    <th class="border">Paraf ( Bubuhkan, Stempel, Nama, Paraf, Tanggal, Jam )</th>
+                                </tr>
+                                <tr>
+                                    <td class="border"></td>
+                                    <td class="border"></td>
+                                    <td class="border"></td>
+                                    <td class="border"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

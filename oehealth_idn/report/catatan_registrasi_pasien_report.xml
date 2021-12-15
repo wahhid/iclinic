@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="report_catatan_registrasi_pasien">
+    <t t-call="report.html_container">
+      <t t-call="report.external_layout">
+        <t t-foreach="docs" t-as="o">
+          <div class="page">
+            <style>
+.border{
+  border:1px solid black;
+}
+th, td {
+  padding: 5px;
+}
+</style>
+            <div class="oe_structure">
+              <table style="width:100%">
+                <tr>
+                  <th class="border">RINGKASAN MASUK DAN KELUAR PASIEN</th>
+
+                  <td class="border">
+                    <table style="width:50%">
+                      <tr>
+                        <td>No RM</td>
+                        <td> : </td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Nama Pasien</td>
+                        <td> : </td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Umur</td>
+                        <td> : </td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Jenis Kelmain</td>
+                        <td> : </td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Alamat</td>
+                        <td> : </td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">
+                    NPP : ______
+                    <br />
+                    Nomor Peserta Askes : ______
+                    <br />
+                    Status Perkawinan :
+                    <br />
+                    ( ) Kawin             ( ) Duda
+                    <br />
+                    ( ) Belum Kawin       ( ) Janda
+                    <br />
+                    Nama Penanggung Biaya : _________
+                    <br />
+                    Alamat : _________________
+                    <br />
+                    __________________________
+                    <br />
+                    <br />
+                  </td>
+                  <td class="border">
+                    NPP : ______
+                    <br />
+                    Nomor Peserta Askes : ______
+                    <br />
+                    (1) Peg dan Kel paska tambang
+                    <br />
+                    (2) Peg dan Kel UPBE Pongkor
+                    <br />
+                    (3) Peg dan Kel UBPN Pomala
+                    <br />
+                    (4) Pens dan Kel.Antam
+                    <br />
+                    (5) Pihak III
+                    <br />
+                    (6) Lain-lain
+                    <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">
+                    Dokter Penanggung Jawab : ______
+                    <br />
+                    Ruang Rawat : ______
+                    <br />
+                    Kelas : __________________________
+                    <br />
+                  </td>
+                  <td class="border">
+                    Cara penerimaan melalui :
+                    <br />
+                    (1) UGD
+                    <br />
+                    (2) Rawat Jalan
+                    <br />
+                    (3) Lain-lain
+                    <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">
+                    Diagnosa
+                    <br />
+                    a. Masuk / Onadmission :
+                    <br />
+                    1. _________________
+                    <br />
+                    2. _________________
+                    <br />
+                    b. Akhir / Ondischange :
+                    <br />
+                    __________________________
+                    <br />
+                  </td>
+                  <td class="border">
+                    Cara masuk dikirim oleh :
+                    <br />
+                    (1) Dokter
+                    <br />
+                    (2) Datang Sendiri
+                    <br />
+                    (3) Kasus Polisi
+                    <br />
+                    (4) RS Lain
+                    <br />
+                    (5) Lain-lain
+                    <br />
+                    <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">
+                    Anamnesis / History Of Liness :
+                    <br />
+                    __________________________
+                    <br />
+                    __________________________
+                    <br />
+                    <br />
+                  </td>
+                  <td class="border">
+                    Tanggal Masuk : ______/____/___ Jam
+                    <br />
+                    Dipindahkan ke ruangan : ________/_____/____ Jam
+                    <br />
+                    Tanggal Keluar : _________/____/____ Jam
+                    <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">
+                    Pemeriksaan fisik / Physical Examination :
+                    <br />
+                    __________________________
+                    <br />
+                    __________________________
+                    <br />
+                    <br />
+                  </td>
+                  <td class="border">
+                    Pemeriksaan Penunjang :
+                    <br />
+                    __________________________
+                    <br />
+                    __________________________
+                    <br />
+                    <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">
+                    Konsultasi / Consultation :
+                    <br />
+                    __________________________
+                    <br />
+                    __________________________
+                    <br />
+                    <br />
+                  </td>
+                  <td class="border">
+                    Pengobatan / Therapy :
+                    <br />
+                    __________________________
+                    <br />
+                    __________________________
+                    <br />
+                    <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="border">
+                    Kondisi Pasien Keluar :
+                    <br />
+                    (1) Sembuh   (2) Membaik  (3) Belum Sembuh   (4) Meninggal
+                    <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">
+                    Tranfusi : Ada/Tidak ada ________cc
+                    <br />
+                    Golda : A/B/AB/O      Rhesus : +/-
+                  </td>
+                  <td class="border">
+                    Cara pulang :
+                    <br />
+                    (1) Diijinkan pulang
+                    <br />
+                    (2) Pulang Paksa
+                    <br />
+                    (3) Dirujuk
+                    <br />
+                    <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">
+                    Tindakan Operasi
+        a. Saat pulang / On Dischange :
+                    <br />
+                    __________________________
+                    <br />
+                    b. Komplikasi / Complication :
+                    <br />
+                    __________________________
+                    <br />
+                    c. Meninggal / Death :
+                    <br />
+                    __________________________
+                    <br />
+                    <br />
+
+                  </td>
+                  <td class="border">
+                    Terapi Pulang :
+                    <br />
+                    __________________________
+                    <br />
+                    __________________________
+                    <br />
+                    __________________________
+                    <br />
+                    <br />
+                    Kontrol tanggal : ____/____/____
+                    <br />
+                  </td>
+                </tr>
+                <tr>
+                  <td class="border">
+                    Dokter yang merawat / Doctor
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                  </td>
+                  <td class="border">
+                    Tanda tangan :
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_pengkajian_rawat_inap">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+
+table, th, td {
+  padding: 5px;
+}
+.border{
+border:1px solid black;
+}
+</style>
+                        <div class="oe_structure">
+                            <h3>
+                                FORMULIR PENGKAJIAN AWAL PASIEN
+                                <br />
+                                TERINTREGASI RAWAT INAP
+                            </h3>
+
+                            <table style="width:100%;">
+                                <tr>
+                                    <td class="border">Nama : </td>
+                                    <td class="border">No.RM : </td>
+                                </tr>
+                                <tr>
+                                    <td class="border">Tanggal Lahir : </td>
+                                    <td class="border">Pekerjaan : </td>
+                                </tr>
+                                <tr>
+                                    <td class="border">DPJP : </td>
+                                    <td class="border">Tanggal Masuk : </td>
+                                </tr>
+                                <tr>
+                                    <td class="border">Penanggung : </td>
+                                    <td class="border">Tanggal Keluar : </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="border">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td colspan="2">NPP : </td>
+                                            </tr>
+                                            <tr>
+                                                <td>1. Peg dan Kel pasce tambang </td>
+                                                <td>4. Pens dan Kel. Antam </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2. Peg dan Kel UPBE Pongkor </td>
+                                                <td>5. Pihak III </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3. Peg dan Kel UPBN Pomala </td>
+                                                <td>6. Lain-lain/BPJS </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="border">
+                                        I. Riwayat Kesehatan (Diisi oleh dokter)
+                                        <br />
+                                        a. Alasan MRS/Keluhan Utama :
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        b. Riwayat penyakit sekarang :
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        c. Riwayat penyakit terdahulu :
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        d. Riwayat penyakit dalam keluarga :
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        II. Pemeriksaan multi organ (diisi oleh dokter)
+                                        <br />
+                                        a. Kepala dan leher :
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        b. Dada dan punggung :
+                                        <br />
+                                        - Paru
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        - Jantung
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        - Perut dan pinggang
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        - Anggota gerak
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        - Genetalia dan anus
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                    </td>
+                                    <td class="border">
+                                        III. Hasil Pemeriksaan penunjang (dicantumkan oleh dokter)
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        IV. Daftar Masalah/Diagnosis (Diisi oleh dokter)
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        V. Penatalaksanaan / Terapi (Diisi oleh dokter)
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        _______________________________________
+                                        <br />
+                                        VI. Pemeriksaan tanda-tanda vital dan kondisi umum (diisi oleh perawat)
+                                        <br />
+                                        TD : ________ mmHg   Suhu : ________ C
+                                        <br />
+                                        HR : ________ x/m    RR : ________ x/m
+                                        <br />
+                                        Kesadaran : _________________________
+                                        <br />
+                                        Penggunaan alat bantu : ______________________________
+                                        <br />
+                                        <br />
+                                        VII. Kebutuhan Dasar Manusia (diisi oleh perawat)
+                                        <br />
+                                        - Malnutrition Screening Tool (MST)
+                                        <br />
+                                        1. Apakah pasien mengalami penurunan berat badan yang tidak di rencanakan / Tidak diinginkan dalam 6 bulan terakhir ?
+                                        <br />
+                                        o Tidak
+                                        <br />
+                                        o Tidak Yakin (ada tanda : baju menjadi lebih longgar)
+                                        <br />
+                                        o Ya, ada penurunan BB sebanyak :
+                                        <br />
+                                        1 - 5 Kg
+                                        <br />
+                                        6 - 10 Kg
+                                        <br />
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="page-break-after:always;page-break-inside: avoid;"></p>
+
+                            <table style="width:100%">
+
+                                <tr>
+                                    <td class="border">
+                                        11-15Kg
+                                        <br />
+                                        > 15Kg
+                                        <br />
+                                        Tidak tahu berapa penurunan berat badannya.
+                                        <br />
+                                        <br />
+                                        2. Apakah asupan makanan pasien berkurang karena penurunan nafsu makan/ kesulitan menerima makanan ?
+                                        <br />
+                                        o Tidak
+                                        <br />
+                                        o Ya
+                                        <br />
+                                        Total Skor : ____________
+                                        <br />
+                                        <br />
+                                        a. Kebutuhan Eliminasi
+                                        <br />
+                                        Frekuensi BAB : ___________x/hari
+                                        <br />
+                                        Warna  : ___________
+                                        <br />
+                                        Konsistensi : ___________
+                                        <br />
+                                        Frekuensi BAK : ___________x/hari
+                                        <br />
+                                        Jumlah : ___________
+                                        <br />
+                                        Warna  : ___________
+                                        <br />
+                                        <br />
+                                        b. Kebutuhan Aktivitas dan Istirahat
+                                        <br />
+                                        Mandi : Mampu/Dibantu
+                                        <br />
+                                        Makan : Mampu/Dibantu
+                                        <br />
+                                        Berpakaian : Mampu/Dibantu
+                                        <br />
+                                        BAB/BAK : Mampu/Dibantu
+                                        <br />
+                                        Olahraga : Ya/Tidak
+                                        <br />
+                                        Keterbatasan ROM : Ada/Tidak
+                                        <br />
+                                        Gaya berjalan : Pelan/Diseret/Tremor/Lain-lain
+                                        <br />
+                                        Kwalitas tidur : Nyenyak/Sering terbangun
+                                        <br />
+                                        Obat Tidur : Ada/Tidak
+                                        <br />
+                                        <br />
+                                        Pengkajian nyeri
+                                        <br />
+                                        P	: _____________________________________________
+                                        <br />
+                                        Q	: _____________________________________________
+                                        <br />
+                                        R	: _____________________________________________
+                                        <br />
+                                        S	: _____________________________________________
+                                        <br />
+                                        T	: _____________________________________________
+                                        <br />
+                                        <br />
+                                        c. Kebutuhan Emosional
+        Kontak Mata : Ada/Tidak
+                                        <br />
+                                        Bingung : Ada/Tidak
+                                        <br />
+                                        Perasaan tidak mampu : Ada/Tidak
+                                        <br />
+                                        Perasaan tidak berharga : Ada/Tidak
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </td>
+                                    <td class="border">
+                                        d. Cairan Dan Elektrolit
+    Minum : _____________________ cc/hari
+                                        <br />
+                                        Parenteral : _____________________ cc/hari
+                                        <br />
+                                        Mukosa Bibir : __________________________
+                                        <br />
+                                        Turgor Kulit : __________________________
+                                        <br />
+                                        Edema : __________________________
+                                        <br />
+                                        Lain-Lain : __________________________
+                                        <br />
+                                        <br />
+                                        e. Kebutuhan Persepsi Sensori
+                                        <br />
+                                        Penglihatan : normal / tidak normal
+                                        <br />
+                                        Pendengaran : normal / tidak normal
+                                        <br />
+                                        Penciuman : normal / tidak normal
+                                        <br />
+                                        Pengecapan : normal / tidak normal
+                                        <br />
+                                        Perabaan : normal / tidak normal
+                                        <br />
+                                        <br />
+                                        f. Kebutuhan Komunikasi
+                                        <br />
+                                        Pembicaraan : koheren / inkoheren
+                                        <br />
+                                        Disorientasi : Ada / Tidak
+                                        <br />
+                                        Apatis : Ada / Tidak
+                                        <br />
+                                        Afasia : Ada / Tidak
+                                        <br />
+                                        <br />
+                                        g. Kebutuhan Spiritual
+                                        <br />
+                                        Kegiatan ibadah sehari hari :
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        <br />
+                                        VIII. Daftar Diagnosis Keperawatan
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        <br />
+                                        IX. Daftar Rencana Keperawatan
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                        ________________________________________
+                                        <br />
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

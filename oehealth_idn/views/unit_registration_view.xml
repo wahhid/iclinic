@@ -81,9 +81,14 @@
                             <field name="queue_no" invisible="1"/>
                             -->
                             <field name="type" invisible="1"/>
+<<<<<<< HEAD
                             <field name="operating_unit_id" invisible="1"/>
                             <field name="unit" required="1" domain="[('type', '=', type),('operating_id','=', operating_unit_id)]"/>
                             <field name="doctor" attrs="{'required': ['|',('type','in',('Out-Patient')),('is_medical_record','=',True)]}" domain="['|', ('unit_ids', '=', unit), ('id', '=', doctor_reference)]"/>
+=======
+                            <field name="unit" required="1" domain="[('type', '=', type)]"/>
+                            <field name="doctor" attrs="{'required': [('is_medical_record','=',True)]}" domain="['|', ('unit_ids', '=', unit), ('id', '=', doctor_reference)]"/>
+>>>>>>> origin/10.0-yogi
                             <field name="is_medical_record" invisible="1"/>
                             <label for="payment" string="Payment Guarantor"/>
                             <div>
