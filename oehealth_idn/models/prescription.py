@@ -346,18 +346,12 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'partner_invoice_id': guarantor, 
                         'partner_shipping_id': guarantor, 
                         'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
-<<<<<<< HEAD
                         'operating_unit_id': self.env.user.default_operating_unit_id.id,
                         #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id,
                         'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
                         #'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit_id.id))], limit=1).id
                     }
                     inv_ids = obj.sudo().create(val_obj)
-=======
-                        #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
-                        'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
-                    inv_ids = obj.create(val_obj)
->>>>>>> origin/10.0-yogi
                     
                     if inv_ids:
                         inv_id = inv_ids.id
@@ -453,18 +447,11 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                     'arrival_id': False, 
                     'patient_id': acc.patient.id, 
                     'doctor_id': acc.doctor.id, 
-<<<<<<< HEAD
                     'partner_id': guarantor, 
                     'partner_invoice_id': guarantor, 
                     'partner_shipping_id': guarantor, 
                     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id,
                     'operating_unit_id': self.env.user.default_operating_unit_id.id,
-=======
-                    'partner_id': acc.patient.partner_id.id, 
-                    'partner_invoice_id': acc.patient.partner_id.id, 
-                    'partner_shipping_id': acc.patient.partner_id.id, 
-                    #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
->>>>>>> origin/10.0-yogi
                     'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
                 inv_ids = obj.create(val_obj)
                 
@@ -483,7 +470,6 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                             }
                             line_obj.create(vals)
 
-<<<<<<< HEAD
                         if acc.concoction_ids:
                             for cn in acc.concoction_ids:
                                 for cnd in cn.concoction_detail_ids:
@@ -516,23 +502,6 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                                         'price_unit': cnd.product_id.lst_price
                                     }
                                     line_obj.create(vals)
-=======
-                    if acc.concoction_ids:
-                        for cn in acc.concoction_ids:
-                            for cnd in cn.concoction_detail_ids:
-                                vals = {
-                                    'order_id': inv_id, 
-                                    'product_id': cnd.product_id.id, 
-                                    'name': cnd.product_id.name, 
-                                    'is_concoction': True,
-                                    'medical_concoction_id': cn.id,
-                                    'prescribe_qty': cnd.qty, 
-                                    'product_uom_qty': cnd.qty, 
-                                    'product_uom': cnd.uom_id.id, 
-                                    #'price_unit': cnd.price_unit
-                                }
-                                line_obj.create(vals)
->>>>>>> origin/10.0-yogi
 
                 self.write(
                     {
