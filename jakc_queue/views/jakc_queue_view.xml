@@ -70,9 +70,11 @@
             <field name="type">form</field>						
             <field name="arch" type="xml">
                 <form string="Queue Type">
-                    <button name="trans_close" string="Close" type="object" class="oe-highlight" state="open"/>
-                    <button name="trans_reopen" string="Re-Open" type="object" class="oe-highlight" state="done"/>
-                	<sheet>
+                    <header>
+                        <button name="trans_close" string="Close" type="object" class="oe-highlight" state="open"/>
+                        <button name="trans_reopen" string="Re-Open" type="object" class="oe-highlight" state="done"/>
+                	</header>
+                    <sheet>
 	                    <group>                            
 	                        <field name="name"/>
 	                        <field name="number"/>
@@ -80,6 +82,7 @@
                             <field name="bg_color"/>
                             <field name="sequence_id"/>
                             <field name="next_type_id"/>
+                            <field name='is_end_type'/>
 	                        <field name="state"/>	                                                   
 	                    </group>	                		                	
                 	</sheet>  

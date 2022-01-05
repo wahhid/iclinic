@@ -109,6 +109,7 @@ class QueueType(models.Model):
     is_active = fields.Boolean('Active', default=False) 
     sequence_id = fields.Many2one('queue.sequence', 'Sequence #', required=True)
     next_type_id = fields.Many2one('queue.type', 'Next Step')
+    is_end_type = fields.Boolean('End Type', default=False)
     state = fields.Selection(AVAILABLE_STATES, 'Status', size=16 , readonly=True, default='open')
 
 

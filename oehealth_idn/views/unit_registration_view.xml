@@ -39,7 +39,10 @@
                     <button name="action_next" type="object" string="Confirm" confirm="Menlanjutkan ke bagian berikutnya ?" states="Unlock" class="oe_highlight"/>
                     <button name="create_sale" string="Create Transaction" states="Unlock,Check-In" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     <button name="view_sale" string="View Transaction" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service,oehealth_idn.group_cashier,oehealth.group_oeh_medical_manager"/>
+                    <!--
                     <button name="create_reference" string="Create Reference" attrs="{'invisible': [('type', '==', 'Medical Support')]}" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
+                    -->
+                    <button name="%(action_wizard_reference_hospital)d" string="Create Reference" attrs="{'invisible': [('type', '==', 'Medical Support')]}" type="action" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     <button name="set_lock" string="Lock" states="Unlock" type="object" class="oe_highlight"/>
                     <button name="set_unlock" string="Unlock" states="Lock" type="object" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="Scheduled,Completed,Invoiced" statusbar_colors="{&quot;Scheduled&quot;:&quot;blue&quot;,&quot;Completed&quot;:&quot;green&quot;,&quot;Invoiced&quot;:&quot;grey&quot;}"/>
@@ -80,15 +83,11 @@
                             <field name="queue"/>
                             <field name="queue_no" invisible="1"/>
                             -->
+                            <field name="is_has_reference" invisible="1"/>
                             <field name="type" invisible="1"/>
-<<<<<<< HEAD
                             <field name="operating_unit_id" invisible="1"/>
                             <field name="unit" required="1" domain="[('type', '=', type),('operating_id','=', operating_unit_id)]"/>
                             <field name="doctor" attrs="{'required': ['|',('type','in',('Out-Patient')),('is_medical_record','=',True)]}" domain="['|', ('unit_ids', '=', unit), ('id', '=', doctor_reference)]"/>
-=======
-                            <field name="unit" required="1" domain="[('type', '=', type)]"/>
-                            <field name="doctor" attrs="{'required': [('is_medical_record','=',True)]}" domain="['|', ('unit_ids', '=', unit), ('id', '=', doctor_reference)]"/>
->>>>>>> origin/10.0-yogi
                             <field name="is_medical_record" invisible="1"/>
                             <label for="payment" string="Payment Guarantor"/>
                             <div>
@@ -217,6 +216,12 @@
                                         <button string="Ambulatory" name="action_ambulatory" attrs="{'invisible': [('ambulatory_id', '=', False)]}" type="object" class="oe_stat_button" icon="fa-book"/>
                                     </div>
                                 </group>
+                            </group>
+                        </page>
+                        <page string="Reference" attrs="{'invisible': [('is_has_reference','=',False)]}">
+                            <group>
+                                <field name="unit_administration"/>
+                                <field name="reference_hospital"/>
                             </group>
                         </page>
                         <page string="Details" attrs="{'invisible': [('type', '!=', 'In-Patient')]}">

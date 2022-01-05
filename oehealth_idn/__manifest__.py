@@ -19,7 +19,6 @@
         "stock",
         "jakc_queue",
         "operating_unit"
-        "stock"
     ],
     "init_xml": [],
     "data": [
@@ -27,6 +26,10 @@
         "security/res.groups.xml",
         "security/ir.rule.xml",
         "security/ir.model.access.csv",
+        # "wizard/sale_order_line_make_account_invoice_view.xml",
+        "wizard/ms_report_stock_wizard.xml",
+        "wizard/wizard_reference_hospital.xml",
+        "wizard/wizard_report_physician_income.xml",
         "views/medical_evaluation_view.xml",
         "views/class_view.xml",
         "views/room_view.xml",
@@ -50,8 +53,6 @@
         "views/res_users_view.xml",
         "views/menu_view.xml",
         "config/sale_config_settings.xml",
-        # "wizard/sale_order_line_make_account_invoice_view.xml",
-        "wizard/ms_report_stock_wizard.xml",
         "report/patient_card_report.xml",
         "report/stiker_pasien_report.xml",
         "report/master_filepatient_report.xml",
@@ -84,6 +85,8 @@
         "report/rujukan_internal_report.xml",
         "report/persetujuan_tindakan_report.xml",
         "report/registration_reciept.xml",
+        "report/report_physician_income_template.xml",
+        "report/report_physician_income.xml",
         "report/report_menu.xml",
     ],
     "installable": True,
