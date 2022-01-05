@@ -19,7 +19,7 @@ th, td {
                                             <tr>
                                                 <td>No.Rekam Medis</td>
                                                 <td> : </td>
-                                                <td>__________________________________</td>
+                                                <td><p t-field="o.name" /></td>
                                                 <td>Ruang</td>
                                                 <td> : </td>
                                                 <td>__________________________________</td>
@@ -27,10 +27,10 @@ th, td {
                                             <tr>
                                                 <td>Nama</td>
                                                 <td> : </td>
-                                                <td>__________________________________LK/P</td>
+                                                <td><p t-field="o.patient.name" /> - <p t-field="o.patient.sex" /></td>
                                                 <td>Tanggal Lahir</td>
                                                 <td> : </td>
-                                                <td>__________________________________</td>
+                                                <td><p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -45,9 +45,9 @@ th, td {
                                     <td style="border:1px solid black;">
                                         <table style="width:100%">
                                             <tr>
-                                                <td>Umur : __________th</td>
-                                                <td>Jenis Kelamin : L/P</td>
-                                                <td>Agama : </td>
+                                                <td>Umur : <p t-field="o.patient.age" /></td>
+                                                <td>Jenis Kelamin :<p t-field="o.patient.sex" /></td>
+                                                <td>Agama : <p t-field="o.patient.religion" /></td>
                                                 <td>Kemampuan Baca : Bisa/Tidak</td>
                                             </tr>
                                         </table>
@@ -284,8 +284,8 @@ _________
                                     <td colspan="2">
                                         <table style="width:100%">
                                             <tr>
-                                                <td>Tanggal : __________ </td>
-                                                <td>Jam : ___________ </td>
+                                                <td>Tanggal : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/> </td>
+                                                <td></td>
                                                 <td>Tanda tangan dan nama Dietisien : __________ </td>
                                             </tr>
                                         </table>

@@ -39,7 +39,7 @@
                                     </div>
                                     <div>
                                         <strong>Mohon dilakukan pemeriksaan : </strong>
-                                        <!-- <p t-field="o.test_type" /> -->
+                                        
                                     </div>
                                     <div>
                                         <p>

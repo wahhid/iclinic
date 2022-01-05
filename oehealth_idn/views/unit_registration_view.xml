@@ -36,12 +36,14 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="action_next" type="object" string="Confirm" confirm="Menlanjutkan ke bagian berikutnya ?" states="Unlock" class="oe_highlight"/>
                     <button name="create_sale" string="Create Transaction" states="Unlock,Check-In" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     <button name="view_sale" string="View Transaction" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service,oehealth_idn.group_cashier,oehealth.group_oeh_medical_manager"/>
                     <button name="create_reference" string="Create Reference" attrs="{'invisible': [('type', '==', 'Medical Support')]}" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
-                    <button name="set_lock" string="Lock" states="Unlock" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
-                    <button name="set_unlock" string="Unlock" states="Lock" type="object" class="oe_highlight" groups="oehealth.group_medical_service"/>
+                    <button name="set_lock" string="Lock" states="Unlock" type="object" class="oe_highlight"/>
+                    <button name="set_unlock" string="Unlock" states="Lock" type="object" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="Scheduled,Completed,Invoiced" statusbar_colors="{&quot;Scheduled&quot;:&quot;blue&quot;,&quot;Completed&quot;:&quot;green&quot;,&quot;Invoiced&quot;:&quot;grey&quot;}"/>
+
                 </header>
                 <sheet>
                     <field name="is_blacklist" invisible="1"/>
@@ -74,26 +76,32 @@
                     </div>
                     <group>
                         <group>
+                            <!--
                             <field name="queue"/>
                             <field name="queue_no" invisible="1"/>
+                            -->
                             <field name="type" invisible="1"/>
-                            <field name="unit" required="1" domain="[('type', '=', type)]"/>
-                            <field name="doctor" attrs="{'required': [('is_medical_record','=',True)]}" domain="['|', ('unit_ids', '=', unit), ('id', '=', doctor_reference)]"/>
+                            <field name="operating_unit_id" invisible="1"/>
+                            <field name="unit" required="1" domain="[('type', '=', type),('operating_id','=', operating_unit_id)]"/>
+                            <field name="doctor" attrs="{'required': ['|',('type','in',('Out-Patient')),('is_medical_record','=',True)]}" domain="['|', ('unit_ids', '=', unit), ('id', '=', doctor_reference)]"/>
                             <field name="is_medical_record" invisible="1"/>
                             <label for="payment" string="Payment Guarantor"/>
                             <div>
-                                <field name="payment" class="oe_inline" nolabel="1"/>
+                                <field name="payment" class="oe_inline" nolabel="1" readonly="0"/>
                                 <span style="margin-right:10px"/>
-                                <field name="company" placeholder="Company" domain="[('is_company','=',True), ('customer','=',True)]" attrs="{'invisible': [('payment','!=','Corporate')], 'required': [('payment','=','Corporate')]}" class="oe_inline" nolabel="1"/>
-                                <field name="insurance" placeholder="Insurance" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')]}" class="oe_inline" nolabel="1"/>
-                                <field name="employee_id" placeholder="Employee" domain="[('patient','=',patient), ('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
+                                <field name="company" placeholder="Company" domain="[('is_company','=',True), ('customer','=',True)]" attrs="{'invisible': [('payment','!=','Corporate')], 'required': [('payment','=','Corporate')]}" class="oe_inline" nolabel="1" readonly="0"/>
+                                <field name="insurance" placeholder="Insurance" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')]}" class="oe_inline" nolabel="1" readonly="0"/>
+                                <field name="employee_id" placeholder="Employee" domain="[('patient','=',patient), ('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1" readonly="0"/>
                             </div>
-                            <field name="payment_guarantor_discount_id" readonly="1"/>
+                            <field name="payment_guarantor_discount_id" readonly="0"/>
                             <field name="remarks" placeholder="Remarks"/>
                         </group>
                         <group attrs="{'invisible': [('type', '!=', 'Out-Patient')]}">
                             <field name="schedule" invisible="1"/>
                             <field name="date" placeholder="Date"/>
+                            <field name="queue_trans_id" readonly="0"/>
+                            <field name="type_id"/>
+                            <field name="user_unit_administration_id"/>
                         </group>
                         <group attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
                             <field name="admission_reason"/>
@@ -231,10 +239,11 @@
         <field name="name">unit_registration_tree_view</field>
         <field name="model">unit.registration</field>
         <field name="arch" type="xml">
-            <tree colors="red:is_blacklist">
+            <tree colors="red:is_blacklist" default_order="date asc">
                 <field name="name"/>
-                <field name="queue"/>
+                <!--<field name="queue"/>-->
                 <field name="date"/>
+                <field name="queue_trans_id"/>
                 <field name="unit" string="Unit Name"/>
                 <field name="patient"/>
                 <field name="age"/>
@@ -251,9 +260,9 @@
         <field name="name">unit_registration_tree_view</field>
         <field name="model">unit.registration</field>
         <field name="arch" type="xml">
-            <tree create="0" colors="blue:queue_state=='Now'; gray:queue_state=='Done'">
+            <tree create="0"  default_order="date asc" colors="blue:queue_state=='Now'; gray:queue_state=='Done'">
                 <field name="name"/>
-                <field name="queue"/>
+                <!--<field name="queue"/>-->
                 <field name="date"/>
                 <field name="unit" string="Unit Name"/>
                 <field name="patient"/>

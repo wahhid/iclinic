@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "counter_name": "Customer Service",
+      "current_trans": "202",
+      "counter_bg": "bg-red",
+      "counter_fa": "fa-users"
+    },
+    {
+      "counter_name": "Teller",
+      "current_trans": "303",
+      "counter_bg": "bg-red",
+      "counter_fa": "fa-bank"
+    },
+    {
+      "counter_name": "Customer Service",
+      "current_trans": "203",
+      "counter_bg": "bg-red",
+      "counter_fa": "fa-users"
+    },
+    {
+      "counter_name": "Teller",
+      "current_trans": "304",
+      "counter_bg": "bg-red",
+      "counter_fa": "fa-bank"
+    },
+    {
+      "counter_name": "Customer Service",
+      "current_trans": "204",
+      "counter_bg": "bg-red",
+      "counter_fa": "fa-users"
+    },
+    {
+      "counter_name": "Teller",
+      "current_trans": "305",
+      "counter_bg": "bg-red",
+      "counter_fa": "fa-bank"
+    },
+    {
+      "counter_name": "Customer Service",
+      "current_trans": "305",
+      "counter_bg": "bg-red",
+      "counter_fa": "fa-users"
+    },
+    {
+      "counter_name": "Teller",
+      "current_trans": "305",
+      "counter_bg": "bg-red",
+      "counter_fa": "fa-bank"
+    }
+  ]
+}

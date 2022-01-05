@@ -7,6 +7,9 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="oehealth.oeh_medical_physician_view"/>
         <field name="arch" type="xml">
+            <field name="is_pharmacist" position="before">   
+                <field name="is_pathology"/>
+            </field>
             <field name="consultancy_type" position="after">
                 <field name="consultancy_fee" attrs="{'invisible': [('consultancy_type','=','Residential')]}"/>
             </field>

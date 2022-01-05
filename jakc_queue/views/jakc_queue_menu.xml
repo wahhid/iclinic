@@ -1,0 +1,25 @@
+<odoo>
+    <data>    	
+        <menuitem id="queue_main_menu" name="Queue"/>
+        <menuitem name="General" id="base.queue_general_menu" parent="queue_main_menu"/>	
+     	<menuitem name="Transaction" id="base.queue_transaction_menu" parent="jakc_queue.queue_main_menu"/>
+ 		<menuitem name="Configuration" id="base.queue_configuration_menu" parent="jakc_queue.queue_main_menu"/>
+
+ 		<!-- QUEUE/MENU -->
+        <!-- GENERAL -->
+        <menuitem name="Counter" id="queue_general_menu" parent="base.queue_general_menu"/>
+        <menuitem id="queue_kiosk_menu" name="Kiosk" parent="jakc_queue.queue_general_menu"  action="jakc_queue.queue_kiosk_action"  sequence="1"/>
+        <menuitem id="queue_display_menu" name="Display" parent="jakc_queue.queue_general_menu"  action="jakc_queue.queue_display_action"  sequence="2"/>
+        <menuitem id="queue_type_menu" name="Type" parent="jakc_queue.queue_general_menu"  action="jakc_queue.queue_type_action"  sequence="3"/>
+        <menuitem id="queue_pickup_menu" name="Pickup" parent="jakc_queue.queue_general_menu"  action="jakc_queue.queue_pickup_action" sequence="4"/>
+        
+        <!-- TRANSACTION -->
+        <menuitem name="Transaction" id="queue_transaction_menu" parent="base.queue_transaction_menu"/>
+        <menuitem id="queue_pickup_log_menu" name="Pickup Log" parent="jakc_queue.queue_transaction_menu"  action="jakc_queue.queue_pickup_log_action" sequence="1"/>
+        <menuitem id="queue_trans_menu" name="Transaction" parent="jakc_queue.queue_transaction_menu"  action="jakc_queue.queue_trans_action" sequence="2"/>
+
+        <!-- CONFIGURATION --> 
+        <menuitem id="queue_sequence_menu" name="Sequence" parent="base.queue_configuration_menu"  action="jakc_queue.queue_sequence_action" sequence="1"/>
+
+    </data>
+</odoo>

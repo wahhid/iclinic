@@ -6,13 +6,14 @@
 
     <report id="master_filepatient_report_menu" string="Master File Patient" model="oeh.medical.patient" report_type="qweb-pdf" name="oehealth_idn.report_master_filepatient" menu="True" />
 
-    <!-- Registration Report Menu -->
+    <!-- Registration Report Menu 
     <report id="slip_registrasi_report_menu" string="Slip Registrasi Rajal" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_slip_registrasi" menu="True" attachment_use="True" attachment="'Slip Registrasi - %s' % ((object.name or '').replace('/','')+'.pdf')" />
 
     <report id="slip_registrasi_penunjang_report_menu" string="Slip Registrasi Penunjang" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_slip_registrasi_penunjang" menu="True" attachment_use="True" attachment="'Slip Registrasi - %s' % ((object.name or '').replace('/','')+'.pdf')" />
 
     <report id="slip_registrasi_igd_report_menu" string="Slip Registrasi IGD" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_slip_registrasi_igd" menu="True" attachment_use="True" attachment="'Slip Registrasi - %s' % ((object.name or '').replace('/','')+'.pdf')" />
-
+	-->
+	
     <!-- Action Report Menu -->
     <report id="etiket_report_menu" string="e-tiket" model="oeh.medical.prescription" report_type="qweb-pdf" name="oehealth_idn.report_etiket" menu="True" attachment_use="True" attachment="'E-tiket - %s' % ((object.patient.name or '').replace('/','')+'.pdf')" />
 
@@ -90,9 +91,6 @@
         <field name="report_ids" eval="[
             (4, ref('oehealth.action_report_patient_label')),
             (4, ref('oehealth_idn.stiker_pasien_report_menu')),
-            (4, ref('oehealth_idn.slip_registrasi_report_menu')),
-            (4, ref('oehealth_idn.slip_registrasi_penunjang_report_menu')),
-            (4, ref('oehealth_idn.slip_registrasi_igd_report_menu')),
             (4, ref('oehealth_idn.etiket_report_menu'))
         ]" />
     </record>

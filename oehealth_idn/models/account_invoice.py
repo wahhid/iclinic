@@ -9,6 +9,7 @@ from odoo.exceptions import UserError, Warning
 
 class account_invoice(models.Model):
     _inherit = 'account.invoice'
+
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID')
     medical_record = fields.Char(string='Medical Record', related='patient.identification_code')
@@ -63,6 +64,7 @@ class account_invoice(models.Model):
                             max_admin_fee = prv.max_admin_fee
                         else:
                             raise UserError('Medical Insurance Type "Personal" Not Found!')
+                            
                     admin_fee_value = self.amount_total * admin_fee_percent / 100
                     if max_admin_fee and admin_fee_value >= max_admin_fee:
                         admin_fee_value = max_admin_fee
@@ -85,6 +87,7 @@ class account_invoice(models.Model):
 
 class account_invoice_line(models.Model):
     _inherit = 'account.invoice.line'
+
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID')
     patient_id = fields.Many2one(comodel_name='oeh.medical.patient', string='Patient')

@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+
+        <menuitem id="queue_main_menu" name="Queue"/>
+        <menuitem name="General" id="base.queue_general_menu" parent="queue_main_menu"/>	
+     	<menuitem name="Transaction" id="base.queue_trans_menu" parent="queue_main_menu"/>
+ 		<!-- QUEUE/MENU -->
+        <!-- GENERAL -->
+        <menuitem name="Counter" id="queue_general_counter_menu" parent="base.queue_general_menu"/>
+        
+        <!-- TRANSACTION -->
+        <menuitem name="Transaction" id="queue_transaction_trans_menu" parent="base.queue_trans_menu"/>
+
+    </data>
+</odoo>

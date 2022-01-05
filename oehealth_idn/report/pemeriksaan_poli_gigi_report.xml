@@ -24,8 +24,8 @@ th, td {
               <br />
               <table style="width:80%" class="center">
                 <tr>
-                  <td>NAMA LENGKAP : _________________________</td>
-                  <td>JENIS KELAMIN : L/P </td>
+                  <td>NAMA LENGKAP : <p t-field="o.patient.name" /></td>
+                  <td>JENIS KELAMIN : <p t-field="o.patient.sex" /> </td>
                 </tr>
                 <tr>
                   <td>NIK/KTP : _________________________</td>

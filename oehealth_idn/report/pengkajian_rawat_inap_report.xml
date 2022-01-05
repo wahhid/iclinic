@@ -23,11 +23,11 @@ border:1px solid black;
 
                             <table style="width:100%;">
                                 <tr>
-                                    <td class="border">Nama : </td>
-                                    <td class="border">No.RM : </td>
+                                    <td class="border">Nama : <span t-field="o.patient.name"/></td>
+                                    <td class="border">No.RM : <span t-field="o.name"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="border">Tanggal Lahir : </td>
+                                    <td class="border">Tanggal Lahir : <span t-field="o.patient.dob"/></td>
                                     <td class="border">Pekerjaan : </td>
                                 </tr>
                                 <tr>

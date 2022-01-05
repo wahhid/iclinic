@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-
 {
-    "name" : "Indonesia Hospital Management System",
-    "version" : "2.0",
-    "author" :"Permata Technology, Ibrahim",
+    "name" : "Hospital Management System",
+    "version" : "10.0.2.0",
+    "author" :"WEHA Consultant",
     "category": "Medical",
     "description" :
     '''
@@ -17,7 +16,9 @@
         "sale_stock_location",
         "vit_kelurahan",
         "sale_margin",
-        "stock"
+        "stock",
+        "jakc_queue",
+        "operating_unit"
     ],
     "init_xml": [],
     "data": [
@@ -25,7 +26,6 @@
         "security/res.groups.xml",
         "security/ir.rule.xml",
         "security/ir.model.access.csv",
-
         "views/medical_evaluation_view.xml",
         "views/class_view.xml",
         "views/room_view.xml",
@@ -45,12 +45,12 @@
         "views/opthalmology_view.xml",
         "views/account_invoice_view.xml",
         "views/stock_pack_operation_views.xml",
+        "views/jakc_queue_view.xml",
+        "views/res_users_view.xml",
         "views/menu_view.xml",
-
         "config/sale_config_settings.xml",
         # "wizard/sale_order_line_make_account_invoice_view.xml",
         "wizard/ms_report_stock_wizard.xml",
-
         "report/patient_card_report.xml",
         "report/stiker_pasien_report.xml",
         "report/master_filepatient_report.xml",
@@ -58,30 +58,17 @@
         "report/daftar_transaksi_report.xml",
         "report/nota_resep_report.xml",
         "report/salinan_resep_report.xml",
-        "report/resep_report.xml",
-        "report/perintah_rawat_inap_report.xml",
         "report/detail_transaksi_invoice_report.xml",
         "report/kwitansi_report.xml",
-        "report/pengkajian_report.xml",
-        "report/catatan_registrasi_pasien_report.xml",
-        "report/surat_keterangan_report.xml",
-        "report/catatan_asuhan_gizi_report.xml",
-        "report/pengkajian_rawat_inap_report.xml",
-        "report/rekam_medis_rawat_jalan_report.xml",
         "report/slip_registrasi_rajal_report.xml",
         "report/slip_registrasi_penunjang_report.xml",
         "report/slip_registrasi_igd_report.xml",
         "report/prescription_etiket_report.xml",
         "report/konsultasi_report.xml",
-        "report/observasi_terapi_pasien_report.xml",
-        "report/cppt_report.xml",
-        "report/implementasi_keperawatan_report.xml",
         "report/rujukan_radiologi_report.xml",
         "report/rujukan_pasien_report.xml",
-        "report/rujukan_poli_gigi_report.xml",
-        "report/pemeriksaan_poli_gigi_report.xml",
-        "report/rujukan_internal_report.xml",
         "report/persetujuan_tindakan_report.xml",
+        "report/registration_reciept.xml",
         "report/report_menu.xml",
     ],
     "installable": True,

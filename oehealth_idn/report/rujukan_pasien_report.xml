@@ -34,12 +34,16 @@ th, td {
                                             <tr>
                                                 <td>Nama Pasien</td>
                                                 <td> : </td>
-                                                <td>____________________________</td>
+                                                <td>
+                                                    <p t-field="o.patient" />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Umur</td>
                                                 <td> : </td>
-                                                <td>____________________________</td>
+                                                <td>
+                                                    <p t-field="o.patient.age" />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Penanggung Biaya</td>
@@ -47,9 +51,15 @@ th, td {
                                                 <td>____________________________</td>
                                             </tr>
                                             <tr>
-                                                <td>Diagnisa Medis</td>
+                                                <td>Diagnosa Medis</td>
                                                 <td> : </td>
-                                                <td>____________________________</td>
+                                                <td>
+                                                    <tr t-foreach='o.prescription_id.diagnostic_ids' t-as='line'>
+                                                        <td>
+                                                            <t t-esc="line['name']" />
+                                                        </td>
+                                                    </tr>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="3">TANDA-TANDA VITAL</td>
@@ -57,12 +67,17 @@ th, td {
                                             <tr>
                                                 <td>Tekanan Darah</td>
                                                 <td> : </td>
-                                                <td>____________mmHg</td>
+                                                <td>
+                                                    ______________mmHg
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Suhu</td>
                                                 <td> : </td>
-                                                <td>__________C</td>
+                                                <td>
+                                                    <p t-field="o.evaluation_id.temperature" />
+                                                    C
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Nadi</td>
@@ -72,12 +87,18 @@ th, td {
                                             <tr>
                                                 <td>Penapasan</td>
                                                 <td> : </td>
-                                                <td>_____________x/m (Regular/Ireguler)</td>
+                                                <td>
+                                                    <p t-field="o.evaluation_id.respiratory_rate" />
+                                                    x/m (Regular/Ireguler)
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Saturasi</td>
                                                 <td> : </td>
-                                                <td>___________%</td>
+                                                <td>
+                                                    <p t-field="o.evaluation_id.osat" />
+                                                    %
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>GCS</td>
@@ -126,10 +147,17 @@ th, td {
                                                 <th style="border: 1px solid black;">Obat</th>
                                                 <th style="border: 1px solid black;">Rute</th>
                                             </tr>
-                                            <tr>
-                                                <td style="border: 1px solid black;"></td>
-                                                <td style="border: 1px solid black;"></td>
-                                                <td style="border: 1px solid black;"></td>
+                                            <t t-set="nomor" t-value="1" />
+                                            <tr t-foreach='o.prescription_id.prescription_line' t-as='line'>
+                                                <td style="border: 1px solid black;">
+                                                    <t t-esc="nomor" />
+                                                </td>
+                                                <td style="border: 1px solid black;">
+                                                    <t t-esc="line['duration']" />
+                                                </td>
+                                                <td style="border: 1px solid black;">
+                                                    <t t-esc="line['name']" />
+                                                </td>
                                                 <td style="border: 1px solid black;"></td>
                                             </tr>
                                         </table>

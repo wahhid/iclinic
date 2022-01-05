@@ -17,12 +17,12 @@ th, td {
                                     <td>
                                         <table style="width:100%">
                                             <tr>
-                                                <td>No.RM : _______________</td>
+                                                <td>No.RM : <p t-field="o.name" /></td>
                                                 <td>Ruang Perawat : II/I/VIV Kamar : ____________</td>
                                             </tr>
                                             <tr>
-                                                <td>Nama Pasien : ________________</td>
-                                                <td>Jenis Kelamin : Laki-laki/wanita</td>
+                                                <td>Nama Pasien : <p t-field="o.patient.name" /></td>
+                                                <td>Jenis Kelamin : <p t-field="o.patient.sex" /></td>
                                             </tr>
                                         </table>
                                     </td>

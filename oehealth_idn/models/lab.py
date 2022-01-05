@@ -37,83 +37,94 @@ class OehMedicalLabTest(models.Model):
         guarantor = 0
         arrival = 0
         for acc in self:
-            if acc.payment != 'Personal' and acc.state not in ['Draft', 'Test In Progress']:
-                if acc.patient:
-                    if acc.payment == 'Insurance':
-                        guarantor = acc.insurance.ins_type.partner_id.id
-                    elif acc.payment == 'Corporate':
-                        guarantor = acc.company.id
-                    elif acc.payment == 'Employee':
-                        guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
-                    else:
-                        guarantor = acc.patient.partner_id.id
-                        #guarantor = acc.company.id
-
-
-                    val_obj = {
-                        #'reg_id': acc.id, 
-                        'arrival_id': acc.walkin.id, 
-                        'patient_id': acc.patient.id, 
-                        'doctor_id': acc.requestor.id, 
-                        'partner_id': acc.patient.partner_id.id, 
-                        'partner_invoice_id': guarantor, 
-                        'partner_shipping_id': acc.patient.partner_id.id, 
-                        'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
-                        'pricelist_id': acc.patient.partner_id.property_product_pricelist.id, 
-                        'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
-                        #'operating_unit_id': acc.unit.operating_id.id or False
-                    }
-                    inv_ids = obj.create(val_obj)
-                    
-                    if inv_ids:
-                        inv_id = inv_ids.id
-
-                        discount = 0.0
-                        product_id = self.env['product.product'].browse(360)
-                        if acc.payment_guarantor_discount_id:
-                            if product_id.item_type == 'General Item':
-                                discount = acc.payment_guarantor_discount_id.general_item
-                            elif product_id.item_type == 'Medical Item':        
-                                discount = acc.payment_guarantor_discount_id.medical_item
-                            elif product_id.item_type == 'Food Item':        
-                                discount = acc.payment_guarantor_discount_id.food_item
-                            elif product_id.item_type == 'Medicine':        
-                                discount = acc.payment_guarantor_discount_id.medicine
-                            elif product_id.item_type == 'Doctor':        
-                                discount = acc.payment_guarantor_discount_id.doctor
-                            elif product_id.item_type == 'Nurse':        
-                                discount = acc.payment_guarantor_discount_id.nurse
-                        vals = {
-                            'order_id': inv_id, 
-                            'product_id': 360, 
-                            'name': acc.test_type.name, 
-                            'prescribe_qty': 1, 
-                            'product_uom_qty': 1, 
-                            'discount_type': 'percent',
-                            'discount': discount,
-                            #product_uom': ps.name.uom_id.id, 
-                            'price_unit': acc.test_type.test_charge
-                        }
-                        line_obj.create(vals)
-                    
-                    self.write(
-                        {
-                            'state': 'Invoiced',
-                            'sale_order_id': inv_id
-                        }
-                    )
-                    inv_ids.action_confirm()
+            #if acc.payment != 'Personal' and acc.state not in ['Draft', 'Test In Progress']:
+            if acc.patient:
+                if acc.payment == 'Insurance':
+                    guarantor = acc.insurance.ins_type.partner_id.id
+                elif acc.payment == 'Corporate':
+                    guarantor = acc.company.id
+                elif acc.payment == 'Employee':
+                    guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
                 else:
-                    raise UserError(_('Can not create the transactions because Payment Guarantor is Personal !'))
-                return {
-                    'name': 'Transactions', 
-                    'view_type': 'form', 
-                    'view_mode': 'form', 
-                    'res_id': inv_id, 
-                    'res_model': 'sale.order', 
-                    'type': 'ir.actions.act_window'
+                    guarantor = acc.patient.partner_id.id
+                    #guarantor = acc.company.id
+                val_obj = {
+                    #'reg_id': acc.id, 
+                    'arrival_id': acc.walkin.id, 
+                    'patient_id': acc.patient.id, 
+                    'doctor_id': acc.requestor.id, 
+                    'partner_id': acc.patient.partner_id.id, 
+                    'partner_invoice_id': guarantor, 
+                    'partner_shipping_id': acc.patient.partner_id.id, 
+                    'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
+                    'pricelist_id': acc.patient.partner_id.property_product_pricelist.id, 
+                    'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
+                    'operating_unit_id': acc.operating_unit_id.id or False
                 }
+                inv_ids = obj.create(val_obj)
+                
+                if inv_ids:
+                    inv_id = inv_ids.id
 
+                    discount = 0.0
+                    product_id = self.env['product.product'].browse(360)
+                    if acc.payment_guarantor_discount_id:
+                        if product_id.item_type == 'General Item':
+                            discount = acc.payment_guarantor_discount_id.general_item
+                        elif product_id.item_type == 'Medical Item':        
+                            discount = acc.payment_guarantor_discount_id.medical_item
+                        elif product_id.item_type == 'Food Item':        
+                            discount = acc.payment_guarantor_discount_id.food_item
+                        elif product_id.item_type == 'Medicine':        
+                            discount = acc.payment_guarantor_discount_id.medicine
+                        elif product_id.item_type == 'Doctor':        
+                            discount = acc.payment_guarantor_discount_id.doctor
+                        elif product_id.item_type == 'Nurse':        
+                            discount = acc.payment_guarantor_discount_id.nurse
+                    vals = {
+                        'order_id': inv_id, 
+                        'product_id': 360, 
+                        'name': acc.test_type.name, 
+                        'prescribe_qty': 1, 
+                        'product_uom_qty': 1, 
+                        'discount_type': 'percent',
+                        'discount': discount,
+                        #product_uom': ps.name.uom_id.id, 
+                        'price_unit': acc.test_type.test_charge
+                    }
+                    line_obj.create(vals)
+                
+                self.write(
+                    {
+                        'state': 'Invoiced',
+                        'sale_order_id': inv_id
+                    }
+                )
+                inv_ids.action_confirm()
+            else:
+                raise UserError(_('Can not create the transactions because Payment Guarantor is Personal !'))
+            return {
+                'name': 'Transactions', 
+                'view_type': 'form', 
+                'view_mode': 'form', 
+                'res_id': inv_id, 
+                'res_model': 'sale.order', 
+                'type': 'ir.actions.act_window'
+            }
+
+    def action_next(self):
+        if self.queue_trans_id.type_id.unit_administration_id.id == self.env.user.default_unit_administration_id.id:
+            next_type_id = self.queue_trans_id.type_id.next_type_id
+            self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})        
+            self.state = 'Unlock'
+        else:
+            raise Warning('Queue have different unit administration')
+
+    def get_user_unit_administration(self):
+        for row in self:
+            _logger.info(self.env.user.default_unit_administration_id.id)
+            row.user_unit_administration_id = self.env.user.default_unit_administration_id.id
+    
     lab_test_walkin_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Lab Test Walkin')
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
@@ -122,7 +133,14 @@ class OehMedicalLabTest(models.Model):
     payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount')
     state = fields.Selection(LABTEST_STATE, string='State', readonly=True, default=lambda *a: 'Draft')
     sale_order_id = fields.Many2one('sale.order', string='Order#', readonly=True)
-    
+    operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit', default=lambda self: self.env.user.default_operating_unit_id.id)
+
+    queue_trans_id = fields.Many2one('queue.trans','Queue', domain=[('unit','','')])
+    type_id = fields.Many2one('queue.type', related="queue_trans_id.type_id", readonly=True)
+    user_unit_administration_id = fields.Many2one('unit.administration', compute="get_user_unit_administration")
+    is_on_unit_administration = fields.Boolean('', compute="get_user_unit_administration")
+
+
     def set_lock(self):
         self.write({'state': 'Lock'})
 
@@ -139,7 +157,7 @@ class OehMedicalLabTest(models.Model):
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id
         elif res.payment == 'Corporate':
             #Corporate
@@ -151,7 +169,7 @@ class OehMedicalLabTest(models.Model):
             _logger.info(domain)
             payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_guarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         elif res.payment == 'Insurance':
@@ -164,7 +182,7 @@ class OehMedicalLabTest(models.Model):
             _logger.info(domain)
             payment_guarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_guarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         else:
@@ -174,7 +192,7 @@ class OehMedicalLabTest(models.Model):
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
-                raise UserError(_('Payment Guarantor Discount not found'))
+                raise Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
 
         return res

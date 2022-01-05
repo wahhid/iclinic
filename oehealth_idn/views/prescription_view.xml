@@ -17,7 +17,14 @@
             <xpath expr="//notebook/page[1]/field[@name='prescription_line']" position="attributes">
                 <attribute name="context">{'default_patient' : patient}</attribute>
             </xpath>
-
+            
+            <xpath expr="//notebook/page[1]/field[@name='prescription_line']/tree[1]/field[@name='name']" position="after">
+                <field name="qty_available"/>
+            </xpath>
+            <xpath expr="//notebook/page[1]/field[@name='prescription_line']/form[1]/group[1]/group[1]/field[@name='name']" position="after">
+                <field name="product_template_categ_id" readonly="1"/>
+                <field name="qty_available"/>
+            </xpath>
             <xpath expr="//notebook/page[1]" position="after">
                 <page string="Concoctions">
                     <field name="concoction_ids" context="{'default_doctor_id': doctor}">
@@ -26,13 +33,15 @@
                             <field name="item_type"/>
                             <field name="qty"/>
                             <field name="product_uom"/>
-                            <field name="price"/>
-                            <field name="date"/>
-                            <field name="state"/>
+                            <field name="price" invisible="1"/>
+                            <field name="date" invisible="1"/>
+                            <field name="state" invisible="1"/>
                         </tree>
                         <form>
                             <header>
+                                <!--
                                 <button type="object" name="confirm_order" string="Confirm Order" states="draft" class="oe_highlight"/>
+                                -->
                                 <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
                             </header>
                             <!-- <div class="oe_button_box" name="button_box">
@@ -51,7 +60,9 @@
                                         <field name="product_uom" class="oe_inline" style="width:47% !important"/>
                                     </div>
                                 </group>
-                                <group/>
+                                <group>
+                                    <field name="remark"/>
+                                </group>
                             </group>
                             <notebook>
                                 <page string="Ingredients">
@@ -59,11 +70,14 @@
                                         <tree editable="bottom">
                                             <field name="product_id" required="1" domain="[('item_type','=','Medicine')]"/>
                                             <field name="item_type" readonly="1"/>
+                                            <!--
                                             <field name="big_qty"/>
                                             <field name="uom_po_id" readonly="1"/>
-                                            <field name="qty" required="1"/>
+                                            -->
+                                            <field name="is_alt_uom"/>
+                                            <field name="qty" attrs="{'readonly':[('is_alt_uom','=',True)], 'required': [('is_alt_uom','=',False)]}"/>
                                             <field name="uom_id" readonly="1"/>
-                                            <field name="zat_qty"/>
+                                            <field name="zat_qty" attrs="{'readonly':[('is_alt_uom','=',False)], 'required': [('is_alt_uom','=',True)]}"/>
                                             <field name="zat_uom" readonly="1"/>
                                             <field name="total"/>
                                             <!-- <field name="depot_id"/> -->
@@ -98,6 +112,9 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="oehealth.oeh_medical_healthcenters_pharmacy_view"/>
         <field name="arch" type="xml">
+            <field name="info" position="before">
+                <field name="operating_unit_id"/>
+            </field>
             <xpath expr="//notebook/page[1]/field[@name='pharmacy_lines']/form/header/button[@name='action_prescription_invoice_create']" position="replace">
                 <button confirm="Are you sure you want to create the transaction?" name="create_sale" states="Draft" string="Create Transaction" type="object" class="oe_highlight"/>
             </xpath>
@@ -136,6 +153,7 @@
             <form string="Prescriptions" nolabel="1">
                 <header>
                     <button confirm="Are you sure you want to create the transaction?" name="create_sale" states="Draft" string="Create Transaction" type="object" class="oe_highlight"/>
+                    <button confirm="Menlanjutkan ke bagian berikutnya ?" name="action_next" type="object" states="Invoiced" string="Confirm"  class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="Draft,Invoiced" statusbar_colors="{&quot;Draft&quot;:&quot;blue&quot;,&quot;Invoiced&quot;:&quot;grey&quot;}"/>
                 </header>
                 <sheet>
@@ -151,6 +169,8 @@
                             <field name="unit_id" readonly="1"/>
                             <!-- <field name="reg_id" readonly="1"/> -->
                             <field name="reg_ids" readonly="1"/>
+                            <field name="queue_trans_id"/>
+                            <field name="type_id"/>
                             <field name="is_public" readonly="1" invisible="1"/>
                         </group>
                         <group>
@@ -170,68 +190,76 @@
                     </group>
                     <notebook>
                         <page string="Prescription Lines">
-                            <field name="prescription_lines" nolabel="1">
-                                <tree string="Prescription Lines" nolabel="1" editable="bottom">
-                                    <field name="name" on_change="onchange_medicine_id(name)"/>
-                                    <field name="qty_available"/>
-                                    <field name="indication"/>
-                                    <field name="qty" readonly="1"/>
-                                    <field name="actual_qty" on_change="onchange_qty_and_price(actual_qty,price_unit)"/>
-                                    <field name="price_unit" on_change="onchange_qty_and_price(actual_qty,price_unit)"/>
-                                    <field name="price_subtotal"/>
-                                </tree>
-                            </field>
-                        </page>
-                        <page string="Concoction Lines">
-                            <field name="concoction_ids" context="{'default_doctor_id': doctor}">
-                                <tree>
-                                    <field name="product_id"/>
-                                    <field name="item_type"/>
-                                    <field name="qty"/>
-                                    <field name="product_uom"/>
-                                    <field name="price"/>
-                                    <field name="date"/>
-                                    <field name="state"/>
-                                </tree>
-                                <form>
-                                    <header>
-                                        <button type="object" name="confirm_order" string="Confirm Order" states="draft" class="oe_highlight"/>
-                                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
-                                    </header>
-                                    <group>
+                            <group string="Prescription">
+                                <field name="prescription_lines" nolabel="1">
+                                    <tree string="Prescription Lines" nolabel="1" editable="bottom">
+                                        <field name="name" on_change="onchange_name(name)"/>
+                                        <field name="qty_available"/>
+                                        <field name="indication"/>
+                                        <field name="qty" readonly="1"/>
+                                        <field name="actual_qty" on_change="onchange_qty_and_price(actual_qty,price_unit)"/>
+                                        <field name="price_unit" on_change="onchange_qty_and_price(actual_qty,price_unit)"/>
+                                        <field name="price_subtotal"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group string="Concoction">
+                                <field name="concoction_ids"  nolabel="1" context="{'default_doctor_id': doctor}">
+                                    <tree>
+                                        <field name="product_id"/>
+                                        <field name="item_type"/>
+                                        <field name="qty"/>
+                                        <field name="product_uom"/>
+                                        <field name="price"/>
+                                        <field name="date" invisible="1"/>
+                                        <field name="state" invisible="1"/>
+                                    </tree>
+                                    <form>
+                                        <header>
+                                            <!--
+                                            <button type="object" name="confirm_order" string="Confirm Order" states="draft" class="oe_highlight"/>
+                                            -->
+                                            <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                                        </header>
                                         <group>
-                                            <field name="product_id" required="1" domain="[('is_concoction','=',True)]"/>
-                                            <field name="doctor_id" required="1"/>
-                                            <label for="qty" string="Quantity"/>
-                                            <div>
-                                                <field name="qty" class="oe_inline" required="1" style="width:25% !important"/> for
-                                                <field name="qty_unit" class="oe_inline" style="width:18% !important"/>
-                                                <field name="product_uom" class="oe_inline" style="width:47% !important"/>
-                                            </div>
-                                            <field name="remark"/>
+                                            <group>
+                                                <field name="product_id" required="1" domain="[('is_concoction','=',True)]"/>
+                                                <field name="doctor_id" required="1"/>
+                                                <label for="qty" string="Quantity"/>
+                                                <div>
+                                                    <field name="qty" class="oe_inline" required="1" style="width:25% !important"/> for
+                                                    <field name="qty_unit" class="oe_inline" style="width:18% !important"/>
+                                                    <field name="product_uom" class="oe_inline" style="width:47% !important"/>
+                                                </div>
+                                            </group>
+                                            <group>
+                                                <field name="remark"/>
+                                            </group>
                                         </group>
-                                        <group/>
-                                    </group>
-                                    <notebook>
-                                        <page string="Ingredients">
-                                            <field name="concoction_detail_ids">
-                                                <tree editable="bottom">
-                                                    <field name="product_id" required="1" domain="[('item_type','=','Medicine')]"/>
-                                                    <field name="item_type" readonly="1"/>
-                                                    <field name="big_qty"/>
-                                                    <field name="uom_po_id" readonly="1"/>
-                                                    <field name="qty" required="1"/>
-                                                    <field name="uom_id" readonly="1"/>
-                                                    <field name="zat_qty"/>
-                                                    <field name="zat_uom" readonly="1"/>
-                                                    <field name="total"/>
-                                                    <!-- <field name="depot_id"/> -->
-                                                </tree>
-                                            </field>
-                                        </page>
-                                    </notebook>
-                                </form>
-                            </field>
+                                        <notebook>
+                                            <page string="Ingredients">
+                                                <field name="concoction_detail_ids">
+                                                    <tree editable="bottom">
+                                                        <field name="product_id" required="1" domain="[('item_type','=','Medicine')]"/>
+                                                        <field name="item_type" readonly="1"/>
+                                                        <!--
+                                                        <field name="big_qty"/>
+                                                        <field name="uom_po_id" readonly="1"/>
+                                                        -->
+                                                        <field name="is_alt_uom"/>
+                                                        <field name="qty" attrs="{'readonly':[('is_alt_uom','=',True)], 'required': [('is_alt_uom','=',False)]}"/>
+                                                        <field name="uom_id" readonly="1"/>
+                                                        <field name="zat_qty" attrs="{'readonly':[('is_alt_uom','=',False)], 'required': [('is_alt_uom','=',True)]}"/>
+                                                        <field name="zat_uom" readonly="1"/>
+                                                        <field name="total"/>
+                                                        <!-- <field name="depot_id"/> -->
+                                                    </tree>
+                                                </field>
+                                            </page>
+                                        </notebook>
+                                    </form>
+                                </field>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>

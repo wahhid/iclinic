@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_oehealth_queue_kiosk_tree" model="ir.ui.view">
+        <field name="name">view.oehealth.queue.kiosk.tree</field>
+        <field name="model">queue.kiosk</field>
+        <field name="inherit_id" ref="jakc_queue.view_queue_kiosk_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="operating_unit_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_oehealth_queue_kiosk_form" model="ir.ui.view">
+        <field name="name">view.oehealth.queue.kiosk.form</field>
+        <field name="model">queue.kiosk</field>
+        <field name="inherit_id" ref="jakc_queue.view_queue_kiosk_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="operating_unit_id"/>
+            </field>
+            <field name="queue_type_ids" position="replace">
+                <field name="queue_type_ids" domain="[('operating_unit_id','=', operating_unit_id)]" widget="many2many_tags"/>  
+            </field>
+        </field>
+    </record>
+
+    <record id="view_oehealth_queue_display_tree" model="ir.ui.view">
+        <field name="name">view.oehealth.queue.display.tree</field>
+        <field name="model">queue.display</field>
+        <field name="inherit_id" ref="jakc_queue.view_queue_display_tree"/>
+        <field name="arch" type="xml">
+            <field name="display_type" position="after">
+                <field name="operating_unit_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_oehealth_queue_display_form" model="ir.ui.view">
+        <field name="name">view.oehealth.queue.display.form</field>
+        <field name="model">queue.display</field>
+        <field name="inherit_id" ref="jakc_queue.view_queue_display_form"/>
+        <field name="arch" type="xml">
+            <field name="display_type" position="after">
+                <field name="operating_unit_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_oehealth_queue_type_tree" model="ir.ui.view">
+        <field name="name">view.oehealth.queue.type.tree</field>
+        <field name="model">queue.type</field>
+        <field name="inherit_id" ref="jakc_queue.view_queue_type_tree"/>
+        <field name="arch" type="xml">
+            <field name="bg_color" position="after">
+                <field name="operating_unit_id"/>
+                <field name="unit_administration_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_oehealth_queue_type_form" model="ir.ui.view">
+        <field name="name">view.oehealth.queue.type.form</field>
+        <field name="model">queue.type</field>
+        <field name="inherit_id" ref="jakc_queue.view_queue_type_form"/>
+        <field name="arch" type="xml">
+            <field name="bg_color" position="after">
+                <field name="operating_unit_id"/>
+                <field name="unit_administration_id" domain="[('operating_id','=', operating_unit_id)]"/>
+            </field>
+            <field name="next_type_id" position="replace">
+                <field name="next_type_id" domain="[('operating_unit_id','=', operating_unit_id)]"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_oehealth_queue_pickup_tree" model="ir.ui.view">
+        <field name="name">view.oehealth.queue.pickup.tree</field>
+        <field name="model">queue.pickup</field>
+        <field name="inherit_id" ref="jakc_queue.view_queue_pickup_tree"/>
+        <field name="arch" type="xml">
+            <field name="type_id" position="before">
+                <field name="operating_unit_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_oehealth_queue_pickup_form" model="ir.ui.view">
+        <field name="name">view.oehealth.queue.pickup.form</field>
+        <field name="model">queue.pickup</field>
+        <field name="inherit_id" ref="jakc_queue.view_queue_pickup_form"/>
+        <field name="arch" type="xml">
+            <field name="type_id" position="before">
+                <field name="operating_unit_id"/>
+            </field>
+            <field name="type_id" position="replace">
+                <field name="type_id" domain="[('operating_unit_id','=',operating_unit_id)]"/>
+            </field>
+            <field name="display_id" position="replace">
+                <field name="display_id" domain="[('operating_unit_id','=',operating_unit_id)]"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_oehealth_queue_trans_tree" model="ir.ui.view">
+        <field name="name">view.oehealth.queue.trans.tree</field>
+        <field name="model">queue.trans</field>
+        <field name="inherit_id" ref="jakc_queue.view_queue_trans_tree"/>
+        <field name="arch" type="xml">
+            <field name="type_id" position="before">
+                <field name="operating_unit_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_oehealth_queue_trans_form" model="ir.ui.view">
+        <field name="name">view.oehealth.queue.trans.form</field>
+        <field name="model">queue.trans</field>
+        <field name="inherit_id" ref="jakc_queue.view_queue_trans_form"/>
+        <field name="arch" type="xml">
+            <field name="type_id" position="before">
+                <field name="operating_unit_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

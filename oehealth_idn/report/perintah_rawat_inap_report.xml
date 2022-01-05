@@ -62,7 +62,7 @@ th, td {
 
                           <td>:</td>
 
-                          <td>_________________</td>
+                          <td><p t-field="o.patient.name" /></td>
 
                         </tr>
 
@@ -72,7 +72,7 @@ th, td {
 
                           <td>:</td>
 
-                          <td>_________________</td>
+                          <td><p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
 
                         </tr>
 
@@ -82,13 +82,13 @@ th, td {
 
                           <td>:</td>
 
-                          <td>_________________.</td>
+                          <td><p t-field="o.patient.age" /></td>
 
                         </tr>
 
                         <tr>
 
-                          <td>No. Kartu Asuransi</td>
+                          <td>No. Kartu Asuransi/NPP</td>
 
                           <td>:</td>
 

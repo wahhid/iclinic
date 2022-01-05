@@ -1,0 +1,58 @@
+<odoo>
+    <data>
+        <template id="receiptprint">
+            <html lang="en">
+                <head>
+                    <meta charset="utf-8"/>
+                    <title>Receipt</title>
+
+                    <link rel="stylesheet" href="/jakc_queue/static/src/css/bootstrap/dist/css/bootstrap.min.css"/>
+                    <!-- Normalize or reset CSS with your favorite library -->
+                    <link rel="stylesheet" href="/jakc_queue/static/src/js/normalize.css"/>
+                    <!-- Load paper.css for happy printing -->
+                    <link rel="stylesheet" href="/jakc_queue/static/src/js/paper.css"/>
+                    <!-- Set page size here: A5, A4 or A3 -->
+                    <!-- Set also "landscape" if you need -->
+                    <style>
+                        @page { size: A5 portrait }
+                        body {color:black;}
+                    </style>
+
+                    <!-- Custom styles for this document -->
+                    <link href='https://fonts.googleapis.com/css?family=Tangerine:700' rel='stylesheet' type='text/css'/>
+                </head>
+
+                <!-- Set "A5", "A4" or "A3" for class name -->
+                <!-- Set also "landscape" if you need -->
+                <body class="A5 portrait">
+                    <!-- Each sheet element should have the class "sheet" -->
+                    <!-- "padding-**mm" is optional: you can set 10, 15, 20 or 25 -->
+                    <div class="row sheet">
+                        <div class="col-md-12 col-xs-12">
+                            <div class="row">
+                                <center><h1 style="margin-top:50px;margin-bottom:100px;">Mal Taman Anggrek</h1></center>
+                            </div>
+                            <div class="row text-center">
+                                <h4 style="font-size:68px;"><span class="pagination-centered"><t t-esc="data['counter_trans']"/></span></h4>
+                            </div>
+                            <div class="row text-center">
+                                <center><h4 style="font-size:24px;"><t t-esc="data['counter_type']"/></h4></center>
+                            </div>
+                            <div class="row text-center">
+                                <center><h4 style="font-size:24px;">---</h4></center>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- jQuery 3 -->
+                    <script src="/jakc_queue/static/src/js/jquery/dist/jquery.min.js"></script>
+                    <!-- Bootstrap 3.3.7 -->
+                    <script src="/jakc_queue/static/src/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+                    <script src="/jakc_queue/static/src/js/receipt.js"></script>
+                </body>
+
+            </html>
+
+        </template>
+    </data>
+</odoo>

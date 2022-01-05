@@ -60,6 +60,8 @@ class MsReportStock(models.TransientModel):
             ('Total Stock', 20, 'float', 'float'),
             ('Available', 20, 'float', 'float'),
             ('Reserved', 20, 'float', 'float'),
+            ('No Batch', 20, 'char', 'char'),
+            ('Best before Date', 20, 'char', 'char'),
         ]
 
         datetime_format = '%Y-%m-%d %H:%M:%S'
@@ -83,7 +85,10 @@ class MsReportStock(models.TransientModel):
                 date_part('days', now() - (quant.in_date + interval '%s')) as aging,
                 sum(quant.qty) as total_product, 
                 sum(quant2.qty) as stock, 
-                sum(quant3.qty) as reserved
+                sum(quant3.qty) as reserved,
+                prod_lot.name as nobatch,
+                prod_lot.use_date as expired
+                
             FROM 
                 stock_quant quant
             LEFT JOIN 
@@ -100,10 +105,12 @@ class MsReportStock(models.TransientModel):
                 product_template prod_tmpl on prod_tmpl.id=prod.product_tmpl_id
             LEFT JOIN 
                 product_category categ on categ.id=prod_tmpl.categ_id
+            LEFT JOIN
+                stock_production_lot prod_lot on prod_lot.id=quant.lot_id
             WHERE 
                 %s and %s
             GROUP BY 
-                product, prod_categ, location, date_in
+                product, prod_categ, location, date_in, nobatch, expired
             ORDER BY 
                 date_in
         """

@@ -22,12 +22,12 @@ th, td {
                                                     <tr>
                                                         <td style="">Nama</td>
                                                         <td style=""> : </td>
-                                                        <td style="">...........</td>
+                                                        <td style=""><p t-field="o.patient.name" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="">Tanggal Lahir</td>
                                                         <td style=""> : </td>
-                                                        <td style="">...........</td>
+                                                        <td style=""><p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="">Istri/ Anak dari</td>
@@ -37,7 +37,7 @@ th, td {
                                                     <tr>
                                                         <td style="">Alamat</td>
                                                         <td style=""> : </td>
-                                                        <td style="">...........</td>
+                                                        <td style=""><p t-field="o.patient.street" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="">Alergi Obat</td>
@@ -53,27 +53,27 @@ th, td {
                                                     <tr>
                                                         <td style="">No. Rekam Medis</td>
                                                         <td style=""> : </td>
-                                                        <td style="">...........</td>
+                                                        <td style=""><p t-field="o.name" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="">Pekerjaan</td>
                                                         <td style=""> : </td>
-                                                        <td style="">...........</td>
+                                                        <td style=""><p t-field="o.patient.function" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="">Agama</td>
                                                         <td style=""> : </td>
-                                                        <td style="">...........</td>
+                                                        <td style=""><p t-field="o.patient.religion" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="">Jenis Kelamin</td>
                                                         <td style=""> : </td>
-                                                        <td style="">...........</td>
+                                                        <td style=""><p t-field="o.patient.sex" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="">Kewarganegaraan</td>
                                                         <td style=""> : </td>
-                                                        <td style="">...........</td>
+                                                        <td style=""><p t-field="o.patient.country_id" /></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

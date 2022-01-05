@@ -8,11 +8,14 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="oehealth.oeh_medical_lab_test_form"/>
         <field name="arch" type="xml">
+            <field name="pathologist" position="replace">
+                <field name="pathologist" options="{'no_create': True}" domain="[('is_pathology','=',True)]"/>
+            </field>
             <xpath expr="//button[@name='set_to_test_inprogress']" position="before">
-                <button confirm="Are you sure you want to start the test?" name="create_sale" string="Create Transaction" type="object" class="oe_highlight" states="Draft"/>
+                <button confirm="Are you sure you want to create transaction?" states="Draft,Test In Progress,Completed" name="create_sale" string="Create Transaction" type="object" class="oe_highlight"/>
             </xpath>
             <xpath expr="//button[@name='set_to_test_inprogress']" position="after">
-                <button confirm="Are you sure you want to Cancelled?" name="cancelled_lab" string="Cancelled" type="object" states="Draft,Test In Progress"/>
+                <button confirm="Are you sure you want to Cancelled?" name="cancelled_lab" string="Cancel" type="object"  states="Draft,Test In Progress,Completed"/>
                 <button name="set_lock" string="Lock" states="Unlock" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     <button name="set_unlock" string="Unlock" states="Lock" type="object" class="oe_highlight" groups="oehealth.group_medical_service"/>
             </xpath>
@@ -22,7 +25,11 @@
             <xpath expr="//field[@name='state']" position="attributes">
                 <attribute name="statusbar_visible">Draft,Test In Progress,Completed,Cancelled</attribute>
             </xpath>
-            <!-- <xpath expr="//field[@name='date_analysis']" position="after">
+            <xpath expr="//field[@name='date_analysis']" position="after">
+                <field name="operating_unit_id" readonly="1"/>
+                <field name="queue_trans_id" attrs="{'readonly': [('state','not in',('Draft'))]}" domain="[('type_id.unit_administration_id','=', user_unit_administration_id ),('state','=','open'),('trans_date','=',context_today().strftime('%%Y-%%m-%%d'))]"/>
+                <field name="type_id"/>
+                <field name="user_unit_administration_id"/>
                 <label for="payment" string="Payment Guarantor"/>
                 <div>
                     <field name="payment" class="oe_inline" nolabel="1"/>
@@ -31,9 +38,8 @@
                     <field name="insurance" placeholder="Insurance" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')]}" class="oe_inline" nolabel="1"/>
                     <field name="employee_id" placeholder="Employee" domain="[('patient','=',patient), ('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
                 </div>
-            </xpath> -->
-                <!-- <field name="sale_order_id" readonly="1"/>
-            </xpath> -->
+                <field name="sale_order_id" readonly="1"/>
+            </xpath>
         </field>
     </record>
 

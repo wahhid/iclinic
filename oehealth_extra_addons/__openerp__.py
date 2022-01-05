@@ -10,7 +10,7 @@
     'category': 'Generic Modules/Medical',
     'summary': 'Pediatrics, Patient Call Logs, Medical History, Nursing, Surgical, Ophthalmology, Imaging, Neglected Tropical Diseases, Walkins, Medical Certificate and Procedure Coding System Management',
     'depends': ['oehealth','product'],
-    'price': 150.00,
+    'price': 0,
     'currency': 'EUR',
     'description': """
 

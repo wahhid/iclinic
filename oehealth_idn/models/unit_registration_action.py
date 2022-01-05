@@ -11,6 +11,16 @@ import datetime
 class unit_registration_action(models.Model):
     _inherit = 'unit.registration'
 
+    def _get_physician(self):
+        """Return default physician value"""
+        therapist_obj = self.env['oeh.medical.physician']
+        domain = [('oeh_user_id', '=', self.env.uid)]
+        user_ids = therapist_obj.search(domain, limit=1)
+        if user_ids:
+            return user_ids.id or False
+        else:
+            return False
+
     @api.multi
     def create_poly(self, model, val_obj, field_labels):
         obj = self.env[model]
@@ -61,18 +71,34 @@ class unit_registration_action(models.Model):
         model = 'oeh.medical.evaluation'
         field_id = self.evaluation_id
         field_labels = 'evaluation_id'
-        val_obj = {'reg_id': self.id, 
-           'walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
-           'patient': self.patient.id, 
-           'doctor': self.doctor.id, 
-           'evaluation_start_date': datetime.datetime.now()}
+
+        therapist_obj = self.env['oeh.medical.physician']
+        domain = [('oeh_user_id', '=', self.env.uid)]
+        user_ids = therapist_obj.search(domain, limit=1)
+        doctor = False
+        if user_ids:
+            doctor = user_ids.id or False
+
+
+        val_obj = {
+            'reg_id': self.id, 
+            'walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
+            'patient': self.patient.id, 
+            'doctor': doctor,
+            'evaluation_start_date': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        }
+
         if not field_id:
             return self.create_poly(model, val_obj, field_labels)
         else:
-            context = {'default_reg_id': self.id, 
-               'default_walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
-               'default_patient': self.patient.id, 
-               'default_doctor': self.doctor.id}
+            
+            context = {
+                'default_reg_id': self.id, 
+                'default_walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
+                'default_patient': self.patient.id, 
+                'default_doctor': doctor,
+                'default_evaluation_start_date': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
             return self.view_poly(model, self.id, context)
 
     lab_id = fields.Many2one(comodel_name='oeh.medical.lab.test', string='Lab Tests', copy=False, readonly=True)

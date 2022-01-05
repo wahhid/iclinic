@@ -112,6 +112,17 @@ access_oeh_medical_lab_test_customer_service,oeh.medical.lab.test,oehealth_extra
 access_oeh_medical_lab_test_medical_service,oeh.medical.lab.test,oehealth_extra_addons.model_oeh_medical_lab_test,group_medical_service,1,1,1,0
 access_oeh_medical_lab_test_cashier,oeh.medical.lab.test,oehealth_extra_addons.model_oeh_medical_lab_test,group_cashier,1,1,1,0
 ,,,,,,,
+access_oeh_medical_labtest_criteria_customer_service,oeh.medical.labtest.criteria,oehealth.model_oeh_medical_labtest_criteria,group_customer_service,1,1,1,0
+,,,,,,,
+access_oeh_medical_labtest_types_customer_service,oeh.medical.labtest.type,oehealth.model_oeh_medical_labtest_types,group_customer_service,1,1,1,0
+,,,,,,,
+access_oeh_medical_lab_units_customer_service,oeh.medical.lab.units,oehealth.model_oeh_medical_lab_units,group_customer_service,1,1,1,0
+,,,,,,,
+access_oeh_medical_lab_resultcriteria_customer_service,oeh.medical.lab.resultcriteria,oehealth.model_oeh_medical_lab_resultcriteria,group_customer_service,1,1,1,0
+,,,,,,,
+access_oeh_medical_pathology_customer_service,oeh.medical.pathology,oehealth.model_oeh_medical_pathology,group_customer_service,1,0,0,0
+
+,,,,,,,
 access_oeh_medical_patient_family_customer_service,oeh.medical.patient.family,oehealth.model_oeh_medical_patient_family,group_customer_service,1,1,1,0
 access_oeh_medical_patient_family_medical_service,oeh.medical.patient.family,oehealth.model_oeh_medical_patient_family,group_medical_service,1,1,1,0
 access_oeh_medical_patient_family_cashier,oeh.medical.patient.family,oehealth.model_oeh_medical_patient_family,group_cashier,1,1,1,0

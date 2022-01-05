@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_queue_type_operator,queue.type.operator,model_queue_type,group_queue_user,1,1,1,1
+access_queue_display_operator,queue.display.operator,model_queue_display,group_queue_user,1,1,1,1
+access_queue_pickup_operator,queue.pickup.operator,model_queue_pickup,group_queue_user,1,1,1,1
+access_queue_pickup_log_operator,queue.pickup.log.operator,model_queue_pickup_log,group_queue_user,1,1,1,1
+access_queue_trans_operator,queue.trans.operator,model_queue_trans,group_queue_user,1,1,1,1
+access_queue_sequence_operator,queue.sequence.operator,model_queue_sequence,group_queue_user,1,1,1,1
+
+
+

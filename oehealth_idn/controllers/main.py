@@ -49,7 +49,6 @@ class Dashboard(http.Controller):
         cr.execute(requete)
         return cr.dictfetchall()
             
-        
     @route('/page/dashboard', type='http', auth='public')
     def get_uid(self):
         

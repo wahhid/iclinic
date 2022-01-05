@@ -16,16 +16,16 @@ table, th, td {
               <table style="width:100%">
                 <tr>
                   <th rowspan="6">TINDAKAN KEDOKTERAN</th>
-                  <td>Nama  : </td>
+                  <td>Nama  : <p t-field="o.patient.name" /></td>
                 </tr>
                 <tr>
-                  <td>Tanggal Lahir  : </td>
+                  <td>Tanggal Lahir  : <p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
                 </tr>
                 <tr>
-                  <td>No.RM  : </td>
+                  <td>No.RM  : <p t-field="o.name" /></td>
                 </tr>
                 <tr>
-                  <td>Jenis Kelamin  : ________________________ Ruang  : </td>
+                  <td>Jenis Kelamin  : <p t-field="o.patient.sex" /> Ruang  : </td>
                 </tr>
                 <tr>
                   <td>Tanggal Masuk  : _______________________ Kelas  : </td>
@@ -39,7 +39,7 @@ table, th, td {
                   <th>PEMBERIAN INFORMASI</th>
                 </tr>
                 <tr>
-                  <td>Dokter pelaksana tindakan  : </td>
+                  <td>Dokter pelaksana tindakan  : <p t-field="o.doctor" /></td>
                 </tr>
                 <tr>
                   <td>Pemberi informasi  : </td>
@@ -151,13 +151,13 @@ table, th, td {
                 <div class="row">
                   <div class="col-sm-4">
                     <p>
-                      <strong>Nama: ________________________</strong>
+                      <strong>Nama: _________________</strong>
                     </p>
                     <p>
-                      <strong>Alamat: _______________________</strong>
+                      <strong>Alamat: _________________</strong>
                     </p>
                     <p>
-                      <strong>Umur: ________________________</strong>
+                      <strong>Umur: _________________</strong>
                     </p>
                   </div>
                   <div class="col-sm-4"></div>
@@ -178,13 +178,13 @@ table, th, td {
                 <div class="row">
                   <div class="col-sm-4">
                     <p>
-                      <strong>Nama: ________________________</strong>
+                      <strong>Nama: <p t-field="o.patient.name" /></strong>
                     </p>
                     <p>
-                      <strong>Alamat: _______________________</strong>
+                      <strong>Alamat: <p t-field="o.patient.street" /></strong>
                     </p>
                     <p>
-                      <strong>Umur: ________________________</strong>
+                      <strong>Umur: <p t-field="o.patient.age" /></strong>
                     </p>
                   </div>
                   <div class="col-sm-4"></div>
@@ -291,13 +291,13 @@ table, th, td {
                 <div class="row">
                   <div class="col-sm-4">
                     <p>
-                      <strong>Nama: ________________________</strong>
+                      <strong>Nama: <p t-field="o.patient.name" /></strong>
                     </p>
                     <p>
-                      <strong>Alamat: _______________________</strong>
+                      <strong>Alamat: <p t-field="o.patient.street" /></strong>
                     </p>
                     <p>
-                      <strong>Umur: ________________________</strong>
+                      <strong>Umur: <p t-field="o.patient.age" /></strong>
                     </p>
                   </div>
                   <div class="col-sm-4"></div>
