@@ -85,7 +85,8 @@ class oeh_medical_patient(models.Model):
         return True
 
     identification_code = fields.Char(string='Medical Record', readonly=False, index=True)
-    medical_record = fields.Char(compute=_reformat_medical_record, string='Medical Record', store=True, readonly=True, index=True)
+    #medical_record = fields.Char(compute=_reformat_medical_record, string='Medical Record', store=True, readonly=True, index=True)
+    medical_record = fields.Char(string='Medical Record', readonly=True, index=True)
     current_insurance = fields.Many2one('medical.insurance', string='Insurance', domain="[('patient','=', active_id),('state','=','Active')]", index=True, help='Insurance information. You may choose from the different insurances belonging to the patient')
     inpatient_count = fields.Integer(compute=_inpatient_count, string='Admission / Discharge')
     is_medical_record = fields.Boolean(string='Patient with Medical Record')
@@ -102,11 +103,11 @@ class oeh_medical_patient(models.Model):
         if vals['street']:
             vals['street'] = vals['street'].upper()
         res = super(oeh_medical_patient, self).create(vals)
-        # if vals['is_medical_record']:
-        #     sequence = self.env['ir.sequence'].next_by_code('oeh.medical.patient')
-        # else:
-        #     sequence = self.env['ir.sequence'].next_by_code('oeh.medical.patient.dummy')
-        # res.update({'identification_code': sequence})
+        if vals['is_medical_record']:
+            sequence = self.env['ir.sequence'].next_by_code('oeh.medical.patient')
+        else:
+            sequence = self.env['ir.sequence'].next_by_code('oeh.medical.patient.dummy')
+        res.update({'identification_code': sequence})
         return res
 
     @api.multi
