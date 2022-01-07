@@ -102,11 +102,11 @@ class oeh_medical_patient(models.Model):
         if vals['street']:
             vals['street'] = vals['street'].upper()
         res = super(oeh_medical_patient, self).create(vals)
-        if vals['is_medical_record']:
-            sequence = self.env['ir.sequence'].next_by_code('oeh.medical.patient')
-        else:
-            sequence = self.env['ir.sequence'].next_by_code('oeh.medical.patient.dummy')
-        res.update({'identification_code': sequence})
+        # if vals['is_medical_record']:
+        #     sequence = self.env['ir.sequence'].next_by_code('oeh.medical.patient')
+        # else:
+        #     sequence = self.env['ir.sequence'].next_by_code('oeh.medical.patient.dummy')
+        # res.update({'identification_code': sequence})
         return res
 
     @api.multi
