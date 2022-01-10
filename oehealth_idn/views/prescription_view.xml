@@ -20,14 +20,6 @@
             </xpath>
             
             <xpath expr="//notebook/page[1]/field[@name='prescription_line']/tree[1]/field[@name='name']" position="after">
-<<<<<<< HEAD
-                <field name="qty_available"/>
-            </xpath>
-            <xpath expr="//notebook/page[1]/field[@name='prescription_line']/form[1]/group[1]/group[1]/field[@name='name']" position="after">
-                <field name="product_template_categ_id" readonly="1"/>
-                <field name="qty_available"/>
-            </xpath>
-=======
                 <field name="qty_available" readonly="1"/>
             </xpath>
 
@@ -36,7 +28,6 @@
                 <field name="qty_available" readonly="1"/>
             </xpath>
 
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
             <xpath expr="//notebook/page[1]" position="after">
                 <page string="Concoctions">
                     <field name="concoction_ids" context="{'default_doctor_id': doctor}">
@@ -243,17 +234,11 @@
                                                 <field name="doctor_id" required="1"/>
                                                 <label for="qty" string="Quantity"/>
                                                 <div>
-<<<<<<< HEAD
-                                                    <field name="qty" class="oe_inline" required="1" style="width:25% !important"/> for
-                                                    <field name="qty_unit" class="oe_inline" style="width:18% !important"/>
-                                                    <field name="product_uom" class="oe_inline" style="width:47% !important"/>
-=======
                                                     <field name="qty" class="oe_inline" required="1" style="width:25% !important"/>
                                                     <!--
                                                     <field name="qty_unit" class="oe_inline" style="width:18% !important"/>
                                                     <field name="product_uom" class="oe_inline" style="width:47% !important"/>
                                                     -->
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                                                 </div>
                                             </group>
                                             <group>
@@ -271,15 +256,9 @@
                                                         <field name="uom_po_id" readonly="1"/>
                                                         -->
                                                         <field name="is_alt_uom"/>
-<<<<<<< HEAD
-                                                        <field name="qty" attrs="{'readonly':[('is_alt_uom','=',True)], 'required': [('is_alt_uom','=',False)]}"/>
-                                                        <field name="uom_id" readonly="1"/>
-                                                        <field name="zat_qty" attrs="{'readonly':[('is_alt_uom','=',False)], 'required': [('is_alt_uom','=',True)]}"/>
-=======
                                                         <field name="qty" attrs="{'invisible':[('is_alt_uom','=',True)],'readonly':[('is_alt_uom','=',True)], 'required': [('is_alt_uom','=',False)]}"/>
                                                         <field name="uom_id" readonly="1"/>
                                                         <field name="zat_qty" attrs="{'invisible':[('is_alt_uom','=',False)],'readonly':[('is_alt_uom','=',False)], 'required': [('is_alt_uom','=',True)]}"/>
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                                                         <field name="zat_uom" readonly="1"/>
                                                         <field name="total"/>
                                                         <!-- <field name="depot_id"/> -->

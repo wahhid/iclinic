@@ -41,11 +41,8 @@
                     <button name="view_sale" string="View Transaction" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service,oehealth_idn.group_cashier,oehealth.group_oeh_medical_manager"/>
                     <!--
                     <button name="create_reference" string="Create Reference" attrs="{'invisible': [('type', '==', 'Medical Support')]}" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
-<<<<<<< HEAD
-=======
                     -->
                     <button name="%(action_wizard_reference_hospital)d" string="Create Reference" attrs="{'invisible': [('type', '==', 'Medical Support')]}" type="action" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                     <button name="set_lock" string="Lock" states="Unlock" type="object" class="oe_highlight"/>
                     <button name="set_unlock" string="Unlock" states="Lock" type="object" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="Scheduled,Completed,Invoiced" statusbar_colors="{&quot;Scheduled&quot;:&quot;blue&quot;,&quot;Completed&quot;:&quot;green&quot;,&quot;Invoiced&quot;:&quot;grey&quot;}"/>
@@ -86,10 +83,7 @@
                             <field name="queue"/>
                             <field name="queue_no" invisible="1"/>
                             -->
-<<<<<<< HEAD
-=======
                             <field name="is_has_reference" invisible="1"/>
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                             <field name="type" invisible="1"/>
                             <field name="operating_unit_id" invisible="1"/>
                             <field name="unit" required="1" domain="[('type', '=', type),('operating_id','=', operating_unit_id)]"/>

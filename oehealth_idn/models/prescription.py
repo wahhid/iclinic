@@ -180,11 +180,7 @@ class oeh_medical_prescription_line(models.Model):
 
     name = fields.Many2one('product.product', string='Medicines', help='Prescribed Medicines', domain=[('item_type', '=', 'Medicine')], required=True)
     product_template_categ_id = fields.Many2one('product.template.category', related='name.product_template_categ_id')
-<<<<<<< HEAD
-    qty_available = fields.Float(related='name.qty_available')
-=======
     qty_available = fields.Float("Qty On Hand")
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
 
 #Pharmacy Order
 
@@ -256,10 +252,6 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
             next_type_id = self.queue_trans_id.type_id.next_type_id
             self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def get_user_unit_administration(self):
         for row in self:
             _logger.info(self.env.user.default_unit_administration_id.id)
@@ -376,14 +368,8 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'partner_shipping_id': guarantor, 
                         'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                         'operating_unit_id': self.env.user.default_operating_unit_id.id,
-<<<<<<< HEAD
-                        #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id,
-                        'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
-                        #'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit_id.id))], limit=1).id
-=======
                         'user_id': self.env.user.id,
                         'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                     }
                     inv_ids = obj.sudo().create(val_obj)
                     

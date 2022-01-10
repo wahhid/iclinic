@@ -8,11 +8,6 @@
                         <div class="page">
                             <div class="oe_structure"/>
                             <div class="row">
-<<<<<<< HEAD
-                                <div class="col-xs-12">
-                                    <div class="row text-center">
-                                        <img t-if="res_company.logo" style="width:150px;height:150px;" t-att-src="'data:image/png;base64,%s' %res_company.logo"/>
-=======
                                 <div class="col-xs-3">
                                     <img t-if="res_company.logo" style="width:80px;height:80px;" t-att-src="'data:image/png;base64,%s' %res_company.logo"/>
                                 </div>
@@ -42,7 +37,6 @@
                                     </div>
                                     <div class="row text-center">
                                         <span>Nomor Panggil Pemeriksaan</span>
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                                     </div>
                                     <div class="row text-center">
                                         <div class="col-xs-12">
@@ -51,8 +45,6 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-6">
-<<<<<<< HEAD
-=======
                                             <span>No RM #</span>
                                         </div>
                                         <div class="col-xs-6">
@@ -61,7 +53,6 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-6">
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                                             <span>Arrival #</span>
                                         </div>
                                         <div class="col-xs-6">
@@ -73,11 +64,7 @@
                                             <span>NIK</span>
                                         </div>
                                         <div class="col-xs-6">
-<<<<<<< HEAD
-                                            
-=======
                                             <span t-field="o.patient.identity"/>
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                                         </div>
                                     </div>
                                     <div class="row">
@@ -119,10 +106,7 @@
                                             </t>
                                         </div>
                                     </div>
-<<<<<<< HEAD
-=======
                                     <br/>
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                                     <div class="row text-center" styles="margin-top:30px;">
                                         <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:50px"/>                                    
                                     </div>

@@ -81,18 +81,10 @@ class unit_registration_action(models.Model):
         if user_ids:
             doctor = user_ids.id or False
 
-<<<<<<< HEAD
-
-        val_obj = {
-            'reg_id': self.id, 
-            'walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
-            'patient': self.patient.id, 
-=======
         val_obj = {
             'reg_id': self.id,
             'walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id,
             'patient': self.patient.id,
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
             'doctor': doctor,
             'evaluation_start_date': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }
@@ -100,19 +92,11 @@ class unit_registration_action(models.Model):
         if not field_id:
             return self.create_poly(model, val_obj, field_labels)
         else:
-<<<<<<< HEAD
-            
-            context = {
-                'default_reg_id': self.id, 
-                'default_walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id, 
-                'default_patient': self.patient.id, 
-=======
 
             context = {
                 'default_reg_id': self.id,
                 'default_walkin': self.clinic_walkin_id.id or self.unit_walkin_id.id or self.emergency_walkin_id.id or self.support_walkin_id.id,
                 'default_patient': self.patient.id,
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                 'default_doctor': doctor,
                 'default_evaluation_start_date': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             }

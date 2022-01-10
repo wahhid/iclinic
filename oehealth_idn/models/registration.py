@@ -105,27 +105,19 @@ class register_walkin(models.Model):
             self.payment_guarantor_discount_id = payment_guarantor_discount_id.id
         else:
             #Employee
-<<<<<<< HEAD
-            domain = [
-                ('payment','=', 'Employee')
-=======
             #domain = [
             #    ('payment','=', 'Employee')
             #]
             domain = [
                 ('payment','=', 'Insurance'),
                 ('insurance_type_id','=', self.employee_id.current_insurance.ins_type.id)
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
             ]
             payment_quarantor_discount_id = self.env['payment.guarantor.discount'].search(domain, limit=1)
             if not payment_quarantor_discount_id:
                 raise Warning(_('Payment Guarantor Discount not found'))
             self.payment_quarantor_discount_id = payment_quarantor_discount_id.id
 
-<<<<<<< HEAD
-=======
     
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     @api.onchange('insurance')
     def onchange_for_insurance(self):
         _logger.info("On Change Insurance")
@@ -142,10 +134,6 @@ class register_walkin(models.Model):
         self.find_payment_guarantor_discount()
         
     def action_next(self):
-<<<<<<< HEAD
-=======
-
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
         if not self.queue_trans_id:
             raise Warning('No Queue number defined!')
 
@@ -244,11 +232,7 @@ class register_walkin(models.Model):
                     raise UserError(_('Medical Support! \n Reg ID # ' + line.name + ' must be lock first !'))
 
             for line in self.lab_test_ids:
-<<<<<<< HEAD
-                if line.state not in 'Cancelled':
-=======
                 if line.state not in ('Cancelled','Invoiced','Completed'):
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                     raise UserError(_('Laboratory Test! \n Reg ID # ' + line.name + ' must be processed or cancelled !'))
 
             return self.write({'state': 'Completed'})

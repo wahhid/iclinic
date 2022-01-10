@@ -92,19 +92,11 @@ class QueueDisplay(models.Model):
 class QueueType(models.Model):
     _name = 'queue.type'
 
-<<<<<<< HEAD
     @api.one
     def trans_close(self):
         self.state = 'done'
 
     @api.one
-=======
-
-    def trans_close(self):
-        self.state = 'done'
-
-
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def trans_reopen(self):
         self.state = 'open'
 
@@ -117,29 +109,18 @@ class QueueType(models.Model):
     is_active = fields.Boolean('Active', default=False) 
     sequence_id = fields.Many2one('queue.sequence', 'Sequence #', required=True)
     next_type_id = fields.Many2one('queue.type', 'Next Step')
-<<<<<<< HEAD
-=======
     is_end_type = fields.Boolean('End Type', default=False)
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     state = fields.Selection(AVAILABLE_STATES, 'Status', size=16 , readonly=True, default='open')
 
 
 class QueuePickup(models.Model):
     _name = 'queue.pickup'
 
-<<<<<<< HEAD
     @api.one
     def trans_open(self):
         self.state = 'open'
 
     @api.one
-=======
-
-    def trans_open(self):
-        self.state = 'open'
-
-
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def trans_close(self):
         self.state = 'done'
 
@@ -157,21 +138,13 @@ class QueuePickup(models.Model):
         for pickup in self:
             pickup_log = pickup.pickup_log_ids.filtered(lambda s: s.state == 'opened')
             pickup.pickup_log_username = pickup_log and pickup_log[0].user_id.name or False
-<<<<<<< HEAD
             
     @api.one
-=======
-
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def open_existing_pickup_log_cb_close(self):
         assert len(self.ids) == 1, "you can open only one session at a time"
         return self.open_pickup_log_cb()
 
-<<<<<<< HEAD
     @api.one
-=======
-
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def open_pickup_log_cb(self):
         assert len(self.ids) == 1, "you can open only one pickup log at a time"
         if not self.current_pickup_log_id:
@@ -183,7 +156,6 @@ class QueuePickup(models.Model):
                 return self.open_ui(self.current_pickup_log_id.id)
             return self._open_pickup_log(self.current_pickup_log_id.id)
         return self._open_pickup_log(self.current_pickup_log_id.id)
-<<<<<<< HEAD
         
     @api.one
     def open_existing_pickup_log_cb(self):
@@ -191,13 +163,6 @@ class QueuePickup(models.Model):
         return self._open_pickup_log(self.current_pickup_log_id.id)
         
     @api.one
-=======
-
-    def open_existing_pickup_log_cb(self):
-        assert len(self.ids) == 1, "you can open only one session at a time"
-        return self._open_pickup_log(self.current_pickup_log_id.id)
-
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def _open_pickup_log(self, pickup_log_id):
         return {
             'name': _('Pickup Log'),
@@ -209,10 +174,7 @@ class QueuePickup(models.Model):
             'type': 'ir.actions.act_window',
         }
 
-<<<<<<< HEAD
     @api.one
-=======
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def open_ui(self, id):
         assert len(self.ids) == 1, "you can open only one session at a time"
         return {
@@ -237,11 +199,7 @@ class QueuePickup(models.Model):
 class QueuePickupLog(models.Model):
     _name = 'queue.pickup.log'
 
-<<<<<<< HEAD
     @api.one
-=======
-
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def trans_close(self):
         self.write({'log_out': datetime.now(), 'state': 'closed'})
 
@@ -256,10 +214,7 @@ class QueueTrans(models.Model):
     _name = 'queue.trans'
     _rec_name = 'trans_id'
 
-<<<<<<< HEAD
     @api.one
-=======
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def get_random_string(self, length):
         # choose from all lowercase letter
         letters = string.ascii_lowercase
@@ -267,10 +222,7 @@ class QueueTrans(models.Model):
         print("Random string of length", length, "is:", result_str)
         return result_str
 
-<<<<<<< HEAD
     @api.one
-=======
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def action_close(self):
         self.state = 'done'
 
@@ -326,10 +278,6 @@ class QueueTrans(models.Model):
         
 class QueueTransPrint(models.Model):
     _name = 'queue.trans.print'
-<<<<<<< HEAD
-    
-=======
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     trans_id = fields.Many2one('queue.trans', 'Transaction ID', index=True)
     trans_date_time = fields.Datetime('Date and Time', default=fields.Datetime.now)
     state = fields.Selection(AVAILABLE_STATES, 'Status', size=16, readonly=True, default='open')
@@ -337,10 +285,6 @@ class QueueTransPrint(models.Model):
 
 class QueueTransSound(models.Model):
     _name = 'queue.trans.sound'
-<<<<<<< HEAD
-    
-=======
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     trans_id = fields.Many2one('queue.trans', 'Transaction ID', index=True)
     trans_date_time = fields.Datetime('Date and Time', default=fields.Datetime.now)
     state = fields.Selection(AVAILABLE_STATES, 'Status', size=16, readonly=True, default='open')
@@ -349,10 +293,7 @@ class QueueSequence(models.Model):
 
     _name = 'queue.sequence'
 
-<<<<<<< HEAD
     @api.one
-=======
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def action_reset_sequence(self):
         queue_sequence_ids = self.env['queue.sequence'].search([])
         for queue_sequence_id in queue_sequence_ids:
@@ -363,12 +304,8 @@ class QueueSequence(models.Model):
     code = fields.Char('Code', size=100, required=True)
     reset_sequence = fields.Selection([('daily','Daily'),('monthly','Monthly'),('yearly','Yearly')],'Reset Sequence', default="daily")
     sequence_id = fields.Many2one('ir.sequence', 'Sequence #')
-<<<<<<< HEAD
     
     @api.model
-=======
-
->>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def create(self, vals):
         IrSequenceSudo = self.env['ir.sequence'].sudo()
         sequence_vals = {
