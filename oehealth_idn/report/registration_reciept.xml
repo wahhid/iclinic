@@ -8,9 +8,41 @@
                         <div class="page">
                             <div class="oe_structure"/>
                             <div class="row">
+<<<<<<< HEAD
                                 <div class="col-xs-12">
                                     <div class="row text-center">
                                         <img t-if="res_company.logo" style="width:150px;height:150px;" t-att-src="'data:image/png;base64,%s' %res_company.logo"/>
+=======
+                                <div class="col-xs-3">
+                                    <img t-if="res_company.logo" style="width:80px;height:80px;" t-att-src="'data:image/png;base64,%s' %res_company.logo"/>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="row text-center">
+                                        <span>KLINIK PRATAMA MEDIKA</span>
+                                    </div>
+                                    <div class="row text-center">
+                                        <span>YAKESPEN UTAMA</span>
+                                    </div>
+                                    <div class="row text-center">
+                                        <span>Jl Hang Jebat Barek Motor Kijang</span>
+                                    </div>
+                                    <div class="row text-center">
+                                        <span>Kec Bintan Timur</span>
+                                    </div>
+                                    <div class="row text-center">
+                                        <span>HP: 082182441550</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row text-center">
+                                        <span t-esc="datetime.datetime.now().strftime('%A, %d %B %Y, %H:%M:%S')"/>
+                                    </div>
+                                    <div class="row text-center">
+                                        <span>Nomor Panggil Pemeriksaan</span>
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                                     </div>
                                     <div class="row text-center">
                                         <div class="col-xs-12">
@@ -19,6 +51,17 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-6">
+<<<<<<< HEAD
+=======
+                                            <span>No RM #</span>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <span t-field="o.patient.medical_record"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                                             <span>Arrival #</span>
                                         </div>
                                         <div class="col-xs-6">
@@ -30,7 +73,11 @@
                                             <span>NIK</span>
                                         </div>
                                         <div class="col-xs-6">
+<<<<<<< HEAD
                                             
+=======
+                                            <span t-field="o.patient.identity"/>
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                                         </div>
                                     </div>
                                     <div class="row">
@@ -72,6 +119,10 @@
                                             </t>
                                         </div>
                                     </div>
+<<<<<<< HEAD
+=======
+                                    <br/>
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                                     <div class="row text-center" styles="margin-top:30px;">
                                         <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:50px"/>                                    
                                     </div>

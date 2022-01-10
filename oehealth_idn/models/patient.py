@@ -85,9 +85,15 @@ class oeh_medical_patient(models.Model):
         return True
 
     identification_code = fields.Char(string='Medical Record', readonly=False, index=True)
+<<<<<<< HEAD
     medical_record = fields.Char(compute=_reformat_medical_record, string='Medical Record', store=True, readonly=True, index=True)
     #current_insurance = fields.Many2one('medical.insurance', string='Insurance', domain="[('patient','=', active_id),('state','=','Active')]", help='Insurance information. You may choose from the different insurances belonging to the patient')
     current_insurance = fields.Many2one('medical.insurance', string='Insurance', help='Insurance information. You may choose from the different insurances belonging to the patient')
+=======
+    #medical_record = fields.Char(compute=_reformat_medical_record, string='Medical Record', store=True, readonly=True, index=True)
+    medical_record = fields.Char(string='Medical Record', readonly=False, index=True)
+    current_insurance = fields.Many2one('medical.insurance', string='Insurance', domain="[('patient','=', active_id),('state','=','Active')]", index=True, help='Insurance information. You may choose from the different insurances belonging to the patient')
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     inpatient_count = fields.Integer(compute=_inpatient_count, string='Admission / Discharge')
     is_medical_record = fields.Boolean(string='Patient with Medical Record')
         

@@ -158,9 +158,33 @@ class oeh_medical_prescription(models.Model):
 
 class oeh_medical_prescription_line(models.Model):
     _inherit = 'oeh.medical.prescription.line'
+
+    @api.onchange('name')
+    def onchange_product(self):
+        domain = [('unit_ids','in',(self.env.user.default_unit_administration_id.id))]
+        stock_location_id = self.env['stock.location'].search(domain, limit=1)
+        if stock_location_id:
+            domain = [
+                ('product_id','=',self.name.id),
+                ('location_id','=', stock_location_id.id)
+            ]
+            _logger.info(domain)
+            fields = ['product_id','qty']
+            groupby = ['product_id']
+            result = self.env['stock.quant'].read_group(domain, fields=fields, groupby=groupby)
+            _logger.info(result)
+            if len(result) > 0:
+                self.qty_available = result[0]['qty']
+            else:
+                self.qty_available = 0.0
+
     name = fields.Many2one('product.product', string='Medicines', help='Prescribed Medicines', domain=[('item_type', '=', 'Medicine')], required=True)
     product_template_categ_id = fields.Many2one('product.template.category', related='name.product_template_categ_id')
+<<<<<<< HEAD
     qty_available = fields.Float(related='name.qty_available')
+=======
+    qty_available = fields.Float("Qty On Hand")
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
 
 #Pharmacy Order
 
@@ -232,6 +256,10 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
             next_type_id = self.queue_trans_id.type_id.next_type_id
             self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     def get_user_unit_administration(self):
         for row in self:
             _logger.info(self.env.user.default_unit_administration_id.id)
@@ -246,6 +274,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
 
     is_public = fields.Boolean('Is Public', default=False)
     remark = fields.Text('Remark')
+    pharmacist = fields.Many2one('oeh.medical.physician', string='Pharmacist', help='Current primary care / family doctor', domain=[('is_pharmacist', '=', True)], required=True, readonly=True, states={'Draft': [('readonly', False)]})
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
@@ -347,9 +376,14 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'partner_shipping_id': guarantor, 
                         'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                         'operating_unit_id': self.env.user.default_operating_unit_id.id,
+<<<<<<< HEAD
                         #'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id,
                         'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
                         #'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit_id.id))], limit=1).id
+=======
+                        'user_id': self.env.user.id,
+                        'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                     }
                     inv_ids = obj.sudo().create(val_obj)
                     

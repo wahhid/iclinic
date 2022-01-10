@@ -26,6 +26,13 @@
         "security/res.groups.xml",
         "security/ir.rule.xml",
         "security/ir.model.access.csv",
+<<<<<<< HEAD
+=======
+        # "wizard/sale_order_line_make_account_invoice_view.xml",
+        "wizard/ms_report_stock_wizard.xml",
+        "wizard/wizard_reference_hospital.xml",
+        "wizard/wizard_report_physician_income.xml",
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
         "views/medical_evaluation_view.xml",
         "views/class_view.xml",
         "views/room_view.xml",
@@ -49,8 +56,11 @@
         "views/res_users_view.xml",
         "views/menu_view.xml",
         "config/sale_config_settings.xml",
+<<<<<<< HEAD
         # "wizard/sale_order_line_make_account_invoice_view.xml",
         "wizard/ms_report_stock_wizard.xml",
+=======
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
         "report/patient_card_report.xml",
         "report/stiker_pasien_report.xml",
         "report/master_filepatient_report.xml",
@@ -80,6 +90,13 @@
         "report/cppt_report.xml",
         "report/implementasi_keperawatan_report.xml",
         "report/rujukan_internal_report.xml",
+<<<<<<< HEAD
+=======
+        "report/persetujuan_tindakan_report.xml",
+        "report/registration_reciept.xml",
+        "report/report_physician_income_template.xml",
+        "report/report_physician_income.xml",
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
         "report/report_menu.xml",
     ],
     "installable": True,

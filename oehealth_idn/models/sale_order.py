@@ -16,7 +16,9 @@ class sale_order(models.Model):
     PAYMENT_TYPE = [
         ('Personal', 'Personal'),
         ('Corporate', 'Corporate'),
-        ('Insurance', 'Insurance')]
+        ('Insurance', 'Insurance'),
+        ('Employee', 'Employee'),
+    ]
 
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID')
     arrival_txt = fields.Char(compute='set_arrival_id', string='Arrival #', store=True)

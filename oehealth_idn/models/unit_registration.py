@@ -8,6 +8,11 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
 import requests, json
 import datetime
+<<<<<<< HEAD
+=======
+import requests, json, datetime
+from datetime import timedelta
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
 import pytz
 import logging
 
@@ -63,10 +68,22 @@ class unit_registration(models.Model):
         #     row.insurance = row.patient.current_insurance
 
     def action_next(self):
+<<<<<<< HEAD
         if self.queue_trans_id.type_id.unit_administration_id.id == self.env.user.default_unit_administration_id.id:
             next_type_id = self.queue_trans_id.type_id.next_type_id
             self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})        
             self.state = 'Unlock'
+=======
+        _logger.info("Unit Registration Action Next")
+        if self.queue_trans_id.type_id.unit_administration_id.id == self.env.user.default_unit_administration_id.id:
+            if self.queue_trans_id.type_id.is_end_type:
+                _logger.info("End Type")
+                self.queue_trans_id.write({'state': 'done'})
+            else:
+                next_type_id = self.queue_trans_id.type_id.next_type_id
+                self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})        
+                self.state = 'Unlock'
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
         else:
             raise Warning('Queue have different unit administration')
 
@@ -135,7 +152,19 @@ class unit_registration(models.Model):
     is_on_unit_administration = fields.Boolean('', compute="get_user_unit_administration")
 
     queue_state = fields.Selection(QUEUE_STATUS, string='Queue State', default='Waiting', copy=False, readonly=True, track_visibility='onchange')
+<<<<<<< HEAD
     
+=======
+
+    #Reference
+    is_has_reference = fields.Boolean("Has Reference", default=False)
+    reference_date = fields.Date('Reference Date')
+    unit_administration = fields.Char('Unit Administration', size=200)
+    reference_hospital = fields.Char('Reference Hospital/Clinic', size=200)
+
+
+
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
     _sql_constraints = [
      ('full_name_uniq', 'unique (name)', 'The Queue Number must be unique')]
 
@@ -302,6 +331,10 @@ class unit_registration(models.Model):
                                 lst_price = acc.doctor.consultancy_price
                             else:
                                 lst_price = product_id.lst_price
+<<<<<<< HEAD
+=======
+                                
+>>>>>>> 8131d81b231df22e8d32fbdbe43187ef5f68ab98
                             _logger.info(lst_price)
                             if product_id.item_type == 'Doctor':
                                 _logger.info("Product Doctor")
@@ -495,3 +528,5 @@ class unit_registration(models.Model):
                 self.env.cr.execute(query)
 
         return self.write({'state': 'Cancelled'})
+
+
