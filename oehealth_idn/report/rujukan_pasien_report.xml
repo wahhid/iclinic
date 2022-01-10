@@ -35,14 +35,14 @@ th, td {
                                                 <td>Nama Pasien</td>
                                                 <td> : </td>
                                                 <td>
-                                                    <p t-field="o.patient" />
+                                                    <span t-field="o.patient.name" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Umur</td>
                                                 <td> : </td>
                                                 <td>
-                                                    <p t-field="o.patient.age" />
+                                                    <span t-field="o.patient.age" />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -75,7 +75,7 @@ th, td {
                                                 <td>Suhu</td>
                                                 <td> : </td>
                                                 <td>
-                                                    <p t-field="o.evaluation_id.temperature" />
+                                                    <span t-field="o.evaluation_id.temperature" />
                                                     C
                                                 </td>
                                             </tr>
@@ -88,7 +88,7 @@ th, td {
                                                 <td>Penapasan</td>
                                                 <td> : </td>
                                                 <td>
-                                                    <p t-field="o.evaluation_id.respiratory_rate" />
+                                                    <span t-field="o.evaluation_id.respiratory_rate" />
                                                     x/m (Regular/Ireguler)
                                                 </td>
                                             </tr>
@@ -96,7 +96,7 @@ th, td {
                                                 <td>Saturasi</td>
                                                 <td> : </td>
                                                 <td>
-                                                    <p t-field="o.evaluation_id.osat" />
+                                                    <span t-field="o.evaluation_id.osat" />
                                                     %
                                                 </td>
                                             </tr>
@@ -165,7 +165,7 @@ th, td {
                                 </tr>
                             </table>
                             <p>Atas kerjasamanya, kami mengucapkan terimakasih</p>
-                            <p style="text-align:right;">________,_____/____/_____</p>
+                            <p style="text-align:right;"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>_</p>
                             <table style="width:100%;">
                                 <tr>
                                     <td>PETUGAS PENGANTAR</td>

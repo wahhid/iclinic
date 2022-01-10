@@ -16,19 +16,19 @@ table, th, td {
               <table style="width:100%">
                 <tr>
                   <th rowspan="6">TINDAKAN KEDOKTERAN</th>
-                  <td>Nama  : <p t-field="o.patient.name" /></td>
+                  <td>Nama  : <span t-field="o.patient.name" /></td>
                 </tr>
                 <tr>
-                  <td>Tanggal Lahir  : <p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
+                  <td>Tanggal Lahir  : <span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
                 </tr>
                 <tr>
-                  <td>No.RM  : <p t-field="o.name" /></td>
+                  <td>No.RM  : <span t-field="o.patient.medical_record"/></td>
                 </tr>
                 <tr>
-                  <td>Jenis Kelamin  : <p t-field="o.patient.sex" /> Ruang  : </td>
+                  <td>Jenis Kelamin  : <span t-field="o.patient.sex" /> Ruang  : </td>
                 </tr>
                 <tr>
-                  <td>Tanggal Masuk  : _______________________ Kelas  : </td>
+                  <td>Tanggal Masuk  : <span t-field="o.date" /> Kelas  : </td>
                 </tr>
                 <tr>
                   <td>DPJP  : </td>
@@ -39,7 +39,7 @@ table, th, td {
                   <th>PEMBERIAN INFORMASI</th>
                 </tr>
                 <tr>
-                  <td>Dokter pelaksana tindakan  : <p t-field="o.doctor" /></td>
+                  <td>Dokter pelaksana tindakan  : <span t-field="o.doctor" /></td>
                 </tr>
                 <tr>
                   <td>Pemberi informasi  : </td>
@@ -178,13 +178,13 @@ table, th, td {
                 <div class="row">
                   <div class="col-sm-4">
                     <p>
-                      <strong>Nama: <p t-field="o.patient.name" /></strong>
+                      <strong>Nama: <span t-field="o.patient.name" /></strong>
                     </p>
                     <p>
-                      <strong>Alamat: <p t-field="o.patient.street" /></strong>
+                      <strong>Alamat: <span t-field="o.patient.street" /></strong>
                     </p>
                     <p>
-                      <strong>Umur: <p t-field="o.patient.age" /></strong>
+                      <strong>Umur: <span t-field="o.patient.age" /></strong>
                     </p>
                   </div>
                   <div class="col-sm-4"></div>
@@ -199,7 +199,7 @@ table, th, td {
                                   seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
                     <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
                                   kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
-                    <p>_________,__________________</p>
+                    <p><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></p>
                     <p>
                       <br />
                     </p>
@@ -291,13 +291,13 @@ table, th, td {
                 <div class="row">
                   <div class="col-sm-4">
                     <p>
-                      <strong>Nama: <p t-field="o.patient.name" /></strong>
+                      <strong>Nama: <span t-field="o.patient.name" /></strong>
                     </p>
                     <p>
-                      <strong>Alamat: <p t-field="o.patient.street" /></strong>
+                      <strong>Alamat: <span t-field="o.patient.street" /></strong>
                     </p>
                     <p>
-                      <strong>Umur: <p t-field="o.patient.age" /></strong>
+                      <strong>Umur: <span t-field="o.patient.age" /></strong>
                     </p>
                   </div>
                   <div class="col-sm-4"></div>
@@ -312,7 +312,7 @@ table, th, td {
                                   seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
                     <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
                                   kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
-                    <p>_________,__________________</p>
+                    <p><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></p>
                     <p>
                       <br />
                     </p>

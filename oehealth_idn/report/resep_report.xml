@@ -17,15 +17,15 @@
                                     </div>
                                     <div>
                                         <strong>No. Registrasi:</strong>
-                                        <p t-field="o.reg_id.name"/>
+                                        <span t-field="o.reg_id.name"/>
                                     </div>
                                     <div>
                                         <strong>Nama Pasien:</strong>
-                                        <p t-field="o.patient.name"/>
+                                        <span t-field="o.patient.name"/>
                                     </div>
                                     <div>
                                         <strong>Tanggal Lahir:</strong>
-                                        <p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}'/>
+                                        <span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}'/>
                                     </div>
                                 </div>
                                 <div class="col-xs-4">
@@ -35,11 +35,11 @@
                                     </div>
                                     <div>
                                         <strong>Tanggal Masuk:</strong>
-                                        <p t-field="o.date" t-field-options='{"format": "d MMMM y"}'/>
+                                        <span t-field="o.date" t-field-options='{"format": "d MMMM y"}'/>
                                     </div>
                                     <div>
                                         <strong>Unit:</strong>
-                                        <p t-field="o.reg_id.unit.name"/>
+                                        <span t-field="o.reg_id.unit.name"/>
                                     </div>
                                     <div>
                                         <strong>No Resep:</strong>

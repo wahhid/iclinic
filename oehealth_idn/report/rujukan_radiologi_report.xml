@@ -48,15 +48,15 @@
                                     </div>
                                     <div>
                                         <strong>Nama pasien: </strong>
-                                        <p t-field="o.patient" />
+                                        <span t-field="o.patient.name" />
                                     </div>
                                     <div>
                                         <strong>Tanggal Lahir:</strong>
-                                        <p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' />
+                                        <span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' />
                                     </div>
                                     <div>
                                         <strong>Umur: </strong>
-                                        <p t-field="o.patient.age" />
+                                        <span t-field="o.patient.age" />
                                     </div>
                                     <div>
                                         <p>
@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <p style="text-align:center;">_______,_________________ </p>
+                                    <p style="text-align:center;"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/> </p>
                                     <div>
                                         <p>
                                             <br />

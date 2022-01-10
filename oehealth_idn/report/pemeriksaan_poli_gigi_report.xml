@@ -24,8 +24,8 @@ th, td {
               <br />
               <table style="width:80%" class="center">
                 <tr>
-                  <td>NAMA LENGKAP : <p t-field="o.patient.name" /></td>
-                  <td>JENIS KELAMIN : <p t-field="o.patient.sex" /> </td>
+                  <td>NAMA LENGKAP : <span t-field="o.patient.name" /></td>
+                  <td>JENIS KELAMIN : <span t-field="o.patient.sex" /> </td>
                 </tr>
                 <tr>
                   <td>NIK/KTP : _________________________</td>
@@ -227,7 +227,7 @@ th, td {
                 </tr>
                 <tr>
                   <td class="text-center">(Drg._____________________)</td>
-                  <td class="text-center">(______/______/_________)</td>
+                  <td class="text-center">(<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>)</td>
                   <td class="text-center">(_______________________)</td>
                 </tr>
               </table>

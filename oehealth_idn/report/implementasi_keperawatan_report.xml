@@ -21,17 +21,17 @@ th, td {
                                 <tr class="border">
                                     <td>No.RM</td>
                                     <td> : </td>
-                                    <td><p t-field="o.name" /></td>
+                                    <td><span t-field="o.name" /></td>
                                 </tr>
                                 <tr class="border">
                                     <td>Nama Pasien</td>
                                     <td> : </td>
-                                    <td><p t-field="o.patient.name" /></td>
+                                    <td><span t-field="o.patient.name" /></td>
                                 </tr>
                                 <tr class="border">
                                     <td>Tanggal Lahir </td>
                                     <td> : </td>
-                                    <td><p t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
+                                    <td><span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
                                 </tr>
                                 <tr class="border">
                                     <td>DPJP</td>

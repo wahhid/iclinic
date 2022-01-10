@@ -16,7 +16,7 @@ th, td {
 
                             <table style="width:100%">
                                 <tr>
-                                    <td>No.RM : <p t-field="o.name" /></td>
+                                    <td>No.RM : <span t-field="o.patient.medical_record" /></td>
                                     <td></td>
                                     <td>No.NPP : ____________________</td>
                                     <th rowspan="3" style="border:1px solid black;">
@@ -27,14 +27,14 @@ th, td {
                                     </th>
                                 </tr>
                                 <tr>
-                                    <td>Nama Lengkap :  <p t-field="o.patient.name" /></td>
+                                    <td>Nama Lengkap :  <span t-field="o.patient.name" /></td>
                                     <td></td>
-                                    <td>Jenis Kelamin : <p t-field="o.patient.sex" /></td>
+                                    <td>Jenis Kelamin : <span t-field="o.patient.sex" /></td>
                                 </tr>
                                 <tr>
                                     <td>TTL : ________________</td>
                                     <td></td>
-                                    <td>Umur : <p t-field="o.patient.age" /></td>
+                                    <td>Umur : <span t-field="o.patient.age" /></td>
                                 </tr>
                             </table>
                             <table style="width:100%">
