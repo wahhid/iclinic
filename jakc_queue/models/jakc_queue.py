@@ -298,6 +298,7 @@ class QueueSequence(models.Model):
     reset_sequence = fields.Selection([('daily','Daily'),('monthly','Monthly'),('yearly','Yearly')],'Reset Sequence', default="daily")
     sequence_id = fields.Many2one('ir.sequence', 'Sequence #')
 
+    @api.model
     def create(self, vals):
         IrSequenceSudo = self.env['ir.sequence'].sudo()
         sequence_vals = {
