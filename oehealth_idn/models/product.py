@@ -92,8 +92,6 @@ class PaymentGuarantorDiscount(models.Model):
     doctor = fields.Float('Doctor in %')
     nurse = fields.Float('Nurse in %')
 
-
-
 class ProductTemplateCategory(models.Model):
     _name = "product.template.category"
     _description = "Public Category"

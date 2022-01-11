@@ -117,7 +117,6 @@ class register_walkin(models.Model):
                 raise Warning(_('Payment Guarantor Discount not found'))
             self.payment_quarantor_discount_id = payment_quarantor_discount_id.id
 
-    
     @api.onchange('insurance')
     def onchange_for_insurance(self):
         _logger.info("On Change Insurance")

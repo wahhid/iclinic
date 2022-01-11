@@ -143,6 +143,8 @@ class sale_order_line(models.Model):
                     'price_subtotal': taxes['total_excluded'],
                 })
 
+
+    # p
     
 
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID', related='order_id.arrival_id')

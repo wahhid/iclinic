@@ -21,3 +21,4 @@ from . import lab
 from . import stock_operation_pack
 from . import jakc_queue
 from . import res_users
+from . import purchase_order
