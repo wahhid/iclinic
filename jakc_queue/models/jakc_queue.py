@@ -303,7 +303,8 @@ class QueueSequence(models.Model):
         IrSequenceSudo = self.env['ir.sequence'].sudo()
         sequence_vals = {
             'name': vals.get('name') + " Sequence",
-            'padding': 3}
+            'padding': 3
+        }
         sequence_id = IrSequenceSudo.create(sequence_vals)
         vals.update({'sequence_id': sequence_id.id})
         vals.update({'code': vals.get('code').lower().replace(' ','.')})
