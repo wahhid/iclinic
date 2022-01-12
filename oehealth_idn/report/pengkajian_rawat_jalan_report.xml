@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="report_pengkajian">
+    <template id="report_pengkajian_rawat_jalan">
         <t t-call="report.html_container">
             <t t-call="report.external_layout">
                 <t t-foreach="docs" t-as="o">
@@ -32,7 +32,9 @@ th, td {
                                                     <tr>
                                                         <td style="">Istri/ Anak dari</td>
                                                         <td style=""> : </td>
-                                                        <td style="">...........</td>
+                                                        <td style=""><t t-if="true == o.patient.is_have_parent">
+                                                            <span t-field="o.parent_id.name"/> 
+                                                        </t></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="">Alamat</td>
@@ -42,7 +44,7 @@ th, td {
                                                     <tr>
                                                         <td style="">Alergi Obat</td>
                                                         <td style=""> : </td>
-                                                        <td style="">Tidak ada/ada, Sebutkan</td>
+                                                        <td style=""><span t-field="o.allergy_history" /></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -53,7 +55,7 @@ th, td {
                                                     <tr>
                                                         <td style="">No. Rekam Medis</td>
                                                         <td style=""> : </td>
-                                                        <td style=""><span t-field="o.name" /></td>
+                                                        <td style=""><span t-field="o.patient.medical_record" /></td>
                                                     </tr>
                                                     <tr>
                                                         <td style="">Pekerjaan</td>
@@ -106,151 +108,201 @@ th, td {
                                             Riwayat Penyakit
                                             <br />
                                             a. Riwayat Penyakit Pribadi
-                                            <br />
-
+                                            <br /><br/>
+                                            <table style="border: 1px solid #000;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">DM.Stroke</td>
+                                                        <td style="border: 1px solid #000; ">
+                                                    <t t-if="true == o.dm_stroke_p">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Katarak</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.katarak">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Hipertensi</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.hipertensi_p">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Penyakit jantung koroner</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.jantung_p">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Kolesterol,Penyakit Ginjal</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.kolesterol">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Penyakit hati/liver</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.liver">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Asam urat</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.asam_urat">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Pendarahan Lama</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.pendarahan">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Lain-Lain : </td>
+                                                        <td style="border: 1px solid #000; "><span t-field="o.lain_rpp" /></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
                                             <br />
                                             b. Riwayat Penyakit Keluarga
                                             <br />
-
-
                                             <br />
+                                            <table style="border: 1px solid #000;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">DM</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.dm_stroke_k">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Hipertensi</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.hipertensi_k">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Penyakit jantung koroner</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.jantung_k">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Penyakit gangguan ginjal</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.gangguan_ginjal">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Kejiwaan/Depresi</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.kejiwaan">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Serangan Jantung</td>
+                                                        <td style="border: 1px solid #000; "><t t-if="true == o.serangan_jantung">
+                                                            ✔ 
+                                                        </t></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Lain-lain : </td>
+                                                        <td style="border: 1px solid #000; "><span t-field="o.lain_rpk" /></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                             <br />
                                             c. Riwayat Alergi Obat dan Makanan
                                             <br />
                                             <br />
+                                            <t t-if="true == o.alergi_obat_makanan">
+                                                            Ya, Sebutkan :  <span t-field="o.lain_alergi_obat_makanan" />
+                                                        </t>
+                                            <t t-if="false == o.alergi_obat_makanan">
+                                                            Tidak
+                                                        </t>
                                             Kajian Biopsikososial
                                             <br />
                                             a. kebiasaan
                                             <br />
+                                            <br />
+                                            <tr>
+                                                <td style="border: 0px solid #000; ">Meroko / Minum Alkohol</td>
+                                                <td style="border: 1px solid #000; "><t t-if="true == o.alkohol">
+                                                    ✔ 
+                                                </t></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 0px solid #000; ">Lain-lain : </td>
+                                                <td style="border: 1px solid #000; "><span t-field="o.lain_kebiasaan" /></td>
+                                            </tr>
+                                            <br /><br />
                                             b. Pekerjaan
                                             <br />
+                                            <br />
+                                            Apakah pekerjaan pasien berhubungan dengan bahan berbahaya?(Misal,Kimia,Gas dll)
+                                            <t t-if="true == o.bb_pekerjaan">
+                                                            Ya, Sebutkan :  <span t-field="o.sebutkan_bb" />
+                                                        </t>
+                                            <t t-if="false == o.bb_pekerjaan">
+                                                            Tidak
+                                                        </t>             
+                                            
+<br /><br />
                                             c. Psikologis
                                             <br />
                                             <br />
-                                            Tingkat Pendidikan
+                                            Tingkat Pendidikan : <span t-field="o.tingkat_pendidikan" />
                                             <br />
-                                            Disorientasi
+                                            Disorientasi : <t t-if="true == o.disorientasi">
+                                                            Ya, Sebutkan :  <span t-field="o.sebutkan_disorientasi" />
+                                                        </t>
+                                            <t t-if="false == o.bb_pekerjaan">
+                                                            Tidak
+                                                        </t>     
                                             <br />
-                                            Emosi
+                                            Emosi : <span t-field="o.emosi" />
                                             <br />
                                             d. Sosial
                                             <br />
                                             <br />
                                             Tempat tinggal
                                             <br />
+                                            <span t-field="o.tinggal" />
+                                            <br />
                                             Bantuan yang di butuhkan di rumah
+                                            <br />
+                                            Makan [<t t-if="true == o.bantuan_makan">
+                                                            ✔ 
+                                                        </t>] / Mandir [<t t-if="true == o.bantuan_mandi">
+                                                            ✔ 
+                                                        </t>] / BAK [<t t-if="true == o.bantuan_bak">
+                                                            ✔ 
+                                                        </t>] / BAB [<t t-if="true == o.bantuan_bab">
+                                                            ✔ 
+                                                        </t>] / Berjalan [<t t-if="true == o.bantuan_berjalan">
+                                                            ✔ 
+                                                        </t>]
                                             <br />
                                             Status Gizi (Malnutrition Screening Tool MST)
                                             <br />
-                                            BB : ......  kg
+                                            BB : <span t-field="o.weight" />  kg
                                             <br />
-                                            TB : ......   cm
+                                            TB : <span t-field="o.height" />  cm
                                             <br />
-                                            IMT : ......   (BB/TB2/M)
+                                            IMT : <span t-field="o.imt" />  (BB/TB2/M)
                                             <br />
 
                                         </td>
                                         <td style="border: 1px solid #000; ">
                                             <table style="border: 1px solid #000;">
                                                 <tbody>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">DM.Stroke</td>
-                                                        <td style="border: 1px solid #000; ">..............................</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Katarak</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Hipertensi</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Penyakit jantung koroner</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Kolesterol,Penyakit Ginjal</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Penyakit hati/liver</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Asam urat</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Pendarahan Lama</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Lain-Lain : </td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; "></td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">DM</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Hipertensi</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Penyakit jantung koroner</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Penyakit gangguan ginjal</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Kejiwaan/Depresi</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Serangan Jantung</td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Lain-lain : </td>
-                                                        <td style="border: 1px solid #000; "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; " colspan="2">
-                                                            Tidak ada/ada
-                                                            
-                                                            Sebutkan : ................
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; " colspan="2">
-                                                            Apakah pekerjaan pasien berhubungan dengan bahan berbahaya?(Misal,Kimia,Gas dll)
-                                                            
-                                                            Tidak/Ya,Sebutkan : .........................
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; " colspan="2">
-                                                            SD/SMP/SMA/D3/S1/S2/S3
-                                                            
-                                                            Tidak ada/ada,Sebutkan : waktu/orang/ruang
-                                                            
-                                                            Tidak bisa menahan diri/mudah tersinggung/gelisah/tenang
-                                                            
-                                                            
-                                                            Sendiri/sewa/bersama keluarga lain
-                                                            
-                                                            Makan/Mandir/BAK/BAB/Berjalan
-                                                            
-                                                        </td>
-                                                    </tr>
+                                                    
+                                                    
                                                     <tr>
                                                         <td style="border: 0px solid #000; " colspan="2">
 1. Apakah pasien mengalami penurunan berat badan yang tidak direncanakan/tidak di inginkan dalam 6 bulan terakhir?

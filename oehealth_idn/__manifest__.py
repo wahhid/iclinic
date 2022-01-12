@@ -86,6 +86,7 @@
         "report/registration_reciept.xml",
         "report/report_physician_income_template.xml",
         "report/report_physician_income.xml",
+        "report/pengkajian_rawat_jalan_report.xml",
         "report/report_menu.xml",
     ],
     "installable": True,
