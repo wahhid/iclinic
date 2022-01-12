@@ -360,6 +360,8 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                     else:
                         guarantor = acc.patient.partner_id.id
                     
+                    _logger.info(self.env.user.default_operating_unit_id)
+                    
                     val_obj = {
                         'reg_id': acc.reg_ids.id, 
                         'arrival_id': acc.arrival_id.id, 
