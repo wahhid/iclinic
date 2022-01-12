@@ -103,7 +103,8 @@ class oeh_medical_prescription(models.Model):
                     'company': pres.company.id,
                     'insurance': pres.insurance.id,
                     'employee_id': pres.employee_id.id,
-                    'queue_trans_id': pres.reg_id.queue_trans_id.id
+                    'queue_trans_id': pres.reg_id.queue_trans_id.id,
+                    'pharmacist': pres.pharmacy.pharmacist_name.id,
                 }
                 phy_id = pharmacy_obj.create(curr_pres)
                 
