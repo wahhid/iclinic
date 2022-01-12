@@ -21,9 +21,16 @@ class PurchaseOrder(models.Model):
             partner = self.partner_id if not self.partner_id.parent_id else self.partner_id.parent_id
             _logger.info(partner.name)
             currency = partner.property_purchase_currency_id or self.env.user.company_id.currency_id
-            price = self.currency_id.compute(line.price_unit, currency)
+            purchase_price = self.currency_id.compute(line.price_unit, currency)
+            _logger.info(purchase_price)
             product_id = line.product_id
-            if product_id.standard_price < price:
-                _logger.info(product_id.name)
-                _logger.info(price)
-                product_id.standard_price = price
+            _logger.info(product_id)
+            _logger.info(product_id.standard_price)
+            qty_conversion = line.product_uom._compute_quantity(line.product_qty, line.product_id.uom_id)
+            _logger.info(qty_conversion)
+            _logger.info(product_id.name)
+            new_price = purchase_price / qty_conversion
+            _logger.info(new_price)
+            if product_id.standard_price < new_price:
+                product_id.standard_price = new_price
+            

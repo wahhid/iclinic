@@ -330,7 +330,7 @@ class Queue_app(http.Controller):
         domain = [
             ('code', '=', kiosk_code)
         ]
-        queue_kiosk =  http.request.env['queue.kiosk'].search(domain)
+        queue_kiosk =  http.request.env['queue.kiosk'].sudo().search(domain)
         for type in queue_kiosk.queue_type_ids:
             type.mod_bg_color = 'btn3d btn btn-danger btn-lg btn-block'
         return request.render('jakc_queue.kioskscreen', {'types': queue_kiosk.queue_type_ids})
