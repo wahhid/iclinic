@@ -369,7 +369,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'partner_invoice_id': guarantor, 
                         'partner_shipping_id': guarantor, 
                         'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
-                        'operating_unit_id': self.env.user.default_operating_unit_id.id,
+                        #'operating_unit_id': self.env.user.default_operating_unit_id.id,
                         'user_id': self.env.user.id,
                         'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
                     }
