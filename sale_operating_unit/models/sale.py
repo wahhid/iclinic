@@ -59,6 +59,9 @@ class SaleOrder(models.Model):
     @api.constrains('operating_unit_id', 'company_id')
     def _check_company_operating_unit(self):
         for rec in self:
+            _logger.info(rec.company_id)
+            _logger.info(rec.operating_unit_id)
+            _logger.info(rec.operating_unit_id.company_id)
             if (rec.company_id and rec.operating_unit_id and
                     rec.company_id != rec.operating_unit_id.company_id):
                 raise ValidationError(_('Configuration error\nThe Company in'
