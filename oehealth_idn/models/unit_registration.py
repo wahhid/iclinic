@@ -288,7 +288,8 @@ class unit_registration(models.Model):
                     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                     'partner_shipping_id': acc.patient.partner_id.id, 
                     'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
-                    'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).id
+                    'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).id,
+                    'warehouse_id': self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).warehouse_id.id
                 }
                 #Create Sale Order
                 inv_ids = obj.create(val_obj)
