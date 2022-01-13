@@ -388,7 +388,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         #'user_id': self.env.user.id,
                         'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_operating_unit_id.id))], limit=1).id,
                         #'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
-                        'warehouse_id': self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).warehouse_id.id
+                        'warehouse_id': self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_operating_unit_id.id))], limit=1).warehouse_id.id
 
                     }
                     _logger.info(val_obj)
