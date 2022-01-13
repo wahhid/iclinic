@@ -362,6 +362,19 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                     
                     _logger.info(self.env.user.default_operating_unit_id)
                     
+                #  val_obj = {
+                #     'reg_id': acc.id, 
+                #     'arrival_id': acc.clinic_walkin_id.id or acc.unit_walkin_id.id or acc.emergency_walkin_id.id or acc.support_walkin_id.id, 
+                #     'patient_id': acc.patient.id, 
+                #     'doctor_id': acc.doctor.id, 
+                #     'partner_id': acc.patient.partner_id.id, 
+                #     'partner_invoice_id': guarantor, 
+                #     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
+                #     'partner_shipping_id': acc.patient.partner_id.id, 
+                #     'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
+                #     'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).id
+                # }
+
                     val_obj = {
                         'reg_id': acc.reg_ids.id, 
                         'arrival_id': acc.arrival_id.id, 
@@ -369,11 +382,12 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'doctor_id': acc.doctor.id, 
                         'partner_id': guarantor, 
                         'partner_invoice_id': guarantor, 
-                        'partner_shipping_id': guarantor, 
+                        'partner_shipping_id': acc.patient.partner_id.id, 
                         'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                         'operating_unit_id': self.env.user.default_operating_unit_id.id,
-                        'user_id': self.env.user.id,
-                        'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
+                        #'user_id': self.env.user.id,
+                        'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).id
+                        #'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
                     }
                     inv_ids = obj.sudo().create(val_obj)
                     
