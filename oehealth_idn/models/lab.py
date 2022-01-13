@@ -90,7 +90,7 @@ class OehMedicalLabTest(models.Model):
                             discount = acc.payment_guarantor_discount_id.nurse
                     vals = {
                         'order_id': inv_id, 
-                        'product_id': 360, 
+                        'product_id': 49031, 
                         'name': acc.test_type.name, 
                         'prescribe_qty': 1, 
                         'product_uom_qty': 1, 
