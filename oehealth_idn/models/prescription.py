@@ -374,7 +374,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                 #     'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
                 #     'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).id
                 # }
-
+                    warehouse_id = self.env['stock_warehouse'].search(['operating_unit_id','=',self.env.user.default_operating_unit_id.id], limit=1)
                     val_obj = {
                         'reg_id': acc.reg_ids.id, 
                         'arrival_id': acc.arrival_id.id, 
@@ -388,8 +388,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         #'user_id': self.env.user.id,
                         'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_operating_unit_id.id))], limit=1).id,
                         #'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
-                        'warehouse_id': self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_operating_unit_id.id))], limit=1).warehouse_id.id
-
+                        'warehouse_id': warehouse_id and warehouse_id.id or False
                     }
                     _logger.info(val_obj)
                     inv_ids = obj.sudo().create(val_obj)
