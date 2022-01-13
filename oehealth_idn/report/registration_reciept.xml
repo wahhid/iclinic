@@ -9,7 +9,7 @@
                             <div class="oe_structure"/>
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <img t-if="res_company.logo" style="width:80px;height:80px;" t-att-src="'data:image/png;base64,%s' %res_company.logo"/>
+                                    <img t-if="res_company.logo" style="width:70px;height:70px;" t-att-src="'data:image/png;base64,%s' %res_company.logo"/>
                                 </div>
                                 <div class="col-xs-9">
                                     <div class="row text-center">
@@ -19,13 +19,13 @@
                                         <span>YAKESPEN UTAMA</span>
                                     </div>
                                     <div class="row text-center">
-                                        <span>Jl Hang Jebat Barek Motor Kijang</span>
+                                        <span style="font-size:8px;">Jl Hang Jebat Barek Motor Kijang</span>
                                     </div>
                                     <div class="row text-center">
-                                        <span>Kec Bintan Timur</span>
+                                        <span style="font-size:8px;">Kec Bintan Timur</span>
                                     </div>
                                     <div class="row text-center">
-                                        <span>HP: 082182441550</span>
+                                        <span style="font-size:8px;">HP: 082182441550</span>
                                     </div>
                                 </div>
                             </div>
