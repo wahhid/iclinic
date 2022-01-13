@@ -48,6 +48,10 @@ class OehMedicalLabTest(models.Model):
                 else:
                     guarantor = acc.patient.partner_id.id
                     #guarantor = acc.company.id
+                _logger.info(self.env.user.default_operating_unit_id)
+                _logger.info("Get User Warehouse")
+                warehouse_id = self.env['stock.warehouse'].search([('operating_unit_id','=',self.env.user.default_operating_unit_id.id)], limit=1)
+            
                 val_obj = {
                     #'reg_id': acc.id, 
                     'arrival_id': acc.walkin.id, 
@@ -58,8 +62,11 @@ class OehMedicalLabTest(models.Model):
                     'partner_shipping_id': acc.patient.partner_id.id, 
                     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                     'pricelist_id': acc.patient.partner_id.property_product_pricelist.id, 
-                    'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id, 
-                    'operating_unit_id': acc.operating_unit_id.id or False
+                    'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_unit_administration_id.id))], limit=1).id,
+                    #'operating_unit_id': acc.operating_unit_id.id or False,
+                    'operating_unit_id': self.env.user.default_operating_unit_id.id,
+                    'warehouse_id':  False if not warehouse_id else warehouse_id.id
+
                 }
                 inv_ids = obj.create(val_obj)
                 
