@@ -74,7 +74,7 @@ class OehMedicalLabTest(models.Model):
                     inv_id = inv_ids.id
 
                     discount = 0.0
-                    product_id = self.env['product.product'].browse(360)
+                    product_id = self.env['product.product'].browse(49031)
                     if acc.payment_guarantor_discount_id:
                         if product_id.item_type == 'General Item':
                             discount = acc.payment_guarantor_discount_id.general_item
