@@ -8,8 +8,8 @@
 		        <form string="Confirm Next Step">
 	                <group>
 		        		<group>
-		                    <field name="unit_administration_id"/>
-		                </group>
+		                    <field name="queue_type_id"/>
+							<field name="is_valid" readonly="1"/>		                </group>
 		        	</group>
 	                <footer>
 	                    <button name="confirm_next_step" string="Confirm" type="object" class="oe_highlight"/>

@@ -30,6 +30,7 @@
         "wizard/ms_report_stock_wizard.xml",
         "wizard/wizard_reference_hospital.xml",
         "wizard/wizard_report_physician_income.xml",
+        "wizard/wizard_next_step.xml",
         "views/medical_evaluation_view.xml",
         "views/class_view.xml",
         "views/room_view.xml",
