@@ -41,32 +41,32 @@ class SaleOrder(models.Model):
                 self.operating_unit_id:
             self.team_id = False
 
-    # @api.multi
-    # @api.constrains('team_id', 'operating_unit_id')
-    # def _check_team_operating_unit(self):
-    #     for rec in self:
-    #         _logger.info(rec.team_id)
-    #         _logger.info(rec.team_id.operating_unit_id)
-    #         _logger.info(rec.operating_unit_id)
-    #         if (rec.team_id and
-    #                 rec.team_id.operating_unit_id != rec.operating_unit_id):
-    #             raise ValidationError(_('Configuration error\n'
-    #                                     'The Operating Unit of the sales team '
-    #                                     'must match with that of the '
-    #                                     'quote/sales order'))
+    @api.multi
+    @api.constrains('team_id', 'operating_unit_id')
+    def _check_team_operating_unit(self):
+        for rec in self:
+            _logger.info(rec.team_id)
+            _logger.info(rec.team_id.operating_unit_id)
+            _logger.info(rec.operating_unit_id)
+            if (rec.team_id and
+                    rec.team_id.operating_unit_id != rec.operating_unit_id):
+                raise ValidationError(_('Configuration error\n'
+                                        'The Operating Unit of the sales team '
+                                        'must match with that of the '
+                                        'quote/sales order'))
 
-    # @api.multi
-    # @api.constrains('operating_unit_id', 'company_id')
-    # def _check_company_operating_unit(self):
-    #     for rec in self:
-    #         _logger.info(rec.company_id)
-    #         _logger.info(rec.operating_unit_id)
-    #         _logger.info(rec.operating_unit_id.company_id)
-    #         if (rec.company_id and rec.operating_unit_id and
-    #                 rec.company_id != rec.operating_unit_id.company_id):
-    #             raise ValidationError(_('Configuration error\nThe Company in'
-    #                                     ' the Sales Order and in the Operating'
-    #                                     ' Unit must be the same.'))
+    @api.multi
+    @api.constrains('operating_unit_id', 'company_id')
+    def _check_company_operating_unit(self):
+        for rec in self:
+            _logger.info(rec.company_id)
+            _logger.info(rec.operating_unit_id)
+            _logger.info(rec.operating_unit_id.company_id)
+            if (rec.company_id and rec.operating_unit_id and
+                    rec.company_id != rec.operating_unit_id.company_id):
+                raise ValidationError(_('Configuration error\nThe Company in'
+                                        ' the Sales Order and in the Operating'
+                                        ' Unit must be the same.'))
 
     @api.multi
     def _prepare_invoice(self):
