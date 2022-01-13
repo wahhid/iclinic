@@ -292,6 +292,7 @@ class unit_registration(models.Model):
                     'warehouse_id': self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).warehouse_id.id
                 }
                 #Create Sale Order
+                _logger.info(val_obj)
                 inv_ids = obj.create(val_obj)
 
                 if inv_ids:
