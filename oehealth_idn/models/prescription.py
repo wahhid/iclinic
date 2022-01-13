@@ -388,7 +388,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         #'user_id': self.env.user.id,
                         'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_operating_unit_id.id))], limit=1).id,
                         #'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
-                        'warehouse_id': warehouse_id and warehouse_id.id or False
+                        'warehouse_id':  False if not warehouse_id else warehouse_id.id
                     }
                     _logger.info(val_obj)
                     inv_ids = obj.sudo().create(val_obj)
