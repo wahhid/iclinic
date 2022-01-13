@@ -374,6 +374,9 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                 #     'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
                 #     'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).id
                 # }
+
+                    _logger.info(self.env.user.default_operating_unit_id)
+                    _logger.info("Get User Warehouse")
                     warehouse_id = self.env['stock.warehouse'].search(['operating_unit_id','=',self.env.user.default_operating_unit_id.id], limit=1)
                     val_obj = {
                         'reg_id': acc.reg_ids.id, 
