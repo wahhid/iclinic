@@ -377,7 +377,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
 
                     _logger.info(self.env.user.default_operating_unit_id)
                     _logger.info("Get User Warehouse")
-                    warehouse_id = self.env['stock.warehouse'].search(['operating_unit_id','=',self.env.user.default_operating_unit_id.id], limit=1)
+                    warehouse_id = self.env['stock.warehouse'].search([('operating_unit_id','=',self.env.user.default_operating_unit_id.id)], limit=1)
                     val_obj = {
                         'reg_id': acc.reg_ids.id, 
                         'arrival_id': acc.arrival_id.id, 
@@ -391,7 +391,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         #'user_id': self.env.user.id,
                         'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_operating_unit_id.id))], limit=1).id,
                         #'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
-                        'warehouse_id':  False if not warehouse_id else warehouse_id
+                        'warehouse_id':  False if not warehouse_id else warehouse_id.id
                     }
                     _logger.info(val_obj)
                     inv_ids = obj.sudo().create(val_obj)
