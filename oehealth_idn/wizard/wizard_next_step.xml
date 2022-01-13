@@ -1,0 +1,37 @@
+<odoo>
+	<data>
+	    <record id="view_wizard_next_step_form" model="ir.ui.view">
+			<field name="name">wizard.next.step.form</field>
+			<field name="model">wizard.next.step</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+		        <form string="Confirm Next Step">
+	                <group>
+		        		<group>
+		                    <field name="unit_administration_id"/>
+		                </group>
+		        	</group>
+	                <footer>
+	                    <button name="confirm_next_step" string="Confirm" type="object" class="oe_highlight"/>
+	                    <label string=" or "/>
+	                    <button string="Cancel" class="oe_link" special="cancel" />
+	                </footer>
+		        </form>
+	    	</field>
+	    </record>
+		
+	    <record id="action_wizard_reference_hospital" model="ir.actions.act_window">
+			<field name="name">Reference Hospital/Clinic</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">wizard.reference.hospital</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_wizard_reference_hospital_form"/>
+			<field name="target">new</field>
+	    </record>
+		
+        <!--
+		<menuitem id="ms_menu_report_stock_xlsx" action="action_wizard_reference_hospital" parent="stock.menu_warehouse_report"/>
+        -->
+	</data>
+</odoo>

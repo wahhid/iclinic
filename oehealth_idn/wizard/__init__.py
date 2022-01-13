@@ -5,3 +5,4 @@ from . import sale_order_line_make_account_invoice
 from . import ms_report_stock_wizard
 from . import wizard_reference_hospital
 from . import wizard_report_physician_income
+from . import wizard_next_step
