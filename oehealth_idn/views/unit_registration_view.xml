@@ -56,6 +56,9 @@
                         </div>
                     </div>
                     <div class="oe_button_box" name="buttons">
+                        <button type="object" class="oe_stat_button" name="view_picking" icon="fa-list">
+                            <label string="View Medical Record"/>
+                        </button>
                         <t attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
                             <button type="object" class="oe_stat_button" name="set_to_hospitalized" states="Unlock" icon="fa-building-o">
                                 <label string="Check-In"/>
