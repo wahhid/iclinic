@@ -157,6 +157,8 @@ class OehMedicalLabTest(models.Model):
     @api.model
     def create(self, vals):
         _logger.info(vals)
+        if vals['payment'] != 'Employee':
+            vals['employee_id'] = False
         res = super(OehMedicalLabTest, self).create(vals)
         if res.payment == 'Personal':
             #Personal
