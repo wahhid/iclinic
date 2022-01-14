@@ -88,16 +88,16 @@ th, td {
                                                     
                                             </t>
                                             <t t-if="'Corporate' == o.walkin.payment">
-                                                    <p t-field="o.company.name" />
-                                                    <p t-field="o.insurance.ins_no" />
+                                                    <p t-field="o.walkin.company.name" />
+                                                    <p t-field="o.walkin.insurance.ins_no" />
                                             </t>
                                             <t t-if="'Insurance' == o.walkin.payment">
-                                                    <p t-field="o.insurance.ins_type.name" />
-                                                    <p t-field="o.insurance.ins_no" />
+                                                    <p t-field="o.walkin.insurance.ins_type.name" />
+                                                    <p t-field="o.walkin.insurance.ins_no" />
                                             </t>
                                             <t t-if="'Employe' == o.walkin.payment">
-                                                    <p t-field="o.patient.detail_payment" />
-                                                    <p t-field="o.employee_id.employee_number" />
+                                                    <p t-field="o.walkin.patient.detail_payment" />
+                                                    <p t-field="o.walkin.employee_id.employee_number" />
                                             </t>
 
                                         </td>
@@ -267,7 +267,7 @@ th, td {
                                             Disorientasi : <t t-if="true == o.disorientasi">
                                                             Ya, <p> Sebutkan :  <span t-field="o.sebutkan_disorientasi" /></p>
                                                         </t>
-                                            <t t-if="false == o.bb_pekerjaan">
+                                            <t t-if="false == o.disorientasi">
                                                             Tidak
                                                         </t>     
                                             <br /><br />

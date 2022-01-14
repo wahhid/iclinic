@@ -51,6 +51,7 @@
         "views/stock_pack_operation_views.xml",
         "views/jakc_queue_view.xml",
         "views/res_users_view.xml",
+        "views/unit_view.xml",
         "views/menu_view.xml",
         "config/sale_config_settings.xml",
         "wizard/ms_report_stock_wizard.xml",
