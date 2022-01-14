@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="oeh_medical_physician_inherit">
+        <field name="name">oeh_medical_physician_inherit</field>   
+        <field name="model">oeh.medical.physician</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="oehealth.oeh_medical_physician_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='is_pharmacist']" position="after">
+                <field name="is_doctor"/>
+                <field name="physician_position"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

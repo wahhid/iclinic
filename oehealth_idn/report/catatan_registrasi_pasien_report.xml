@@ -23,27 +23,27 @@ th, td {
                       <tr>
                         <td>No RM</td>
                         <td> : </td>
-                        <td></td>
+                        <td><span t-field="o.patient.medical_record" /></td>
                       </tr>
                       <tr>
                         <td>Nama Pasien</td>
                         <td> : </td>
-                        <td></td>
+                        <td><span t-field="o.patient.name" /></td>
                       </tr>
                       <tr>
                         <td>Umur</td>
                         <td> : </td>
-                        <td></td>
+                        <td><span t-field="o.patient.age" /></td>
                       </tr>
                       <tr>
                         <td>Jenis Kelmain</td>
                         <td> : </td>
-                        <td></td>
+                        <td><span t-field="o.patient.sex" /></td>
                       </tr>
                       <tr>
                         <td>Alamat</td>
                         <td> : </td>
-                        <td></td>
+                        <td><span t-field="o.patient.street" /></td>
                       </tr>
                     </table>
                   </td>
@@ -52,13 +52,10 @@ th, td {
                   <td class="border">
                     NPP : ______
                     <br />
-                    Nomor Peserta Askes : ______
+                    Nomor Peserta Askes : <span t-field="o.name" />
                     <br />
                     Status Perkawinan :
-                    <br />
-                    ( ) Kawin             ( ) Duda
-                    <br />
-                    ( ) Belum Kawin       ( ) Janda
+                    <span t-field="o.patient.marital_status" />
                     <br />
                     Nama Penanggung Biaya : _________
                     <br />
@@ -251,7 +248,7 @@ th, td {
                     __________________________
                     <br />
                     <br />
-                    Kontrol tanggal : ____/____/____
+                    Kontrol tanggal : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
                     <br />
                   </td>
                 </tr>

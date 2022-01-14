@@ -22,3 +22,6 @@ from . import stock_operation_pack
 from . import jakc_queue
 from . import res_users
 from . import purchase_order
+from . import pengkajian_rawat_jalan_report
+from . import medical_physician
+from . import operating_unit

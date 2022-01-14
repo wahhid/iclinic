@@ -163,6 +163,8 @@ class unit_registration(models.Model):
     unit_administration = fields.Char('Unit Administration', size=200)
     reference_hospital = fields.Char('Reference Hospital/Clinic', size=200)
 
+    perstujuan_tindakan = fields.Boolean(string='Persetujuan Tindakan')
+
 
 
     _sql_constraints = [

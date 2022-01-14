@@ -15,7 +15,7 @@ border:1px solid black;
 }
 </style>
                         <div class="oe_structure">
-                            <h3>
+                            <h3 style="text-align:center;">
                                 FORMULIR PENGKAJIAN AWAL PASIEN
                                 <br />
                                 TERINTREGASI RAWAT INAP
@@ -23,12 +23,12 @@ border:1px solid black;
 
                             <table style="width:100%;">
                                 <tr>
-                                    <td class="border">Nama : </td>
-                                    <td class="border">No.RM : </td>
+                                    <td class="border">Nama : <span t-field="o.patient.name"/></td>
+                                    <td class="border">No.RM : <span t-field="o.patient.medical_record"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="border">Tanggal Lahir : </td>
-                                    <td class="border">Pekerjaan : </td>
+                                    <td class="border">Tanggal Lahir : <span t-field="o.patient.dob"/></td>
+                                    <td class="border">Pekerjaan : <span t-field="o.patient.function"/></td>
                                 </tr>
                                 <tr>
                                     <td class="border">DPJP : </td>

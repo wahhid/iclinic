@@ -6,6 +6,93 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="oehealth.oeh_medical_evaluation_view"/>
         <field name="arch" type="xml">
+            <xpath expr="//notebook/page[1]/group[1]" position="before">
+                <group string="Personal Illness History">
+                    <field name="dm_stroke_p"/>
+                    <field name="katarak"/>
+                    <field name="hipertensi_p"/>
+                    <field name="jantung_p"/>
+                    <field name="kolesterol"/>
+                    <field name="liver"/>
+                    <field name="asam_urat"/>
+                    <field name="pendarahan"/>
+                    <field name="lain_rpp"/>  
+                </group>
+                <group string="Family Disease History">
+                    <field name="dm_stroke_k"/>
+                    <field name="hipertensi_k"/>
+                    <field name="jantung_k"/>
+                    <field name="gangguan_ginjal"/>
+                    <field name="kejiwaan"/>
+                    <field name="serangan_jantung"/>
+                    <field name="lain_rpk"/>
+                </group>
+                <group string="History of Drug and Food Allergies">
+                    <field name="alergi_obat_makanan"/>
+                    <field name="lain_alergi_obat_makanan" attrs="{'invisible': [('alergi_obat_makanan','=',False)]}"/>
+                </group>
+                <group string="Biopsychosocial Studies">
+                    <field name="alkohol"/>
+                    <field name="lain_kebiasaan" attrs="{'invisible': [('alkohol','=',False)]}"/>
+                    <field name="bb_pekerjaan"/>
+                    <field name="sebutkan_bb" attrs="{'invisible': [('bb_pekerjaan','=',False)]}"/>
+                    <field name="tingkat_pendidikan"/>
+                    <field name="disorientasi"/>
+                    <field name="sebutkan_disorientasi" attrs="{'invisible': [('disorientasi','=',False)]}"/>
+                    <field name="emosi"/>
+                    <field name="tinggal"/>
+                </group>
+                <group string="Help needed at home">
+                    <field name="bantuan_makan"/>
+                    <field name="bantuan_mandi"/>
+                    <field name="bantuan_bak"/>
+                    <field name="bantuan_bab"/>
+                    <field name="bantuan_berjalan"/>
+                </group>
+                <group >
+                    <field name="penurunan_bb"/>
+                    <field name="asupan_makan"/>
+                </group>
+                <group >
+                    <field name="riwayat_jatuh"/>
+                    <field name="diagnosa_sekunder"/>
+                    <field name="alat_bantu_jalan"/>
+                    <field name="terapi_intravena"/>
+                    <field name="cara_berjalan"/>
+                    <field name="status_mental"/>
+                </group>
+
+            </xpath>
+
+            <xpath expr="//field[@name='respiratory_rate']" position="after">
+                <field name="tekanan_darah"/>
+                <field name="nadi"/>
+                <field name="gcs_e"/>
+                <field name="gcs_v"/>
+                <field name="gcs_m"/>
+                <field name="total_gcs"/>
+                <field name="gds"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[1]/group[1]" position="after">
+                <group string="Multi Organ">
+                    <field name="organ_atas"/>
+                    <field name="organ_jantung"/>
+                    <field name="organ_perut"/>
+                    <field name="organ_anggota_gerak"/>
+                    <field name="organ_genetalia"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//field[@name='height']" position="after">
+                <field name="imt"/>
+            </xpath>
+
+            <xpath expr="//field[@name='notes']" position="after">
+                <field name="resiko"/>
+                <field name="alternatif"/>
+            </xpath>
+        
             <xpath expr="//notebook/page[2]/group[1]" position="before">
                 <group string="Subjective">
                     <field name="subjective"/>

@@ -185,6 +185,7 @@ class SaleReport(models.Model):
     doctor_id = fields.Many2one('oeh.medical.physician', string='Doctor', readonly=True)
     partner_invoice_type = fields.Selection([('Personal', 'Personal'), ('Company', 'Company'), ('Insurance', 'Insurance')], string='Customer Type', store=True)
 
+    
     def _select(self):
         return super(SaleReport, self)._select() + ', l.doctor_id as doctor_id, s.partner_invoice_type as partner_invoice_type'
 

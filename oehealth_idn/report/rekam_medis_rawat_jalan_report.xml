@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+<!-- Main template -->
+<template id="oehealth_idn.report_rekam_medis_rawat_jalan">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'oehealth_idn.report_rekam_medis_rawat_jalan')"/>
+        </t>
+    </t>
+</template>
+
     <template id="report_rekam_medis_rawat_jalan">
         <t t-call="report.html_container">
             <t t-call="report.external_layout">
@@ -16,25 +25,29 @@ th, td {
 
                             <table style="width:100%">
                                 <tr>
-                                    <td>No.RM : _________________</td>
+                                    <td>No.RM : <span t-field="o.patient.medical_record" /></td>
                                     <td></td>
-                                    <td>No.NPP : ____________________</td>
+                                    <td>No.NPP : 
+                                            <t t-if="'Employe' == o.walkin.payment">
+                                                    <span t-field="o.employee_id.employee_number" />
+                                            </t>
+                                            
+                                    </td>
                                     <th rowspan="3" style="border:1px solid black;">
                                         RIWAYAT ALERGI
                                         <br />
-                                        <br />
-                                        _______________
+                                        <span t-field="o.allergy_history" />
                                     </th>
                                 </tr>
                                 <tr>
-                                    <td>Nama Lengkap : ___________________</td>
+                                    <td>Nama Lengkap :  <span t-field="o.patient.name" /></td>
                                     <td></td>
-                                    <td>Jenis Kelamin : L/P*</td>
+                                    <td>Jenis Kelamin : <span t-field="o.patient.sex" /></td>
                                 </tr>
                                 <tr>
                                     <td>TTL : ________________</td>
                                     <td></td>
-                                    <td>Umur : ______________________</td>
+                                    <td>Umur : <span t-field="o.patient.age" /></td>
                                 </tr>
                             </table>
                             <table style="width:100%">
@@ -47,16 +60,36 @@ th, td {
                                     <th style="border:1px solid black;">TERAPI/TINDAKAN</th>
                                     <th style="border:1px solid black;">DOKTER</th>
                                 </tr>
-                                <tr>
-                                    <td style="border:1px solid black;"></td>
-                                    <td style="border:1px solid black;"></td>
-                                    <td style="border:1px solid black;"></td>
-                                    <td style="border:1px solid black;"></td>
-                                    <td style="border:1px solid black;"></td>
-                                    <td style="border:1px solid black;"></td>
-                                    <td style="border:1px solid black;"></td>
-
-                                </tr>
+                                
+                                    <tr>
+                                        <td style="border:1px solid black;"><span t-field="o.evaluation_start_date" /></td>
+                                        <td style="border:1px solid black;">
+                                            S : 
+                                            <P t-field="o.subjective" />
+                                            <br/>
+                                            O : <br />
+                                                BB : <span t-field="o.weight" />  kg
+                                                <br /><br />
+                                                TB : <span t-field="o.height" />  cm
+                                                <br /><br />
+                                                IMT : <span t-field="o.imt" />  (BB/TB2/M)
+                                                <br /><br />
+                                            A :
+                                            <P t-field="o.notes" />
+                                            <br/>
+                                            P :
+                                            <P t-field="o.notes_complaint" />
+                                            <br/>
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="o.env.user.name"/>
+                                        </td>
+                                        <td style="border:1px solid black;"></td>
+                                        <td style="border:1px solid black;"></td>
+                                        <td style="border:1px solid black;"></td>
+                                        <td style="border:1px solid black;"></td>
+                                    </tr>
+                                
                             </table>
                         </div>
                     </div>

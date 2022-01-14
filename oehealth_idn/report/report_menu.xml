@@ -6,13 +6,14 @@
 
     <report id="master_filepatient_report_menu" string="Master File Patient" model="oeh.medical.patient" report_type="qweb-pdf" name="oehealth_idn.report_master_filepatient" menu="True" />
 
-    <!-- Registration Report Menu -->
+    <!-- Registration Report Menu 
     <report id="slip_registrasi_report_menu" string="Slip Registrasi Rajal" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_slip_registrasi" menu="True" attachment_use="True" attachment="'Slip Registrasi - %s' % ((object.name or '').replace('/','')+'.pdf')" />
 
     <report id="slip_registrasi_penunjang_report_menu" string="Slip Registrasi Penunjang" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_slip_registrasi_penunjang" menu="True" attachment_use="True" attachment="'Slip Registrasi - %s' % ((object.name or '').replace('/','')+'.pdf')" />
 
     <report id="slip_registrasi_igd_report_menu" string="Slip Registrasi IGD" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_slip_registrasi_igd" menu="True" attachment_use="True" attachment="'Slip Registrasi - %s' % ((object.name or '').replace('/','')+'.pdf')" />
-
+	-->
+	
     <!-- Action Report Menu -->
     <report id="etiket_report_menu" string="e-tiket" model="oeh.medical.prescription" report_type="qweb-pdf" name="oehealth_idn.report_etiket" menu="True" attachment_use="True" attachment="'E-tiket - %s' % ((object.patient.name or '').replace('/','')+'.pdf')" />
 
@@ -33,9 +34,9 @@
 
     <report id="rujukan_pasien_report_menu" string="Rujukan External" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_rujukan_pasien" menu="True" />
 
-    <report id="perintah_rawat_inap_report_menu" string="Perintah Rawat Inap" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_perintah_rawat_inap" menu="True" />
+    <report id="perintah_rawat_inap_report_menu" string="Surat Perintah Rawat Inap" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_perintah_rawat_inap" menu="True" />
 
-    <report id="pengkajian_report_menu" string="Form Pengkajian Awal Klinis Rawat Jalan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian" menu="True" />
+    <report id="pengkajian_report_menu" string="Form Pengkajian Awal Klinis Rawat Jalan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian_rawat_jalan" menu="True" />
 
     <report id="pengkajian_rawat_inap_report_menu" string="Form Pengkajian Rawat Inap" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian_rawat_inap" menu="True" />
 
@@ -90,9 +91,6 @@
         <field name="report_ids" eval="[
             (4, ref('oehealth.action_report_patient_label')),
             (4, ref('oehealth_idn.stiker_pasien_report_menu')),
-            (4, ref('oehealth_idn.slip_registrasi_report_menu')),
-            (4, ref('oehealth_idn.slip_registrasi_penunjang_report_menu')),
-            (4, ref('oehealth_idn.slip_registrasi_igd_report_menu')),
             (4, ref('oehealth_idn.etiket_report_menu'))
         ]" />
     </record>

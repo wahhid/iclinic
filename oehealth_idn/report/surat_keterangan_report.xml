@@ -22,12 +22,12 @@ table, th, td {
                                 <tr>
                                     <td>Nama</td>
                                     <td> : </td>
-                                    <td>_______________________________________</td>
+                                    <td><span t-field="o.patient.name" /></td>
                                 </tr>
                                 <tr>
                                     <td>Umur</td>
                                     <td> : </td>
-                                    <td>_______________________________________</td>
+                                    <td><span t-field="o.patient.age" /></td>
                                 </tr>
                                 <tr>
                                     <td>Pekerjaan/Sekolah</td>
@@ -37,7 +37,7 @@ table, th, td {
                                 <tr>
                                     <td>Alamat</td>
                                     <td> : </td>
-                                    <td>_______________________________________</td>
+                                    <td><span t-field="o.patient.street" /></td>
                                 </tr>
                                 <tr>
                                     <td colspan="3">
@@ -56,7 +56,7 @@ table, th, td {
                                 </tr>
                                 <tr>
                                     <td colspan="3">
-    ________,__________________
+    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
   
                                 </td>
                                 </tr>
@@ -72,7 +72,7 @@ table, th, td {
                                 </tr>
                                 <tr>
                                     <td colspan="3">
-    dr._________
+    dr.<span t-field="o.doctor" />
   
                                 
                                 </td>

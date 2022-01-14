@@ -133,7 +133,6 @@ class register_walkin(models.Model):
         self.find_payment_guarantor_discount()
         
     def action_next(self):
-
         if not self.queue_trans_id:
             raise Warning('No Queue number defined!')
 

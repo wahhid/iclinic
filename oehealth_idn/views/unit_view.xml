@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record model="ir.ui.view" id="unit_form_view">
+    <!-- <record model="ir.ui.view" id="unit_form_view">
         <field name="name">unit_form_view</field>
         <field name="model">unit.administration</field>
         <field name="arch" type="xml">
@@ -53,7 +53,7 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <!-- Inherit Operting Unit -->
+    Inherit Operting Unit 
     <record model="ir.ui.view" id="view_operating_unit_tree_inherit">
         <field name="name">view_operating_unit_tree_inherit</field>
         <field name="model">operating.unit</field>
@@ -63,16 +63,20 @@
                 <field name="type"/>
             </field>
         </field>
-    </record>
+    </record> -->
 
     <record model="ir.ui.view" id="view_operating_unit_form_inherit">
         <field name="name">view_operating_unit_form_inherit</field>
         <field name="model">operating.unit</field>
         <field name="inherit_id" ref="operating_unit.view_operating_unit_form"/>
         <field name="arch" type="xml">
-            <field name="name" position="after">
+            <!-- <field name="name" position="after">
                 <field name="type"/>
-            </field>
+            </field> -->
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="unit_address"/>
+            </xpath>
         </field>
     </record>
 </odoo>

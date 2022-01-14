@@ -42,7 +42,9 @@
                         </tree>
                         <form>
                             <header>
+                                <!--
                                 <button type="object" name="confirm_order" string="Confirm Order" states="draft" class="oe_highlight"/>
+                                -->
                                 <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
                             </header>
                             <!-- <div class="oe_button_box" name="button_box">

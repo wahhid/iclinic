@@ -17,19 +17,29 @@ table, th, td {
                                     <th style="border: 1px solid black">
                                         <table style="width:100%; text-align:left;">
                                             <tr>
-                                                <td>CM/</td>
+                                                <td>CM/Medical Record</td>
                                                 <td> : </td>
-                                                <td></td>
+                                                <td>
+                                                    <span t-field="o.patient.medical_record" />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Nama</td>
                                                 <td> : </td>
-                                                <td></td>
+                                                <td>
+                                                    <span t-field="o.patient.name" />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Diagnosa</td>
                                                 <td> : </td>
-                                                <td></td>
+                                                <td>
+                                                    <tr t-foreach='o.prescription_id.diagnostic_ids' t-as='line'>
+                                                        <td>
+                                                            <t t-esc="line['name']" />
+                                                        </td>
+                                                    </tr>
+                                                </td>
                                             </tr>
                                         </table>
                                     </th>
@@ -38,7 +48,10 @@ table, th, td {
                                     <td colspan="2" style="border: 1px solid black">
                                         <table style="width:100%">
                                             <tr>
-                                                <td>Kepada TS : dr.______________</td>
+                                                <td>
+                                                    Kepada TS : dr.
+                                                    <span t-field="o.doctor" />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Dengan ini kami konsulkan pasien.</td>
@@ -58,11 +71,10 @@ table, th, td {
                                             <tr>
                                                 <td>Obat dan tindakan yang diberikan : _______________________</td>
                                             </tr>
-                                            <tr>
-                                                <td>________________________________________</td>
-                                            </tr>
-                                            <tr>
-                                                <td>________________________________________</td>
+                                            <tr t-foreach='o.prescription_id.prescription_line' t-as='line'>
+                                                <td>
+                                                    <t t-esc="line['name']" />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>________________________________________</td>
@@ -98,7 +110,7 @@ table, th, td {
                                                 <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;"> Tanggal : ____________ Jam : ___________</td>
+                                                <td style="text-align:center;"> <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -114,17 +126,27 @@ table, th, td {
                                             <tr>
                                                 <td>CM/</td>
                                                 <td> : </td>
-                                                <td></td>
+                                                <td>
+                                                    <p t-field="o.patient.medical_record" />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Nama</td>
                                                 <td> : </td>
-                                                <td></td>
+                                                <td>
+                                                    <span t-field="o.patient.name" />
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Diagnosa</td>
                                                 <td> : </td>
-                                                <td></td>
+                                                <td>
+                                                    <tr t-foreach='o.prescription_id.diagnostic_ids' t-as='line'>
+                                                        <td>
+                                                            <t t-esc="line['name']" />
+                                                        </td>
+                                                    </tr>
+                                                </td>
                                             </tr>
                                         </table>
                                     </th>
@@ -187,7 +209,7 @@ table, th, td {
                                                 <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;"> Tanggal : ____________ Jam : ___________</td>
+                                                <td style="text-align:center;"> <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
                                             </tr>
                                         </table>
                                     </td>

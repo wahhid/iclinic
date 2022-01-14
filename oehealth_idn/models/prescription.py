@@ -253,7 +253,6 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
             next_type_id = self.queue_trans_id.type_id.next_type_id
             self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})
 
-
     def get_user_unit_administration(self):
         for row in self:
             _logger.info(self.env.user.default_unit_administration_id.id)
@@ -485,6 +484,17 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                 else:
                     raise UserError(_('Configuration Error! \n Could not Find Registration to Create the Transactions !'))
             else:
+                _logger.info("Create Public")
+
+                if acc.payment == 'Insurance':
+                    guarantor = acc.insurance.ins_type.partner_id.id
+                elif acc.payment == 'Corporate':
+                    guarantor = acc.company.id
+                elif acc.payment == 'Employee':
+                    guarantor = acc.employee_id.current_insurance.ins_type.partner_id.id
+                else:
+                    guarantor = acc.patient.partner_id.id
+                
                 val_obj = {
                     'reg_id': False, 
                     'arrival_id': False, 
@@ -502,6 +512,21 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                     inv_id = inv_ids.id
                     if acc.prescription_lines:
                         for ps in acc.prescription_lines:
+                            discount = 0.0
+                            product_id = ps.name
+                            if acc.payment_guarantor_discount_id:
+                                if product_id.item_type == 'General Item':
+                                    discount = acc.payment_guarantor_discount_id.general_item
+                                elif product_id.item_type == 'Medical Item':        
+                                    discount = acc.payment_guarantor_discount_id.medical_item
+                                elif product_id.item_type == 'Food Item':        
+                                    discount = acc.payment_guarantor_discount_id.food_item
+                                elif product_id.item_type == 'Medicine':        
+                                    discount = acc.payment_guarantor_discount_id.medicine
+                                elif product_id.item_type == 'Doctor':        
+                                    discount = acc.payment_guarantor_discount_id.doctor
+                                elif product_id.item_type == 'Nurse':        
+                                    discount = acc.payment_guarantor_discount_id.nurse
                             vals = {
                                 'order_id': inv_id, 
                                 'product_id': ps.name.id, 
@@ -509,8 +534,12 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                                 'prescribe_qty': ps.qty, 
                                 'product_uom_qty': ps.actual_qty, 
                                 'product_uom': ps.name.uom_id.id, 
+                                'discount_type': 'percent',
+                                'discount': discount,
+                                #product_uom': ps.name.uom_id.id, 
                                 'price_unit': ps.price_unit
                             }
+                            _logger.info(vals)
                             line_obj.create(vals)
 
                         if acc.concoction_ids:
@@ -546,13 +575,13 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                                     }
                                     line_obj.create(vals)
 
-                self.write(
-                    {
-                        'state': 'Invoiced',
-                        'sale_order_id': inv_id
-                    }
-                )
-                inv_ids.action_confirm()
+                    self.write(
+                        {
+                            'state': 'Invoiced',
+                            'sale_order_id': inv_id
+                        }
+                    )
+                    inv_ids.action_confirm()
 
 class oeh_medical_health_center_pharmacy_prescription_line(models.Model):
     _inherit = 'oeh.medical.health.center.pharmacy.prescription.line'
