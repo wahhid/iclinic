@@ -192,7 +192,7 @@ class OehMedicalLabTest(models.Model):
                 raise Warning(_('Payment Guarantor Discount not found'))
             _logger.info(payment_guarantor_discount_id.description)
             res.payment_guarantor_discount_id = payment_guarantor_discount_id.id
-        else:
+        elif res.payment == 'Employee':
             #Employee
             domain = [
                 ('payment','=', 'Employee')
@@ -201,5 +201,7 @@ class OehMedicalLabTest(models.Model):
             if not payment_quarantor_discount_id:
                 raise Warning(_('Payment Guarantor Discount not found'))
             res.payment_quarantor_discount_id = payment_quarantor_discount_id.id
+        else:
+            res.payment_quarantor_discount_id = False
 
         return res
