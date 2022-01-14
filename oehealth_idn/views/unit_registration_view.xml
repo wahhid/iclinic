@@ -99,6 +99,7 @@
                             </div>
                             <field name="payment_guarantor_discount_id" readonly="0"/>
                             <field name="remarks" placeholder="Remarks"/>
+                            <field name="perstujuan_tindakan"/>
                         </group>
                         <group attrs="{'invisible': [('type', '!=', 'Out-Patient')]}">
                             <field name="schedule" invisible="1"/>

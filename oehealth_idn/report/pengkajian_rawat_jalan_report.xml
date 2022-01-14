@@ -8,7 +8,7 @@
                         <style>
 
 th, td {
-  padding: 5px;
+  padding: 7px;
 }
 </style>
                         <div class="oe_structure">
@@ -82,34 +82,34 @@ th, td {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="border: 1px solid #000; ">
-                                            NPP (Jika ada) :
-                                            <br />
-                                            1. Peg dan kel pasca tambang
-                                            <br />
-                                            2. Peg dan kel UPBE Pongkor
-                                            <br />
-                                            3. Peg dan kel UBPN Pomala
-                                            <br />
-                                        </td>
-                                        <td style="border: 1px solid #000; ">
-                                            No. BPJS (Jika ada) :
-                                            <br />
-                                            4. Pens dan kel.Antam
-                                            <br />
-                                            5. Pihak III
-                                            <br />
-                                            6. Lain-lain/BPJS/ASURANSI
-                                            <br />
+                                        <td colspan="2">
+                                            <t t-if="'Personal' == o.walkin.payment">
+                                                    <p>PIHAK III</p>
+                                                    
+                                            </t>
+                                            <t t-if="'Corporate' == o.walkin.payment">
+                                                    <p t-field="o.company.name" />
+                                                    <p t-field="o.insurance.ins_no" />
+                                            </t>
+                                            <t t-if="'Insurance' == o.walkin.payment">
+                                                    <p t-field="o.insurance.ins_type.name" />
+                                                    <p t-field="o.insurance.ins_no" />
+                                            </t>
+                                            <t t-if="'Employe' == o.walkin.payment">
+                                                    <p t-field="o.patient.detail_payment" />
+                                                    <p t-field="o.employee_id.employee_number" />
+                                            </t>
+
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="border: 1px solid #000; vertical-align:top">
+                                        <td style="border: 1px solid #000; vertical-align:top" colspan="2">
                                             Riwayat Penyakit
-                                            <br />
+                                            <br /><br />
                                             a. Riwayat Penyakit Pribadi
                                             <br /><br/>
-                                            <table style="border: 1px solid #000;">
+                                            <center>
+                                            <table style="border: 1px solid #000;" width="70%">
                                                 <tbody>
                                                     <tr>
                                                         <td style="border: 0px solid #000; ">DM.Stroke</td>
@@ -161,17 +161,18 @@ th, td {
                                                         </t></td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="border: 0px solid #000; ">Lain-Lain : </td>
-                                                        <td style="border: 1px solid #000; "><span t-field="o.lain_rpp" /></td>
+                                                        <td style="border: 0px solid #000; " colspan="2">Lain-Lain : <span t-field="o.lain_rpp" /></td>
+                                                        
                                                     </tr>
                                                 </tbody>
                                             </table>
-
+                                            </center>
                                             <br />
                                             b. Riwayat Penyakit Keluarga
                                             <br />
                                             <br />
-                                            <table style="border: 1px solid #000;">
+                                            <center>
+                                            <table style="border: 1px solid #000;" width="70%">
                                                 <tbody>
                                                     <tr>
                                                         <td style="border: 0px solid #000; ">DM</td>
@@ -210,72 +211,76 @@ th, td {
                                                         </t></td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="border: 0px solid #000; ">Lain-lain : </td>
-                                                        <td style="border: 1px solid #000; "><span t-field="o.lain_rpk" /></td>
+                                                        <td style="border: 0px solid #000; " colspan="2">Lain-lain : <span t-field="o.lain_rpk" /></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <br />
-                                            c. Riwayat Alergi Obat dan Makanan
-                                            <br />
-                                            <br />
+                                            </center>
+                                            <br /><br />
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            c. Riwayat Alergi Obat dan Makanan : 
                                             <t t-if="true == o.alergi_obat_makanan">
-                                                            Ya, Sebutkan :  <span t-field="o.lain_alergi_obat_makanan" />
+                                                            <p>Ya, Sebutkan :  <span t-field="o.lain_alergi_obat_makanan" /></p>
                                                         </t>
                                             <t t-if="false == o.alergi_obat_makanan">
                                                             Tidak
                                                         </t>
+                                                        <br /><br />
                                             Kajian Biopsikososial
-                                            <br />
+                                            <br /><br />
                                             a. kebiasaan
                                             <br />
                                             <br />
-                                            <tr>
-                                                <td style="border: 0px solid #000; ">Meroko / Minum Alkohol</td>
-                                                <td style="border: 1px solid #000; "><t t-if="true == o.alkohol">
-                                                    ✔ 
-                                                </t></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="border: 0px solid #000; ">Lain-lain : </td>
-                                                <td style="border: 1px solid #000; "><span t-field="o.lain_kebiasaan" /></td>
-                                            </tr>
+                                            
+                                                Meroko / Minum Alkohol : 
+                                                <t t-if="true == o.alkohol">
+                                                    [ ✔ ] 
+                                                </t>
+                                                <br /><br />
+                                                Lain-lain :
+                                                <span t-field="o.lain_kebiasaan" />
+                                            
                                             <br /><br />
                                             b. Pekerjaan
                                             <br />
                                             <br />
                                             Apakah pekerjaan pasien berhubungan dengan bahan berbahaya?(Misal,Kimia,Gas dll)
                                             <t t-if="true == o.bb_pekerjaan">
-                                                            Ya, Sebutkan :  <span t-field="o.sebutkan_bb" />
+                                                            <p>Ya, Sebutkan :  <span t-field="o.sebutkan_bb" /></p>
                                                         </t>
                                             <t t-if="false == o.bb_pekerjaan">
                                                             Tidak
                                                         </t>             
                                             
-<br /><br />
+                                            <br /><br />
+                                        </td>
+                                        <td>
                                             c. Psikologis
                                             <br />
                                             <br />
                                             Tingkat Pendidikan : <span t-field="o.tingkat_pendidikan" />
-                                            <br />
+                                            <br /><br />
                                             Disorientasi : <t t-if="true == o.disorientasi">
-                                                            Ya, Sebutkan :  <span t-field="o.sebutkan_disorientasi" />
+                                                            Ya, <p> Sebutkan :  <span t-field="o.sebutkan_disorientasi" /></p>
                                                         </t>
                                             <t t-if="false == o.bb_pekerjaan">
                                                             Tidak
                                                         </t>     
-                                            <br />
+                                            <br /><br />
                                             Emosi : <span t-field="o.emosi" />
-                                            <br />
+                                            <br /><br />
                                             d. Sosial
                                             <br />
                                             <br />
-                                            Tempat tinggal
-                                            <br />
+                                             - Tempat tinggal : 
                                             <span t-field="o.tinggal" />
                                             <br />
-                                            Bantuan yang di butuhkan di rumah
-                                            <br />
+                                             - Bantuan yang di butuhkan di rumah
+                                            <br /><br />
                                             Makan [<t t-if="true == o.bantuan_makan">
                                                             ✔ 
                                                         </t>] / Mandir [<t t-if="true == o.bantuan_mandi">
@@ -287,73 +292,83 @@ th, td {
                                                         </t>] / Berjalan [<t t-if="true == o.bantuan_berjalan">
                                                             ✔ 
                                                         </t>]
-                                            <br />
+                                            <br /><br />
                                             Status Gizi (Malnutrition Screening Tool MST)
-                                            <br />
+                                            <br /><br />
                                             BB : <span t-field="o.weight" />  kg
-                                            <br />
+                                            <br /><br />
                                             TB : <span t-field="o.height" />  cm
-                                            <br />
+                                            <br /><br />
                                             IMT : <span t-field="o.imt" />  (BB/TB2/M)
-                                            <br />
+                                            <br /><br />
 
                                         </td>
-                                        <td style="border: 1px solid #000; ">
-                                            <table style="border: 1px solid #000;">
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #000; vertical-align:top" colspan="2">
+                                            <center>
+                                            <table style="border: 1px solid #000;" width="70%">
                                                 <tbody>
+                                                    <t t-set="i" t-value="0" />
+                                                    <t t-set="l" t-value="0" />
+
+                                                    <t t-if="'bb1' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="0" />
+                                                    </t>
+                                                    <t t-if="'bb2' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="2" />
+                                                    </t>
+                                                    <t t-if="'bb3' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="1" />
+                                                    </t>
+                                                    <t t-if="'bb4' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="2" />
+                                                    </t>
+                                                    <t t-if="'bb5' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="3" />
+                                                    </t>
+                                                    <t t-if="'bb6' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="4" />
+                                                    </t>
+
+                                                    <t t-if="'no' == o.asupan_makan">
+                                                    <t t-set="l" t-value="0" />
+                                                    </t>
+                                                    <t t-if="'yes' == o.asupan_makan">
+                                                    <t t-set="l" t-value="1" />
+                                                    </t>
                                                     
-                                                    
+
+                                                    <t t-set="t" t-value="i+l" />
+
                                                     <tr>
                                                         <td style="border: 0px solid #000; " colspan="2">
-1. Apakah pasien mengalami penurunan berat badan yang tidak direncanakan/tidak di inginkan dalam 6 bulan terakhir?
-</td>
+                                                            1. Apakah pasien mengalami penurunan berat badan yang tidak direncanakan/tidak di inginkan dalam 6 bulan terakhir?
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="border: 0px solid #000; ">Tidak</td>
-                                                        <td style="border: 0px solid #000; "> 0 </td>
+                                                        <td style="border: 0px solid #000; "><span t-field="o.penurunan_bb" /></td>
+                                                        <td style="border: 0px solid #000; "> <span t-esc="i" /> </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Tidak yakin ada tanda : baju menjadi lebih longgar</td>
-                                                        <td style="border: 0px solid #000; "> 2 </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2">Ya, ada penurunan BB sebanyak</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; "> 1-5 kg</td>
-                                                        <td style="border: 0px solid #000; "> 1 </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; "> 6-10 kg</td>
-                                                        <td style="border: 0px solid #000; "> 2 </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; "> 11-15 kg</td>
-                                                        <td style="border: 0px solid #000; "> 3 </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; "> > 15 kg</td>
-                                                        <td style="border: 0px solid #000; "> 4 </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2">Tidak tahu berapa Kg penurunannya</td>
-                                                    </tr>
+                                                    
                                                     <tr>
 
                                                         <td style="border: 0px solid #000; " colspan="2">
-2. Apakah asupan makanan pasien berkurang karena penurunan nafsu makan/kesulitan menerima makan?
-</td>
+                                                        2. Apakah asupan makanan pasien berkurang karena penurunan nafsu makan/kesulitan menerima makan?
+                                                        </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="border: 0px solid #000; ">Tidak</td>
-                                                        <td style="border: 0px solid #000; "> 0 </td>
+                                                        <td style="border: 0px solid #000; "><span t-field="o.asupan_makan" /></td>
+                                                        <td style="border: 0px solid #000; "> <span t-esc="l" /> </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="border: 0px solid #000; ">Ya</td>
-                                                        <td style="border: 0px solid #000; "> 1 </td>
+                                                        <td style="border: 0px solid #000; ">Total : <span t-esc="t" /></td>
+                                                        <td style="border: 0px solid #000; ">  </td>
                                                     </tr>
+                                                   
                                                 </tbody>
                                             </table>
+                                            </center>
                                         </td>
                                     </tr>
 
@@ -364,144 +379,193 @@ th, td {
 
                             <table class="gt_table" width="100%" style="border: 1px solid #000; ">
                                 <tr>
-                                    <th>NO</th>
-                                    <th>PENGKAJIAN</th>
-                                    <th colspan="2">SKALA</th>
-                                    <th>NILAI</th>
-                                    <th>KET</th>
+                                    <th style="border: 0px solid #000; ">NO</th>
+                                    <th style="border: 0px solid #000; ">PENGKAJIAN</th>
+                                    <th style="border: 0px solid #000; " colspan="2">SKALA</th>
+                                    <th style="border: 0px solid #000; ">NILAI</th>
+                                    <th style="border: 0px solid #000; ">KET</th>
                                 </tr>
                                 <tr>
-                                    <td rowspan="2">1. </td>
-                                    <td rowspan="2">
+                                    <td style="border: 0px solid #000; " rowspan="2">1. </td>
+                                    <td style="border: 0px solid #000; " rowspan="2">
                                         Rawayat jatuh :
                                         <br />
                                         Apakah lansia pernah jatuh dalam 3 bulan terakhir?
                                     </td>
-                                    <td>Tidak</td>
-                                    <td> 0 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; " >Tidak</td>
+                                    <td style="border: 0px solid #000; " > 0 </td>
+                                    <td style="border: 0px solid #000; " rowspan="2">
+                                        <t t-set="rj" t-value="0" />
+                                        <t t-if="false == o.riwayat_jatuh">
+                                        <t t-set="rj" t-value="0" /><span t-esc="rj" />
+                                        </t>
+                                        <t t-if="true == o.riwayat_jatuh">
+                                        <t t-set="rj" t-value="25" /><span t-esc="rj" />
+                                        </t>
+                                    </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td> Ya </td>
-                                    <td> 25 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "> Ya </td>
+                                    <td style="border: 0px solid #000; "> 25 </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td rowspan="2">2. </td>
-                                    <td rowspan="2">
+                                    <td style="border: 0px solid #000; " rowspan="2">2. </td>
+                                    <td style="border: 0px solid #000; " rowspan="2">
                                         Diagnosa sekunder :
                                         <br />
                                         Apakah lansia lebih dari 1 penyakit?
                                     </td>
-                                    <td>Tidak</td>
-                                    <td> 0 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; " >Tidak</td>
+                                    <td style="border: 0px solid #000; " > 0 </td>
+                                    <td style="border: 0px solid #000; " rowspan="2">
+                                        <t t-set="ds" t-value="0" />
+                                        <t t-if="false == o.diagnosa_sekunder">
+                                        <t t-set="ds" t-value="0" /><span t-esc="ds" />
+                                        </t>
+                                        <t t-if="true == o.diagnosa_sekunder">
+                                        <t t-set="ds" t-value="15" /><span t-esc="ds" />
+                                        </t>
+                                    </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td> Ya </td>
-                                    <td> 15 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "> Ya </td>
+                                    <td style="border: 0px solid #000; "> 15 </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td rowspan="3">3. </td>
-                                    <td>
+                                    <td style="border: 0px solid #000; " rowspan="3">3. </td>
+                                    <td style="border: 0px solid #000; ">
                                         Alat bantu jalan :
                                         <br />
                                         - Bet Resi/dibantu perawat
                                     </td>
-                                    <td></td>
-                                    <td> 0 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "></td>
+                                    <td style="border: 0px solid #000; "> 0 </td>
+                                    <td style="border: 0px solid #000; " rowspan="3">
+                                        <t t-set="abj" t-value="0" />
+                                        <t t-if="'abj1' == o.alat_bantu_jalan">
+                                        <t t-set="abj" t-value="0" /><span t-esc="abj" />
+                                        </t>
+                                        <t t-if="'abj2' == o.alat_bantu_jalan">
+                                        <t t-set="abj" t-value="15" /><span t-esc="abj" />
+                                        </t>
+                                        <t t-if="'abj3' == o.alat_bantu_jalan">
+                                        <t t-set="abj" t-value="30" /><span t-esc="abj" />
+                                        </t>
+                                    </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td> - Krul/tongakat/walker </td>
-                                    <td></td>
-                                    <td> 15 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "> - Krul/tongakat/walker </td>
+                                    <td style="border: 0px solid #000; "></td>
+                                    <td style="border: 0px solid #000; "> 15 </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td> - Berpegangan pada benda-benda disekitar (kursi,lemari,meja)</td>
-                                    <td></td>
-                                    <td> 30 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "> - Berpegangan pada benda-benda disekitar (kursi,lemari,meja)</td>
+                                    <td style="border: 0px solid #000; "></td>
+                                    <td style="border: 0px solid #000; "> 30 </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td rowspan="2">4. </td>
-                                    <td rowspan="2">
+                                    <td style="border: 0px solid #000; " rowspan="2">4. </td>
+                                    <td style="border: 0px solid #000; " rowspan="2">
                                         Terapi intravena :
                                         <br />
                                         Apakah saat ini lansia terpasang infus?
                                     </td>
-                                    <td>Tidak</td>
-                                    <td> 0 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; ">Tidak</td>
+                                    <td style="border: 0px solid #000; "> 0 </td>
+                                    <td style="border: 0px solid #000; " rowspan="2">
+                                        <t t-set="ti" t-value="0" />
+                                        <t t-if="false == o.terapi_intravena">
+                                        <t t-set="ti" t-value="0" /><span t-esc="ti" />
+                                        </t>
+                                        <t t-if="true == o.terapi_intravena">
+                                        <t t-set="ti" t-value="20" /><span t-esc="ti" />
+                                        </t>
+                                    </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td> Ya </td>
-                                    <td> 20 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "> Ya </td>
+                                    <td style="border: 0px solid #000; "> 20 </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td rowspan="3">5. </td>
-                                    <td>
+                                    <td style="border: 0px solid #000; " rowspan="3">5. </td>
+                                    <td style="border: 0px solid #000; ">
                                         Gaya berjalan / cara berpindah :
                                         <br />
                                         - Normal/Bed rest/immobile(tidak dapat bergerak sendiri)
                                     </td>
-                                    <td></td>
-                                    <td> 0 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "></td>
+                                    <td style="border: 0px solid #000; "> 0 </td>
+                                    <td style="border: 0px solid #000; " rowspan="3">
+                                        <t t-set="cb" t-value="0" />
+                                        <t t-if="'cb1' == o.cara_berjalan">
+                                        <t t-set="cb" t-value="0" /><span t-esc="cb" />
+                                        </t>
+                                        <t t-if="'cb2' == o.cara_berjalan">
+                                        <t t-set="cb" t-value="10" /><span t-esc="cb" />
+                                        </t>
+                                        <t t-if="'cb3' == o.cara_berjalan">
+                                        <t t-set="cb" t-value="20" /><span t-esc="cb" />
+                                        </t>
+                                    </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td> - Lemah tidak bertenaga </td>
-                                    <td></td>
-                                    <td> 10 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "> - Lemah tidak bertenaga </td>
+                                    <td style="border: 0px solid #000; "></td>
+                                    <td style="border: 0px solid #000; "> 10 </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                                 <tr>
-                                    <td> - Gangguan/tidak normal(pincang/diseret)</td>
-                                    <td></td>
-                                    <td> 20 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "> - Gangguan/tidak normal(pincang/diseret)</td>
+                                    <td style="border: 0px solid #000; "></td>
+                                    <td style="border: 0px solid #000; "> 20 </td>
+                                    <td style="border: 0px solid #000; "> </td>
                                 </tr>
 
                                 <tr>
-                                    <td rowspan="2">6. </td>
-                                    <td>
+                                    <td style="border: 0px solid #000; " rowspan="2">6. </td>
+                                    <td style="border: 0px solid #000; ">
                                         status mental :
                                         <br />
                                         - Lansia menyadari kondisi dirinya
                                     </td>
-                                    <td></td>
-                                    <td> 0 </td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "></td>
+                                    <td style="border: 0px solid #000; "> 0 </td>
+                                    <td style="border: 0px solid #000; " rowspan="2">
+                                        <t t-set="sm" t-value="0" />
+                                        <t t-if="false == o.status_mental">
+                                        <t t-set="sm" t-value="0" /><span t-esc="sm" />
+                                        </t>
+                                        <t t-if="true == o.status_mental">
+                                        <t t-set="sm" t-value="15" /><span t-esc="sm" />
+                                        </t>
+                                    </td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td> - Lansian mengalami keterbatasan daya ingat </td>
-                                    <td></td>
-                                    <td> 15 </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td style="border: 0px solid #000; "> - Lansian mengalami keterbatasan daya ingat </td>
+                                    <td style="border: 0px solid #000; "></td>
+                                    <td style="border: 0px solid #000; "> 15 </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
 
                                 <tr>
-                                    <td colspan="3" style="text-align: right;">Total Nila</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="3" style="text-align: right; border: 0px solid #000;">Total Nila</td>
+                                    <td style="border: 0px solid #000; "></td>
+                                    <td style="border: 0px solid #000; ">
+                                        <t t-set="t" t-value="rj+ds+abj+ti+cb+sm" />
+                                        <span t-esc="t"/>
+                                    </td>
+                                    <td style="border: 0px solid #000; "></td>
                                 </tr>
                             </table>
                             <br />
@@ -536,21 +600,27 @@ th, td {
                                     <th>Nila MFS</th>
                                     <th>Tindakan</th>
                                 </tr>
-                                <tr>
-                                    <td> Tidak beresiko </td>
-                                    <td> 0 - 24 </td>
-                                    <td> Perawatan dasar</td>
-                                </tr>
-                                <tr>
-                                    <td> Resiko rendah </td>
-                                    <td> 25 - 50 </td>
-                                    <td> Pelaksanaan intervensi pencegahan jatuh standar</td>
-                                </tr>
-                                <tr>
-                                    <td> Resiko tinggi </td>
-                                    <td> >= 51</td>
-                                    <td> Pelaksanaan intervensi jatuh resiko tinggi</td>
-                                </tr>
+                                <t t-if="t >= 0 and t &lt;= 24">
+                                    <tr>
+                                        <td> Tidak beresiko </td>
+                                        <td> 0 - 24 </td>
+                                        <td> Perawatan dasar</td>
+                                    </tr>
+                                </t>
+                                <t t-if="t >= 25 and t &lt;= 50">
+                                    <tr>
+                                        <td> Resiko rendah </td>
+                                        <td> 25 - 50 </td>
+                                        <td> Pelaksanaan intervensi pencegahan jatuh standar</td>
+                                    </tr>
+                                </t>
+                                <t t-if="t >= 51">
+                                    <tr>
+                                        <td> Resiko tinggi </td>
+                                        <td> >= 51</td>
+                                        <td> Pelaksanaan intervensi jatuh resiko tinggi</td>
+                                    </tr>
+                                </t>
                             </table>
                             <br />
                             <br />

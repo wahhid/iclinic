@@ -73,6 +73,10 @@
             <field name="name" position="after">
                 <field name="type"/>
             </field>
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="unit_address"/>
+            </xpath>
         </field>
     </record>
 </odoo>

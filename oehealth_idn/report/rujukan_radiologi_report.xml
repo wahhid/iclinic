@@ -38,7 +38,13 @@
                                         </p>
                                     </div>
                                     <div>
-                                        <strong>Mohon dilakukan pemeriksaan : </strong>
+                                        <strong>Mohon dilakukan pemeriksaan : 
+                                        <t t-foreach="o.evaluation_id" t-as="l">
+                                             <t t-if="true == l.is_doctor">
+                                                <span t-field="l.notes_complaint" />
+                                            </t>
+                                        </t>
+                                        </strong>
                                         
                                     </div>
                                     <div>

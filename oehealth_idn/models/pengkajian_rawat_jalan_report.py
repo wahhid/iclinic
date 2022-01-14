@@ -83,5 +83,34 @@ class medical_evaluation_patient(models.Model):
     #Is the patient's food intake reduced due to decreased appetite/difficulty accepting food?
     asupan_makan = fields.Selection([('yes', 'Yes'),('no', 'No')], string='Asupan Makan Pasien', index=True)
 
+    riwayat_jatuh = fields.Boolean(string='Riwayat Jatuh')
+    diagnosa_sekunder = fields.Boolean(string='Diagnosa Sekunder')
+    alat_bantu_jalan = fields.Selection([('abj1', 'Bed Resi/Dibantu Perawat'),('abj2', 'Kruk/Tongkat/Walker'),('abj3', 'Berpegangan pada kursi/lemari/meja')], string='Alat Bantu Jalan', index=True)
+    cara_berjalan = fields.Selection([('cb1', 'Bed Resi/Dibantu Perawat'),('cb2', 'Kruk/Tongkat/Walker'),('cb3', 'Berpegangan pada kursi/lemari/meja')], string='Cara Berjalan', index=True)
+    terapi_intravena = fields.Boolean(string='Terapi Intravena')
+    status_mental = fields.Boolean(string='Status Mental')
+
+    tujuan = fields.Text(string='Tujuan ')
+    resiko = fields.Text(string='Resiko ')
+    komplikasi = fields.Text(string='komplikasi ')
+    alternatif = fields.Text(string='Alternatif ')
+
+    tekanan_darah = fields.Float(string='Tekanan Darah (mmHg) ')
+    nadi = fields.Float(string='Nadi (mmHg) ')
+    total_gcs = fields.Float(string='Total GCS')
+    gcs_e = fields.Float(string='GCS E')
+    gcs_v = fields.Float(string='GCS V')
+    gcs_m = fields.Float(string='GCS M')
+    gds = fields.Float(string='GDS (mg/dl)')
+
+    organ_atas = fields.Text(string='Kepala dan Leher')
+    organ_jantung = fields.Text(string='Jantung')
+    organ_perut = fields.Text(string='Perut')
+    organ_anggota_gerak = fields.Text(string='Anggota Gerak')
+    organ_genetalia = fields.Text(string='Genetalia')
+
+
+
+
 
 

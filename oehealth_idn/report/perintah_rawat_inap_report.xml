@@ -23,12 +23,12 @@ th, td {
                         <tr>
                           <td>Nama</td>
                           <td>:</td>
-                          <td>_________________</td>
+                          <td><span t-field="o.doctor.name" /></td>
                         </tr>
                         <tr>
                           <td>Jabatan</td>
                           <td>:</td>
-                          <td>_________________</td>
+                          <td><span t-field="o.doctor.physician_position" /></td>
                         </tr>
                         <tr>
 
@@ -36,7 +36,7 @@ th, td {
 
                           <td>:</td>
 
-                          <td>_________________</td>
+                          <td><span t-field="o.unit.operating_id.unit_address" /></td>
 
                         </tr>
 
@@ -46,7 +46,7 @@ th, td {
 
                           <td>:</td>
 
-                          <td>_________________</td>
+                          <td><span t-field="o.unit.operating_id.partner_id.name" /></td>
 
                         </tr>
 
@@ -92,7 +92,16 @@ th, td {
 
                           <td>:</td>
 
-                          <td>_________________</td>
+                          <td>
+                            <t t-if="'Insurance' == o.payment">
+                                    <p t-field="o.insurance.ins_type.name" /> -
+                                    <span t-field="o.insurance.ins_no" />
+                            </t>
+                            <t t-if="'Employe' == o.payment">
+                                    <p t-field="o.patient.detail_payment" /> - 
+                                    <span t-field="o.employee_id.employee_number" />
+                            </t>
+                          </td>
 
                         </tr>
 
@@ -102,7 +111,7 @@ th, td {
 
                           <td>:</td>
 
-                          <td>_________________</td>
+                          <td><span t-field="o.date" /></td>
 
                         </tr>
 
@@ -114,7 +123,7 @@ th, td {
 
                         <tr>
 
-                          <td style="text-align: right;" colspan="3">________,________________</td>
+                          <td style="text-align: right;" colspan="3"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
 
                         </tr>
 
@@ -186,33 +195,42 @@ th, td {
                         <tr>
                           <td>Nama</td>
                           <td>:</td>
-                          <td>_________________.</td>
+                          <td><span t-field="o.patient.name" /> / </td>
                         </tr>
                         <tr>
                           <td>Tanggal Lahir</td>
                           <td>:</td>
-                          <td>_________________</td>
+                          <td><span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /> / </td>
                         </tr>
                         <tr>
                           <td>Umur</td>
                           <td>:</td>
-                          <td>_________________</td>
+                          <td><span t-field="o.patient.age" /> / </td>
                         </tr>
                         <tr>
                           <td>No. Kartu Asuransi</td>
                           <td>:</td>
-                          <td>_________________</td>
+                          <td>
+                            <t t-if="'Insurance' == o.payment">
+                                    <p t-field="o.insurance.ins_type.name" /> -
+                                    <span t-field="o.insurance.ins_no" />
+                            </t>
+                            <t t-if="'Employe' == o.payment">
+                                    <p t-field="o.patient.detail_payment" /> - 
+                                    <span t-field="o.employee_id.employee_number" />
+                            </t>
+                          </td>
                         </tr>
                         <tr>
                           <td>Alamat</td>
                           <td>:</td>
-                          <td>_________________</td>
+                          <td><span t-field="o.patient.street" /> /</td>
                         </tr>
                         <tr>
-                          <td colspan="3">Dengan ini menyatakan bahwa benar saya telah menerima pelayanan _________________.... pada tanggal _________________...... demikian surat ini dibuat dengan sebenarnya dan digunakan sebagaimana mestinya.</td>
+                          <td colspan="3">Dengan ini menyatakan bahwa benar saya telah menerima pelayanan RAWAT INAP di <span t-field="o.unit.operating_id.name" /> pada tanggal <span t-field="o.date" /> demikian surat ini dibuat dengan sebenarnya dan digunakan sebagaimana mestinya.</td>
                         </tr>
                         <tr>
-                          <td style="text-align: right;" colspan="3">________,________________</td>
+                          <td style="text-align: right;" colspan="3"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
                         </tr>
                         <tr>
                           <td style="text-align: right;" colspan="3">Yang menyatakan,</td>

@@ -21,7 +21,7 @@ th, td {
                                 <tr class="border">
                                     <td>No.RM</td>
                                     <td> : </td>
-                                    <td><span t-field="o.name" /></td>
+                                    <td><span t-field="o.patient.medical_record" /></td>
                                 </tr>
                                 <tr class="border">
                                     <td>Nama Pasien</td>
@@ -36,7 +36,7 @@ th, td {
                                 <tr class="border">
                                     <td>DPJP</td>
                                     <td> : </td>
-                                    <td></td>
+                                    <td><span t-field="o.doctor" /></td>
                                 </tr>
                                 <tr class="border">
                                     <td>Ruang</td>

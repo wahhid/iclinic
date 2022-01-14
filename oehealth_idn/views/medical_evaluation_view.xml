@@ -53,12 +53,46 @@
                     <field name="penurunan_bb"/>
                     <field name="asupan_makan"/>
                 </group>
+                <group >
+                    <field name="riwayat_jatuh"/>
+                    <field name="diagnosa_sekunder"/>
+                    <field name="alat_bantu_jalan"/>
+                    <field name="terapi_intravena"/>
+                    <field name="cara_berjalan"/>
+                    <field name="status_mental"/>
+                </group>
+
+            </xpath>
+
+            <xpath expr="//field[@name='respiratory_rate']" position="after">
+                <field name="tekanan_darah"/>
+                <field name="nadi"/>
+                <field name="gcs_e"/>
+                <field name="gcs_v"/>
+                <field name="gcs_m"/>
+                <field name="total_gcs"/>
+                <field name="gds"/>
+            </xpath>
+
+            <xpath expr="//notebook/page[1]/group[1]" position="after">
+                <group string="Multi Organ">
+                    <field name="organ_atas"/>
+                    <field name="organ_jantung"/>
+                    <field name="organ_perut"/>
+                    <field name="organ_anggota_gerak"/>
+                    <field name="organ_genetalia"/>
+                </group>
             </xpath>
 
             <xpath expr="//field[@name='height']" position="after">
                 <field name="imt"/>
             </xpath>
 
+            <xpath expr="//field[@name='notes']" position="after">
+                <field name="resiko"/>
+                <field name="alternatif"/>
+            </xpath>
+        
             <xpath expr="//notebook/page[2]/group[1]" position="before">
                 <group string="Subjective">
                     <field name="subjective"/>

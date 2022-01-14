@@ -15,12 +15,9 @@ th, td {
                             <h2 style="text-align:center;">FORMULIR RUJUKAN PASIEN</h2>
                             <p style="text-align:right;">
                                 Kepada Yth, TS
-                                <br />
-                                __________________
-                                <br />
-                                __________________
-                                <br />
-                                <br />
+                                <br /><br />
+                                 <span t-field="o.patient.name" /> / 
+                                <br /><br />
                                 Di Tempat
                             </p>
 
@@ -48,7 +45,7 @@ th, td {
                                             <tr>
                                                 <td>Penanggung Biaya</td>
                                                 <td> : </td>
-                                                <td>____________________________</td>
+                                                <td><span t-field="o.patient.name" /> / </td>
                                             </tr>
                                             <tr>
                                                 <td>Diagnosa Medis</td>
@@ -68,7 +65,7 @@ th, td {
                                                 <td>Tekanan Darah</td>
                                                 <td> : </td>
                                                 <td>
-                                                    ______________mmHg
+                                                    <span t-field="o.evaluation_id.tekanan_darah" /> mmHg
                                                 </td>
                                             </tr>
                                             <tr>
@@ -82,7 +79,7 @@ th, td {
                                             <tr>
                                                 <td>Nadi</td>
                                                 <td> : </td>
-                                                <td>_____________x/m (Regular/Ireguler)</td>
+                                                <td><span t-field="o.evaluation_id.nadi" /> x/m (Regular/Ireguler)</td>
                                             </tr>
                                             <tr>
                                                 <td>Penapasan</td>
@@ -103,30 +100,23 @@ th, td {
                                             <tr>
                                                 <td>GCS</td>
                                                 <td> : </td>
-                                                <td>E_______V_________M_________</td>
+                                                <td>E <span t-field="o.evaluation_id.gcs_e" /> V <span t-field="o.evaluation_id.gcs_v" /> M <span t-field="o.evaluation_id.gcs_m"/> </td>
                                             </tr>
                                             <tr>
                                                 <td>Total GCS</td>
                                                 <td> : </td>
-                                                <td>____________________________</td>
+                                                <td><span t-field="o.evaluation_id.total_gcs" /></td>
                                             </tr>
                                             <tr>
                                                 <td>GDS</td>
                                                 <td> : </td>
-                                                <td>_________________mg/dl</td>
+                                                <td><span t-field="o.evaluation_id.gds" /> mg/dl</td>
                                             </tr>
                                             <tr>
                                                 <td>
                                                     TINDAKAN YANG SUDAH DI LAKUKAN :
                                                     <br />
-                                                    ________________________________________
-                                                    <br />
-                                                    ________________________________________
-                                                    <br />
-                                                    ________________________________________
-                                                    <br />
-                                                    ________________________________________
-                                                    <br />
+                                                    <span t-field="o.evaluation_id.notes_complaint" />
                                                     ________________________________________
                                                     <br />
                                                     ________________________________________
