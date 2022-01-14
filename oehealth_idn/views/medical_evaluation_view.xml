@@ -88,6 +88,18 @@
                 <field name="imt"/>
             </xpath>
 
+            <xpath expr="//field[@name='notes_complaint']" position="after">
+                <group string="Purpose">
+                    <field name="tujuan"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//field[@name='notes']" position="after">
+                <field name="resiko"/>
+                <field name="komplikasi"/>
+                <field name="alternatif"/>
+            </xpath>
+
             <xpath expr="//field[@name='notes']" position="after">
                 <field name="resiko"/>
                 <field name="alternatif"/>
