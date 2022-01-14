@@ -156,6 +156,7 @@ class OehMedicalLabTest(models.Model):
 
     @api.model
     def create(self, vals):
+        _logger.info(vals)
         res = super(OehMedicalLabTest, self).create(vals)
         if res.payment == 'Personal':
             #Personal
