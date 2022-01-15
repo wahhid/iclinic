@@ -56,7 +56,7 @@
                         </div>
                     </div>
                     <div class="oe_button_box" name="buttons">
-                        <button type="object" class="oe_stat_button" name="view_picking" icon="fa-list">
+                        <button type="object" class="oe_stat_button" name="view_medical_record" icon="fa-list">
                             <label string="View Medical Record"/>
                         </button>
                         <t attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
