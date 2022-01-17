@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 class medical_evaluation_patient(models.Model):
     _inherit = 'oeh.medical.physician'
 
+    is_nurse = fields.Boolean('Is Nurse', default=False)
     is_doctor = fields.Boolean(string='Is Doctor ?')
     physician_position = fields.Char(string='Position')
     

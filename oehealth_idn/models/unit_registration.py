@@ -4,6 +4,7 @@
 # [GCC 8.4.0]
 # Embedded file name: D:\Workspaces\Odoo10\mod\Health\addons-klinik-online\oehealth_idn\models\unit_registration.py
 # Compiled at: 2019-07-28 17:50:56
+from ast import walk
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
 import requests, json
@@ -63,6 +64,47 @@ class unit_registration(models.Model):
         pass
         # for row in self:
         #     row.insurance = row.patient.current_insurance
+
+    def print_medical_record(self):
+        #arrival_id
+        #evaluations = []
+        walkin_id = False
+        if self.type == 'Out-Patient':
+            walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
+            _logger.info(walkin_id.id)
+
+        data = {'walkin_id': walkin_id.id, 'type': self.type}
+        return self.env['report'].get_action([], 'oehealth_idn.report_rekammedisrawatjalan', data=data)
+
+    # clinic_walkin_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Clinic Walkin')
+    # unit_walkin_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Unit Walkin')
+    # emergency_walkin_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Emergency Walkin')
+    # support_walkin_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Support Walkin')
+    # clinic_ids = fields.One2many(comodel_name='unit.registration', inverse_name='clinic_walkin_id', string='Out-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)],'Draft': [('readonly', False)]}, track_visibility='onchange')
+    # unit_ids = fields.One2many(comodel_name='unit.registration', inverse_name='unit_walkin_id', string='In-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)],'Draft': [('readonly', False)]}, track_visibility='onchange')
+    # emergency_ids = fields.One2many(comodel_name='unit.registration', inverse_name='emergency_walkin_id', string='Emergency Registration', readonly=True, states={'Scheduled': [('readonly', False)],'Draft': [('readonly', False)]}, track_visibility='onchange')
+    # support_ids = fields.One2many(comodel_name='unit.registration', inverse_name='support_walkin_id', string='Medical Support Registration', readonly=True, states={'Scheduled': [('readonly', False)], 'Draft': [('readonly', False)]}, track_visibility='onchange')
+    # lab_test_ids = fields.One2many(comodel_name='oeh.medical.lab.test', inverse_name='walkin', string='Lab Test Registration', readonly=True, states={'Scheduled': [('readonly', False)], 'Draft': [('readonly', False)]}, track_visibility='onchange')
+    
+        # domain = []
+        # walkin_id = False
+        # evaluations = []
+
+        # if self.type == 'Out-Patient':
+        #     walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
+        #     _logger.info(walkin_id.id)
+
+        # if walkin_id:
+        #     _logger.info("Walkin Available")
+        #     _logger.info("Clinic IDS")
+        #     for clinic_id in walkin_id.clinic_ids:
+        #         evaluation_ids = self.env['oeh.medical.evaluation'].search([('reg_id','=', clinic_id.id)])
+        #         _logger.info(evaluation_ids)
+        #         for evaluation_id in evaluation_ids:
+        #             _logger.info(evaluation_id.id)
+        #             evaluations.append(evaluation_id.id)       
+        #     _logger.info(evaluations)
+
 
     def action_next(self):
         _logger.info("Unit Registration Action Next")

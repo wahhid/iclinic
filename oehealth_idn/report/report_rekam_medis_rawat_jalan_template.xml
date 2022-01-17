@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Main template -->
+    <template id="report_rekammedisrawatjalan">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <style>
+                        th, td {
+                        padding: 5px;
+                        }
+                    </style>
+                    <div class="oe_structure">
+                        <t t-if="type=='Out-Patient'">
+                            <h2 style="text-align:center;">REKAM MEDIS RAWAT JALAN</h2>
+                        </t>
+                        <t t-if="type=='In-Patient'">
+                            <h2 style="text-align:center;">REKAM MEDIS RAWAT INAP</h2>
+                        </t>
+                        <table style="width:100%">
+                            <tr>
+                                <td>No.RM : <span t-esc="patient['medical_record']" /></td>
+                                <td></td>
+                                <td>No.NPP : 
+                                        <!-- <t t-if="'Employee' == o.walkin.payment">
+                                                <span t-field="o.employee_id.employee_number" />
+                                        </t>
+                                         -->
+                                </td>
+                                <th rowspan="3" style="border:1px solid black;">
+                                    RIWAYAT ALERGI
+                                    <br />
+                                    <!-- <span t-field="o.allergy_history" /> -->
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>Nama Lengkap :  <span t-esc="patient['patient_name']" /></td>
+                                <td></td>
+                                <td>Jenis Kelamin : <span t-esc="patient['sex']" /></td>
+                            </tr>
+                            <tr>
+                                <td>TTL : ________________</td>
+                                <td></td>
+                                <td>Umur : <span t-esc="patient['age']" /></td>
+                            </tr>
+                        </table>
+                        <table style="width:100%">
+                            <tr>
+                                <th style="border:1px solid black;">TANGGAL POLI</th>
+                                <th style="border:1px solid black;">ASUHAN KEPERAWATAN DNA KEBIDANAN SOAP</th>
+                                <th style="border:1px solid black;">PERAWAT BIDAN</th>
+                                <th style="border:1px solid black;">ANAMNESA DAN DIAGNOSA</th>
+                                <th style="border:1px solid black;">PEMERIKSAAN PENUNJANG</th>
+                                <th style="border:1px solid black;">TERAPI/TINDAKAN</th>
+                                <th style="border:1px solid black;">DOKTER</th>
+                            </tr>
+                            <t t-if="type=='Out-Patient'">
+                                <tr>
+                                    <td style="border:1px solid black;">
+                                        <span t-esc="nurse['evaluation_start_date']" />
+                                    </td>
+                                    <td style="border:1px solid black;">
+                                        S : 
+                                        <P t-esc="nurse['subjective']" />
+                                        <br/>
+                                        O : <br />
+                                            BB : <span t-esc="nurse['weight']" />  kg
+                                            <br /><br />
+                                            TB : <span t-esc="nurse['height']" />  cm
+                                            <br /><br />
+                                            IMT : <span t-esc="nurse['imt']" />  (BB/TB2/M)
+                                            <br /><br />
+                                        A :
+                                        <P t-esc="nurse['notes']" />
+                                        <br/>
+                                        P :
+                                        <P t-esc="nurse['notes_complaint']" />
+                                        <br/>
+                                    </td>
+                                    <td style="border:1px solid black;">
+                                        <span t-esc="nurse['nurse']" />
+                                        <!-- <span t-field="o.env.user.name"/> -->
+                                    </td>
+                                    <td style="border:1px solid black;">
+                                        <span t-esc="doctor['subjective']"/>
+                                    </td>
+                                    <td style="border:1px solid black;">
+                                        <t t-foreach="labs" t-as="lab">
+                                           <span t-esc="lab"/>
+                                           <br/> 
+                                        </t>
+                                    </td>
+                                    <td style="border:1px solid black;">
+                                    </td>
+                                    <td style="border:1px solid black;">
+                                        <span t-esc="doctor['doctor']" />
+                                    </td>
+                                </tr>           
+                            </t>
+                            <t t-if="type=='In-Patient'">
+                                <t t-foreach="evaluations" t-as="evaluation">
+                                    <tr>
+                                        <td style="border:1px solid black;">
+                                            <span t-esc="evaluation['evaluation_start_date']" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            S : 
+                                            <P t-esc="evaluation['subjective']" />
+                                            <br/>
+                                            O : <br />
+                                                BB : <span t-esc="evaluation['weight']" />  kg
+                                                <br /><br />
+                                                TB : <span t-esc="evaluation['height']" />  cm
+                                                <br /><br />
+                                                IMT : <span t-esc="evaluation['imt']" />  (BB/TB2/M)
+                                                <br /><br />
+                                            A :
+                                            <P t-esc="evaluation['notes']" />
+                                            <br/>
+                                            P :
+                                            <P t-esc="evaluation['notes_complaint']" />
+                                            <br/>
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <!-- <span t-field="o.env.user.name"/> -->
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-esc="evaluation['subjective']"/>
+                                        </td>
+                                        <td style="border:1px solid black;">
+
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-esc="evaluation['doctor']" />
+                                        </td>
+                                    </tr>    
+                                </t>        
+                            </t>
+                        </table>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

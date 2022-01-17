@@ -65,6 +65,17 @@ class unit_registration_action(models.Model):
                 'context': context
             }
 
+    @api.multi
+    def view_medical_record(self, context):
+        return {'domain': [('patient','=',self.patient.id)],
+                'name': 'Action',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'oeh.medical.evaluation',
+                'type': 'ir.actions.act_window',
+                'context': context
+            }
+
     evaluation_id = fields.Many2one(
         comodel_name='oeh.medical.evaluation', string='Evaluation', copy=False, readonly=True)
 

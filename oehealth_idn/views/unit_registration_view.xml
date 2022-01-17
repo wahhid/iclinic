@@ -37,6 +37,7 @@
             <form>
                 <header>
                     <button name="action_next" type="object" string="Confirm" confirm="Menlanjutkan ke bagian berikutnya ?" states="Unlock" class="oe_highlight"/>
+                    <button name="print_medical_record" type="object" string="Print Medical Record" class="oe_highlight"/> 
                     <button name="create_sale" string="Create Transaction" states="Unlock,Check-In" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     <button name="view_sale" string="View Transaction" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service,oehealth_idn.group_cashier,oehealth.group_oeh_medical_manager"/>
                     <!--
@@ -56,9 +57,11 @@
                         </div>
                     </div>
                     <div class="oe_button_box" name="buttons">
+                        <!--
                         <button type="object" class="oe_stat_button" name="view_medical_record" icon="fa-list">
                             <label string="View Medical Record"/>
                         </button>
+                        -->
                         <t attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
                             <button type="object" class="oe_stat_button" name="set_to_hospitalized" states="Unlock" icon="fa-building-o">
                                 <label string="Check-In"/>

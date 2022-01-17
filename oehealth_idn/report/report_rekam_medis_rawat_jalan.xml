@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        id="report_rekam_medis_rawatjalan"
+        model="oeh.medical.appointment.register.walkin"
+        string="Rekam Medis Rawat Jalan"
+        report_type="qweb-pdf"
+        name="oehealth_idn.report_rekammedisrawatjalan"
+        file="oehealth_idn.report_rekammedisrawatjalan"
+    />
+
+    <!--
+    <record id="report_physician_income_details" model="ir.actions.report.xml">
+        <field name="name">Physican Income Details</field>
+        <field name="model">report.oehealth_idn.report_physician_income_details</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">oehealth_idn.report_physiciandetails</field>
+    </record>
+    -->
+</odoo>
