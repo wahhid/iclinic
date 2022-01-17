@@ -45,7 +45,7 @@ th, td {
                                     <td>Jenis Kelamin : <span t-field="o.patient.sex" /></td>
                                 </tr>
                                 <tr>
-                                    <td>TTL : ________________</td>
+                                    <td>TTL : <span t-field="o.patient.place_birth"/>, <span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
                                     <td></td>
                                     <td>Umur : <span t-field="o.patient.age" /></td>
                                 </tr>

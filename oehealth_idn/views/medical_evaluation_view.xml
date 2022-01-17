@@ -6,86 +6,175 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="oehealth.oeh_medical_evaluation_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//notebook/page[1]/group[1]" position="before">
-                <group string="Personal Illness History">
-                    <field name="dm_stroke_p"/>
-                    <field name="katarak"/>
-                    <field name="hipertensi_p"/>
-                    <field name="jantung_p"/>
-                    <field name="kolesterol"/>
-                    <field name="liver"/>
-                    <field name="asam_urat"/>
-                    <field name="pendarahan"/>
-                    <field name="lain_rpp"/>  
-                </group>
-                <group string="Family Disease History">
-                    <field name="dm_stroke_k"/>
-                    <field name="hipertensi_k"/>
-                    <field name="jantung_k"/>
-                    <field name="gangguan_ginjal"/>
-                    <field name="kejiwaan"/>
-                    <field name="serangan_jantung"/>
-                    <field name="lain_rpk"/>
-                </group>
-                <group string="History of Drug and Food Allergies">
-                    <field name="alergi_obat_makanan"/>
-                    <field name="lain_alergi_obat_makanan" attrs="{'invisible': [('alergi_obat_makanan','=',False)]}"/>
-                </group>
-                <group string="Biopsychosocial Studies">
-                    <field name="alkohol"/>
-                    <field name="lain_kebiasaan" attrs="{'invisible': [('alkohol','=',False)]}"/>
-                    <field name="bb_pekerjaan"/>
-                    <field name="sebutkan_bb" attrs="{'invisible': [('bb_pekerjaan','=',False)]}"/>
-                    <field name="tingkat_pendidikan"/>
-                    <field name="disorientasi"/>
-                    <field name="sebutkan_disorientasi" attrs="{'invisible': [('disorientasi','=',False)]}"/>
-                    <field name="emosi"/>
-                    <field name="tinggal"/>
-                </group>
-                <group string="Help needed at home">
-                    <field name="bantuan_makan"/>
-                    <field name="bantuan_mandi"/>
-                    <field name="bantuan_bak"/>
-                    <field name="bantuan_bab"/>
-                    <field name="bantuan_berjalan"/>
-                </group>
-                <group >
-                    <field name="penurunan_bb"/>
-                    <field name="asupan_makan"/>
-                </group>
-                <group >
-                    <field name="riwayat_jatuh"/>
-                    <field name="diagnosa_sekunder"/>
-                    <field name="alat_bantu_jalan"/>
-                    <field name="terapi_intravena"/>
-                    <field name="cara_berjalan"/>
-                    <field name="status_mental"/>
-                </group>
+            <xpath expr="//notebook/page[1]/group[2]" position="after">
+                <group>
+                    <group string="Riwayat Penyakit Pribadi">
+                        <field name="dm_stroke_p"/>
+                        <field name="katarak"/>
+                        <field name="hipertensi_p"/>
+                        <field name="jantung_p"/>
+                        <field name="kolesterol"/>
+                        <field name="liver"/>
+                        <field name="asam_urat"/>
+                        <field name="pendarahan"/>
+                        <field name="lain_rpp"/>  
+                    </group>
+                    <group string="Riwayat Penyakit Keluarga">
+                        <field name="dm_stroke_k"/>
+                        <field name="hipertensi_k"/>
+                        <field name="jantung_k"/>
+                        <field name="gangguan_ginjal"/>
+                        <field name="kejiwaan"/>
+                        <field name="serangan_jantung"/>
+                        <field name="lain_rpk"/>
+                    </group>
 
-            </xpath>
+                    <group string="Multi Organ">
+                        <field name="organ_atas"/>
+                        <field name="organ_jantung"/>
+                        <field name="organ_perut"/>
+                        <field name="organ_anggota_gerak"/>
+                        <field name="organ_genetalia"/>
+                    </group>
+                </group>
+                <group>
+                    <group string="Kebutuhan Aktivitas Dan Istirahat">
+                        <field name="olahraga"/>
+                        <field name="obat_tidur"/>
+                        <field name="kwalitas_tidur"/>
+                        <field name="keterbatasan_rom"/>
+                    </group>
+                    <group string="Pengkajian Nyeri">
+                        <field name="pengkajian_nyeri_p"/>
+                        <field name="pengkajian_nyeri_q"/>
+                        <field name="pengkajian_nyeri_r"/>
+                        <field name="pengkajian_nyeri_s"/>
+                        <field name="pengkajian_nyeri_t"/>
+                    </group>
+                    <group string="Kebutuhan Emosional">
+                        <field name="kontak_mata"/>
+                        <field name="bingung"/>
+                        <field name="perasaan_tidak_mampu"/>
+                        <field name="perasaan_tidaK_berharga"/>
+                    </group>
+                    <group string="Cairan Dan Elektrolit">
+                        <field name="minum"/>
+                        <field name="parenteral"/>
+                        <field name="mukosa_bibir"/>
+                        <field name="turgor_kulit"/>
+                        <field name="edema"/>
+                        <field name="cairan_lain"/>
+                    </group>
+                    <group string="Kebutuhan Persepsi Sensori">
+                        <field name="penglihatan"/>
+                        <field name="pendengaran"/>
+                        <field name="penciuman"/>
+                        <field name="pengecapan"/>
+                        <field name="perabaan"/>
+                    </group>
+                    <group string="Kebutuhan Komunikasi">
+                        <field name="pembicaraan"/>
+                        <field name="apatis"/>
+                        <field name="afasia"/>
+                    </group>
+                    <field name="kegiatan_ibadah"/>
+                </group>
+            </xpath>  
 
-            <xpath expr="//field[@name='respiratory_rate']" position="after">
-                <field name="tekanan_darah"/>
+            <xpath expr="//field[@name='respiratory_rate']" position="after">         
+               
                 <field name="nadi"/>
                 <field name="gcs_e"/>
                 <field name="gcs_v"/>
                 <field name="gcs_m"/>
                 <field name="total_gcs"/>
                 <field name="gds"/>
+            
             </xpath>
 
-            <xpath expr="//notebook/page[1]/group[1]" position="after">
-                <group string="Multi Organ">
-                    <field name="organ_atas"/>
-                    <field name="organ_jantung"/>
-                    <field name="organ_perut"/>
-                    <field name="organ_anggota_gerak"/>
-                    <field name="organ_genetalia"/>
+            <xpath expr="//notebook/page[2]/group[1]" position="after">
+                <group string="Kajian Biopsikososial">
+                    <group>
+                        <field name="alkohol"/>
+                        <field name="lain_kebiasaan" attrs="{'invisible': [('alkohol','=',False)]}"/>
+                        <field name="bahan_berbahaya_pekerjaan"/>
+                        <field name="sebutkan_bahan_berbahaya" attrs="{'invisible': [('sebutkan_bahan_berbahaya','=',False)]}"/>
+                        <field name="tingkat_pendidikan"/>
+                        <field name="disorientasi"/>
+                        <field name="sebutkan_disorientasi" attrs="{'invisible': [('disorientasi','=',False)]}"/>
+                        <field name="emosi"/>
+                        <field name="tinggal"/>
+                    </group>
+
+                    <group string="Riwayat Alergi Obat dan Makanan">
+                        <field name="alergi_obat_makanan"/>
+                        <field name="lain_alergi_obat_makanan" attrs="{'invisible': [('alergi_obat_makanan','=',False)]}"/>
+                        <field name="ketidaksukaan_makan"/>
+                        <field name="pantangan_makan"/>
+                        <field name="pengalaman_diet"/>
+                    </group>
+                    
+                    <group string="Bantuan Yang Dibtuhkan Dirumah">
+                        <field name="bantuan_makan"/>
+                        <field name="bantuan_mandi"/>
+                        <field name="bantuan_bak"/>
+                        <field name="bantuan_bab"/>
+                        <field name="bantuan_berjalan"/>
+                    </group>
+
+                    <group >
+                        <field name="penurunan_bb"/>
+                        <field name="asupan_makan"/>
+                    </group>
+
+                    <group >
+                        <field name="riwayat_jatuh"/>
+                        <field name="diagnosa_sekunder"/>
+                        <field name="kesadaran"/>
+                        <field name="alat_bantu_jalan"/>
+                        <field name="terapi_intravena"/>
+                        <field name="cara_berjalan"/>
+                        <field name="status_mental"/>
+                    </group>
                 </group>
+                <group>
+                    <group string="Biokimia Terkait Gizi">
+                        <field name="prosedur_terkait_gizi"/>
+                    </group>
+                    <group string="Fisik Klinis Gizi">
+                        <field name="atropi"/>
+                        <field name="udem"/>
+                        <field name="nafsu_makan"/>
+                        <field name="mual"/>
+                        <field name="muntah"/>
+                        <field name="kembung"/>
+                        <field name="konstipasi"/>
+                        <field name="diare"/>
+                        <field name="fisik_gizi_kulit"/>
+                        <field name="kepaladanmata"/>
+                        <field name="gigi_geligi"/>
+                        <field name="ganguan_menelan"/>
+                        <field name="ganguan_mengunyah"/>
+                        <field name="ganguan_menghisap"/>
+                    </group>
+                </group>
+
+            </xpath>
+
+            <xpath expr="//field[@name='notes']" position="replace">
+                <group string="Extra Info">
+                    <field name="notes"/>
+                </group>
+                
             </xpath>
 
             <xpath expr="//field[@name='height']" position="after">
                 <field name="imt"/>
+                <field name="status_gizi"/>
+                <field name="berat_badan_biasanya"/>
+                <field name="penurunan_berat_badan"/>
+                <field name="penurunan_berat_badan_dalam"/>
+                <field name="pengukuran_lain"/>
             </xpath>
 
             <xpath expr="//field[@name='notes_complaint']" position="after">
@@ -95,14 +184,15 @@
             </xpath>
 
             <xpath expr="//field[@name='notes']" position="after">
-                <field name="resiko"/>
-                <field name="komplikasi"/>
-                <field name="alternatif"/>
-            </xpath>
-
-            <xpath expr="//field[@name='notes']" position="after">
-                <field name="resiko"/>
-                <field name="alternatif"/>
+                <group string="Resiko">
+                    <field name="resiko"/>
+                </group>
+                <group string="Komplikasi">
+                    <field name="komplikasi"/>
+                </group>
+                <group string="Alternatif">
+                    <field name="alternatif"/>
+                </group>
             </xpath>
         
             <xpath expr="//notebook/page[2]/group[1]" position="before">

@@ -179,6 +179,11 @@ class register_walkin(models.Model):
     queue_trans_id = fields.Many2one('queue.trans','Queue')
     type_id = fields.Many2one('queue.type', related="queue_trans_id.type_id", readonly=True)
     user_unit_administration_id = fields.Many2one('unit.administration',  default=lambda self: self.env.user.default_unit_administration_id.id)
+    detail_payment_guarantor = fields.Selection([('dpg1','Peg & Kel Pasca Tambang'), 
+    ('dpg2','Peg & Kel UPBE Pongkor'), ('dpg3','Peg & Kel UBPN Pomala'), ('dpg4','Pens & Kel Antam'), ('dpg5','Pihak III'), ('dpg6','Lain-lain / BPJS / ASURANSI')], string='Payment Guarantor Details')
+
+
+
     state = fields.Selection(WALKIN_STATUS, string='State', readonly=True, states={'Scheduled': [('readonly', False)]}, default=lambda *a: 'Draft')
 
     @api.model

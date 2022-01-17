@@ -71,9 +71,11 @@ table, th, td {
                                             <tr>
                                                 <td>Obat dan tindakan yang diberikan : _______________________</td>
                                             </tr>
-                                            <tr t-foreach='o.prescription_id.prescription_line' t-as='line'>
+                                            <tr>
                                                 <td>
-                                                    <t t-esc="line['name']" />
+                                                    <t t-foreach='o.prescription_id.prescription_line' t-as='line'>
+                                                        <t t-esc="line.name" />
+                                                    </t>
                                                 </td>
                                             </tr>
                                             <tr>

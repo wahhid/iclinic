@@ -57,9 +57,9 @@ th, td {
                     Status Perkawinan :
                     <span t-field="o.patient.marital_status" />
                     <br />
-                    Nama Penanggung Biaya : _________
+                    Nama Penanggung Biaya : <span t-field="o.patient.name" /> / 
                     <br />
-                    Alamat : _________________
+                    Alamat : <span t-field="o.patient.street" /> / 
                     <br />
                     __________________________
                     <br />

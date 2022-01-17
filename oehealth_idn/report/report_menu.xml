@@ -36,7 +36,7 @@
 
     <report id="perintah_rawat_inap_report_menu" string="Surat Perintah Rawat Inap" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_perintah_rawat_inap" menu="True" />
 
-    <report id="pengkajian_report_menu" string="Form Pengkajian Awal Klinis Rawat Jalan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian_rawat_jalan" menu="True" />
+    <report id="pengkajian_report_menu" string="Form Pengkajian Rawat Jalan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian_rawat_jalan" menu="True" />
 
     <report id="pengkajian_rawat_inap_report_menu" string="Form Pengkajian Rawat Inap" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian_rawat_inap" menu="True" />
 

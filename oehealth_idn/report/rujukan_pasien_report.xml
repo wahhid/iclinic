@@ -65,7 +65,7 @@ th, td {
                                                 <td>Tekanan Darah</td>
                                                 <td> : </td>
                                                 <td>
-                                                    <span t-field="o.evaluation_id.tekanan_darah" /> mmHg
+                                                    <span t-field="o.evaluation_id.systolic" /> / <span t-field="o.evaluation_id.diastolic" /> mmHg
                                                 </td>
                                             </tr>
                                             <tr>

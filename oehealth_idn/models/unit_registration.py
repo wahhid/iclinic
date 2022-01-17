@@ -151,8 +151,7 @@ class unit_registration(models.Model):
 
     perstujuan_tindakan = fields.Boolean(string='Persetujuan Tindakan')
 
-
-
+    
     _sql_constraints = [
      ('full_name_uniq', 'unique (name)', 'The Queue Number must be unique')]
 

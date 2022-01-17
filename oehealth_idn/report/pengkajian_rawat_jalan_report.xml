@@ -83,23 +83,16 @@ th, td {
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <t t-if="'Personal' == o.walkin.payment">
-                                                    <p>PIHAK III</p>
-                                                    
-                                            </t>
-                                            <t t-if="'Corporate' == o.walkin.payment">
-                                                    <p t-field="o.walkin.company.name" />
-                                                    <p t-field="o.walkin.insurance.ins_no" />
-                                            </t>
+                                            <br />
                                             <t t-if="'Insurance' == o.walkin.payment">
-                                                    <p t-field="o.walkin.insurance.ins_type.name" />
-                                                    <p t-field="o.walkin.insurance.ins_no" />
+                                                BPJS/Insurance No : <span t-field="o.walkin.insurance.ins_no" />
                                             </t>
                                             <t t-if="'Employe' == o.walkin.payment">
-                                                    <p t-field="o.walkin.patient.detail_payment" />
-                                                    <p t-field="o.walkin.employee_id.employee_number" />
+                                                NPP No: <span t-field="o.walkin.employee_id.employee_number" />
                                             </t>
-
+                                            <br /><br />
+                                            <span t-field="o.walkin.detail_payment_guarantor" />
+                                            <br /><br />
                                         </td>
                                     </tr>
                                     <tr>
@@ -249,10 +242,10 @@ th, td {
                                             <br />
                                             <br />
                                             Apakah pekerjaan pasien berhubungan dengan bahan berbahaya?(Misal,Kimia,Gas dll)
-                                            <t t-if="true == o.bb_pekerjaan">
-                                                            <p>Ya, Sebutkan :  <span t-field="o.sebutkan_bb" /></p>
+                                            <t t-if="true == o.bahan_berbahaya_pekerjaan">
+                                                            <p>Ya, Sebutkan :  <span t-field="o.sebutkan_bahan_berbahaya" /></p>
                                                         </t>
-                                            <t t-if="false == o.bb_pekerjaan">
+                                            <t t-if="false == o.bahan_berbahaya_pekerjaan">
                                                             Tidak
                                                         </t>             
                                             

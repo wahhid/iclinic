@@ -41,7 +41,7 @@ th, td {
                                 <tr class="border">
                                     <td>Ruang</td>
                                     <td> : </td>
-                                    <td></td>
+                                    <td><span t-field="o.room_id_name" /></td>
                                 </tr>
                             </table>
                             <br />
