@@ -69,6 +69,7 @@
         <field name="arch" type="xml">
             <field name="discount_policy" position="after">
                 <field name="attribute_value"/>
+                <field name="payment_guarantor_discount"/>
             </field>
         </field>
     </record>

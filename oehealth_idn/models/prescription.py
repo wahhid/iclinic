@@ -282,7 +282,6 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
 
     amount_total = fields.Monetary(compute=amount_all, string='Total', store=True, multi='sums', help='The total amount.')
 
-
     @api.model
     def create(self, vals):
         res = super(oeh_medical_health_center_pharmacy_line, self).create(vals)
@@ -359,21 +358,6 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                     else:
                         guarantor = acc.patient.partner_id.id
                     
-                    _logger.info(self.env.user.default_operating_unit_id)
-                    
-                #  val_obj = {
-                #     'reg_id': acc.id, 
-                #     'arrival_id': acc.clinic_walkin_id.id or acc.unit_walkin_id.id or acc.emergency_walkin_id.id or acc.support_walkin_id.id, 
-                #     'patient_id': acc.patient.id, 
-                #     'doctor_id': acc.doctor.id, 
-                #     'partner_id': acc.patient.partner_id.id, 
-                #     'partner_invoice_id': guarantor, 
-                #     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
-                #     'partner_shipping_id': acc.patient.partner_id.id, 
-                #     'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
-                #     'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.unit.id))], limit=1).id
-                # }
-
                     _logger.info(self.env.user.default_operating_unit_id)
                     _logger.info("Get User Warehouse")
                     warehouse_id = self.env['stock.warehouse'].search([('operating_unit_id','=',self.env.user.default_operating_unit_id.id)], limit=1)
@@ -588,14 +572,45 @@ class oeh_medical_health_center_pharmacy_prescription_line(models.Model):
     _inherit = 'oeh.medical.health.center.pharmacy.prescription.line'
     
     @api.multi
+    def _get_display_price(self, product):
+        # TO DO: move me in master/saas-16 on sale.order
+        if self.prescription_id.pricelist_id.discount_policy == 'with_discount':
+            return product.with_context(pricelist=self.prescription_id.pricelist_id.id).price
+        product_context = dict(self.env.context, partner_id=self.prescription_id.partner_id.id, date=datetime.now(), uom=self.name.uom_id.id)
+        final_price, rule_id = self.prescription_id.pricelist_id.with_context(product_context).get_product_price_rule(product, self.actual_qty or 1.0, self.prescription_id.partner_id)
+        base_price, currency_id = self.with_context(product_context)._get_real_price_currency(product, rule_id, self.actual_qty, self.name.uom_id, self.prescription_id.pricelist_id.id)
+        if currency_id != self.elf.name.uom_id.pricelist_id.currency_id.id:
+            base_price = self.env['res.currency'].browse(currency_id).with_context(product_context).compute(base_price, self.elf.name.uom_id.pricelist_id.currency_id)
+        # negative discounts (= surcharge) are included in the display price
+        return max(base_price, final_price)
+
+    @api.multi
     @api.onchange('name')
     def onchange_name(self, name=False):
         _logger.info('On Change Name')
+        vals = {}
         result = {}
-        if name:
-            product_ids = self.env['product.product'].search([('id','=',name)])
-            if product_ids:
-                result['price_unit'] = product_ids.lst_price
+        if self.name:
+            product = self.name.with_context(
+                #lang=self.prescription_id.patient.lang,
+                #partner=self.prescription_id.patient.id,
+                quantity= vals.get('actual_qty') or self.actual_qty,
+                date=datetime.datetime.now(),
+                pricelist=self.prescription_id.pricelist_id.id,
+                uom=self.name.uom_id.id
+            )
+            _logger.info(product)
+            vals['price_unit'] = product.lst_price
+            #vals['price_unit'] =  self.env['account.tax']._fix_tax_included_price_company(self._get_display_price(product), product.taxes_id, self.tax_id, self.company_id)
+            self.update(vals)
+            #self.
+            #if prescription_id.pricelist_id and prescription_id.partner_id:
+            #    result['price_unit'] =  prescription_id.patient.partner_id.property_product_pricelist.id.get_product_price(self, name, actual_qty, prescription_id.partner_id)
+            #else:
+            #    result['price_unit'] = name.lst_price
+                #result['price_unit'] = self.prescription_id.pricelist_id.get_product_price(self, self.name, self.actual_qty, self.perscription_id.partner_id)
+                #result['price_unit'] = pricelist_id.get_product_price(self.name.id, self.actual_qty, self.pescription_id.patient.partner_id.id)
+
         return {'value': result}
     
 

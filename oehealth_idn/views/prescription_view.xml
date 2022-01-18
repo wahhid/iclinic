@@ -170,10 +170,12 @@
                     </div>
                     <group>
                         <group>
+                            <!-- <field name="name" on_change="onchange_prescription_id(name)" attrs="{'required': [('is_public','=', False)],'readonly': [('is_public','=', True)]}" options="{'no_create': True}"/> -->
                             <field name="name" on_change="onchange_prescription_id(name)" attrs="{'required': [('is_public','=', False)],'readonly': [('is_public','=', True)]}" options="{'no_create': True}"/>
                             <field name="doctor" options="{'no_create': True}"/>
                             <field name="pharmacist"/>
                             <field name="unit_id" readonly="1"/>
+                            <field name="pricelist_id" readonly="1"/>
                             <!-- <field name="reg_id" readonly="1"/> -->
                             <field name="reg_ids" readonly="1"/>
                             <field name="queue_trans_id"/>
@@ -200,12 +202,16 @@
                             <group string="Prescription">
                                 <field name="prescription_lines" nolabel="1">
                                     <tree string="Prescription Lines" nolabel="1" editable="bottom">
-                                        <field name="name" on_change="onchange_name(name)"/>
+                                        <field name="name" onchange="onchange_name(name)"/>
                                         <field name="qty_available"/>
                                         <field name="indication"/>
                                         <field name="qty" readonly="1"/>
-                                        <field name="actual_qty" on_change="onchange_qty_and_price(actual_qty,price_unit)"/>
-                                        <field name="price_unit" on_change="onchange_qty_and_price(actual_qty,price_unit)"/>
+                                        <!-- <field name="actual_qty" on_change="onchange_qty_and_price(actual_qty,price_unit)"/>
+                                        <field name="price_unit" on_change="onchange_qty_and_price(actual_qty,price_unit)"/> -->
+                                        <field name="actual_qty"
+                                            context="{'actual_qty':actual_qty, 'pricelist':parent.pricelist_id}"/>
+                                        <field name="price_unit" 
+                                            context="{'actual_qty':actual_qty, 'pricelist':parent.pricelist_id}"/>
                                         <field name="price_subtotal"/>
                                     </tree>
                                 </field>

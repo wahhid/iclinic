@@ -49,7 +49,7 @@ class product_product(models.Model):
 class product_pricelist(models.Model):
     _inherit = 'product.pricelist'
     attribute_value = fields.Many2one(comodel_name='product.attribute.value', string='Attribute Value', help='Filter product by pricelist & attribute value', index=True)
-
+    payment_guarantor_discount = fields.Boolean("Payment Guarantor Discount", default=False)
 
 class PaymentGuarantorDiscount(models.Model):
     _name  = 'payment.guarantor.discount'
