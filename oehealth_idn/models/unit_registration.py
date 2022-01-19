@@ -64,6 +64,16 @@ class unit_registration(models.Model):
         # for row in self:
         #     row.insurance = row.patient.current_insurance
 
+    def print_implementasi_keperawatan(self):
+        walkin_id = False
+        
+        walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
+        _logger.info(walkin_id.id)
+
+        data = {'walkin_id': walkin_id.id, 'type': self.type}
+        return self.env['report'].get_action([], 'oehealth_idn.report_implementasi_keperawatan', data=data)
+        
+
     def action_next(self):
         _logger.info("Unit Registration Action Next")
         if self.queue_trans_id.type_id.unit_administration_id.id == self.env.user.default_unit_administration_id.id:

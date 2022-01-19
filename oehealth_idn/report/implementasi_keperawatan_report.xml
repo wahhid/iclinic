@@ -16,49 +16,47 @@
                     <div class="oe_structure">
                         <h2 style="text-align:center;">IMPLEMENTASI KEPERAWATAN</h2>
 
-                        <!-- <table style="width:100%">
+                        <table style="width:100%">
                             <tr class="border">
                                 <td>No.RM</td>
                                 <td> : </td>
-                                <td><span t-field="o.patient.medical_record" /></td>
+                                <td><span t-esc="no_rm" /></td>
                             </tr>
                             <tr class="border">
                                 <td>Nama Pasien</td>
                                 <td> : </td>
-                                <td><span t-field="o.patient.name" /></td>
+                                <td><span t-esc="patient_name" /></td>
                             </tr>
                             <tr class="border">
                                 <td>Tanggal Lahir </td>
                                 <td> : </td>
-                                <td><span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
+                                <td><span t-esc="dob" /></td>
                             </tr>
                             <tr class="border">
                                 <td>DPJP</td>
                                 <td> : </td>
-                                <td><span t-field="o.doctor" /></td>
+                                <td><span t-esc="doctor" /></td>
                             </tr>
                             <tr class="border">
                                 <td>Ruang</td>
                                 <td> : </td>
-                                <td><span t-field="o.bed.name" /></td>
+                                <td><span t-esc="bed" /></td>
                             </tr>
-                        </table> -->
+                        </table>
                         <br />
                         <br />
                         <br />
                         <table style="width:100%">
                             <tr>
                                 <th class="border">Hari/TGL</th>
-                                <th class="border">Jam</th>
                                 <th class="border">Tindakan</th>
                                 <th class="border">Paraf ( Bubuhkan, Stempel, Nama, Paraf, Tanggal, Jam )</th>
                             </tr>
-                            <t t-foreach="sale_order_list" t-as="s">
+                            <t t-foreach="sale_order_list" t-as="order_list">
                                 <tr>
-                                    <td class="border"><span t-field="s.tanggal" /></td>
-                                    <td class="border"><span t-field="s.tanggal" t-field-options='{"format": "H:M:S"}'/></td>
-                                    <td class="border"><span t-field="s.tujuan" /></td>
-                                    <td class="border"><span t-field="s.doctor_name" /></td>
+                                    <td class="border"><span t-esc="order_list['tanggal']" /></td>
+                                    <td class="border"><span t-esc="order_list['tujuan']" /></td>
+                                    <td class="border"><span t-esc="order_list['doctor_name']" /></td>
                                 </tr>
                             </t>
                         </table>

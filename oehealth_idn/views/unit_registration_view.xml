@@ -39,6 +39,7 @@
                     <button name="action_next" type="object" string="Confirm" confirm="Menlanjutkan ke bagian berikutnya ?" states="Unlock" class="oe_highlight"/>
                     <button name="create_sale" string="Create Transaction" states="Unlock,Check-In" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     <button name="view_sale" string="View Transaction" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service,oehealth_idn.group_cashier,oehealth.group_oeh_medical_manager"/>
+                    <button name="print_implementasi_keperawatan" type="object" string="Print Implementasi Keperawatan" class="oe_highlight"/>
                     <!--
                     <button name="create_reference" string="Create Reference" attrs="{'invisible': [('type', '==', 'Medical Support')]}" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     -->
