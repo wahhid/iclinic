@@ -8,11 +8,12 @@
                         <style>
 
 th, td {
-  padding: 7px;
+  padding: 8px;
 }
 </style>
                         <div class="oe_structure">
-
+                            <br/><br/>
+                            <h2 style="text-align:center;">FORM PENGKAJIAN AWAL KLINIS (RAWAT JALAN)</h2>
                             <table class="gt_table" width="100%" style="border: 1px solid #000; ">
                                 <tbody>
                                     <tr>
@@ -83,21 +84,19 @@ th, td {
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <br />
                                             <t t-if="'Insurance' == o.walkin.payment">
                                                 BPJS/Insurance No : <span t-field="o.walkin.insurance.ins_no" />
                                             </t>
                                             <t t-if="'Employe' == o.walkin.payment">
                                                 NPP No: <span t-field="o.walkin.employee_id.employee_number" />
                                             </t>
-                                            <br /><br />
+                                            <br />
                                             <span t-field="o.walkin.detail_payment_guarantor" />
-                                            <br /><br />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="border: 1px solid #000; vertical-align:top" colspan="2">
-                                            Riwayat Penyakit
+                                            <b><h5>RIWAYAT PENYAKIT</h5></b>
                                             <br /><br />
                                             a. Riwayat Penyakit Pribadi
                                             <br /><br/>
@@ -211,10 +210,7 @@ th, td {
                                             </center>
                                             <br /><br />
 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
+                                        
                                             c. Riwayat Alergi Obat dan Makanan : 
                                             <t t-if="true == o.alergi_obat_makanan">
                                                             <p>Ya, Sebutkan :  <span t-field="o.lain_alergi_obat_makanan" /></p>
@@ -223,9 +219,9 @@ th, td {
                                                             Tidak
                                                         </t>
                                                         <br /><br />
-                                            Kajian Biopsikososial
+                                            <b><h5>KAJIAN BIOPSIKOSOSIAL</h5></b>
                                             <br /><br />
-                                            a. kebiasaan
+                                            a. Kebiasaan
                                             <br />
                                             <br />
                                             
@@ -250,8 +246,7 @@ th, td {
                                                         </t>             
                                             
                                             <br /><br />
-                                        </td>
-                                        <td>
+                            
                                             c. Psikologis
                                             <br />
                                             <br />
@@ -286,21 +281,17 @@ th, td {
                                                             ✔ 
                                                         </t>]
                                             <br /><br />
-                                            Status Gizi (Malnutrition Screening Tool MST)
+                                            <b><h5>Status Gizi (Malnutrition Screening Tool MST)</h5></b>
                                             <br /><br />
                                             BB : <span t-field="o.weight" />  kg
                                             <br /><br />
                                             TB : <span t-field="o.height" />  cm
                                             <br /><br />
-                                            IMT : <span t-field="o.imt" />  (BB/TB2/M)
+                                            IMT : <span t-field="o.bmi" />  (BB/TB2/M)
                                             <br /><br />
 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="border: 1px solid #000; vertical-align:top" colspan="2">
-                                            <center>
-                                            <table style="border: 1px solid #000;" width="70%">
+                                        
+                                            <table width="70%">
                                                 <tbody>
                                                     <t t-set="i" t-value="0" />
                                                     <t t-set="l" t-value="0" />
@@ -335,33 +326,33 @@ th, td {
                                                     <t t-set="t" t-value="i+l" />
 
                                                     <tr>
-                                                        <td style="border: 0px solid #000; " colspan="2">
+                                                        <td  colspan="2">
                                                             1. Apakah pasien mengalami penurunan berat badan yang tidak direncanakan/tidak di inginkan dalam 6 bulan terakhir?
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="border: 0px solid #000; "><span t-field="o.penurunan_bb" /></td>
+                                                        <td ><span t-field="o.penurunan_bb" /></td>
                                                         <td style="border: 0px solid #000; "> <span t-esc="i" /> </td>
                                                     </tr>
                                                     
                                                     <tr>
 
-                                                        <td style="border: 0px solid #000; " colspan="2">
+                                                        <td  colspan="2">
                                                         2. Apakah asupan makanan pasien berkurang karena penurunan nafsu makan/kesulitan menerima makan?
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="border: 0px solid #000; "><span t-field="o.asupan_makan" /></td>
+                                                        <td ><span t-field="o.asupan_makan" /></td>
                                                         <td style="border: 0px solid #000; "> <span t-esc="l" /> </td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="border: 0px solid #000; ">Total : <span t-esc="t" /></td>
-                                                        <td style="border: 0px solid #000; ">  </td>
+                                                        <td >Total : <span t-esc="t" /></td>
+                                                        <td >  </td>
                                                     </tr>
                                                    
                                                 </tbody>
                                             </table>
-                                            </center>
+                                           
                                         </td>
                                     </tr>
 

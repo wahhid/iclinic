@@ -92,9 +92,9 @@ th, td {
                                                     <br />
                                                     <br />
                                                     Diagnosa Dokter :
-                                                    <br />
+                                                    
                                                     <t t-foreach='o.diagnostic_ids.pathology_id' t-as='line'>
-                                                        <t t-esc="line.name" />
+                                                        <t t-esc="line.name" />,
                                                     </t>
                                                     <br />
                                                 </td>
@@ -135,7 +135,7 @@ th, td {
                                                 <th>ANTROPOMETRI</th>
                                                 <td>BB saat ini: <span t-field="o.weight" /> </td>
                                                 <td>PB/TB : <span t-field="o.height" /> cm</td>
-                                                <td>IMT : <span t-field="o.imt" /></td>
+                                                <td>IMT : <span t-field="o.bmi" /></td>
                                                 <td>Status Gizi : <span t-field="o.status_gizi" /></td>
                                             </tr>
 
@@ -221,10 +221,10 @@ th, td {
                                 <tr>
                                     <td style="border:1px solid black;" colspan="2">
                                         Tanda-tanda Vital : <br/><br/>
-                                        Tekanan Darah : <span t-field="o.evaluation_id.systolic" /> / <span t-field="o.evaluation_id.diastolic" /> mmHg<br/>
-                                        Suhu : <span t-field="o.evaluation_id.temperature" /> C <br/>
-                                        Nadi : <span t-field="o.evaluation_id.nadi" /> x/m (Regular/Ireguler) <br/>
-                                        Penapasan : <span t-field="o.evaluation_id.respiratory_rate" /> x/m (Regular/Ireguler) <br/>
+                                        Tekanan Darah : <span t-field="o.systolic" /> / <span t-field="o.diastolic" /> mmHg<br/>
+                                        Suhu : <span t-field="o.temperature" /> C <br/>
+                                        Nadi : <span t-field="o.nadi" /> x/m (Regular/Ireguler) <br/>
+                                        Penapasan : <span t-field="o.respiratory_rate" /> x/m (Regular/Ireguler) <br/>
                                         <br/>
                                     </td>
                                 </tr>

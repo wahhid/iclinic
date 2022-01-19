@@ -137,11 +137,11 @@
                         <field name="status_mental"/>
                     </group>
                 </group>
-                <group>
-                    <group string="Biokimia Terkait Gizi">
-                        <field name="prosedur_terkait_gizi"/>
-                    </group>
-                    <group string="Fisik Klinis Gizi">
+                <group string="Biokimia Terkait Gizi">
+                    <field name="prosedur_terkait_gizi"/>
+                </group>
+                <group string="Fisik Klinis Gizi">
+                    <group>
                         <field name="atropi"/>
                         <field name="udem"/>
                         <field name="nafsu_makan"/>
@@ -149,6 +149,8 @@
                         <field name="muntah"/>
                         <field name="kembung"/>
                         <field name="konstipasi"/>
+                    </group>
+                    <group>
                         <field name="diare"/>
                         <field name="fisik_gizi_kulit"/>
                         <field name="kepaladanmata"/>
@@ -169,7 +171,7 @@
             </xpath>
 
             <xpath expr="//field[@name='height']" position="after">
-                <field name="imt"/>
+                <!-- <field name="imt"/> -->
                 <field name="status_gizi"/>
                 <field name="berat_badan_biasanya"/>
                 <field name="penurunan_berat_badan"/>

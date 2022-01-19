@@ -114,6 +114,9 @@ border:1px solid black;
                                         <span t-field="o.organ_paru" /><br />
                                         _______________________________________
                                         <br /><br />
+                                        
+                                    </td>
+                                    <td class="border">
                                         - Jantung
                                         <br /><br />
                                         <span t-field="o.organ_jantung" /><br />
@@ -134,8 +137,6 @@ border:1px solid black;
                                         <span t-field="o.organ_genetalia" /><br />
                                         _______________________________________
                                         <br /><br />
-                                    </td>
-                                    <td class="border">
                                         III. Hasil Pemeriksaan penunjang (dicantumkan oleh dokter)
                                         <br /><br />
                                         <t t-foreach="o.walkin.unit_ids.lab_id" t-as="lab">
@@ -262,7 +263,7 @@ border:1px solid black;
                                 </tr>
                             </table>
 
-                            <p style="page-break-after:always;page-break-inside: avoid;"></p>
+                            <!-- <p style="page-break-after:always;page-break-inside: avoid;"></p> -->
 
                             <table style="width:100%">
 

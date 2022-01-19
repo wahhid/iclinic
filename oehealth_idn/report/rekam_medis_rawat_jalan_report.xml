@@ -72,7 +72,7 @@ th, td {
                                                 <br /><br />
                                                 TB : <span t-field="o.height" />  cm
                                                 <br /><br />
-                                                IMT : <span t-field="o.imt" />  (BB/TB2/M)
+                                                IMT : <span t-field="o.bmi" />  (BB/TB2/M)
                                                 <br /><br />
                                             A :
                                             <P t-field="o.notes" />

@@ -16,7 +16,7 @@ th, td {
                             <p style="text-align:right;">
                                 Kepada Yth, TS
                                 <br /><br />
-                                 <span t-field="o.patient.name" /> / 
+                                <span t-field="o.unit_administration" /> 
                                 <br /><br />
                                 Di Tempat
                             </p>
