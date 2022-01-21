@@ -30,7 +30,7 @@
                     <div class="row sheet">
                         <div class="col-md-12 col-xs-12">
                             <div class="row">
-                                <center><h1 style="margin-top:50px;margin-bottom:100px;">Mal Taman Anggrek</h1></center>
+                                <center><h1 style="margin-top:50px;margin-bottom:100px;">KLINIK MEDIKA YAKESPEN UTAMA</h1></center>
                             </div>
                             <div class="row text-center">
                                 <h4 style="font-size:68px;"><span class="pagination-centered"><t t-esc="data['counter_trans']"/></span></h4>
