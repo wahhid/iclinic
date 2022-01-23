@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <!-- Main template -->
-<template id="oehealth_idn.report_rekam_medis_rawat_jalan">
-    <t t-call="report.html_container">
-        <t t-foreach="doc_ids" t-as="doc_id">
-            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'oehealth_idn.report_rekam_medis_rawat_jalan')"/>
-        </t>
-    </t>
-</template>
 
     <template id="report_rekam_medis_rawat_jalan">
         <t t-call="report.html_container">
@@ -82,7 +75,7 @@ th, td {
                                             <br/>
                                         </td>
                                         <td style="border:1px solid black;">
-                                            <span t-field="o.env.user.name"/>
+                                            <span t-field="o.env.name"/>
                                         </td>
                                         <td style="border:1px solid black;"></td>
                                         <td style="border:1px solid black;"></td>

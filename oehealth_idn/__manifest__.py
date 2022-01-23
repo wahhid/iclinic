@@ -90,6 +90,7 @@
         "report/report_physician_income.xml",
         "report/pengkajian_rawat_jalan_report.xml",
         "report/perintah_rawat_inap_report.xml",
+        "report/resep_report.xml",
         "report/report_menu.xml",
     ],
     "installable": True,

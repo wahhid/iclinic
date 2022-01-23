@@ -8,8 +8,9 @@
 		        <form string="Reference Hospital">
 	                <group>
 		        		<group>
-		                    <field name="unit_administration"/>
-		                    <field name="reference_hospital"/>
+		                    <field name="unit_administration_internal"/>
+		                    <field name="unit_administration" attrs="{'readonly': [('unit_administration_internal', '>', 0)], 'required': [('unit_administration_internal','&lt;', 0)],}"/>
+		                    <field name="reference_hospital" attrs="{'readonly': [('unit_administration_internal', '>', 0)], 'required': [('unit_administration_internal','&lt;', 0)],}"/>
 		                </group>
 		        	</group>
 	                <footer>

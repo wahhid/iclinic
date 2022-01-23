@@ -34,9 +34,9 @@ table, th, td {
                                                 <td>Diagnosa</td>
                                                 <td> : </td>
                                                 <td>
-                                                    <tr t-foreach='o.prescription_id.diagnostic_ids' t-as='line'>
+                                                    <tr t-foreach='o.evaluation_id.diagnostic_ids' t-as='line'>
                                                         <td>
-                                                            <t t-esc="line['name']" />
+                                                            <t t-esc="line['pathology_id']['name']" />
                                                         </td>
                                                     </tr>
                                                 </td>
@@ -143,9 +143,9 @@ table, th, td {
                                                 <td>Diagnosa</td>
                                                 <td> : </td>
                                                 <td>
-                                                    <tr t-foreach='o.prescription_id.diagnostic_ids' t-as='line'>
+                                                    <tr t-foreach='o.evaluation_id.diagnostic_ids' t-as='line'>
                                                         <td>
-                                                            <t t-esc="line['name']" />
+                                                            <t t-esc="line['pathology_id']['name']" />
                                                         </td>
                                                     </tr>
                                                 </td>
