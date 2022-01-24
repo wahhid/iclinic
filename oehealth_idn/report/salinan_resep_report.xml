@@ -20,7 +20,7 @@
                                         <td>Dibuat Tanggal  : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
                                    </tr>  
                                    <tr>
-                                        <td>Untuk  :  </td>
+                                        <td>Untuk  :  <span t-field="o.remarks" /></td>
                                    </tr>
                             </table>
                             <h2><i>R/</i></h2> 
@@ -30,9 +30,9 @@
                                 <thead>
                                     <tr>
                                         <th class="text-left">Obat</th>
-                                            <th class="text-center">Dosis</th>
-                                            <th class="text-center">QTY</th>
-                                            <th class="text-center">Duration</th>
+                                            <th class="text-left">Dosis</th>
+                                            <th class="text-left">QTY</th>
+                                            <th class="text-left">Duration</th>
                                     </tr>
                                 </thead>
                                 <tbody class="invoice_tbody">
@@ -50,6 +50,33 @@
                                                 <span t-field="s.duration"/>
                                             </td>
                                     </tr>
+                                    <t t-foreach="o.concoction_ids" t-as="cc">
+                                            <tr>  
+                                        <td> 
+                                        Obat : <span t-field="cc.product_id.name" />
+                                        </td>
+                                        <td>
+                                            Jumlah : <span t-field="cc.qty" />
+                                        </td>
+                                        <td colspan="2">
+                                                Keterangan : <span t-field="cc.remark" />
+                                        </td>
+                                        </tr>
+                               <t t-foreach="cc.concoction_detail_ids" t-as="ccd">
+                                    <tr>
+                                    <td>
+                                    Obat Detail : <span t-field="ccd.product_id.name" />
+                                    </td>
+                                    <td>
+                                    Zat Aktif : <span t-field="ccd.zat_qty" />
+                                    </td>
+                                    <td colspan="2">
+                                    Qty : <span t-field="ccd.total" />
+                                    </td>
+                                    </tr>
+</t>
+</t>
+
                                 </tbody>
                             </table>
                             <br/><br/>

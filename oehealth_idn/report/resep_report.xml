@@ -21,7 +21,7 @@
 		<td>
 			<h2><i>R/</i>  : <span t-field="o.name" /></h2> 
             <br/><br/>
-			<table style="width:100%" class="center">
+			<table class="table table-condensed mt32">
                                 <thead>
                                     <tr>
                                            <th class="text-left">Obat</th>
@@ -45,6 +45,33 @@
                                                 <span t-field="s.duration"/>
                                             </td>
                                     </tr>
+									<t t-foreach="o.concoction_ids" t-as="cc">
+       <tr>  
+<td> 
+Obat : <span t-field="cc.product_id.name" />
+</td>
+<td>
+       Jumlah : <span t-field="cc.qty" />
+</td>
+<td colspan="2">
+        Keterangan : <span t-field="cc.remark" />
+</td>
+</tr>
+        <t t-foreach="cc.concoction_detail_ids" t-as="ccd">
+<tr>
+<td>
+Obat Detail : <span t-field="ccd.product_id.name" />
+</td>
+<td>
+ Zat Aktif : <span t-field="ccd.zat_qty" />
+</td>
+<td colspan="2">
+ Keterangan : <span t-field="ccd.total" />
+</td>
+</tr>
+</t>
+</t>
+
                                 </tbody>
                             </table>
 		
@@ -77,7 +104,9 @@
 	<tr>
 		<td>NPP</td>
 		<td> : </td>
-		<td><span t-field="o.walkin.detail_payment_guarantor" /></td>
+		<td><t t-if="'Employe' == o.walkin.payment">
+                                                <span t-field="o.walkin.employee_id.employee_number" />
+                                            </t></td>
 	</tr>
 	<tr>
 		<td>Alamat</td>
@@ -87,7 +116,7 @@
 	<tr>
 		<td>Kode Status</td>
 		<td> : </td>
-		<td><span t-field="o.patient.medical_record" /></td>
+		<td><span t-field="o.walkin.detail_payment_guarantor" /></td>
 	</tr>
 </table>
                         </div>

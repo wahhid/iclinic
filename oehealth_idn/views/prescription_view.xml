@@ -27,7 +27,9 @@
                 <field name="product_template_categ_id" readonly="1"/>
                 <field name="qty_available" readonly="1"/>
             </xpath>
-
+            <xpath expr="//field[@name='pharmacy']" position="after">
+                <field name="remarks"/>
+            </xpath>
             <xpath expr="//notebook/page[1]" position="after">
                 <page string="Concoctions">
                     <field name="concoction_ids" context="{'default_doctor_id': doctor}">

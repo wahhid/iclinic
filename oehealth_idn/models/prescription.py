@@ -28,6 +28,7 @@ class oeh_medical_prescription(models.Model):
     employee_id = fields.Many2one('oeh.medical.patient', 'Employee', readonly=True)
     payment_guarantor_discount_id = fields.Many2one('payment.guarantor.discount', 'Payment Guarantor Discount')
     concoction_ids = fields.One2many('medical.concoction', 'prescription_id', copy=True, string='Concoction')
+    remarks = fields.Text(string="Remarks")
 
     @api.model
     def create(self, vals):
