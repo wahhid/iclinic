@@ -12,6 +12,7 @@
                 <field name="pathologist" options="{'no_create': True}" domain="[('is_pathology','=',True)]"/>
             </field>
             <xpath expr="//button[@name='set_to_test_inprogress']" position="before">
+                <button name="action_next" type="object" string="Confirm" confirm="Menlanjutkan ke bagian berikutnya ?"  class="oe_highlight"/>
                 <button confirm="Are you sure you want to create transaction?" states="Draft,Test In Progress,Completed" name="create_sale" string="Create Transaction" type="object" class="oe_highlight"/>
             </xpath>
             <xpath expr="//button[@name='set_to_test_inprogress']" position="after">
