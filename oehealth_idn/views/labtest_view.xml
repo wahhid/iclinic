@@ -15,15 +15,21 @@
                 <button confirm="Are you sure you want to create transaction?" states="Draft,Test In Progress,Completed" name="create_sale" string="Create Transaction" type="object" class="oe_highlight"/>
             </xpath>
             <xpath expr="//button[@name='set_to_test_inprogress']" position="after">
-                <button confirm="Are you sure you want to Cancelled?" name="cancelled_lab" string="Cancel" type="object"  states="Draft,Test In Progress,Completed"/>
+                <button confirm="Are you sure you want to Cancelled?" name="cancelled_lab" string="Cancel" type="object" states="Draft,Test In Progress,Completed"/>
                 <button name="set_lock" string="Lock" states="Unlock" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
-                    <button name="set_unlock" string="Unlock" states="Lock" type="object" class="oe_highlight" groups="oehealth.group_medical_service"/>
+                <button name="set_unlock" string="Unlock" states="Lock" type="object" class="oe_highlight" groups="oehealth.group_medical_service"/>
             </xpath>
             <xpath expr="//button[@name='action_lab_invoice_create']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//field[@name='state']" position="attributes">
                 <attribute name="statusbar_visible">Draft,Test In Progress,Completed,Cancelled</attribute>
+            </xpath>
+            <xpath expr="//div[@class='oe_title']" position="replace">
+                <label class="oe_edit_only" for="name"/>
+                <h1>
+                    <field name="name" class="oe_inline"/>
+                </h1>
             </xpath>
             <xpath expr="//field[@name='date_analysis']" position="after">
                 <field name="operating_unit_id" readonly="1"/>
@@ -39,7 +45,33 @@
                     <field name="employee_id" placeholder="Employee" domain="[('patient','=',patient), ('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
                 </div>
                 <field name="sale_order_id" readonly="1"/>
+                <field name="total_amount"/>
             </xpath>
+
+            <field name="lab_test_criteria" position="replace">
+                <field name="lab_test_criteria" nolabel="1">
+                    <tree string="Lab Test Cases" editable="bottom">
+                        <field name="sequence" required="0" invisible="1"/>
+                        <field name="criteria_id"/>
+                        <field name="name"/>
+                        <field name="result"/>
+                        <field name="normal_range"/>
+                        <field name="units"/>
+                        <field name="test_charge"/>
+                    </tree>
+                </field>
+            </field>
+
+            <!-- <field name="sequence" position="replace">
+                <field name="sequence" required="0" invisible="1"/>
+            </field>
+            <field name="sequence" position="after">
+                <field name="criteria_id"/>
+            </field>
+            <field name="units" position="after">
+                <field name="test_charge"/>
+            </field> -->
+
         </field>
     </record>
 
@@ -54,5 +86,54 @@
 
         </field>
     </record>
+
+    <record id="oeh_medical_lab_test_criteria_tree" model="ir.ui.view">
+        <field name="name">oeh.medical.lab.test.criteria.tree</field>
+        <field name="model">oeh.medical.labtest.criteria</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="normal_range"/>
+                <field name="units"/>
+                <field name="test_charge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="oeh_medical_lab_test_criteria_form" model="ir.ui.view">
+        <field name="name">oeh.medical.lab.test.criteria.form</field>
+        <field name="model">oeh.medical.labtest.criteria</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="normal_range"/>
+                        <field name="units"/>
+                        <field name="test_charge"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_oeh_medical_lab_test_criteria" model="ir.actions.act_window">
+        <field name="name">Lab Test Criteria</field>
+        <field name="res_model">oeh.medical.labtest.criteria</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new lab tests.
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="action_oeh_medical_lab_test_criteria" id="oeh_medical_lab_test_criteria_conf_list" parent="oehealth.oeh_medical_conf_laboratory" sequence="6"/>
+
+
 
 </odoo>

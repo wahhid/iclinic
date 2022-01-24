@@ -9,7 +9,7 @@ import pytz
 class WizardNextStep(models.TransientModel):
     _name = "wizard.next.step"
 
-    queue_type_id = fields.Many2one('queue.type', 'Queue Type', required=True)
+    queue_type_id = fields.Many2one('queue.type', 'Queue Type', required=False)
     is_valid = fields.Boolean('Is Valid', default=False)
 
     def confirm_next_step(self):

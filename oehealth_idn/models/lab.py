@@ -1,3 +1,4 @@
+from xml import dom
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError, Warning
 import requests, json, datetime
@@ -30,6 +31,19 @@ class OehMedicalLabTest(models.Model):
         self.state = "Cancelled"
 
     @api.multi
+    @api.depends('lab_test_criteria')
+    def get_total_line(self):
+        total_amount = 0
+        for row in self:
+            for criteria_id in  row.lab_test_criteria:
+                total_amount = total_amount + criteria_id.test_charge
+            row.total_amount = total_amount
+
+    @api.multi
+    def onchange_test_type_id(self, test_type=False):
+        pass
+
+    @api.multi
     def create_sale(self):
         obj = self.env['sale.order']
         line_obj = self.env['sale.order.line']
@@ -50,8 +64,10 @@ class OehMedicalLabTest(models.Model):
                     #guarantor = acc.company.id
                 _logger.info(self.env.user.default_operating_unit_id)
                 _logger.info("Get User Warehouse")
-                warehouse_id = self.env['stock.warehouse'].search([('operating_unit_id','=',self.env.user.default_operating_unit_id.id)], limit=1)
-            
+                domain = [('operating_unit_id','=',self.env.user.default_operating_unit_id.id)]
+                _logger.info(domain)
+                warehouse_id = self.env['stock.warehouse'].search(domain, limit=1)
+                _logger.info(warehouse_id)
                 val_obj = {
                     #'reg_id': acc.id, 
                     'arrival_id': acc.walkin.id, 
@@ -64,43 +80,42 @@ class OehMedicalLabTest(models.Model):
                     'pricelist_id': acc.patient.partner_id.property_product_pricelist.id, 
                     'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_unit_administration_id.id))], limit=1).id,
                     #'operating_unit_id': acc.operating_unit_id.id or False,
-                    'operating_unit_id': self.env.user.default_operating_unit_id.id,
-                    'warehouse_id':  False if not warehouse_id else warehouse_id.id
+                    #'operating_unit_id': self.env.user.default_operating_unit_id.id,
+                    #'warehouse_id':  warehouse_id if warehouse_id else False
 
                 }
                 inv_ids = obj.create(val_obj)
                 
                 if inv_ids:
                     inv_id = inv_ids.id
-
-                    discount = 0.0
-                    product_id = self.env['product.product'].browse(36527)
-                    if acc.payment_guarantor_discount_id:
-                        if product_id.item_type == 'General Item':
-                            discount = acc.payment_guarantor_discount_id.general_item
-                        elif product_id.item_type == 'Medical Item':        
-                            discount = acc.payment_guarantor_discount_id.medical_item
-                        elif product_id.item_type == 'Food Item':        
-                            discount = acc.payment_guarantor_discount_id.food_item
-                        elif product_id.item_type == 'Medicine':        
-                            discount = acc.payment_guarantor_discount_id.medicine
-                        elif product_id.item_type == 'Doctor':        
-                            discount = acc.payment_guarantor_discount_id.doctor
-                        elif product_id.item_type == 'Nurse':        
-                            discount = acc.payment_guarantor_discount_id.nurse
-                    vals = {
-                        'order_id': inv_id, 
-                        'product_id': 36527, 
-                        'name': acc.test_type.name, 
-                        'prescribe_qty': 1, 
-                        'product_uom_qty': 1, 
-                        'discount_type': 'percent',
-                        'discount': discount,
-                        #product_uom': ps.name.uom_id.id, 
-                        'price_unit': acc.test_type.test_charge
-                    }
-                    line_obj.create(vals)
-                
+                    for line in acc.lab_test_criteria:
+                        discount = 0.0
+                        product_id = self.env['product.product'].search([('item_type','=','Lab Item')], limit=1)
+                        if acc.payment_guarantor_discount_id:
+                            if product_id.item_type == 'General Item':
+                                discount = acc.payment_guarantor_discount_id.general_item
+                            elif product_id.item_type == 'Medical Item':        
+                                discount = acc.payment_guarantor_discount_id.medical_item
+                            elif product_id.item_type == 'Food Item':        
+                                discount = acc.payment_guarantor_discount_id.food_item
+                            elif product_id.item_type == 'Medicine':        
+                                discount = acc.payment_guarantor_discount_id.medicine
+                            elif product_id.item_type == 'Doctor':        
+                                discount = acc.payment_guarantor_discount_id.doctor
+                            elif product_id.item_type == 'Nurse':        
+                                discount = acc.payment_guarantor_discount_id.nurse
+                        vals = {
+                            'order_id': inv_id, 
+                            'product_id': product_id.id, 
+                            'name': line.criteria_id.name, 
+                            'prescribe_qty': 1, 
+                            'product_uom_qty': 1, 
+                            'discount_type': 'percent',
+                            'discount': discount,
+                            #product_uom': ps.name.uom_id.id, 
+                            'price_unit': line.test_charge
+                        }
+                        line_obj.create(vals)
                 self.write(
                     {
                         'state': 'Invoiced',
@@ -132,7 +147,10 @@ class OehMedicalLabTest(models.Model):
             _logger.info(self.env.user.default_unit_administration_id.id)
             row.user_unit_administration_id = self.env.user.default_unit_administration_id.id
     
+    test_type = fields.Many2one('oeh.medical.labtest.types', string='Test Type', required=False, readonly=True, states={'Draft': [('readonly', False)]}, help='Lab test type')
     lab_test_walkin_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Lab Test Walkin')
+    lab_test_criteria = fields.One2many('oeh.medical.lab.resultcriteria', 'medical_lab_test_id', string='Lab Test Result', readonly=False)
+
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
@@ -146,7 +164,7 @@ class OehMedicalLabTest(models.Model):
     type_id = fields.Many2one('queue.type', related="queue_trans_id.type_id", readonly=True)
     user_unit_administration_id = fields.Many2one('unit.administration', compute="get_user_unit_administration")
     is_on_unit_administration = fields.Boolean('', compute="get_user_unit_administration")
-
+    total_amount = fields.Float('Total Amount', compute="get_total_line", readonly=True)
 
     def set_lock(self):
         self.write({'state': 'Lock'})
@@ -208,3 +226,28 @@ class OehMedicalLabTest(models.Model):
             res.payment_quarantor_discount_id = False
 
         return res
+
+
+
+class OeHealthLabTestCriteria(models.Model):
+    _inherit = 'oeh.medical.labtest.criteria'
+
+    test_charge = fields.Float(string='Test Charge', default=lambda *a: 0.0)
+
+
+class OeHealthLabTestsResultCriteria(models.Model):
+    _inherit = 'oeh.medical.lab.resultcriteria'
+
+    @api.multi
+    @api.onchange('criteria_id')
+    def onchange_criteria_id(self):
+        for row in self:
+            row.normal_range = row.criteria_id.normal_range
+            row.units = row.criteria_id.units
+            row.test_charge = row.criteria_id.test_charge
+
+    criteria_id = fields.Many2one('oeh.medical.labtest.criteria','Lab Test Criteria', required=True)
+    name = fields.Char(string='Tests', size=128, required=False)
+    test_charge = fields.Float(string='Test Charge')
+
+   

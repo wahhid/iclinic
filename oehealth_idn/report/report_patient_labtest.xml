@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_oeh_medical_patient_labtest_inherit" inherit_id="oehealth.report_oeh_medical_patient_labtest">
+            <xpath expr="//table[@class='table table-condensed mt32']" position="replace">
+                <table class="table table-condensed mt32">
+                    <thead>
+                        <tr>
+                            <th class="text-left">LAB TEST</th>
+                            <th class="text-left">DESCRIPTION</th>
+                            <th class="text-center">RESULT</th>
+                            <th class="text-center">NORMAL RANGE</th>
+                            <th class="text-left">UNITS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="invoice_tbody">
+                        <tr t-foreach="o.lab_test_criteria" t-as="l">
+                            <td>
+                                <span t-field="l.criteria_id.name"/>
+                            </td>
+                            <td>
+                                <span t-field="l.name"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="l.result"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="l.normal_range"/>
+                            </td>
+                            <td class="text-left">
+                                <span t-field="l.units.name"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

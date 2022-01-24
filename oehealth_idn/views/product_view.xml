@@ -10,7 +10,8 @@
             <field name="categ_id" position="after">
                 <field name="product_template_categ_id"/>
                 <field name="unit_ids" widget="many2many_tags" attrs="{'invisible': [('type', '!=', 'service')]}"/>
-                <field name="item_type" attrs="{'invisible': [('type', '=', 'service')], 'required': [('type', '!=', 'service')]}"/>
+                <!-- <field name="item_type" attrs="{'invisible': [('type', '=', 'service')], 'required': [('type', '!=', 'service')]}"/> -->
+                <field name="item_type" required="1"/>
                 <field name="is_concoction"/>
             </field>
             <field name="uom_po_id" position="after">

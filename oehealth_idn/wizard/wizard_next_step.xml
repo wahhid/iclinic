@@ -8,7 +8,7 @@
 		        <form string="Confirm Next Step">
 	                <group>
 		        		<group>
-		                    <field name="queue_type_id"/>
+		                    <field name="queue_type_id" required="1"/>
 							<field name="is_valid" readonly="1"/>		                </group>
 		        	</group>
 	                <footer>
