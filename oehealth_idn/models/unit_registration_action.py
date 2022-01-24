@@ -130,7 +130,8 @@ class unit_registration_action(models.Model):
             'default_company': self.company.id,
             'default_insurance': self.insurance.id,
             'default_employee_id': self.employee_id.id,
-            'default_employee_id': self.payment_guarantor_discount_id.id
+            'default_employee_id': self.payment_guarantor_discount_id.id,
+            'default_queue_trans_id': self.queue_trans_id.id
         }
         return self.view_poly(model, self.id, context)
 
