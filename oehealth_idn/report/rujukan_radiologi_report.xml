@@ -30,6 +30,10 @@
                                         <strong>Kepada Yth,</strong>
                                         <strong>
                                             <p>Bagian Radiologi</p>
+                                            <span t-field="o.unit_administration" />
+                                            <br/>
+                                            <span t-field="o.reference_hospital" />
+                                            <br/>
                                         </strong>
                                     </div>
                                     <div>
@@ -40,7 +44,7 @@
                                     <div>
                                         <strong>Mohon dilakukan pemeriksaan : 
                                         <t t-foreach="o.evaluation_id" t-as="l">
-                                             <t t-if="true == l.is_doctor">
+                                             <t t-if="true == l.doctor.is_doctor">
                                                 <span t-field="l.notes_complaint" />
                                             </t>
                                         </t>

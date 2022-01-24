@@ -105,6 +105,23 @@ class unit_registration(models.Model):
         #             evaluations.append(evaluation_id.id)       
         #     _logger.info(evaluations)
 
+    def print_implementasi_keperawatan(self):
+        walkin_id = False
+        
+        walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
+        _logger.info(walkin_id.id)
+
+        data = {'walkin_id': walkin_id.id, 'type': self.type}
+        return self.env['report'].get_action([], 'oehealth_idn.report_implementasi_keperawatan', data=data)
+    
+    def print_cppt(self):
+        walkin_id = False
+        
+        walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
+        _logger.info(walkin_id.id)
+
+        data = {'walkin_id': walkin_id.id, 'type': self.type}
+        return self.env['report'].get_action([], 'oehealth_idn.report_cppt', data=data)
 
     def action_next(self):
         _logger.info("Unit Registration Action Next")
@@ -203,12 +220,12 @@ class unit_registration(models.Model):
     is_has_reference = fields.Boolean("Has Reference", default=False)
     reference_date = fields.Date('Reference Date')
     unit_administration = fields.Char('Unit Administration', size=200)
+    unit_administration_internal = fields.Many2one(comodel_name='oeh.medical.physician', string='Unit Administration Internal')
     reference_hospital = fields.Char('Reference Hospital/Clinic', size=200)
 
     perstujuan_tindakan = fields.Boolean(string='Persetujuan Tindakan')
 
-
-
+    
     _sql_constraints = [
      ('full_name_uniq', 'unique (name)', 'The Queue Number must be unique')]
 

@@ -40,6 +40,8 @@
                     <button name="print_medical_record" type="object" string="Print Medical Record" class="oe_highlight"/> 
                     <button name="create_sale" string="Create Transaction" states="Unlock,Check-In" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     <button name="view_sale" string="View Transaction" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service,oehealth_idn.group_cashier,oehealth.group_oeh_medical_manager"/>
+                    <button name="print_implementasi_keperawatan" type="object" string="Print Implementasi Keperawatan" class="oe_highlight"/>
+                    <button name="print_cppt" type="object" string="Print CPPT" class="oe_highlight"/>
                     <!--
                     <button name="create_reference" string="Create Reference" attrs="{'invisible': [('type', '==', 'Medical Support')]}" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     -->
@@ -227,6 +229,7 @@
                         </page>
                         <page string="Reference" attrs="{'invisible': [('is_has_reference','=',False)]}">
                             <group>
+                                <field name="unit_administration_internal"/>
                                 <field name="unit_administration"/>
                                 <field name="reference_hospital"/>
                             </group>

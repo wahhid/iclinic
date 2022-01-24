@@ -15,145 +15,154 @@ th, td {
                             <h2 style="text-align:center;">FORMULIR RUJUKAN PASIEN</h2>
                             <p style="text-align:right;">
                                 Kepada Yth, TS
-                                <br /><br />
-                                 <span t-field="o.patient.name" /> / 
-                                <br /><br />
+                                <br />
+                                <span t-field="o.unit_administration" />
+                                <br />
+                                <span t-field="o.reference_hospital" />
+                                <br />
                                 Di Tempat
                             </p>
+                            <t t-set="nomor" t-value="1" />
 
-                            <table style="width:100%;">
-                                <tr>
-                                    <td style="border: 1px solid black;">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td colspan="3">IDENTITAS PASIEN</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nama Pasien</td>
-                                                <td> : </td>
-                                                <td>
-                                                    <span t-field="o.patient.name" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Umur</td>
-                                                <td> : </td>
-                                                <td>
-                                                    <span t-field="o.patient.age" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Penanggung Biaya</td>
-                                                <td> : </td>
-                                                <td><span t-field="o.patient.name" /> / </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Diagnosa Medis</td>
-                                                <td> : </td>
-                                                <td>
-                                                    <tr t-foreach='o.prescription_id.diagnostic_ids' t-as='line'>
+                            <t t-foreach='o.evaluation_id' t-as='line'>
+                                
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td style="border: 1px solid black;">
+                                                <table style="width:100%">
+                                                    <tr>
+                                                        <td colspan="3">IDENTITAS PASIEN</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Nama Pasien</td>
+                                                        <td> : </td>
                                                         <td>
-                                                            <t t-esc="line['name']" />
+                                                            <span t-field="o.patient.name" />
                                                         </td>
                                                     </tr>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">TANDA-TANDA VITAL</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Tekanan Darah</td>
-                                                <td> : </td>
-                                                <td>
-                                                    <span t-field="o.evaluation_id.tekanan_darah" /> mmHg
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Suhu</td>
-                                                <td> : </td>
-                                                <td>
-                                                    <span t-field="o.evaluation_id.temperature" />
-                                                    C
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nadi</td>
-                                                <td> : </td>
-                                                <td><span t-field="o.evaluation_id.nadi" /> x/m (Regular/Ireguler)</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Penapasan</td>
-                                                <td> : </td>
-                                                <td>
-                                                    <span t-field="o.evaluation_id.respiratory_rate" />
-                                                    x/m (Regular/Ireguler)
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Saturasi</td>
-                                                <td> : </td>
-                                                <td>
-                                                    <span t-field="o.evaluation_id.osat" />
-                                                    %
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>GCS</td>
-                                                <td> : </td>
-                                                <td>E <span t-field="o.evaluation_id.gcs_e" /> V <span t-field="o.evaluation_id.gcs_v" /> M <span t-field="o.evaluation_id.gcs_m"/> </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Total GCS</td>
-                                                <td> : </td>
-                                                <td><span t-field="o.evaluation_id.total_gcs" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>GDS</td>
-                                                <td> : </td>
-                                                <td><span t-field="o.evaluation_id.gds" /> mg/dl</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    TINDAKAN YANG SUDAH DI LAKUKAN :
-                                                    <br />
-                                                    <span t-field="o.evaluation_id.notes_complaint" />
-                                                    ________________________________________
-                                                    <br />
-                                                    ________________________________________
-                                                    <br />
-                                                </td>
+                                                    <tr>
+                                                        <td>Umur</td>
+                                                        <td> : </td>
+                                                        <td>
+                                                            <span t-field="o.patient.age" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Penanggung Biaya</td>
+                                                        <td> : </td>
+                                                        <td><span t-field="o.patient.name" /> / </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Diagnosa Medis</td>
+                                                        <td> : </td>
+                                                        <td>
+                                                            <!-- <t t-foreach='line.diagnostic_ids' t-as='list'>
+                                                                <span t-field="list.pathology_id.name" />, 
+                                                            </t> -->
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">TANDA-TANDA VITAL</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Tekanan Darah</td>
+                                                        <td> : </td>
+                                                        <td>
+                                                            <span t-field="line.systolic" /> / <span t-field="line.diastolic" /> mmHg
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Suhu</td>
+                                                        <td> : </td>
+                                                        <td>
+                                                            <span t-field="line.temperature" />
+                                                            C
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Nadi</td>
+                                                        <td> : </td>
+                                                        <td><span t-field="line.nadi" /> x/m (Regular/Ireguler)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Penapasan</td>
+                                                        <td> : </td>
+                                                        <td>
+                                                            <span t-field="line.respiratory_rate" />
+                                                            x/m (Regular/Ireguler)
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Saturasi</td>
+                                                        <td> : </td>
+                                                        <td>
+                                                            <span t-field="line.osat" />
+                                                            %
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>GCS</td>
+                                                        <td> : </td>
+                                                        <td>E <span t-field="line.gcs_e" /> V <span t-field="line.gcs_v" /> M <span t-field="line.gcs_m"/> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total GCS</td>
+                                                        <td> : </td>
+                                                        <td><span t-field="line.total_gcs" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>GDS</td>
+                                                        <td> : </td>
+                                                        <td><span t-field="line.gds" /> mg/dl</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            TINDAKAN YANG SUDAH DI LAKUKAN :
+                                                            <br />
+                                                            <span t-field="line.notes_complaint" />
+                                                            <br />
+                                                            ________________________________________
+                                                            <br />
+                                                            ________________________________________
+                                                            <br />
+                                                        </td>
 
-                                            </tr>
-                                        </table>
-                                    </td>
-                                    <td style="border: 1px solid black;vertical-align: top;">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td colspan="4">TERAPI YANG SUDAH DIBERIKAN : </td>
-                                            </tr>
-                                            <tr>
-                                                <th style="border: 1px solid black;">No</th>
-                                                <th style="border: 1px solid black;">Waktu</th>
-                                                <th style="border: 1px solid black;">Obat</th>
-                                                <th style="border: 1px solid black;">Rute</th>
-                                            </tr>
-                                            <t t-set="nomor" t-value="1" />
-                                            <tr t-foreach='o.prescription_id.prescription_line' t-as='line'>
-                                                <td style="border: 1px solid black;">
-                                                    <t t-esc="nomor" />
-                                                </td>
-                                                <td style="border: 1px solid black;">
-                                                    <t t-esc="line['duration']" />
-                                                </td>
-                                                <td style="border: 1px solid black;">
-                                                    <t t-esc="line['name']" />
-                                                </td>
-                                                <td style="border: 1px solid black;"></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td style="border: 1px solid black;vertical-align: top;">
+                                                <table style="width:100%">
+                                                    <tr>
+                                                        <td colspan="4">TERAPI YANG SUDAH DIBERIKAN : </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="border: 1px solid black;">No</th>
+                                                        <th style="border: 1px solid black;">Waktu</th>
+                                                        <th style="border: 1px solid black;">Obat</th>
+                                                        <th style="border: 1px solid black;">Rute</th>
+                                                    </tr>
+                                                    <t t-set="nomor" t-value="1" />
+                                                    <t t-foreach='o.prescription_id' t-as='i'>
+                                                        <tr t-foreach='i.prescription_line' t-as='line'>
+                                                            <td style="border: 1px solid black;">
+                                                                <t t-esc="nomor" />
+                                                            </td>
+                                                            <td style="border: 1px solid black;">
+                                                                <span t-field="line.duration" />
+                                                            </td>
+                                                            <td style="border: 1px solid black;">
+                                                                <span t-field="line.name"/>
+                                                            </td>
+                                                            <td style="border: 1px solid black;"></td>
+                                                        </tr>
+                                                    </t>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                   
+                                
+                            </t>
                             <p>Atas kerjasamanya, kami mengucapkan terimakasih</p>
                             <p style="text-align:right;"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>_</p>
                             <table style="width:100%;">

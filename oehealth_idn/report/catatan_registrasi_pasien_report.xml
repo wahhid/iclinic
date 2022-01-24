@@ -57,9 +57,9 @@ th, td {
                     Status Perkawinan :
                     <span t-field="o.patient.marital_status" />
                     <br />
-                    Nama Penanggung Biaya : _________
+                    Nama Penanggung Biaya : <span t-field="o.patient.name" /> / 
                     <br />
-                    Alamat : _________________
+                    Alamat : <span t-field="o.patient.street" /> / 
                     <br />
                     __________________________
                     <br />
@@ -70,17 +70,7 @@ th, td {
                     <br />
                     Nomor Peserta Askes : ______
                     <br />
-                    (1) Peg dan Kel paska tambang
-                    <br />
-                    (2) Peg dan Kel UPBE Pongkor
-                    <br />
-                    (3) Peg dan Kel UBPN Pomala
-                    <br />
-                    (4) Pens dan Kel.Antam
-                    <br />
-                    (5) Pihak III
-                    <br />
-                    (6) Lain-lain
+                    <span t-field="o.detail_payment_guarantor" />
                     <br />
                   </td>
                 </tr>
@@ -88,9 +78,9 @@ th, td {
                   <td class="border">
                     Dokter Penanggung Jawab : ______
                     <br />
-                    Ruang Rawat : ______
+                    Ruang Rawat : <span t-field="o.unit_ids.room_id.name" />
                     <br />
-                    Kelas : __________________________
+                    Kelas : <span t-field="o.unit_ids.bad.name" />
                     <br />
                   </td>
                   <td class="border">

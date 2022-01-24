@@ -27,310 +27,360 @@ border:1px solid black;
                                     <td class="border">No.RM : <span t-field="o.patient.medical_record"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="border">Tanggal Lahir : <span t-field="o.patient.dob"/></td>
+                                    <td class="border">Tanggal Lahir : <span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
                                     <td class="border">Pekerjaan : <span t-field="o.patient.function"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="border">DPJP : </td>
-                                    <td class="border">Tanggal Masuk : </td>
+                                    <td class="border">DPJP : <span t-field="o.doctor"/></td>
+                                    <td class="border">Tanggal Masuk : <span t-field="o.evaluation_start_date"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="border">Penanggung : </td>
+                                    <td class="border">Penanggung : <span t-field="o.patient.name"/> / </td>
                                     <td class="border">Tanggal Keluar : </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class="border">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td colspan="2">NPP : </td>
-                                            </tr>
-                                            <tr>
-                                                <td>1. Peg dan Kel pasce tambang </td>
-                                                <td>4. Pens dan Kel. Antam </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2. Peg dan Kel UPBE Pongkor </td>
-                                                <td>5. Pihak III </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3. Peg dan Kel UPBN Pomala </td>
-                                                <td>6. Lain-lain/BPJS </td>
-                                            </tr>
-                                        </table>
-
+                                            <t t-if="'Insurance' == o.walkin.payment">
+                                                BPJS/Insurance No : <span t-field="o.walkin.insurance.ins_no" />
+                                            </t>
+                                            <t t-if="'Employe' == o.walkin.payment">
+                                                NPP No: <span t-field="o.walkin.employee_id.employee_number" />
+                                            </t>
+                                            <br />
+                                            <span t-field="o.walkin.detail_payment_guarantor" />
+                                            <br />
                                     </td>
 
                                 </tr>
                                 <tr>
                                     <td class="border">
                                         I. Riwayat Kesehatan (Diisi oleh dokter)
-                                        <br />
+                                        <br /><br />
                                         a. Alasan MRS/Keluhan Utama :
+                                        <br /><br />
+                                        <span t-field="o.subjective" />
                                         <br />
                                         _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
+                                        <br /><br />
                                         b. Riwayat penyakit sekarang :
+                                        <br /><br />
+                                        <t t-if="true == o.dm_stroke_p">DM Stroke, </t>
+                                        <t t-if="true == o.katarak">Katarak, </t>
+                                        <t t-if="true == o.hipertensi_p">Hipertensi , </t>	
+                                        <t t-if="true == o.jantung_p">Penyakit jantung koroner , </t>	
+                                        <t t-if="true == o.kolesterol">Kolesterol,Penyakit Ginjal , </t>	
+                                        <t t-if="true == o.liver">Liver , </t>
+                                        <t t-if="true == o.asam_urat">Asam Urat 	, </t>
+                                        <t t-if="true == o.pendarahan">Pendarahan Lama , </t>
+                                        Lain-lain, <br/>
+                                            Sebutkan : <span t-field="o.lain_rpp" />
+                                        
                                         <br />
                                         _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
+                                        <br /><br />
                                         c. Riwayat penyakit terdahulu :
+                                        <br /><br />
+                                        <t t-foreach="o.patient.evaluation_ids" t-as="i">
+                                            <p t-field="i.notes_complaint" />,
+                                        </t>
                                         <br />
                                         _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
+                                        <br /><br />
                                         d. Riwayat penyakit dalam keluarga :
+                                        <br /><br />
+                                        <t t-if="true == o.dm_stroke_k">DM Stroke, </t>
+                                        <t t-if="true == o.hipertensi_k">Hipertensi ,	</t>
+                                        <t t-if="true == o.jantung_k">Penyakit jantung koroner , </t>	
+                                        <t t-if="true == o.gangguan_ginjal">Penyakit gangguan ginjal ,	</t>
+                                        <t t-if="true == o.kejiwaan">Kejiwaan/Depresi , </t>
+                                        <t t-if="true == o.serangan_jantung">Serangan Jantung , </t>
+                                         Lain-lain, <br/>
+                                            Sebutkan : 
+                                        <span t-field="o.lain_rpk" />
                                         <br />
                                         _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
+                                        <br /><br />
                                         II. Pemeriksaan multi organ (diisi oleh dokter)
-                                        <br />
+                                        <br /><br />
                                         a. Kepala dan leher :
-                                        <br />
+                                        <br /><br />
+                                        <span t-field="o.organ_atas" /><br />
                                         _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
+                                        <br /><br />
                                         b. Dada dan punggung :
-                                        <br />
+                                        <br /><br />
                                         - Paru
                                         <br />
+                                        <span t-field="o.organ_paru" /><br />
                                         _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        - Jantung
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        - Perut dan pinggang
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        - Anggota gerak
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        - Genetalia dan anus
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
+                                        <br /><br />
+                                        
                                     </td>
                                     <td class="border">
+                                        - Jantung
+                                        <br /><br />
+                                        <span t-field="o.organ_jantung" /><br />
+                                        _______________________________________
+                                        <br /><br />
+                                        - Perut dan pinggang
+                                        <br /><br />
+                                        <span t-field="o.organ_perut" /><br />
+                                        _______________________________________
+                                        <br /><br />
+                                        - Anggota gerak
+                                        <br /><br />
+                                        <span t-field="o.organ_anggota_gerak" /><br />
+                                        _______________________________________
+                                        <br /><br />
+                                        - Genetalia dan anus
+                                        <br />
+                                        <span t-field="o.organ_genetalia" /><br />
+                                        _______________________________________
+                                        <br /><br />
                                         III. Hasil Pemeriksaan penunjang (dicantumkan oleh dokter)
+                                        <br /><br />
+                                        <t t-foreach="o.walkin.unit_ids.lab_id" t-as="lab">
+                                            <p t-field="lab.name" />,
+                                        </t>
+                                        <br />
+                                        <t t-foreach="o.walkin.unit_ids.imaging_id" t-as="img">
+                                            <p t-field="img.name" />,
+                                        </t>
+                                        <br />
+                                        <t t-foreach="o.walkin.unit_ids.ophthalmology_id" t-as="oph">
+                                            <p t-field="oph.name" />,
+                                        </t>
+                                        <br />
+                                        <t t-foreach="o.walkin.unit_ids.gynecology_id" t-as="gyn">
+                                            <p t-field="gyn.name" />,
+                                        </t>
                                         <br />
                                         _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
+                                        <br /><br />
                                         IV. Daftar Masalah/Diagnosis (Diisi oleh dokter)
+                                        <br /><br />
+                                        <t t-foreach="o.diagnostic_ids" t-as="l">
+                                             <span t-field="l.pathology_id.name" /> , 
+                                        </t>
                                         <br />
                                         _______________________________________
                                         <br />
                                         _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
+                                        <br /><br />
                                         V. Penatalaksanaan / Terapi (Diisi oleh dokter)
+                                        <br /><br />
+                                        <span t-field="o.notes_complaint" />
                                         <br />
                                         _______________________________________
                                         <br />
                                         _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
-                                        _______________________________________
-                                        <br />
+                                        <br /><br />
                                         VI. Pemeriksaan tanda-tanda vital dan kondisi umum (diisi oleh perawat)
+                                        <br /><br />
+                                        TD : <span t-field="o.systolic" /> / <span t-field="o.diastolic" /> mmHg   Suhu : <span t-field="o.temperature" /> C
                                         <br />
-                                        TD : ________ mmHg   Suhu : ________ C
+                                        HR : <span t-field="o.bpm" /> x/m    RR : <span t-field="o.respiratory_rate" /> x/m
                                         <br />
-                                        HR : ________ x/m    RR : ________ x/m
+                                        Kesadaran : <span t-field="o.kesadaran" />
                                         <br />
-                                        Kesadaran : _________________________
-                                        <br />
-                                        Penggunaan alat bantu : ______________________________
+                                        Penggunaan alat bantu : <span t-field="o.alat_bantu_jalan" />
                                         <br />
                                         <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                    <br /><br />
                                         VII. Kebutuhan Dasar Manusia (diisi oleh perawat)
-                                        <br />
+                                        <br /><br />
                                         - Malnutrition Screening Tool (MST)
-                                        <br />
-                                        1. Apakah pasien mengalami penurunan berat badan yang tidak di rencanakan / Tidak diinginkan dalam 6 bulan terakhir ?
-                                        <br />
-                                        o Tidak
-                                        <br />
-                                        o Tidak Yakin (ada tanda : baju menjadi lebih longgar)
-                                        <br />
-                                        o Ya, ada penurunan BB sebanyak :
-                                        <br />
-                                        1 - 5 Kg
-                                        <br />
-                                        6 - 10 Kg
+                                        <br /><br />
+                                        <center>
+                                            <table style="border: 1px solid #000;" width="70%">
+                                                <tbody>
+                                                    <t t-set="i" t-value="0" />
+                                                    <t t-set="l" t-value="0" />
+
+                                                    <t t-if="'bb1' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="0" />
+                                                    </t>
+                                                    <t t-if="'bb2' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="2" />
+                                                    </t>
+                                                    <t t-if="'bb3' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="1" />
+                                                    </t>
+                                                    <t t-if="'bb4' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="2" />
+                                                    </t>
+                                                    <t t-if="'bb5' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="3" />
+                                                    </t>
+                                                    <t t-if="'bb6' == o.penurunan_bb">
+                                                    <t t-set="i" t-value="4" />
+                                                    </t>
+
+                                                    <t t-if="'no' == o.asupan_makan">
+                                                    <t t-set="l" t-value="0" />
+                                                    </t>
+                                                    <t t-if="'yes' == o.asupan_makan">
+                                                    <t t-set="l" t-value="1" />
+                                                    </t>
+                                                    
+
+                                                    <t t-set="t" t-value="i+l" />
+
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; " colspan="2">
+                                                            1. Apakah pasien mengalami penurunan berat badan yang tidak direncanakan/tidak di inginkan dalam 6 bulan terakhir?
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; "><span t-field="o.penurunan_bb" /></td>
+                                                        <td style="border: 0px solid #000; "> <span t-esc="i" /> </td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+
+                                                        <td style="border: 0px solid #000; " colspan="2">
+                                                        2. Apakah asupan makanan pasien berkurang karena penurunan nafsu makan/kesulitan menerima makan?
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; "><span t-field="o.asupan_makan" /></td>
+                                                        <td style="border: 0px solid #000; "> <span t-esc="l" /> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Total : <span t-esc="t" /></td>
+                                                        <td style="border: 0px solid #000; ">  </td>
+                                                    </tr>
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </center>
                                         <br />
                                     </td>
                                 </tr>
                             </table>
 
-                            <p style="page-break-after:always;page-break-inside: avoid;"></p>
+                            <!-- <p style="page-break-after:always;page-break-inside: avoid;"></p> -->
 
                             <table style="width:100%">
 
                                 <tr>
                                     <td class="border">
-                                        11-15Kg
-                                        <br />
-                                        > 15Kg
-                                        <br />
-                                        Tidak tahu berapa penurunan berat badannya.
-                                        <br />
-                                        <br />
-                                        2. Apakah asupan makanan pasien berkurang karena penurunan nafsu makan/ kesulitan menerima makanan ?
-                                        <br />
-                                        o Tidak
-                                        <br />
-                                        o Ya
-                                        <br />
-                                        Total Skor : ____________
-                                        <br />
-                                        <br />
+                                        
                                         a. Kebutuhan Eliminasi
+                                        <br /><br />
+                                        Frekuensi BAB : <span t-field="o.frekuensi_bab" /> x/hari
                                         <br />
-                                        Frekuensi BAB : ___________x/hari
+                                        Warna  : <span t-field="o.warna_bab" />
                                         <br />
-                                        Warna  : ___________
+                                        Konsistensi : <span t-field="o.konsistensi_bab" />
                                         <br />
-                                        Konsistensi : ___________
+                                        Frekuensi BAK : <span t-field="o.frekuensi_bak" /> x/hari
                                         <br />
-                                        Frekuensi BAK : ___________x/hari
+                                        Jumlah : <span t-field="o.jumlah_bak" />
                                         <br />
-                                        Jumlah : ___________
-                                        <br />
-                                        Warna  : ___________
+                                        Warna  : <span t-field="o.warna_bak" />
                                         <br />
                                         <br />
                                         b. Kebutuhan Aktivitas dan Istirahat
+                                        <br /><br />
+                                        Mandi : <t t-if="false == o.bantuan_mandi">Mampu</t> <t t-if="true == o.bantuan_mandi">Dibantu</t>
                                         <br />
-                                        Mandi : Mampu/Dibantu
+                                        Makan : <t t-if="false == o.bantuan_makan">Mampu</t> <t t-if="true == o.bantuan_makan">Dibantu</t>
                                         <br />
-                                        Makan : Mampu/Dibantu
+                                        Berpakaian : <t t-if="false == o.bantuan_berpakaian">Mampu</t> <t t-if="true == o.bantuan_berpakaian">Dibantu</t>
                                         <br />
-                                        Berpakaian : Mampu/Dibantu
+                                        BAB : <t t-if="false == o.bantuan_bab">Mampu</t> <t t-if="true == o.bantuan_bab">Dibantu</t>
                                         <br />
-                                        BAB/BAK : Mampu/Dibantu
+                                        BAK : <t t-if="false == o.bantuan_bak">Mampu</t> <t t-if="true == o.bantuan_bak">Dibantu</t>
                                         <br />
-                                        Olahraga : Ya/Tidak
+                                        Olahraga : <span t-field="o.olahraga" /> 
                                         <br />
-                                        Keterbatasan ROM : Ada/Tidak
+                                        Keterbatasan ROM : <span t-field="o.keterbatasan_rom" /> 
                                         <br />
-                                        Gaya berjalan : Pelan/Diseret/Tremor/Lain-lain
+                                        Gaya berjalan : <span t-field="o.cara_berjalan" /> 
                                         <br />
-                                        Kwalitas tidur : Nyenyak/Sering terbangun
+                                        Kwalitas tidur : <span t-field="o.kwalitas_tidur" />
                                         <br />
-                                        Obat Tidur : Ada/Tidak
+                                        Obat Tidur : <span t-field="o.obat_tidur" />
                                         <br />
                                         <br />
                                         Pengkajian nyeri
+                                        <br /><br />
+                                        P	: <span t-field="o.pengkajian_nyeri_p" />
                                         <br />
-                                        P	: _____________________________________________
+                                        Q	: <span t-field="o.pengkajian_nyeri_q" />
                                         <br />
-                                        Q	: _____________________________________________
+                                        R	: <span t-field="o.pengkajian_nyeri_r" />
                                         <br />
-                                        R	: _____________________________________________
+                                        S	: <span t-field="o.pengkajian_nyeri_s" />
                                         <br />
-                                        S	: _____________________________________________
-                                        <br />
-                                        T	: _____________________________________________
+                                        T	: <span t-field="o.pengkajian_nyeri_t" />
                                         <br />
                                         <br />
                                         c. Kebutuhan Emosional
-        Kontak Mata : Ada/Tidak
                                         <br />
-                                        Bingung : Ada/Tidak
                                         <br />
-                                        Perasaan tidak mampu : Ada/Tidak
+                                        Kontak Mata : <span t-field="o.kontak_mata" /> 
                                         <br />
-                                        Perasaan tidak berharga : Ada/Tidak
+                                        Bingung : <span t-field="o.bingung" /> 
+                                        <br />
+                                        Perasaan tidak mampu : <span t-field="o.perasaan_tidak_mampu" /> 
+                                        <br />
+                                        Perasaan tidak berharga : <span t-field="o.perasaan_tidaK_berharga" /> 
                                         <br />
                                         <br />
                                         <br />
                                     </td>
                                     <td class="border">
                                         d. Cairan Dan Elektrolit
-    Minum : _____________________ cc/hari
+                                        <br /><br />
+                                        Minum : <span t-field="o.minum" /> cc/hari
                                         <br />
-                                        Parenteral : _____________________ cc/hari
+                                        Parenteral : <span t-field="o.parenteral" /> cc/hari
                                         <br />
-                                        Mukosa Bibir : __________________________
+                                        Mukosa Bibir : <span t-field="o.mukosa_bibir" />
                                         <br />
-                                        Turgor Kulit : __________________________
+                                        Turgor Kulit : <span t-field="o.turgor_kulit" />
                                         <br />
-                                        Edema : __________________________
+                                        Edema : <span t-field="o.edema" />
                                         <br />
-                                        Lain-Lain : __________________________
+                                        Lain-Lain : <span t-field="o.cairan_lain" />
                                         <br />
                                         <br />
                                         e. Kebutuhan Persepsi Sensori
+                                        <br /><br />
+                                        Penglihatan : <span t-field="o.penglihatan" /> 
                                         <br />
-                                        Penglihatan : normal / tidak normal
+                                        Pendengaran : <span t-field="o.pendengaran" /> 
                                         <br />
-                                        Pendengaran : normal / tidak normal
+                                        Penciuman : <span t-field="o.penciuman" /> 
                                         <br />
-                                        Penciuman : normal / tidak normal
+                                        Pengecapan : <span t-field="o.pengecapan" /> 
                                         <br />
-                                        Pengecapan : normal / tidak normal
-                                        <br />
-                                        Perabaan : normal / tidak normal
+                                        Perabaan : <span t-field="o.perabaan" /> 
                                         <br />
                                         <br />
                                         f. Kebutuhan Komunikasi
+                                        <br /><br />
+                                        Pembicaraan : <span t-field="o.pembicaraan" /> 
                                         <br />
-                                        Pembicaraan : koheren / inkoheren
+                                        Disorientasi : <t t-if="false == o.disorientasi">Tidak</t> <t t-if="true == o.disorientasi">Ada</t>
+                                        
                                         <br />
-                                        Disorientasi : Ada / Tidak
+                                        Apatis : <span t-field="o.apatis" /> 
                                         <br />
-                                        Apatis : Ada / Tidak
-                                        <br />
-                                        Afasia : Ada / Tidak
+                                        Afasia : <span t-field="o.afasia" /> 
                                         <br />
                                         <br />
                                         g. Kebutuhan Spiritual
-                                        <br />
+                                        <br /><br />
                                         Kegiatan ibadah sehari hari :
-                                        <br />
-                                        ________________________________________
-                                        <br />
-                                        ________________________________________
-                                        <br />
-                                        ________________________________________
+                                        <br /><br />
+                                        <span t-field="o.kegiatan_ibadah" />
                                         <br />
                                         ________________________________________
                                         <br />
@@ -338,12 +388,8 @@ border:1px solid black;
                                         <br />
                                         <br />
                                         VIII. Daftar Diagnosis Keperawatan
-                                        <br />
-                                        ________________________________________
-                                        <br />
-                                        ________________________________________
-                                        <br />
-                                        ________________________________________
+                                        <br /><br />
+                                        <span t-field="o.notes" />
                                         <br />
                                         ________________________________________
                                         <br />
@@ -351,6 +397,8 @@ border:1px solid black;
                                         <br />
                                         <br />
                                         IX. Daftar Rencana Keperawatan
+                                        <br /><br />
+                                        <span t-field="o.notes_complaint" />
                                         <br />
                                         ________________________________________
                                         <br />
@@ -359,11 +407,7 @@ border:1px solid black;
                                         ________________________________________
                                         <br />
                                         ________________________________________
-                                        <br />
-                                        ________________________________________
-                                        <br />
-                                        ________________________________________
-                                        <br />
+                                        <br /><br />
                                     </td>
 
                                 </tr>

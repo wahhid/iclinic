@@ -36,15 +36,15 @@
 
     <report id="perintah_rawat_inap_report_menu" string="Surat Perintah Rawat Inap" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_perintah_rawat_inap" menu="True" />
 
-    <report id="pengkajian_report_menu" string="Form Pengkajian Awal Klinis Rawat Jalan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian_rawat_jalan" menu="True" />
+    <report id="pengkajian_report_menu" string="Form Pengkajian Rawat Jalan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian_rawat_jalan" menu="True" />
 
     <report id="pengkajian_rawat_inap_report_menu" string="Form Pengkajian Rawat Inap" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_pengkajian_rawat_inap" menu="True" />
 
-    <report id="rekam_medis_rawat_jalan_report_menu" string="Form Rekam Medis Rawat Jalan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_rekam_medis_rawat_jalan" menu="True" />
+    <report id="rekam_medis_rawat_jalan_report_menu" string="Form Rekam Medis Rawat Jalan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_rekam_medis_rawat_jalan" menu="False" />
 
-    <report id="cppt_report_menu" string="Form CPPT" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_cppt" menu="True" />
+    <report id="cppt_report_menu" string="Form CPPT" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_cppt" menu="False" />
 
-    <report id="implementasi_keperawatan_report_menu" string="Form Implementasi Keperawatan" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_implementasi_keperawatan" menu="True" />
+    <report id="implementasi_keperawatan_report_menu" string="Form Implementasi Keperawatan" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_implementasi_keperawatan" menu="False" file="oehealth_idn.report_implementasi_keperawatan" />
 
     <report id="observasi_terapi_pasien_report_menu" string="Observasi Terapi Pasien" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_observasi_terapi_pasien" menu="True" />
 
