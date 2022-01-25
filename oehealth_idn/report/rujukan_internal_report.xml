@@ -50,33 +50,55 @@ table, th, td {
                                             <tr>
                                                 <td>
                                                     Kepada TS : dr.
-                                                    <span t-field="o.doctor" />
+                                                    <span t-field="o.unit_administration_internal" />
+                                                    <span t-field="o.unit_administration" />
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Dengan ini kami konsulkan pasien.</td>
                                             </tr>
                                             <tr>
-                                                <td>Riwayat Penyakit : _____________________________</td>
-                                            </tr>
-                                            <tr>
-                                                <td>____________________________________________________</td>
-                                            </tr>
-                                            <tr>
-                                                <td>____________________________________________________</td>
-                                            </tr>
-                                            <tr>
-                                                <td>____________________________________________________</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Obat dan tindakan yang diberikan : _______________________</td>
+                                                <td>Riwayat Penyakit : </td>
                                             </tr>
                                             <tr>
                                                 <td>
+                                                    <t t-foreach='o.evaluation_id' t-as='evl'>
+                                                        <t t-if="true == evl.dm_stroke_p">DM Stroke, </t>
+                                                        <t t-if="true == evl.katarak">Katarak, </t>
+                                                        <t t-if="true == evl.hipertensi_p">Hipertensi , </t>	
+                                                        <t t-if="true == evl.jantung_p">Penyakit jantung koroner , </t>	
+                                                        <t t-if="true == evl.kolesterol">Kolesterol,Penyakit Ginjal , </t>	
+                                                        <t t-if="true == evl.liver">Liver , </t>
+                                                        <t t-if="true == evl.asam_urat">Asam Urat 	, </t>
+                                                        <t t-if="true == evl.pendarahan">Pendarahan Lama , </t>
+                                                        <br/>Lain-lain, <br/>
+                                                            Sebutkan : <span t-field="evl.lain_rpp" />
+                                                    </t>
+                                                </td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>____________________________________________________</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Obat dan tindakan yang diberikan : </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Obat :
+                                                    <br/>
                                                     <t t-foreach='o.prescription_id' t-as='i'>
                                                         <t t-foreach='i.prescription_line' t-as='line'>
                                                             <span t-field="line.name" />,
                                                         </t>
+                                                    </t>
+                                                    <br/><br/>
+                                                    Tindakan :
+                                                    <br/>
+                                                    <t t-foreach='o.evaluation_id' t-as='ev'>
+                                                        <span t-field="ev.notes_complaint" />,
                                                     </t>
                                                 </td>
                                             </tr>
@@ -90,25 +112,37 @@ table, th, td {
                                                 <td>
                                                     <table style="width:100%">
                                                         <tr>
-                                                            <td style="border:1px solid black;"></td>
-                                                            <td>Mohon konsultasi satu kali</td>
-                                                            <td style="border: 1px solid black"></td>
-                                                            <td>Mohon untuk rawat bersama</td>
-                                                            <td style="border: 1px solid black"></td>
-                                                            <td>Mohon alih rawat</td>
+                                                            <t t-if="o.tipe_konsul == 'konsul1'">
+                                                                <td style="border:1px solid black; width:10%;">✔</td>
+                                                                <td><span t-field="o.tipe_konsul" /></td>
+                                                            </t>
+                                                            <t t-if="o.tipe_konsul == 'konsul2'">
+                                                                <td style="border:1px solid black; width:10%;">✔</td>
+                                                                <td><span t-field="o.tipe_konsul" /></td>
+                                                            </t>
+                                                            <t t-if="o.tipe_konsul == 'konsul3'">
+                                                                <td style="border:1px solid black; width:10%;">✔</td>
+                                                                <td><span t-field="o.tipe_konsul" /></td>
+                                                            </t>
                                                         </tr>
 
                                                     </table>
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td style="text-align:center;"> </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"> </td>
+                                            </tr>
+                                            <tr>
                                                 <td style="text-align:center;"> Dokter yang merawat,</td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;"></td>
+                                                <td style="text-align:center;"><br/><br/></td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;"></td>
+                                                <td style="text-align:center;"><br/><br/></td>
                                             </tr>
                                             <tr>
                                                 <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
@@ -119,9 +153,8 @@ table, th, td {
                                         </table>
                                     </td>
                                 </tr>
-
                             </table>
-
+                            <p style="page-break-after:always;page-break-inside: avoid;"></p>
                             <table style="width:100%;">
                                 <tr>
                                     <th style="border: 1px solid black; text-align:center;">BALASAN KONSULTASI</th>
@@ -198,10 +231,10 @@ table, th, td {
                                                 <td style="text-align:center;"> Dokter yang merawat,</td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;"></td>
+                                                <td style="text-align:center;"><br/><br/></td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;"></td>
+                                                <td style="text-align:center;"><br/><br/></td>
                                             </tr>
                                             <tr>
                                                 <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>

@@ -226,6 +226,7 @@
                                 <field name="unit_administration_internal"/>
                                 <field name="unit_administration"/>
                                 <field name="reference_hospital"/>
+                                <field name="tipe_konsul"/>
                             </group>
                         </page>
                         <page string="Details" attrs="{'invisible': [('type', '!=', 'In-Patient')]}">

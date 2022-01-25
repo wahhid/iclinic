@@ -167,6 +167,7 @@ class unit_registration(models.Model):
     unit_administration = fields.Char('Unit Administration', size=200)
     unit_administration_internal = fields.Many2one(comodel_name='oeh.medical.physician', string='Unit Administration Internal')
     reference_hospital = fields.Char('Reference Hospital/Clinic', size=200)
+    tipe_konsul = fields.Selection([('konsul1','Mohon konsultasi satu kali'), ('konsul2','Mohon untuk rawat bersama'), ('konsul3','Mohon alih rawat')], string='Tipe Konsultasi')
 
     perstujuan_tindakan = fields.Boolean(string='Persetujuan Tindakan')
 
