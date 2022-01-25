@@ -146,7 +146,7 @@ class register_walkin(models.Model):
                 next_type_id = self.queue_trans_id.type_id.next_type_id
                 if not next_type_id:    
                     wizard_form = self.env.ref('oehealth_idn.view_wizard_next_step_form', False)
-                    new = self.env['wizard.next.step'].create({'is_valid': True})
+                    new = self.env['wizard.next.step'].create({'is_valid': True, 'is_start': True})
                     return {
                         'name'      : _('Next Step'),
                         'type'      : 'ir.actions.act_window',
@@ -163,39 +163,39 @@ class register_walkin(models.Model):
         else:
             raise Warning('Queue have different unit administration')
 
-    def action_next(self):
-        if not self.queue_trans_id:
-            raise Warning('No Queue number defined!')
+    # def action_next(self):
+    #     if not self.queue_trans_id:
+    #         raise Warning('No Queue number defined!')
 
-        if self.queue_trans_id.type_id.unit_administration_id.id == self.env.user.default_unit_administration_id.id:
-            if self.state == 'Draft':
-                if len(self.clinic_ids) > 0  or len(self.unit_ids) > 0 or len(self.emergency_ids) > 0 or len(self.support_ids) > 0 or len(self.lab_test_ids) > 0:
-                    next_type_id = self.queue_trans_id.type_id.next_type_id
-                    if not next_type_id:    
-                        wizard_form = self.env.ref('oehealth_idn.view_wizard_next_step_form', False)
-                        new = self.env['wizard.next.step'].create({'is_valid': True})
-                        return {
-                            'name'      : _('Next Step'),
-                            'type'      : 'ir.actions.act_window',
-                            'res_model' : 'wizard.next.step',
-                            'res_id'    : new.id,
-                            'view_id'   : wizard_form.id,
-                            'view_type' : 'form',
-                            'view_mode' : 'form',
-                            'target'    : 'new'
-                        }
-                    else:
-                        self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})        
-                        self.state = 'Scheduled'
-                        # self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'}) 
-                        # self.state = 'Scheduled'
-                else:
-                    raise Warning('Need min 1 unit registration!')
-            # else:
-            #     next_type_id = self.queue_trans_id.type_id.next_type_id
-            #     self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})
-        else:
-            raise Warning('Queue have different unit administration')
+    #     if self.queue_trans_id.type_id.unit_administration_id.id == self.env.user.default_unit_administration_id.id:
+    #         if self.state == 'Draft':
+    #             if len(self.clinic_ids) > 0  or len(self.unit_ids) > 0 or len(self.emergency_ids) > 0 or len(self.support_ids) > 0 or len(self.lab_test_ids) > 0:
+    #                 next_type_id = self.queue_trans_id.type_id.next_type_id
+    #                 if not next_type_id:    
+    #                     wizard_form = self.env.ref('oehealth_idn.view_wizard_next_step_form', False)
+    #                     new = self.env['wizard.next.step'].create({'is_valid': True})
+    #                     return {
+    #                         'name'      : _('Next Step'),
+    #                         'type'      : 'ir.actions.act_window',
+    #                         'res_model' : 'wizard.next.step',
+    #                         'res_id'    : new.id,
+    #                         'view_id'   : wizard_form.id,
+    #                         'view_type' : 'form',
+    #                         'view_mode' : 'form',
+    #                         'target'    : 'new'
+    #                     }
+    #                 else:
+    #                     self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})        
+    #                     self.state = 'Scheduled'
+    #                     # self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'}) 
+    #                     # self.state = 'Scheduled'
+    #             else:
+    #                 raise Warning('Need min 1 unit registration!')
+    #         # else:
+    #         #     next_type_id = self.queue_trans_id.type_id.next_type_id
+    #         #     self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})
+    #     else:
+    #         raise Warning('Queue have different unit administration')
 
     def get_user_unit_administration(self):
         # for row in self:
@@ -263,7 +263,7 @@ class register_walkin(models.Model):
 
     @api.multi
     def set_to_completed(self):
-        if not self.clinic_ids and not self.unit_ids and not self.emergency_ids and not self.support_ids:
+        if not self.clinic_ids and not self.unit_ids and not self.emergency_ids and not self.support_ids and not self.lab_test_ids:
             raise UserError(_('Completed Failed! \n Registration Line empty !'))
         else:
             for line in self.clinic_ids:

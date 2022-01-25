@@ -55,6 +55,8 @@
             <field name="bg_color" position="after">
                 <field name="operating_unit_id"/>
                 <field name="unit_administration_id"/>
+                <field name="is_unit"/>
+                <field name="is_lab"/>
             </field>
         </field>
     </record>

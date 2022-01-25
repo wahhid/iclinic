@@ -16,6 +16,8 @@ class QueueType(models.Model):
     _inherit = 'queue.type'
     operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit')
     unit_administration_id = fields.Many2one('unit.administration', 'Unit Administration')
+    is_unit = fields.Boolean('Is Unit', default=False)
+    is_lab = fields.Boolean('Is Lab', default=False)
 
 class QueuePickup(models.Model):
     _inherit = 'queue.pickup'
