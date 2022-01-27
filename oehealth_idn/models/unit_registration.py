@@ -133,7 +133,7 @@ class unit_registration(models.Model):
                 next_type_id = self.queue_trans_id.type_id.next_type_id
                 if not next_type_id:    
                     wizard_form = self.env.ref('oehealth_idn.view_wizard_next_step_form', False)
-                    new = self.env['wizard.next.step'].create({'is_valid': True})
+                    new = self.env['wizard.next.step'].create({'is_valid': True,'is_current_unit': True})
                     return {
                         'name'      : _('Next Step'),
                         'type'      : 'ir.actions.act_window',
