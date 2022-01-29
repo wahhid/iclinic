@@ -29,32 +29,32 @@ class ProjectReportXlsx(ReportXlsx):
 
 
         # # ---------------------Bar chart for Time duration-------------------------- #
-            chart_bar_t = workbook.add_chart({'type': 'bar'})
-            actual_time = planned_time = 10
-            # for data in task:
-            #     if data.planned_hours:
-            #         planned_time += data.planned_hours
-            #     actual_time += data.effective_hours
+        chart_bar_t = workbook.add_chart({'type': 'bar'})
+        actual_time = planned_time = 10
+        # for data in task:
+        #     if data.planned_hours:
+        #         planned_time += data.planned_hours
+        #     actual_time += data.effective_hours
 
-            data_bar_t = [
-                ['Planned time', 'Actual time'],
-                [planned_time, actual_time],
-            ]
+        data_bar_t = [
+            ['Planned time', 'Actual time'],
+            [planned_time, actual_time],
+        ]
+        col = 6
+        row = 0
+        worksheet2.merge_range(row, col, row + 1, col + 3, "Time Duration(Hours)", header)
+        row += 2
+        for item in range(2):
+            worksheet2.merge_range(row, col, row, col + 1, data_bar_t[0][item], format_cell)
+            col += 2
+            worksheet2.merge_range(row, col, row, col + 1, data_bar_t[1][item], format_cell)
             col = 6
-            row = 0
-            worksheet2.merge_range(row, col, row + 1, col + 3, "Time Duration(Hours)", header)
-            row += 2
-            for item in range(2):
-                worksheet2.merge_range(row, col, row, col + 1, data_bar_t[0][item], format_cell)
-                col += 2
-                worksheet2.merge_range(row, col, row, col + 1, data_bar_t[1][item], format_cell)
-                col = 6
-                row += 1
-            chart_bar_t.add_series({'name': 'Time',
-                                    'categories': '=' + sheet2 + '!$G$3:$G$4',
-                                    'values': '=' + sheet2 + '!$I$3:$I$4',
-                                    })
-            chart_bar_t.set_title({'name': 'Time Duration'})
-            worksheet1.insert_chart('I13', chart_bar_t)
+            row += 1
+        chart_bar_t.add_series({'name': 'Time',
+                                'categories': '=' + sheet2 + '!$G$3:$G$4',
+                                'values': '=' + sheet2 + '!$I$3:$I$4',
+                                })
+        chart_bar_t.set_title({'name': 'Time Duration'})
+        worksheet1.insert_chart('I13', chart_bar_t)
 
-ProjectReportXlsx('report.obserpasi_terapi_patient_report', 'unit.registration')
+    ProjectReportXlsx('report.obserpasi_terapi_patient_report', 'unit.registration')
