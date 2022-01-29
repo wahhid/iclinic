@@ -2,16 +2,17 @@
 <odoo>
   <template id="report_perintah_rawat_inap">
     <t t-call="report.html_container">
-      <t t-call="report.external_layout">
+      
         <t t-foreach="docs" t-as="o">
           <div class="page">
             <style>
 
-th, td {
-  padding: 7px;
-}
-</style>
+              th, td {
+                padding: 7px;
+              }
+              </style>
             <div class="oe_structure">
+              <br/>
               <table border="1" style="width:100%;">
                 <tr>
                   <th style="border: 1px solid black; height: 30px; text-align:center">SURAT PERINTAH RAWAT</th>
@@ -46,7 +47,7 @@ th, td {
 
                           <td>:</td>
 
-                          <td><span t-field="o.unit.operating_id.partner_id.name" /></td>
+                          <td><span t-field="o.unit.operating_id.name" /></td>
 
                         </tr>
 
@@ -94,11 +95,11 @@ th, td {
 
                           <td>
                             <t t-if="'Insurance' == o.payment">
-                                    <p t-field="o.insurance.ins_type.name" /> -
+                                    <span t-field="o.insurance.ins_type.name" /> -
                                     <span t-field="o.insurance.ins_no" />
                             </t>
                             <t t-if="'Employe' == o.payment">
-                                    <p t-field="o.patient.detail_payment" /> - 
+                                    <span t-field="o.patient.detail_payment" /> - 
                                     <span t-field="o.employee_id.employee_number" />
                             </t>
                           </td>
@@ -123,7 +124,7 @@ th, td {
 
                         <tr>
 
-                          <td style="text-align: right;" colspan="3"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
+                          <td style="text-align: right;" colspan="3">Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
 
                         </tr>
 
@@ -159,7 +160,7 @@ th, td {
 
                         <tr>
 
-                          <td style="text-align: right;" colspan="3">(___________________)</td>
+                          <td style="text-align: right;" colspan="3">( <span t-field="o.doctor.name" /> )</td>
 
                         </tr>
 
@@ -212,11 +213,11 @@ th, td {
                           <td>:</td>
                           <td>
                             <t t-if="'Insurance' == o.payment">
-                                    <p t-field="o.insurance.ins_type.name" /> -
+                                    <span t-field="o.insurance.ins_type.name" /> -
                                     <span t-field="o.insurance.ins_no" />
                             </t>
                             <t t-if="'Employe' == o.payment">
-                                    <p t-field="o.patient.detail_payment" /> - 
+                                    <span t-field="o.patient.detail_payment" /> - 
                                     <span t-field="o.employee_id.employee_number" />
                             </t>
                           </td>
@@ -227,10 +228,10 @@ th, td {
                           <td><span t-field="o.patient.street" /> /</td>
                         </tr>
                         <tr>
-                          <td colspan="3">Dengan ini menyatakan bahwa benar saya telah menerima pelayanan RAWAT INAP di <span t-field="o.unit.operating_id.name" /> pada tanggal <span t-field="o.date" /> demikian surat ini dibuat dengan sebenarnya dan digunakan sebagaimana mestinya.</td>
+                          <td colspan="3">Dengan ini menyatakan bahwa benar saya telah menerima pelayanan RAWAT INAP di <span t-field="o.unit.operating_id.name" /> pada tanggal <span t-field="o.date" t-field-options='{"format": "d MMMM y"}'/> demikian surat ini dibuat dengan sebenarnya dan digunakan sebagaimana mestinya.</td>
                         </tr>
                         <tr>
-                          <td style="text-align: right;" colspan="3"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
+                          <td style="text-align: right;" colspan="3">Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
                         </tr>
                         <tr>
                           <td style="text-align: right;" colspan="3">Yang menyatakan,</td>
@@ -266,7 +267,7 @@ th, td {
             </div>
           </div>
         </t>
-      </t>
+      
     </t>
   </template>
 </odoo>

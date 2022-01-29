@@ -33,7 +33,7 @@ th, td {
                                                     <tr>
                                                         <td style="">Istri/ Anak dari</td>
                                                         <td style=""> : </td>
-                                                        <td style=""><t t-if="true == o.patient.is_have_parent">
+                                                        <td style=""><t t-if="o.patient.is_have_parent == true">
                                                             <span t-field="o.parent_id.name"/> 
                                                         </t></td>
                                                     </tr>

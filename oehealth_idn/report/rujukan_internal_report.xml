@@ -148,7 +148,7 @@ table, th, td {
                                                 <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;"> <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
+                                                <td style="text-align:center;"> <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -240,7 +240,7 @@ table, th, td {
                                                 <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
                                             </tr>
                                             <tr>
-                                                <td style="text-align:center;"> <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
+                                                <td style="text-align:center;"> <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
                                             </tr>
                                         </table>
                                     </td>

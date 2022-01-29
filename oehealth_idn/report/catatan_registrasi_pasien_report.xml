@@ -238,7 +238,7 @@ th, td {
                     __________________________
                     <br />
                     <br />
-                    Kontrol tanggal : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                    Kontrol tanggal : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
                     <br />
                   </td>
                 </tr>

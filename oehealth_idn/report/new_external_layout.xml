@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<t t-name="report.new_external_layout_header">
+    <!-- Multicompany -->
+    <t t-if="not o and doc">
+        <t t-set="o" t-value="doc"/>
+    </t>
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"/>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"/>
+    </t>
+
+    <div class="header">
+
+        <div class="row">
+
+            <div class="col-xs-3">
+                <img t-if="company.logo" style="width:70px;height:70px;" t-att-src="'data:image/png;base64,%s' %company.logo"/>
+            </div>
+            <div class="col-xs-9">
+                <div class="row text-center">
+                    <span t-field="o.pharmacy.operating_unit_id.name" />
+                </div>
+                <div class="row text-center">
+                    <span t-field="o.pharmacy.operating_unit_id.unit_address" />
+                </div>
+                <div class="row text-center">
+                    No. Izin Klinik : <span t-field="o.pharmacy.operating_unit_id.izin_klinik" />
+                </div>
+                <div class="row text-center">
+                    No. Izin Apotik : <span t-field="o.pharmacy.operating_unit_id.izin_apotik" />
+                </div>
+            </div>
+        </div>
+        <hr/>
+
+        
+
+    </div>
+
+</t>
+

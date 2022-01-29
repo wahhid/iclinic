@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Main template -->
+    <template id="report_rekammedisrawatjalan">
+        <style>
+            #fontsize {
+                font-size:11px;
+            }
+
+            #fontsizeheader {
+                font-size:9px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            table, th, td {
+                font-size:9px;
+            }
+            hr.new4 {
+                border: 1px solid black;
+            }
+        </style>
+
+        <t t-call="report.html_container">
+            <div class="page">
+                <div class="oe_structure">
+                    <br/><br/>
+                    
+                    <h2 style="text-align:center;">REKAM MEDIS RAWAT JALAN</h2>
+                    <br/>
+                    <center>
+                        <table class="table">
+                            <tr>
+                                <td>No.RM : <span t-esc="patient['medical_record']" /></td>
+                                <td></td>
+                                <td>No.NPP : 
+                                        <!-- <t t-if="'Employee' == o.walkin.payment">
+                                                <span t-field="o.employee_id.employee_number" />
+                                        </t>
+                                            -->
+                                </td>
+                                <th rowspan="3" >
+                                    RIWAYAT ALERGI <br/>
+                                    <br />
+                                    <t t-foreach="alergi_ids" t-as="pathlog">
+                                        <span t-esc="pathlog['alergi']" /><br/>
+                                        <span t-esc="pathlog['alergi_obat']" />
+                                    </t>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>Nama Lengkap :  <span t-esc="patient['patient_name']" /></td>
+                                <td></td>
+                                <td>Jenis Kelamin : <span t-esc="patient['sex']" /></td>
+                            </tr>
+                            <tr>
+                                <td>TTL : <span t-esc="patient['ttl']" /></td>
+                                <td></td>
+                                <td>Umur : <span t-esc="patient['age']" /></td>
+                            </tr>
+                        </table>
+                        <br/><br/>
+                        <table class="table table-striped">
+                            <tr>
+                                <th >TANGGAL POLI</th>
+                                <th >ASUHAN KEPERAWATAN DNA KEBIDANAN SOAP</th>
+                                <th >PERAWAT BIDAN</th>
+                                <th >ANAMNESA DAN DIAGNOSA</th>
+                                <th >PEMERIKSAAN PENUNJANG</th>
+                                <th >TERAPI/TINDAKAN</th>
+                                <th >DOKTER</th>
+                            </tr>
+                            
+                            
+                                <t t-foreach="evaluation" t-as="nrs">   
+                                    <t t-if="nrs['is_nurse']">    
+                                        <tr>
+                                            <td >
+                                                <span t-esc="nrs['evaluation_start_date']" t-field-options='{"format": "d MMMM y"}'/>
+                                            </td>
+                                            <td >
+                                                S : 
+                                                <t t-esc="nrs['subjective']" />
+                                                <br/>
+                                                O : <br />
+                                                    BB : <span t-esc="nrs['weight']" />  kg
+                                                    <br /><br />
+                                                    TB : <span t-esc="nrs['height']" />  cm
+                                                    <br /><br />
+                                                    IMT : <span t-esc="nrs['imt']" />  (BB/TB2/M)
+                                                    <br /><br />
+                                                A :
+                                                <P t-esc="nrs['notes']" />
+                                                <br/>
+                                                P :
+                                                <P t-esc="nrs['notes_complaint']" />
+                                                <br/>
+                                            </td>
+                                            <td >
+                                                <span t-esc="nrs['nurse']" />
+                                            </td>
+                                            <td >
+                                                
+                                            </td>
+                                            <td >
+                                                
+                                            </td>
+                                            <td >
+
+                                            </td>
+                                            <td >
+                                                
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="nrs['is_doctor']">
+                                        <tr>
+                                            <td >
+                                                <span t-esc="nrs['evaluation_start_date']" t-field-options='{"format": "d MMMM y"}'/>
+                                            </td>
+                                            <td >
+                                                
+                                            </td>
+                                            <td >
+                                                
+                                            </td>
+                                            <td >
+                                                ANAMNESA : <span t-esc="nrs['subjective']"/>
+                                                <br/><br/>
+                                                DIAGNOSA : 
+                                                
+                                                <t t-foreach="nrs['pathologys']" t-as="pathlog">
+                                                    <span t-esc="pathlog['pathology_name']"/>,
+                                                </t>
+                                                
+                                            </td>
+                                            <td >
+                                                <t t-foreach="labs" t-as="lab">
+                                                    <span t-esc="lab"/>
+                                                    <br/> 
+                                                </t>
+                                            </td>
+                                            <td >
+                                                <span t-esc="nrs['tindakan']" />
+                                            </td>
+                                            <td >
+                                                <span t-esc="nrs['doctor']" />
+                                            </td>
+                                        </tr>    
+                                    </t>
+                                </t>
+                                
+                        </table>
+                    </center>
+                </div>
+            </div>
+            
+        </t>
+    </template>
+</odoo>

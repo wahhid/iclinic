@@ -30,6 +30,12 @@
                     </div>
                     <!-- end header -->
                     <div class="page">
+                    <style>
+
+th, td {
+  font-size:10px;
+}
+</style>
                         <div class="oe_structure">
                              <div class="row">
                                 <p style="font-size:24px;text-align:center;font-weight:bold;">Salinan Resep</p>
@@ -42,7 +48,7 @@
                                         <td>Dari Dokter :  <span t-field="o.doctor.name" /></td>
                                    </tr>
                                    <tr>
-                                        <td>Dibuat Tanggal  : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
+                                        <td>Dibuat Tanggal  : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
                                    </tr>  
                                    <tr>
                                         <td>Untuk  :  <span t-field="o.remarks" /></td>
@@ -67,7 +73,7 @@
                                                 <span t-field="s.name"/>
                                             </td>
                                             <td class="text-left">
-                                                <span t-field="s.dose"/>
+                                                <span t-field="s.dose"/> Mg
                                             </td>
                                             <td class="text-left">
                                                 <span t-field="s.qty"/>
@@ -80,27 +86,30 @@
                                             </td>
                                     </tr>
                                     <t t-foreach="o.concoction_ids" t-as="cc">
-                                            <tr>  
-                                        <td> 
-                                            Obat : <span t-field="cc.product_id.name" />
-                                        </td>
-                                        <td>
-                                            Jumlah : <span t-field="cc.qty" />
-                                        </td>
-                                        <td colspan="3">
-                                            Keterangan : <span t-field="cc.remark" />
-                                        </td>
+                                        <tr>  
+                                            <th colspan="4"> 
+                                                Obat : <span t-field="cc.product_id.name" />
+                                                Jumlah : <span t-field="cc.qty" />
+                                                Keterangan : <span t-field="cc.remark" />
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>Detail Obat</th>
+                                            <th>Zat Aktif</th>
+                                            <th colspan="1">Total Qty</th>
                                         </tr>
                                         <t t-foreach="cc.concoction_detail_ids" t-as="ccd">
                                             <tr>
+                                                <td></td>
                                                 <td>
-                                                    Obat Detail : <span t-field="ccd.product_id.name" />
+                                                    <span t-field="ccd.product_id.name" />
                                                 </td>
                                                 <td>
-                                                    Zat Aktif : <span t-field="ccd.zat_qty" />
+                                                    <span t-field="ccd.zat_qty" />
                                                 </td>
-                                                <td colspan="3">
-                                                    Qty : <span t-field="ccd.total" />
+                                                <td colspan="1">
+                                                    <span t-field="ccd.total" />
                                                 </td>
                                             </tr>
                                         </t>
@@ -109,7 +118,7 @@
                                 </tbody>
                             </table>
                             <br/><br/>
-                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
                         </div>
                     </div>
                 </t>

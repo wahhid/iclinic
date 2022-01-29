@@ -8,6 +8,7 @@
         <field name="arch" type="xml">
 
             <xpath expr="//field[@name='is_pharmacist']" position="after">
+                <field name="is_nurse"/>
                 <field name="is_doctor"/>
                 <field name="physician_position"/>
             </xpath>

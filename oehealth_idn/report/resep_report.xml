@@ -30,6 +30,12 @@
                     </div>
                     <!-- end header -->
                     <div class="page">
+                    <style>
+
+th, td {
+  font-size:10px;
+}
+</style>
                         <div class="oe_structure">
                              <div class="row">
                                 <p style="font-size:24px;text-align:center;font-weight:bold;">RESEP</p>
@@ -37,7 +43,7 @@
 
                             <table style="width:100%" class="center">
 	<tr>
-		<td class="text-right"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></td>
+		<td class="text-right"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
 	</tr>
 	<tr>
 		<td>Dokter : <span t-field="o.doctor.name" /></td>
@@ -76,26 +82,29 @@
                     </tr>
                     <t t-foreach="o.concoction_ids" t-as="cc">
                         <tr>  
-                            <td> 
+                            <th colspan="5"> 
                                 Obat : <span t-field="cc.product_id.name" />
-                            </td>
-                            <td>
                                 Jumlah : <span t-field="cc.qty" />
-                            </td>
-                            <td colspan="3">
                                 Keterangan : <span t-field="cc.remark" />
-                            </td>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>Detail Obat</th>
+                            <th>Zat Aktif</th>
+                            <th colspan="2">Total Qty</th>
                         </tr>
                         <t t-foreach="cc.concoction_detail_ids" t-as="ccd">
                             <tr>
+                                <td></td>
                                 <td>
-                                    Obat Detail : <span t-field="ccd.product_id.name" />
+                                    <span t-field="ccd.product_id.name" />
                                 </td>
                                 <td>
-                                    Zat Aktif : <span t-field="ccd.zat_qty" />
+                                    <span t-field="ccd.zat_qty" />
                                 </td>
-                                <td colspan="3">
-                                    Keterangan : <span t-field="ccd.total" />
+                                <td colspan="2">
+                                    <span t-field="ccd.total" />
                                 </td>
                             </tr>
                         </t>

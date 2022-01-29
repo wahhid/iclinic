@@ -63,6 +63,15 @@ class unit_registration(models.Model):
         pass
         # for row in self:
         #     row.insurance = row.patient.current_insurance
+    
+    def print_medical_record(self):
+        #arrival_id
+        #evaluations = []
+        walkin_id = self.id
+        _logger.info(walkin_id)
+
+        data = {'walkin_id': walkin_id, 'type': self.type}
+        return self.env['report'].get_action([], 'oehealth_idn.report_rekammedisrawatjalan', data=data)
 
     def print_implementasi_keperawatan(self):
         walkin_id = False
@@ -99,6 +108,26 @@ class unit_registration(models.Model):
         for row in self:
             _logger.info(self.env.user.default_unit_administration_id.id)
             row.user_unit_administration_id = self.env.user.default_unit_administration_id.id
+
+    @api.multi
+    def print_report_xls(self):
+        context = self._context
+        datas = {'ids': context.get('active_ids', [])}
+        datas['model'] = 'unit.registration'
+        datas['form'] = self.read()[0]
+        
+        for field in datas['form'].keys():
+            if isinstance(datas['form'][field], tuple):
+                datas['form'][field] = datas['form'][field][0]
+
+        if len(datas['ids']) > 1:
+            raise except_orm('Warning', 'Selection of multiple record is not allowed')
+        else:
+            return {'type': 'ir.actions.report.xml',
+                    'report_name': 'obserpasi_terapi_patient_report',
+                    'datas': datas,
+                    }
+
 
     name = fields.Char(string='Reg ID #', required=True, readonly=True, default=lambda *a: '/')
     queue = fields.Char(string='Queue #', compute='get_queue', readonly=True)
