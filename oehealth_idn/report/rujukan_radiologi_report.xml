@@ -1,104 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_rujukan_radiologi">
+        <style>
+            #fontsize {
+                font-size:11px;
+            }
+
+            #fontsizeheader {
+                font-size:9px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            #table1, th, td {
+                padding: 8px;
+                border-collapse: separate;
+                border-spacing: 15px;
+                font-family: "Times New Roman", Times, serif;
+            }
+            hr.new4 {
+                border: 1px solid black;
+            }
+        </style>
         <t t-call="report.html_container">
-            <t t-call="report.external_layout">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"/>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+
+            <div class="page">
+                <div class="header">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <img t-if="company.logo" style="width:70px;height:70px;" t-att-src="'data:image/png;base64,%s' %company.logo"/>
+                        </div>
+                        <div class="col-xs-9">
+                            <t t-foreach="docs" t-as="o">
+                                <div class="row text-center">
+                                    <br/>
+                                    <h3><span t-field="o.unit.operating_id.name" /></h3>
+                                </div>
+                                <div class="row text-center" id="fontsizeheader">
+                                    <span t-field="o.unit.operating_id.unit_address" />
+                                </div>
+                                <div class="row text-center" id="fontsizeheader">
+                                    No. Izin Klinik : <span t-field="o.unit.operating_id.izin_klinik" />
+                                </div>
+                                <div class="row text-center" id="fontsizeheader">
+                                    No. Izin Apotik : <span t-field="o.unit.operating_id.izin_apotik" />
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <hr class="new4"/>
+
                 <t t-foreach="docs" t-as="o">
-                    <div class="page">
-                        <div class="oe_structure">
-                            <p>
-                                <br />
-                            </p>
-                            <p>
-                                <br />
-                            </p>
-                            <p>
-                                <br />
-                            </p>
-                            <p>
-                                <br />
-                            </p>
-                            <p>
-                                <br />
-                            </p>
-                            <p>
-                                <br />
-                            </p>
-                            <div class="row">
-                                <div class="col-xs-8">
-                                    <div>
-                                        <strong>Kepada Yth,</strong>
+                    <div class="oe_structure" id="fontsize">
+                        <center>
+                            <table style="width:80%" id="table1">
+                                <tr>
+                                    <td><strong>Kepada Yth,</strong>
                                         <strong>
                                             <p>Bagian Radiologi</p>
                                             <span t-field="o.unit_administration" />
-                                            <br/>
+                                            <span t-field="o.unit_administration_internal.name" /><br/>
                                             <span t-field="o.reference_hospital" />
-                                            <br/>
-                                        </strong>
-                                    </div>
-                                    <div>
-                                        <p>
-                                            <br />
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <strong>Mohon dilakukan pemeriksaan : 
+                                            <br/><br/>
+                                        </strong></td>
+                                </tr>
+                                <tr>
+                                    <td><br/><br/></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Mohon dilakukan pemeriksaan : <br/>
                                         <t t-foreach="o.evaluation_id" t-as="l">
-                                             <t t-if="true == l.doctor.is_doctor">
+                                            <t t-if="l.doctor.is_doctor == true">
                                                 <span t-field="l.notes_complaint" />
                                             </t>
                                         </t>
                                         </strong>
-                                        
-                                    </div>
-                                    <div>
-                                        <p>
-                                            <br />
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <strong>Nama pasien: </strong>
-                                        <span t-field="o.patient.name" />
-                                    </div>
-                                    <div>
-                                        <strong>Tanggal Lahir:</strong>
-                                        <span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' />
-                                    </div>
-                                    <div>
-                                        <strong>Umur: </strong>
-                                        <span t-field="o.patient.age" />
-                                    </div>
-                                    <div>
-                                        <p>
-                                            <br />
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p>Demikian, Terima Kasih</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <p style="text-align:center;"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/> </p>
-                                    <div>
-                                        <p>
-                                            <br />
-                                        </p>
-                                        <p>
-                                            <br />
-                                        </p>
-                                    </div>
-                                    <p style="text-align:center;">
-                                        Dr.
-                                        <span t-field="o.doctor" />
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </div>
+                                        <br/><br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Nama pasien: </strong>
+                                        <span t-field="o.patient.name" /><br/><br/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tanggal Lahir:</strong>
+                                        <span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /><br/><br/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Umur: </strong>
+                                        <span t-field="o.patient.age" /><br/><br/><br/><br/></td>
+                                </tr>
+                                <tr>
+                                    <td><br/><br/><p>Demikian, Terima Kasih</p><br/><br/><br/></td>
+                                </tr>
+                                <tr>
+                                    <td><p style="text-align:center;">Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
+                                    <br/><br/><br/><br/><br/><br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><p style="text-align:center;">( <span t-field="o.doctor" /> )</p></td>
+                                </tr>
+                            </table>
+                        </center>
                     </div>
                 </t>
-            </t>
+            </div>
         </t>
     </template>
 </odoo>

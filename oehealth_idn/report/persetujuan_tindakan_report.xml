@@ -216,7 +216,7 @@ table, th, td {
                                     seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
                       <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
                                     kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
-                      <p><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></p>
+                      <p>Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
                       <p>
                         <br />
                       </p>
@@ -337,7 +337,7 @@ table, th, td {
                                     seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
                       <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
                                     kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
-                      <p><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/></p>
+                      <p><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
                       <p>
                         <br />
                       </p>

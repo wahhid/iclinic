@@ -18,6 +18,7 @@ class WizardReferenceHospital(models.TransientModel):
     unit_administration = fields.Char('Unit Administration', size=200, required=False)
     reference_hospital = fields.Char('Reference Hospital/Clinic', size=200, required=False)
     unit_administration_internal = fields.Many2one(comodel_name='oeh.medical.physician', string='Unit Administration Internal' )
+    tipe_konsul = fields.Selection([('konsul1','Mohon konsultasi satu kali'), ('konsul2','Mohon untuk rawat bersama'), ('konsul3','Mohon alih rawat')], string='Tipe Konsultasi')
 
     def create_reference(self):
         unit_registration_id = self.env['unit.registration'].browse(self._context.get('active_id'))
@@ -25,6 +26,7 @@ class WizardReferenceHospital(models.TransientModel):
             'is_has_reference': True,
             'unit_administration': self.unit_administration,
             'reference_hospital': self.reference_hospital,
-            'unit_administration_internal': self.unit_administration_internal.id
+            'unit_administration_internal': self.unit_administration_internal.id,
+            'tipe_konsul': self.tipe_konsul
         }
         unit_registration_id.write(vals)

@@ -50,7 +50,14 @@ th, td {
                 </tr>
                 <tr>
                   <td class="border">
-                    NPP : ______
+                    NPP : <t t-if="'Insurance' == o.payment">
+                                    <span t-field="o.insurance.ins_type.name" /> -
+                                    <span t-field="o.insurance.ins_no" />
+                            </t>
+                            <t t-if="'Employe' == o.payment">
+                                    <span t-field="o.patient.detail_payment" /> - 
+                                    <span t-field="o.employee_id.employee_number" />
+                            </t>
                     <br />
                     Nomor Peserta Askes : <span t-field="o.name" />
                     <br />
@@ -66,9 +73,17 @@ th, td {
                     <br />
                   </td>
                   <td class="border">
-                    NPP : ______
+                    NPP : <t t-if="'Insurance' == o.payment">
+                                    <span t-field="o.insurance.ins_type.name" /> -
+                                    <span t-field="o.insurance.ins_no" />
+                            </t>
+                            <t t-if="'Employe' == o.payment">
+                                    <span t-field="o.patient.detail_payment" /> - 
+                                    <span t-field="o.employee_id.employee_number" />
+                            </t>
                     <br />
-                    Nomor Peserta Askes : ______
+                    Nomor Peserta Askes : <span t-field="o.name" />
+                    <br />
                     <br />
                     <span t-field="o.detail_payment_guarantor" />
                     <br />
@@ -76,22 +91,26 @@ th, td {
                 </tr>
                 <tr>
                   <td class="border">
-                    Dokter Penanggung Jawab : ______
+                    Dokter Penanggung Jawab : <span t-field="o.unit_ids.doctor.name" />
+                    <br />
                     <br />
                     Ruang Rawat : <span t-field="o.unit_ids.room_id.name" />
                     <br />
-                    Kelas : <span t-field="o.unit_ids.bad.name" />
+                    Kelas : <span t-field="o.unit_ids.bed.name" />
                     <br />
                   </td>
                   <td class="border">
                     Cara penerimaan melalui :
                     <br />
-                    (1) UGD
+                    <t t-if="o.clinic_ids">
+                      (1) Rawat Jalan
+                    </t>
                     <br />
-                    (2) Rawat Jalan
+                    <t t-if="o.emergency_ids">
+                      (2) UGD
+                    </t>
                     <br />
-                    (3) Lain-lain
-                    <br />
+                    
                   </td>
                 </tr>
                 <tr>
@@ -136,8 +155,7 @@ th, td {
                     <br />
                   </td>
                   <td class="border">
-                    Tanggal Masuk : ______/____/___ Jam
-                    <br />
+                    Tanggal Masuk :  <span t-field="o.date" t-field-options='{"format": "d MMMM y"}' />
                     Dipindahkan ke ruangan : ________/_____/____ Jam
                     <br />
                     Tanggal Keluar : _________/____/____ Jam
@@ -148,7 +166,7 @@ th, td {
                   <td class="border">
                     Pemeriksaan fisik / Physical Examination :
                     <br />
-                    __________________________
+                    <!-- Keterbatasan : <span t-field="o.keterbatasan_fisik" /> -->
                     <br />
                     __________________________
                     <br />
@@ -238,7 +256,7 @@ th, td {
                     __________________________
                     <br />
                     <br />
-                    Kontrol tanggal : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                    Kontrol tanggal : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
                     <br />
                   </td>
                 </tr>

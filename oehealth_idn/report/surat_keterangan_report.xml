@@ -1,89 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_surat_keterangan">
+        <style>
+            #fontsize {
+                font-size:11px;
+            }
+
+            #fontsizeheader {
+                font-size:9px;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            
+
+            hr.new4 {
+                border: 1px solid black;
+            }
+        </style>
         <t t-call="report.html_container">
-            <t t-call="report.external_layout">
-                <t t-foreach="docs" t-as="o">
-                    <div class="page">
-                        <style>
-table, th, td {
-  padding: 5px;
-}
-</style>
-                        <div class="oe_structure">
-                            <h2 style="text-align:center;">SURAT KETERANGAN</h2>
-                            <p style="text-align:center;">No. /MK/SKI/ /20</p>
-
-                            <table style="width:100%">
-                                <tr>
-                                    <td colspan="3">Dokter yang bertanda tangan di bawah ini menerangkan, bahwa</td>
-
-                                </tr>
-                                <tr>
-                                    <td>Nama</td>
-                                    <td> : </td>
-                                    <td><span t-field="o.patient.name" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Umur</td>
-                                    <td> : </td>
-                                    <td><span t-field="o.patient.age" /></td>
-                                </tr>
-                                <tr>
-                                    <td>Pekerjaan/Sekolah</td>
-                                    <td> : </td>
-                                    <td>_______________________________________</td>
-                                </tr>
-                                <tr>
-                                    <td>Alamat</td>
-                                    <td> : </td>
-                                    <td><span t-field="o.patient.street" /></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-    Setelah diperiksa kesehatannya dalam keadaan sakit, harus istirahat selama (___________) hari
-    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-    Terhitung Tanggal _________________ s/d_______________
-    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-    Demikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.
-    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
-  
-                                </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-                                        Pemeriksa,
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">
-    dr.<span t-field="o.doctor" />
-  
-                                
-                                </td>
-
-                                </tr>
-                            </table>
-
-                        </div>
-                    </div>
-                </t>
+            
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
             </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"/>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"/>
+            </t>
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <img t-if="company.logo" style="width:70px;height:70px;" t-att-src="'data:image/png;base64,%s' %company.logo"/>
+                    </div>
+                    <div class="col-xs-9">
+                        <t t-foreach="docs" t-as="o">
+                            <div class="row text-center">
+                                <br/>
+                                <h3><span t-field="o.operating_unit_id.name" /></h3>
+                            </div>
+                            <div class="row text-center" id="fontsizeheader">
+                                <span t-field="o.operating_unit_id.unit_address" />
+                            </div>
+                            <div class="row text-center" id="fontsizeheader">
+                                No. Izin Klinik : <span t-field="o.operating_unit_id.izin_klinik" />
+                            </div>
+                            <div class="row text-center" id="fontsizeheader">
+                                No. Izin Apotik : <span t-field="o.operating_unit_id.izin_apotik" />
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <hr class="new4"/>
+            <div class="page">
+                <style>
+
+                th, td {
+                    padding: 5px;
+                    width:95%;
+                }
+                </style>
+                <div class="oe_structure">
+                    <t t-foreach="docs" t-as="o">
+                                                            <br/>
+                                    <br/>
+                        <h2 style="text-align:center;">SURAT KETERANGAN</h2>
+                        <p style="text-align:center;">No.<span t-field="o.id" />/MK/SKI/<span t-field="o.name" /></p>
+                                                            <br/>
+                                    <br/>
+                        <table>
+                            <tr>
+                                <td >Dokter yang bertanda tangan di bawah ini menerangkan, bahwa</td>
+
+                            </tr>
+                            <tr>
+                                <td  >Nama      : <span t-field="o.patient.name" /></td>
+                            </tr>
+                            <tr>
+                                <td >Umur    : <span t-field="o.patient.age" /></td>
+                            </tr>
+                            <tr>
+                                <td>Pekerjaan/Sekolah   : <span t-field="o.patient.function" /></td>
+    
+                            </tr>
+                            <tr>
+                                <td>Alamat      : <span t-field="o.patient.street" /></td>
+
+                            </tr>
+                            <tr>
+                                <td >
+                                    Setelah diperiksa kesehatannya dalam keadaan sakit, harus istirahat selama (___________) hari
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    Terhitung Tanggal _________________ s/d_______________
+                                    <br/>
+                                    <br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    Demikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    Pemeriksa,
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    ( <t t-if="o.clinic_ids">
+                                        <t t-foreach="o.clinic_ids" t-as="cl">
+                                            <t t-if="cl.doctor.is_doctor == true">
+                                                <span t-field="cl.doctor.name" />
+                                            </t>
+                                        </t>
+                                        </t>
+                                        <t t-if="o.emergency_ids">
+                                        <t t-foreach="o.emergency_ids" t-as="em">
+                                            <t t-if="em.doctor.is_doctor == true">
+                                                <span t-field="em.doctor.name" />
+                                            </t>
+                                        </t>
+                                        </t>
+                                    )       
+                                </td>
+                            </tr>
+                        </table>
+                    </t>
+                </div>
+            </div>
+                
         </t>
     </template>
 </odoo>

@@ -76,6 +76,8 @@
 
             <xpath expr="//field[@name='name']" position="after">
                 <field name="unit_address"/>
+                <field name="izin_klinik"/>
+                <field name="izin_apotik"/>
             </xpath>
         </field>
     </record>

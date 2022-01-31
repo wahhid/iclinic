@@ -227,7 +227,7 @@ th, td {
                 </tr>
                 <tr>
                   <td class="text-center">(Drg._____________________)</td>
-                  <td class="text-center">(<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>)</td>
+                  <td class="text-center">(<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>)</td>
                   <td class="text-center">(_______________________)</td>
                 </tr>
               </table>

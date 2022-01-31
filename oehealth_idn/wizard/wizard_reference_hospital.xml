@@ -9,9 +9,14 @@
 	                <group>
 		        		<group>
 		                    <field name="unit_administration_internal"/>
+						</group>
+						<group>
 		                    <field name="unit_administration" attrs="{'readonly': [('unit_administration_internal', '>', 0)], 'required': [('unit_administration_internal','&lt;', 0)],}"/>
 		                    <field name="reference_hospital" attrs="{'readonly': [('unit_administration_internal', '>', 0)], 'required': [('unit_administration_internal','&lt;', 0)],}"/>
 		                </group>
+						<group>
+							<field name="tipe_konsul"/>
+						</group>
 		        	</group>
 	                <footer>
 	                    <button name="create_reference" string="Create Reference" type="object" class="oe_highlight"/>

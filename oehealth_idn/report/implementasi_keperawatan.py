@@ -32,12 +32,13 @@ class ReportImplementasiKeperawatan(models.AbstractModel):
                 for line in sale_order_line_ids:
                     date_order = order.date_order
 
-                    vals = {
-                        'tanggal': date_order,
-                        'tujuan' : line.name,
-                        'doctor_name': order.doctor_id.name,
-                    }
-                    sale_order_list.append(vals)
+                    if line.product_id.type == 'service':
+                        vals = {
+                            'tanggal': date_order,
+                            'tujuan' : line.name,
+                            'doctor_name': order.doctor_id.name,
+                        }
+                        sale_order_list.append(vals)
 
         records.update({'sale_order_list': sale_order_list}) 
 

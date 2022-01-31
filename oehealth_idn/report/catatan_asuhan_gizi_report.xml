@@ -281,7 +281,7 @@ th, td {
                                     <td colspan="2">
                                         <table style="width:100%">
                                             <tr>
-                                                <td>Tanggal : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/> </td>
+                                                <td>Tanggal : Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/> </td>
                                                 <td></td>
                                                 <td>Tanda tangan dan nama Dietisien : __________ </td>
                                             </tr>

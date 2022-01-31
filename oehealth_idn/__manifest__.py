@@ -95,6 +95,7 @@
         "report/report_rekam_medis_rawat_jalan.xml",
         "report/report_patient_labtest.xml",
         "report/resep_report.xml",
+        # "report/new_external_layout.xml",
         "report/report_menu.xml",
     ],
     "installable": True,
