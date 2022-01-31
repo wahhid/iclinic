@@ -106,6 +106,7 @@ class oeh_medical_prescription(models.Model):
                     'employee_id': pres.employee_id.id,
                     'queue_trans_id': pres.reg_id.queue_trans_id.id,
                     'pharmacist': pres.pharmacy.pharmacist_name.id,
+                    'pricelist_id': pres.patient.partner_id.property_product_pricelist.id
                 }
                 phy_id = pharmacy_obj.create(curr_pres)
                 
@@ -372,31 +373,19 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'partner_shipping_id': acc.patient.partner_id.id, 
                         'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                         'operating_unit_id': self.env.user.default_operating_unit_id.id,
-                        #'user_id': self.env.user.id,
+                        'user_id': self.env.user.id,
                         'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_unit_administration_id.id))], limit=1).id,
                         #'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
                         'pricelist_id': acc.patient.partner_id.property_product_pricelist.id, 
-                        'warehouse_id':  False if not warehouse_id else warehouse_id.id
+                        #'warehouse_id':  False if not warehouse_id else warehouse_id.id
                     }
                     _logger.info(val_obj)
                     inv_ids = obj.sudo().create(val_obj)
                     
                     if inv_ids:
                         inv_id = inv_ids.id
-                        # No Need Auto Billing
-                        # if self.arrival_id and not self.arrival_id.have_register:
-                        #     product = self.env['product.product'].search([('auto_billing', '!=', False)])
-                        #     for p in product:
-                        #         vals = {'order_id': inv_id, 'product_id': p.id, 
-                        #         'name': p.name, 
-                        #         'product_uom_qty': 1, 
-                        #         'product_uom': p.uom_id.id, 
-                        #         'price_unit': p.lst_price}
-                        #         line_obj.create(vals)
-
                         arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)
                         arrival.write({'have_register': True})
-                        
                         if acc.prescription_lines:
                             for ps in acc.prescription_lines:
                                 discount = 0.0
@@ -487,8 +476,9 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                     'patient_id': acc.patient.id, 
                     'doctor_id': acc.doctor.id, 
                     'partner_id': guarantor, 
+                    'user_id': self.env.user.id,
                     'partner_invoice_id': guarantor, 
-                    'partner_shipping_id': guarantor, 
+                    'partner_shipping_id': guarantor,
                     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id,
                     'operating_unit_id': self.env.user.default_operating_unit_id.id,
                     'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
@@ -577,7 +567,7 @@ class oeh_medical_health_center_pharmacy_prescription_line(models.Model):
         # TO DO: move me in master/saas-16 on sale.order
         if self.prescription_id.pricelist_id.discount_policy == 'with_discount':
             return product.with_context(pricelist=self.prescription_id.pricelist_id.id).price
-        product_context = dict(self.env.context, partner_id=self.prescription_id.partner_id.id, date=datetime.now(), uom=self.name.uom_id.id)
+        product_context = dict(self.env.context, partner_id=self.prescription_id.partner_id.id, date=datetime.datetime.now(), uom=self.name.uom_id.id)
         final_price, rule_id = self.prescription_id.pricelist_id.with_context(product_context).get_product_price_rule(product, self.actual_qty or 1.0, self.prescription_id.partner_id)
         base_price, currency_id = self.with_context(product_context)._get_real_price_currency(product, rule_id, self.actual_qty, self.name.uom_id, self.prescription_id.pricelist_id.id)
         if currency_id != self.elf.name.uom_id.pricelist_id.currency_id.id:
@@ -592,26 +582,12 @@ class oeh_medical_health_center_pharmacy_prescription_line(models.Model):
         vals = {}
         result = {}
         if self.name:
-            product = self.name.with_context(
-                #lang=self.prescription_id.patient.lang,
-                #partner=self.prescription_id.patient.id,
-                quantity= vals.get('actual_qty') or self.actual_qty,
-                date=datetime.datetime.now(),
-                pricelist=self.prescription_id.pricelist_id.id,
-                uom=self.name.uom_id.id
-            )
-            _logger.info(product)
-            vals['price_unit'] = product.lst_price
-            #vals['price_unit'] =  self.env['account.tax']._fix_tax_included_price_company(self._get_display_price(product), product.taxes_id, self.tax_id, self.company_id)
+            product_context = dict(self.env.context, partner_id=self.prescription_id.patient.partner_id.id, date=datetime.datetime.now(), uom=self.name.uom_id.id)
+            final_price, rule_id = self.prescription_id.pricelist_id.with_context(product_context).get_product_price_rule(self.name, self.actual_qty or 1.0, self.prescription_id.patient.partner_id)
+            _logger.info("Final Price")
+            _logger.info(final_price)
+            vals['price_unit'] = final_price
             self.update(vals)
-            #self.
-            #if prescription_id.pricelist_id and prescription_id.partner_id:
-            #    result['price_unit'] =  prescription_id.patient.partner_id.property_product_pricelist.id.get_product_price(self, name, actual_qty, prescription_id.partner_id)
-            #else:
-            #    result['price_unit'] = name.lst_price
-                #result['price_unit'] = self.prescription_id.pricelist_id.get_product_price(self, self.name, self.actual_qty, self.perscription_id.partner_id)
-                #result['price_unit'] = pricelist_id.get_product_price(self.name.id, self.actual_qty, self.pescription_id.patient.partner_id.id)
-
         return {'value': result}
     
 

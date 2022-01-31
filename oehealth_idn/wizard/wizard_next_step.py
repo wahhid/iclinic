@@ -43,5 +43,26 @@ class WizardNextStep(models.TransientModel):
 
             else:
                 pass
+
+    def confirm_finish(self):
+        if self.queue_type_id.is_unit:
+            if self.is_current_unit:
+                unit_registration_id = self.env['unit.registration'].browse(self._context.get('active_id'))
+                unit_registration_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
+                unit_registration_id.state = 'Unlock'
+            if self.is_current_lab:
+                lab_test_id = self.env['oeh.medical.lab.test'].browse(self._context.get('active_id'))
+                lab_test_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
+                #lab_test_id.state = 'Unlock'
+
+        elif self.queue_type_id.is_lab:
+            if self.is_current_unit:
+                unit_registration_id = self.env['unit.registration'].browse(self._context.get('active_id'))
+                unit_registration_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
+            
+            if self.is_current_lab:
+                lab_test_id = self.env['oeh.medical.lab.test'].browse(self._context.get('active_id'))
+                lab_test_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
+                #lab_test_id.state = 'Unlock'
             
 

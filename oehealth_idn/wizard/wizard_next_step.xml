@@ -9,11 +9,12 @@
 	                <group>
 		        		<group>
 		                    <field name="queue_type_id" required="1"/>
-							<field name="is_valid" readonly="1"/>		                </group>
+							<field name="is_valid" readonly="1" invisible="1"/>		                </group>
 		        	</group>
 	                <footer>
 	                    <button name="confirm_next_step" string="Confirm" type="object" class="oe_highlight"/>
 	                    <label string=" or "/>
+						<button name="confirm_finish" string="Finish"/>
 	                    <button string="Cancel" class="oe_link" special="cancel" />
 	                </footer>
 		        </form>
