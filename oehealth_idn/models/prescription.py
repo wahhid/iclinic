@@ -380,6 +380,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         #'warehouse_id':  False if not warehouse_id else warehouse_id.id
                     }
 
+                    team_id = self.env['crm.team'].search([('member_ids','in', (self.env.user.id))], limit=1)
                     val_obj = {
                         'reg_id': acc.reg_ids.id, 
                         'arrival_id': acc.arrival_id.id, 
@@ -390,6 +391,8 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'partner_shipping_id': acc.patient.partner_id.id, 
                         'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                         'pricelist_id': acc.patient.partner_id.property_product_pricelist.id, 
+                        'operating_unit_id': self.env.user.default_operating_unit_id.id,
+                        'team_id': team_id.id,
                         'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_unit_administration_id.id))], limit=1).id
                     }
 
