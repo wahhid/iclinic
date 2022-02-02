@@ -379,10 +379,26 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'pricelist_id': acc.patient.partner_id.property_product_pricelist.id, 
                         #'warehouse_id':  False if not warehouse_id else warehouse_id.id
                     }
+
+                    val_obj = {
+                        'reg_id': acc.reg_ids.id, 
+                        'arrival_id': acc.arrival_id.id, 
+                        'patient_id': acc.patient.id, 
+                        'doctor_id': acc.doctor.id, 
+                        'partner_id': guarantor,
+                        'partner_invoice_id': guarantor, 
+                        'partner_shipping_id': acc.patient.partner_id.id, 
+                        'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
+                        'pricelist_id': acc.patient.partner_id.property_product_pricelist.id, 
+                        'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_unit_administration_id.id))], limit=1).id
+                    }
+
                     _logger.info(val_obj)
                     inv_ids = obj.sudo().create(val_obj)
-                    
+                
                     if inv_ids:
+                        _logger.info("Create Sale Order Successfully")
+
                         inv_id = inv_ids.id
                         arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)
                         arrival.write({'have_register': True})

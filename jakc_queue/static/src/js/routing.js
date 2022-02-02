@@ -107,6 +107,8 @@
                                 '/jakc_queue/static/src/snd/' + counter_trans.charAt(0)  + '.MP3',
                                 '/jakc_queue/static/src/snd/' + counter_trans.charAt(1)  + '.MP3',
                                 '/jakc_queue/static/src/snd/' + counter_trans.charAt(2)  + '.MP3',
+                                '/jakc_queue/static/src/snd/pendaftaran.MP3',
+
                                 //'/jakc_queue/static/src/snd/konter.MP3',
                                 //'/jakc_queue/static/src/snd/' + counter_number + '.MP3',
                             ]

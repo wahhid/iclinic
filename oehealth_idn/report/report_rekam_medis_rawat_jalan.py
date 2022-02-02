@@ -214,7 +214,7 @@ class ReportRekamMedisRawatJalan(models.AbstractModel):
         records.update({'evaluation': evaluation})
 
         labs = []
-        for lab_test in walkin.lab_id:
+        for lab_test in walkin.lab_test_ids:
             labs.append(lab_test.name)
         records.update({'labs': labs})
 
