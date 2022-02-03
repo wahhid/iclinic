@@ -99,6 +99,7 @@
             console.log(resp);
             counter_trans = resp.counter_trans;
             counter_number = resp.counter_number;
+            counter_snd_filename = resp.counter_snd_filename;
             if (resp.status == true){
                 console.log("Play Sound");
                 str_length = counter_trans.length;
@@ -107,8 +108,7 @@
                                 '/jakc_queue/static/src/snd/' + counter_trans.charAt(0)  + '.MP3',
                                 '/jakc_queue/static/src/snd/' + counter_trans.charAt(1)  + '.MP3',
                                 '/jakc_queue/static/src/snd/' + counter_trans.charAt(2)  + '.MP3',
-                                '/jakc_queue/static/src/snd/pendaftaran.MP3',
-
+                                '/jakc_queue/static/src/snd/' + counter_snd_filename + '.MP3'
                                 //'/jakc_queue/static/src/snd/konter.MP3',
                                 //'/jakc_queue/static/src/snd/' + counter_number + '.MP3',
                             ]

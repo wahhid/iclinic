@@ -110,6 +110,7 @@ class QueueType(models.Model):
     sequence_id = fields.Many2one('queue.sequence', 'Sequence #', required=True)
     next_type_id = fields.Many2one('queue.type', 'Next Step')
     is_end_type = fields.Boolean('End Type', default=False)
+    snd_filename = fields.Char('Sound File', size=255)
     state = fields.Selection(AVAILABLE_STATES, 'Status', size=16 , readonly=True, default='open')
 
 

@@ -393,6 +393,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'pricelist_id': acc.patient.partner_id.property_product_pricelist.id, 
                         'operating_unit_id': self.env.user.default_operating_unit_id.id,
                         'team_id': team_id.id,
+                        'user_id': self.env.user.id,
                         'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_unit_administration_id.id))], limit=1).id
                     }
 

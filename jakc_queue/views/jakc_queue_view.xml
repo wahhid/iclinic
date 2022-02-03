@@ -83,6 +83,7 @@
                             <field name="sequence_id"/>
                             <field name="next_type_id"/>
                             <field name='is_end_type'/>
+                            <field name="snd_filename"/>
 	                        <field name="state"/>	                                                   
 	                    </group>	                		                	
                 	</sheet>  
