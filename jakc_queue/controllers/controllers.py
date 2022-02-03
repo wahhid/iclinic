@@ -245,7 +245,7 @@ class Queue_display(http.Controller):
         domain = [
             ('name', '=', display_code)
         ]
-        queue_display_id = queue_display_obj.search(domain, limit=1)
+        queue_display_id = queue_display_obj.sudo().search(domain, limit=1)
         if not queue_display_id:
             return json.dumps({'status': False, 'counter_trans': {}})
 
@@ -260,7 +260,7 @@ class Queue_display(http.Controller):
             return json.dumps({'status': False, 'counter_trans': {}})
         
         queue_trans_id.iface_recall = False
-        return json.dumps({'status': True, 'counter_trans': queue_trans_id.trans_id, 'counter_number': queue_trans_id.pickup_id.name, 'counter_snd_filename': queue_trans_id.pickup_id.snd_filename})
+        return json.dumps({'status': True, 'counter_trans': queue_trans_id.trans_id, 'counter_number': queue_trans_id.pickup_id.name, 'counter_snd_filename': queue_trans_id.type_id.snd_filename})
       
 class Queue_type(http.Controller):
     
