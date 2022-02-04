@@ -7,13 +7,13 @@
         <field name="arch" type="xml">
             <form string="Walkins">
                 <header>
+                    <button name="action_next" type="object" string="Confirm" confirm="Menlanjutkan ke bagian berikutnya ?" states="Draft" class="oe_highlight"/>
                     <button confirm="Are you sure you want to mark walkin as completed?" name="set_to_completed" states="Scheduled" string="Mark as Completed" type="object" class="oe_highlight" groups="oehealth_idn.group_customer_service,oehealth.group_oeh_medical_manager"/>
-                    <button confirm="Are you sure you want to mark walkin as cancelled?" name="set_to_cancelled" states="Scheduled" string="Mark as Cancelled" type="object" class="" groups="oehealth_idn.group_customer_service,oehealth.group_oeh_medical_manager"/>
+                    <button confirm="Are you sure you want to mark walkin as cancelled?" name="set_to_cancelled" states="Draft,Scheduled" string="Mark as Cancelled" type="object" class="" groups="oehealth_idn.group_customer_service,oehealth.group_oeh_medical_manager"/>
                     <!--
                     <button name="print_patient_stiker" type="object" string="Stiker Patient" icon="fa-print"/>
                     -->
                     <button name="action_print_receipt" type="object" string="Registration Receipt" icon="fa-print" states="Scheduled,Completed"/>
-                    <button name="action_next" type="object" string="Confirm" confirm="Menlanjutkan ke bagian berikutnya ?" states="Draft" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="Scheduled,Completed" statusbar_colors="{&quot;Scheduled&quot;:&quot;blue&quot;,&quot;Completed&quot;:&quot;green&quot;,&quot;Invoiced&quot;:&quot;grey&quot;}"/>
                 </header>
                 <sheet>

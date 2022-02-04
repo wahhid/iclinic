@@ -543,6 +543,7 @@ class unit_registration(models.Model):
                     guarantor = acc.company.id
                 else:
                     guarantor = acc.patient.partner_id.id
+                
                 val_obj = {'reg_id': acc.id, 
                    'arrival_id': acc.clinic_walkin_id.id or acc.unit_walkin_id.id or acc.emergency_walkin_id.id or acc.support_walkin_id.id, 
                    'patient_id': acc.patient.id, 
@@ -552,6 +553,7 @@ class unit_registration(models.Model):
                    'partner_shipping_id': acc.patient.partner_id.id, 
                    'pricelist_id': acc.charge_id.pricelist.id or acc.patient.partner_id.property_product_pricelist.id, 
                    'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
+                
                 inv_ids = obj.create(val_obj)
                 if inv_ids:
                     inv_id = inv_ids.id

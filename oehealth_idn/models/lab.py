@@ -162,10 +162,29 @@ class OehMedicalLabTest(models.Model):
             }
 
     def action_next(self):
+        _logger.info("Lab Action Next")
         if self.queue_trans_id.type_id.unit_administration_id.id == self.env.user.default_unit_administration_id.id:
-            next_type_id = self.queue_trans_id.type_id.next_type_id
-            self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})        
-            self.state = 'Unlock'
+            if self.queue_trans_id.type_id.is_end_type:
+                _logger.info("End Type")
+                self.queue_trans_id.write({'state': 'done'})
+            else:
+                next_type_id = self.queue_trans_id.type_id.next_type_id
+                if not next_type_id:    
+                    wizard_form = self.env.ref('oehealth_idn.view_wizard_next_step_form', False)
+                    new = self.env['wizard.next.step'].create({'is_valid': True,'is_current_lab': True})
+                    return {
+                        'name'      : _('Next Step'),
+                        'type'      : 'ir.actions.act_window',
+                        'res_model' : 'wizard.next.step',
+                        'res_id'    : new.id,
+                        'view_id'   : wizard_form.id,
+                        'view_type' : 'form',
+                        'view_mode' : 'form',
+                        'target'    : 'new'
+                    }
+                else:
+                    self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})        
+                    self.state = 'Unlock'
         else:
             raise Warning('Queue have different unit administration')
 

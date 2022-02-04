@@ -14,6 +14,7 @@ class WizardNextStep(models.TransientModel):
     is_start = fields.Boolean('Is Start', default=False)
     is_current_unit = fields.Boolean('Is Current Unit', default=False)
     is_current_lab = fields.Boolean('Is Current Lab', default=False)
+    is_current_pharmacy = fields.Boolean('Is Current Pharmacy', default=False)
 
     def confirm_next_step(self):
         if self.is_start:
@@ -26,10 +27,16 @@ class WizardNextStep(models.TransientModel):
                     unit_registration_id = self.env['unit.registration'].browse(self._context.get('active_id'))
                     unit_registration_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
                     unit_registration_id.state = 'Unlock'
+
                 if self.is_current_lab:
                     lab_test_id = self.env['oeh.medical.lab.test'].browse(self._context.get('active_id'))
                     lab_test_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
                     #lab_test_id.state = 'Unlock'
+                
+                if self.is_current_pharmacy:
+                    pharmacy_order_id = self.env['oeh.medical.health.center.pharmacy.line'].browse(self._context.get('active_id'))
+                    pharmacy_order_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
+
 
             elif self.queue_type_id.is_lab:
                 if self.is_current_unit:
@@ -41,6 +48,26 @@ class WizardNextStep(models.TransientModel):
                     lab_test_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
                     #lab_test_id.state = 'Unlock'
 
+                if self.is_current_pharmacy:
+                    pharmacy_order_id = self.env['oeh.medical.health.center.pharmacy.line'].browse(self._context.get('active_id'))
+                    pharmacy_order_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
+
+
+            elif self.is_current_pharmacy:
+                if self.is_current_unit:
+                    unit_registration_id = self.env['unit.registration'].browse(self._context.get('active_id'))
+                    unit_registration_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
+                
+                if self.is_current_lab:
+                    lab_test_id = self.env['oeh.medical.lab.test'].browse(self._context.get('active_id'))
+                    lab_test_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
+                    #lab_test_id.state = 'Unlock'
+
+                if self.is_current_pharmacy:
+                    pharmacy_order_id = self.env['oeh.medical.health.center.pharmacy.line'].browse(self._context.get('active_id'))
+                    pharmacy_order_id.queue_trans_id.write({'type_id' : self.queue_type_id.id, 'state': 'draft'})        
+
+                
             else:
                 pass
 

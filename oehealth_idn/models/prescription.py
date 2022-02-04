@@ -241,19 +241,33 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
             #order.update({'amount_total': val})
 
     def action_next(self):
+        _logger.info("Pharmacy Order Action Next")
         if not self.queue_trans_id:
             raise Warning('No Queue number defined!')
 
-        if self.state == 'Draft':
-            if len(self.clinic_ids) > 0  or len(self.unit_ids) > 0 or len(self.emergency_ids) > 0 or len(self.support_ids) > 0 or len(self.lab_test_ids) > 0:
-                next_type_id = self.queue_trans_id.type_id.next_type_id
-                self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'}) 
-                self.state = 'Scheduled'
+        if self.queue_trans_id.type_id.unit_administration_id.id == self.env.user.default_unit_administration_id.id:
+            if self.queue_trans_id.type_id.is_end_type:
+                _logger.info("End Type")
+                self.queue_trans_id.write({'state': 'done'})
             else:
-                raise Warning('Need min 1 unit registration!')
+                next_type_id = self.queue_trans_id.type_id.next_type_id
+                if not next_type_id:    
+                    wizard_form = self.env.ref('oehealth_idn.view_wizard_next_step_form', False)
+                    new = self.env['wizard.next.step'].create({'is_valid': True,'is_current_pharmacy': True})
+                    return {
+                        'name'      : _('Next Step'),
+                        'type'      : 'ir.actions.act_window',
+                        'res_model' : 'wizard.next.step',
+                        'res_id'    : new.id,
+                        'view_id'   : wizard_form.id,
+                        'view_type' : 'form',
+                        'view_mode' : 'form',
+                        'target'    : 'new'
+                    }
+                else:
+                    self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})        
         else:
-            next_type_id = self.queue_trans_id.type_id.next_type_id
-            self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})
+            raise Warning('Queue have different unit administration')
 
     def get_user_unit_administration(self):
         for row in self:
