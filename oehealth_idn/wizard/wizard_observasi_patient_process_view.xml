@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wizard_report_monthly_observasi" model="ir.ui.view">
+        <field name="name">wizard.report.observasi.form</field>
+        <field name="model">wizard.report.observasi</field>
+        <field name="arch" type="xml">
+            <form string="Report Monthly observasi Form">
+                <group>
+                    <field name="report_printed" invisible="1"/>
+                    <field name="reg_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                </group>
+                <group attrs="{'invisible':[('report_printed','=',False)]}">
+                    <separator string="Report done" colspan="4"/>
+                    <group>
+                        <field name="report_filename"/>
+                        <field name="report_file" readonly="1" filename="report_filename"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="generate_report" string="Print" type="object" class="btn-primary"/> or
+                    <button name="generate_report_excel" string="Print to Excel" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_wizard_report_monthly_observasi" model="ir.actions.act_window">
+        <field name="name">wizard.report.observasi.form</field>
+        <field name="res_model">wizard.report.observasi</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_wizard_report_monthly_observasi"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
