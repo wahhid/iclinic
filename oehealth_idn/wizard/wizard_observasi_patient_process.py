@@ -1,6 +1,7 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from datetime import datetime, timedelta, date
+from dateutil.relativedelta import *
 import xlwt
 from xlwt import easyxf
 import logging
@@ -59,13 +60,31 @@ class WizardReportObservasi(models.TransientModel):
     #     }
 
 
-    reg_id = fields.Many2one(comodel_name="unit.registration", string="Reg.Id", required=True,)
+    reg_id = fields.Many2one(comodel_name="unit.registration", string="Reg.Id", required=False,)
+    start_date = fields.Date(required=True, )
+    end_date = fields.Date(required=True, )
     report_filename = fields.Char('Filename', size=100, readonly=True, default='ObservasiReport.xlsx')
     report_file = fields.Binary('File', readonly=True)
     report_printed = fields.Boolean('Report Printed', default=False, readonly=True)
 
     @api.multi
     def generate_report_excel(self):
+
+        tglawal = datetime.strptime(self.start_date, "%Y-%m-%d").date()
+        str_start_date = str(tglawal.year) + "-" + str(tglawal.month).zfill(2) + "-" + str(tglawal.day).zfill(
+            2) + " 00:00:00"
+
+        _logger.info(str_start_date)
+        tglawal = datetime.strptime(str_start_date, "%Y-%m-%d %H:%M:%S") - relativedelta(hours=7)
+        tglawal = tglawal.strftime("%Y-%m-%d %H:%M:%S")
+
+        #=================================
+
+        tglakhir = datetime.strptime(self.end_date, "%Y-%m-%d").date()
+        _logger.info(tglakhir)
+        str_end_date = str(tglakhir.year) + "-" + str(tglakhir.month).zfill(2) + "-" + str(tglakhir.day).zfill(
+            2) + " 23:59:59"
+
         for wizard in self:
             sheet1 = "Observasi"
             sheet2 = "Notes"
@@ -130,13 +149,14 @@ class WizardReportObservasi(models.TransientModel):
 
             # workbook = xlsxwriter.Workbook('chart_line.xlsx')
 
-            active_id = self.env['oeh.medical.evaluation'].search([('reg_id','=',self.env.context.get('active_id'))])
+            active_id = self.env['oeh.medical.evaluation'].search([('reg_id','=',self.env.context.get('active_id')), ('create_date', '>=', tglawal), ('create_date', '<=', str_end_date)])
 
             worksheet = workbook.add_worksheet()
             bold = workbook.add_format({'bold': 1})
 
             # Add the worksheet data that the charts will refer to.
             headings = ['Tanggal', 'Nafas', 'Nadi', 'Suhu']
+            check = ['Defecatie', 'Urine Output', 'Muntah', 'Per Oral', 'Parenteral', 'Balance']
             # data = [
             #     [2, 3, 4, 5, 6, 7],
             #     [10, 40, 50, 20, 10, 50],
@@ -144,6 +164,7 @@ class WizardReportObservasi(models.TransientModel):
             # ]
 
             worksheet.write_row('A5', headings, bold)
+            worksheet.write_row('F5', check, bold)
             # worksheet.write_column('A2', data[0])
             # worksheet.write_column('B2', data[1])
             # worksheet.write_column('C2', data[2])
@@ -216,7 +237,7 @@ class WizardReportObservasi(models.TransientModel):
             chart1.set_style(11)
 
             # Insert the chart into the worksheet (with an offset).
-            worksheet.insert_chart('D2', chart1, {'x_offset': 25, 'y_offset': 10})
+            worksheet.insert_chart('M5', chart1, {'x_offset': 25, 'y_offset': 10})
 
             #######################################################################
             #

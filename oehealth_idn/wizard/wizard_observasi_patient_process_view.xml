@@ -7,7 +7,12 @@
             <form string="Report Monthly observasi Form">
                 <group>
                     <field name="report_printed" invisible="1"/>
-                    <field name="reg_id" options="{'no_quick_create':True,'no_create_edit':True,'no_open': True,}"/>
+                    <group>
+                        Start Date : <field name="start_date"/>
+                    </group>
+                    <group>
+                        End Date : <field name="end_date"/>
+                    </group>
                 </group>
                 <group attrs="{'invisible':[('report_printed','=',False)]}">
                     <separator string="Report done" colspan="4"/>
