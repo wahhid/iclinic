@@ -44,7 +44,7 @@
 
     <report id="cppt_report_menu" string="Form CPPT" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_cppt" menu="False" />
 
-    <!-- <report id="implementasi_keperawatan_report_menu" string="Form Implementasi Keperawatan" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_implementasi_keperawatan" menu="False" file="oehealth_idn.report_implementasi_keperawatan" /> -->
+    <report id="implementasi_keperawatan_report_menu" string="Form Implementasi Keperawatan" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_implementasi_keperawatan" menu="False" file="oehealth_idn.report_implementasi_keperawatan" />
 
     <!-- <report id="observasi_terapi_pasien_report_menu" string="Observasi Terapi Pasien" 
     model="oeh.medical.evaluation" report_type="xlsx" name="oehealth_idn.report_observasi_terapi_pasien" file="oehealth_idn.report_observasi_terapi_pasien"

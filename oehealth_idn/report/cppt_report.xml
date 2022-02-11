@@ -57,11 +57,11 @@
                                         <br />
                                         O : 
                                         <br />
-                                            BB <span t-esc="ev['S']['bb']" />
+                                            BB <span t-esc="ev['O']['bb']" />
                                         <br />
-                                            TB <span t-esc="ev['S']['tb']" />
+                                            TB <span t-esc="ev['O']['tb']" />
                                         <br />
-                                            IMT <span t-esc="ev['S']['imt']" />
+                                            IMT <span t-esc="ev['O']['imt']" />
                                         <br/><br />
                                         A : <span t-esc="ev['A']" />
                                         <br />
