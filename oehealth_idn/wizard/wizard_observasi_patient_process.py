@@ -31,35 +31,6 @@ class WizardReportObservasi(models.TransientModel):
     _description = 'Observasi Patient'
 
 
-    # @api.model
-    # def get_observasi_details(self):
-    #     """ Serialise the orders of the day information
-    #     params: date_start, date_stop string representing the datetime of order
-    #     """
-
-    #     monthlybilling = self.env['billing.periode'].search([
-    #         ('id', '=', self.billing_periode_ids.id), ])
-
-    #     _logger.info(monthlybilling)
-
-    #     monthlybilling_datas = []
-
-    #     for billing in monthlybilling:
-
-    #         for line in billing.line_ids:
-    #             vals = {}
-    #             vals.update({'unitno': line.unitno})
-    #             vals.update({'date_trans': line.date_trans})
-    #             vals.update({'description': line.description})
-    #             vals.update({'amount': line.amount})
-
-    #             monthlybilling_datas.append(vals)
-
-    #     return {
-    #         "monthlybilling": monthlybilling_datas
-    #     }
-
-
     reg_id = fields.Many2one(comodel_name="unit.registration", string="Reg.Id", required=False,)
     start_date = fields.Date(required=True, )
     end_date = fields.Date(required=True, )
@@ -91,88 +62,49 @@ class WizardReportObservasi(models.TransientModel):
 
             fp = StringIO()
             workbook = xlsxwriter.Workbook(fp)
-            # column_heading_style = easyxf('font:height 200;font:bold True;')
-
-            # # request_details = self.get_billing_details()
-            # worksheet = workbook.add_worksheet('Observasi Report')
-            # worksheet.write(0, 0, _('UNIT #'))
-            # worksheet.write(0, 1, _('DATE'))
-            # worksheet.write(0, 2, _('DESCRIPTION'))
-            # worksheet.write(0, 3, _('AMOUNT'))
-            # row = 1
-            # for order in request_details['monthlybilling']:
-            #     worksheet.write(row, 0, order['unitno'])
-            #     worksheet.write(row, 1, order['date_trans'])
-            #     worksheet.write(row, 2, order['description'])
-            #     worksheet.write(row, 3, order['amount'])
-            #     row += 1
 
             # format_main_header = workbook.add_format({'font_size': 14, 'bg_color': 'silver', 'bold': 1, 'border': 1,
             #                                         'align': 'center', 'valign': 'vcenter'})
-            # format_header = workbook.add_format({'bold': 1, 'border': 1, 'align': 'center',
-            #                                     'valign': 'vcenter', 'bg_color': 'silver'})
-            # header = workbook.add_format({'bold': 1, 'border': 1, 'align': 'center',
-            #                             'valign': 'vcenter', 'bg_color': 'silver'})
-            # left_header = workbook.add_format({'bold': 1, 'border': 1, 'align': 'center',
-            #                                 'valign': 'vcenter'})
+            format_header = workbook.add_format({'bold': 1, 'border': 1, 'align': 'center',
+                                                'valign': 'vcenter', 'bg_color': 'silver'})
+            header = workbook.add_format({'bold': 1, 'border': 1, 'align': 'center',
+                                        'valign': 'vcenter', 'bg_color': 'silver'})
+            left_header = workbook.add_format({'bold': 1, 'border': 1, 'align': 'left',
+                                            'valign': 'vcenter','bg_color': 'silver'})
             # format_cell = workbook.add_format({'border': 1, 'align': 'center'})
-
-
-            # # # ---------------------Bar chart for Time duration-------------------------- #
-            # chart_bar_t = workbook.add_chart({'type': 'bar'})
-            # actual_time = planned_time = 10
-            # # for data in task:
-            # #     if data.planned_hours:
-            # #         planned_time += data.planned_hours
-            # #     actual_time += data.effective_hours
-
-            # data_bar_t = [
-            #     ['Planned time', 'Actual time'],
-            #     [planned_time, actual_time],
-            # ]
-            # col = 6
-            # row = 0
             # worksheet.merge_range(row, col, row + 1, col + 3, "Time Duration(Hours)", header)
-            # row += 2
-            # for item in range(2):
-            #     worksheet.merge_range(row, col, row, col + 1, data_bar_t[0][item], format_cell)
-            #     col += 2
-            #     worksheet.merge_range(row, col, row, col + 1, data_bar_t[1][item], format_cell)
-            #     col = 6
-            #     row += 1
-            # chart_bar_t.add_series({'name': 'Time',
-            #                         'categories': '=' + sheet2 + '!$G$3:$G$4',
-            #                         'values': '=' + sheet2 + '!$I$3:$I$4',
-            #                         })
-            # chart_bar_t.set_title({'name': 'Time Duration'})
-            # worksheet.insert_chart('I13', chart_bar_t)
-
-            # workbook = xlsxwriter.Workbook('chart_line.xlsx')
+        
 
             active_id = self.env['oeh.medical.evaluation'].search([('reg_id','=',self.env.context.get('active_id')), ('create_date', '>=', tglawal), ('create_date', '<=', str_end_date)])
 
             worksheet = workbook.add_worksheet()
-            bold = workbook.add_format({'bold': 1})
+            bold = workbook.add_format({'bold': 1,'border': 1,})
+
+            regis_id = self.env['unit.registration'].browse(self.env.context.get('active_id'))
+
+            # Data Patient
+            worksheet.write(1, 0, _('No.RM '), left_header)
+            worksheet.write(1, 1, regis_id.patient.medical_record, bold)
+            worksheet.write(2, 0, _('Nama Pasien '), left_header)
+            worksheet.write(2, 1, regis_id.patient.name, bold)
+            worksheet.write(1, 3, _('NPP/No.BPJS'), left_header)
+            if regis_id.employee_id.employee_number:
+                worksheet.write(1, 4, regis_id.employee_id.employee_number, bold)
+            worksheet.write(2, 3, _('Ruang Perawatan'), left_header)
+            if regis_id.room_id.name:
+                worksheet.write(2, 4, regis_id.room_id.name, bold)
+            worksheet.write(1, 6, _('Tanggal Masuk'), left_header)
+            worksheet.write(1, 7, _(''), bold)
+            worksheet.write(2, 6, _('Tanggal Keluar'), left_header)
+            worksheet.write(2, 7, _(''), bold)
+
 
             # Add the worksheet data that the charts will refer to.
             headings = ['Tanggal', 'Nafas', 'Nadi', 'Suhu']
             check = ['Defecatie', 'Urine Output', 'Muntah', 'Per Oral', 'Parenteral', 'Balance']
-            # data = [
-            #     [2, 3, 4, 5, 6, 7],
-            #     [10, 40, 50, 20, 10, 50],
-            #     [30, 60, 70, 50, 40, 30],
-            # ]
+            worksheet.write_row('A5', headings, header)
+            worksheet.write_row('F5', check, header)
 
-            worksheet.write_row('A5', headings, bold)
-            worksheet.write_row('F5', check, bold)
-            # worksheet.write_column('A2', data[0])
-            # worksheet.write_column('B2', data[1])
-            # worksheet.write_column('C2', data[2])
-
-            # worksheet.write(0, 0, _('UNIT #'))
-            # worksheet.write(0, 1, _('DATE'))
-            # worksheet.write(0, 2, _('DESCRIPTION'))
-            # worksheet.write(0, 3, _('AMOUNT'))
             row = 5
 
             for eval in active_id:
@@ -186,7 +118,53 @@ class WizardReportObservasi(models.TransientModel):
                 row += 1
 
             #######################################################################
-            #
+
+            # INJEKSI & OBAT
+
+            injeksi = ['TANGGAL','INJEKSI']
+            obat = ['TANGGAL','OBAT-OBATAN']
+
+            worksheet.write_row('M5', injeksi, header)
+            worksheet.write_row('P5', obat, header)
+
+            order_id = self.env['sale.order'].sudo().search([('reg_id','=',self.env.context.get('active_id')), ('create_date', '>=', tglawal), ('create_date', '<=', str_end_date)])
+
+            row_injek = 5
+
+            for order in order_id:
+                x = datetime.strptime(order['create_date'], "%Y-%m-%d %H:%M:%S")
+                date_ev = x.strftime("%d %b %Y")
+                
+                # date SO
+                worksheet.write(row_injek, 12, date_ev) 
+
+                # Order Line Details
+                order_line_id = self.env['sale.order.line'].sudo().search([('order_id','=', order.id)])
+                for line in order_line_id:        
+                    worksheet.write(row_injek, 13, line['name'])
+                    row_injek += 1
+
+
+            prescription_id = self.env['oeh.medical.prescription'].sudo().search([('reg_id','=',self.env.context.get('active_id')), ('create_date', '>=', tglawal), ('create_date', '<=', str_end_date)])
+
+            row_injek = 5
+
+            for pres in prescription_id:
+                x = datetime.strptime(pres['create_date'], "%Y-%m-%d %H:%M:%S")
+                date_ev = x.strftime("%d %b %Y")
+                
+                # date Prescription
+                worksheet.write(row_injek, 15, date_ev) 
+
+                # Prescription Line Details
+                pres_line_id = self.env['oeh.medical.prescription.line'].sudo().search([('prescription_id','=', pres.id)])
+                for line in pres_line_id:        
+                    worksheet.write(row_injek, 16, line['name']['name'])
+                    row_injek += 1
+
+
+            ##################################################################
+
             # Create a new bar chart.
             #
             chart1 = workbook.add_chart({'type': 'column'})
@@ -221,12 +199,6 @@ class WizardReportObservasi(models.TransientModel):
                 'values':     value,
             })
 
-            # Configure a second series. Note use of alternative syntax to define ranges.
-            # chart1.add_series({
-            #     'name':       ['Sheet1', 0, 2],
-            #     'categories': ['Sheet1', 1, 0, 6, 0],
-            #     'values':     ['Sheet1', 1, 2, 6, 2],
-            # })
 
             # Add a chart title and some axis labels.
             chart1.set_title ({'name': 'Results of sample analysis'})
@@ -237,69 +209,10 @@ class WizardReportObservasi(models.TransientModel):
             chart1.set_style(11)
 
             # Insert the chart into the worksheet (with an offset).
-            worksheet.insert_chart('M5', chart1, {'x_offset': 25, 'y_offset': 10})
+            worksheet.insert_chart('R5', chart1, {'x_offset': 25, 'y_offset': 10})
 
             #######################################################################
-            #
-            # Create a stacked chart sub-type.
-            #
-            # chart2 = workbook.add_chart({'type': 'bar', 'subtype': 'stacked'})
 
-            # # Configure the first series.
-            # chart2.add_series({
-            #     'name':       '=Sheet1!$B$1',
-            #     'categories': '=Sheet1!$A$2:$A$7',
-            #     'values':     '=Sheet1!$B$2:$B$7',
-            # })
-
-            # # Configure second series.
-            # chart2.add_series({
-            #     'name':       '=Sheet1!$C$1',
-            #     'categories': '=Sheet1!$A$2:$A$7',
-            #     'values':     '=Sheet1!$C$2:$C$7',
-            # })
-
-            # # Add a chart title and some axis labels.
-            # chart2.set_title ({'name': 'Stacked Chart'})
-            # chart2.set_x_axis({'name': 'Test number'})
-            # chart2.set_y_axis({'name': 'Sample length (mm)'})
-
-            # # Set an Excel chart style.
-            # chart2.set_style(12)
-
-            # # Insert the chart into the worksheet (with an offset).
-            # worksheet.insert_chart('D18', chart2, {'x_offset': 25, 'y_offset': 10})
-
-            # #######################################################################
-            # #
-            # # Create a percentage stacked chart sub-type.
-            # #
-            # chart3 = workbook.add_chart({'type': 'bar', 'subtype': 'percent_stacked'})
-
-            # # Configure the first series.
-            # chart3.add_series({
-            #     'name':       '=Sheet1!$B$1',
-            #     'categories': '=Sheet1!$A$2:$A$7',
-            #     'values':     '=Sheet1!$B$2:$B$7',
-            # })
-
-            # # Configure second series.
-            # chart3.add_series({
-            #     'name':       '=Sheet1!$C$1',
-            #     'categories': '=Sheet1!$A$2:$A$7',
-            #     'values':     '=Sheet1!$C$2:$C$7',
-            # })
-
-            # # Add a chart title and some axis labels.
-            # chart3.set_title ({'name': 'Percent Stacked Chart'})
-            # chart3.set_x_axis({'name': 'Test number'})
-            # chart3.set_y_axis({'name': 'Sample length (mm)'})
-
-            # # Set an Excel chart style.
-            # chart3.set_style(13)
-
-            # # Insert the chart into the worksheet (with an offset).
-            # worksheet.insert_chart('D34', chart3, {'x_offset': 25, 'y_offset': 10})
 
             workbook.close()
             excel_file = base64.encodestring(fp.getvalue())
