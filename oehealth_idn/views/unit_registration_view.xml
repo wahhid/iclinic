@@ -43,7 +43,7 @@
                     <button name="print_implementasi_keperawatan" type="object" string="Print Implementasi Keperawatan" class="oe_highlight"/>
                     <button name="print_cppt" type="object" string="Print CPPT" class="oe_highlight"/>
 
-                    <button name="print_report_xls" string="Observasi" type="object" class="oe_highlight"/>
+                    <button name="%(act_wizard_report_monthly_observasi)d" string="Print Observasi" type="action" class="oe_highlight"/>
                     <!--
                     <button name="create_reference" string="Create Reference" attrs="{'invisible': [('type', '==', 'Medical Support')]}" type="object" class="oe_highlight" groups="oehealth_idn.group_medical_service"/>
                     -->

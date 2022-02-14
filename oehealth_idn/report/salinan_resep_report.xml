@@ -19,39 +19,38 @@
                                 <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
                             </div>
                             
-                        <div class="col-xs-9" style="text-align:center;">
-                            <h2><span t-field="o.pharmacy.operating_unit_id.name" /></h2> <br/>
-                            <span t-field="o.pharmacy.operating_unit_id.unit_address" /><br/>
-                            No. Izin Klinik : <span t-field="o.pharmacy.operating_unit_id.izin_klinik" /><br/>
-                            No. Izin Apotik : <span t-field="o.pharmacy.operating_unit_id.izin_apotik" />
-                        </div>
+                            <div class="col-xs-9" style="position: relative;">
+                                <h2><span t-field="o.pharmacy.operating_unit_id.name" /></h2> <br/>
+                                <span t-field="o.pharmacy.operating_unit_id.unit_address" /><br/>
+                                No. Izin Klinik : <span t-field="o.pharmacy.operating_unit_id.izin_klinik" /><br/>
+                                No. Izin Apotik : <span t-field="o.pharmacy.operating_unit_id.izin_apotik" />
+                            </div>
                         
                         </div>
                     </div>
                     <!-- end header -->
                     <div class="page">
-                    <style>
-
-th, td {
-  font-size:10px;
-}
-</style>
+                        <style>
+                            th, td {
+                                font-size:10px;
+                            }
+                        </style>
                         <div class="oe_structure">
                              <div class="row">
                                 <p style="font-size:24px;text-align:center;font-weight:bold;">Salinan Resep</p>
                             </div>
                             <table style="width:100%; padding:5px;">
                                    <tr>
-                                        <td>No. : <span t-field="o.name" />      Tanggal  : <span t-field="o.date" />  </td>
+                                        <td style="padding:8px;">No. : <span t-field="o.name" />      Tanggal  : <span t-field="o.date" />  </td>
                                    </tr>
                                     <tr>
-                                        <td>Dari Dokter :  <span t-field="o.doctor.name" /></td>
+                                        <td style="padding:8px;">Dari Dokter :  <span t-field="o.doctor.name" /></td>
                                    </tr>
                                    <tr>
-                                        <td>Dibuat Tanggal  : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
+                                        <td style="padding:8px;">Dibuat Tanggal  : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
                                    </tr>  
                                    <tr>
-                                        <td>Untuk  :  <span t-field="o.remarks" /></td>
+                                        <td style="padding:8px;">Untuk  :  <span t-field="o.remarks" /></td>
                                    </tr>
                             </table>
                             <h2><i>R/</i></h2> 

@@ -46,7 +46,9 @@
 
     <report id="implementasi_keperawatan_report_menu" string="Form Implementasi Keperawatan" model="unit.registration" report_type="qweb-pdf" name="oehealth_idn.report_implementasi_keperawatan" menu="False" file="oehealth_idn.report_implementasi_keperawatan" />
 
-    <report id="observasi_terapi_pasien_report_menu" string="Observasi Terapi Pasien" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_observasi_terapi_pasien" menu="True" />
+    <!-- <report id="observasi_terapi_pasien_report_menu" string="Observasi Terapi Pasien" 
+    model="oeh.medical.evaluation" report_type="xlsx" name="oehealth_idn.report_observasi_terapi_pasien" file="oehealth_idn.report_observasi_terapi_pasien"
+    attachment_use="False" menu="False" /> -->
 
     <report id="catatan_asuhan_gizi_report_menu" string="Form Catatan Asuhan Gizi" model="oeh.medical.evaluation" report_type="qweb-pdf" name="oehealth_idn.report_catatan_asuhan_gizi" menu="True" />
 
@@ -127,7 +129,7 @@
         <field name="header_line" eval="False" />
         <field name="header_spacing">0</field>
         <field name="dpi">90</field>
-        <field name="report_ids" eval="[(4, ref('oehealth_idn.observasi_terapi_pasien_report_menu')), (4, ref('oehealth_idn.report_rekam_medis_rawatjalan')),]" />
+        <field name="report_ids" eval="[(4, ref('oehealth_idn.report_rekam_medis_rawatjalan')),]" />
     </record>
 
 </odoo>

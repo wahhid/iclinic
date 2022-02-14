@@ -2,86 +2,82 @@
 <odoo>
     <template id="report_cppt">
         <t t-call="report.html_container">
-            <t t-call="report.external_layout">
-                
-                <div class="page">
-                    <style>
-                        th, td {
-                            padding: 8px;
-                        }
-                    </style>
-                    <div class="oe_structure">
-                        <br/>
-                        <h3 style="text-align:center;">
-                            CATATAN PERKEMBANGAN DAFTAR INSTRUKSI DAN IMPLEMENTASI PASIEN <br/>
-                            TERINTEGRASI (CPPT)
-                        </h3>
-                        <br/>
-                        <table style="width:100%; border : 1px solid black;">
-                            <tr>
-                                <td>
-                                    <table style="width:100%">
+            <div class="page">
+                <style>
+                    th, td {
+                        padding: 8px;
+                    }
+                </style>
+                <div class="oe_structure">
+                    <br/>
+                    <h3 style="text-align:center;">
+                        CATATAN PERKEMBANGAN DAFTAR INSTRUKSI DAN IMPLEMENTASI PASIEN <br/>
+                        TERINTEGRASI (CPPT)
+                    </h3>
+                    <br/>
+                    <table style="width:100%; border : 1px solid black;">
+                        <tr>
+                            <td>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>No.RM : <span t-esc="no_rm" /></td>
+                                        <td>Ruang Perawat : <span t-esc="bed" /> Kamar : <span t-esc="kelas" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama Pasien : <span t-esc="patient_name" /></td>
+                                        <td>Jenis Kelamin : <span t-esc="gender" /></td>
+                                    </tr>
                                         <tr>
-                                            <td>No.RM : <span t-esc="no_rm" /></td>
-                                            <td>Ruang Perawat : <span t-esc="bed" /> Kamar : <span t-esc="kelas" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nama Pasien : <span t-esc="patient_name" /></td>
-                                            <td>Jenis Kelamin : <span t-esc="gender" /></td>
-                                        </tr>
-                                         <tr>
-                                            <td>Tanggal Lahir : <span t-esc="dob" /></td>
-                                            <td></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
+                                        <td>Tanggal Lahir : <span t-esc="dob" t-field-options='{"format": "d MMMM y"}'/></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
 
-                        <table style="width:100%">
+                    <table style="width:100%">
+                        <tr>
+                            <th style="border : 1px solid black;">Tgl/Jam</th>
+                            <th style="border : 1px solid black;">Proposional Pemberi Asuhan (PPA)</th>
+                            <th style="border : 1px solid black;">Hasil Assesment dan Pemberi Pelayanan (S.O.A.P)
+                                DPJP harus membaca seluruh rencana perawat
+                                </th>
+                            <th style="border : 1px solid black;">Verifikasi DPJP (bubuhkan stempel,nama,paraf,tgl,jam)</th>
+                        </tr>
+                        <t t-foreach="evaluation_list" t-as="ev">
                             <tr>
-                                <th style="border : 1px solid black;">Tgl/Jam</th>
-                                <th style="border : 1px solid black;">Proposional Pemberi Asuhan (PPA)</th>
-                                <th style="border : 1px solid black;">Hasil Assesment dan Pemberi Pelayanan (S.O.A.P)
-                                    DPJP harus membaca seluruh rencana perawat
-                                    </th>
-                                <th style="border : 1px solid black;">Verifikasi DPJP (bubuhkan stempel,nama,paraf,tgl,jam)</th>
+                                <td style="border : 1px solid black;"><span t-esc="tanggal" /></td>
+                                <td style="border : 1px solid black;"><span t-esc="ppa" /></td>
+                                <td style="border : 1px solid black;">
+                                    S : <span t-esc="ev['S']" />
+                                    <br />
+                                    <br />
+                                    O : 
+                                    <br />
+                                        BB <span t-esc="ev['O']['bb']" />
+                                    <br />
+                                        TB <span t-esc="ev['O']['tb']" />
+                                    <br />
+                                        IMT <span t-esc="ev['O']['imt']" />
+                                    <br/><br />
+                                    A : <span t-esc="ev['A']" />
+                                    <br />
+                                    <br />
+                                    P : <span t-esc="ev['P']" />
+                                    <br />
+                                    <br />
+                                    Edukasi :
+                                    <br />
+                                    <br />
+                                    <br />
+                                </td>
+                                <td style="border : 1px solid black;"><span t-esc="dpjp" /></td>
                             </tr>
-                            <t t-foreach="evaluation_list" t-as="ev">
-                                <tr>
-                                    <td style="border : 1px solid black;"><span t-esc="tanggal" /></td>
-                                    <td style="border : 1px solid black;"><span t-esc="ppa" /></td>
-                                    <td style="border : 1px solid black;">
-                                        S : <span t-esc="ev['S']" />
-                                        <br />
-                                        <br />
-                                        O : 
-                                        <br />
-                                            BB <span t-esc="ev['S']['bb']" />
-                                        <br />
-                                            TB <span t-esc="ev['S']['tb']" />
-                                        <br />
-                                            IMT <span t-esc="ev['S']['imt']" />
-                                        <br/><br />
-                                        A : <span t-esc="ev['A']" />
-                                        <br />
-                                        <br />
-                                        P : <span t-esc="ev['P']" />
-                                        <br />
-                                        <br />
-                                        Edukasi :
-                                        <br />
-                                        <br />
-                                        <br />
-                                    </td>
-                                    <td style="border : 1px solid black;"><span t-esc="dpjp" /></td>
-                                </tr>
-                            </t>
-                        </table>
-                    </div>
+                        </t>
+                    </table>
                 </div>
-                
-            </t>
+            </div>
         </t>
     </template>
 </odoo>
