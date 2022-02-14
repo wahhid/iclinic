@@ -28,7 +28,7 @@
                                         <td>Jenis Kelamin : <span t-esc="gender" /></td>
                                     </tr>
                                         <tr>
-                                        <td>Tanggal Lahir : <span t-esc="dob" /></td>
+                                        <td>Tanggal Lahir : <span t-esc="dob" t-field-options='{"format": "d MMMM y"}'/></td>
                                         <td></td>
                                     </tr>
                                 </table>

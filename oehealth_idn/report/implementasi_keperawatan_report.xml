@@ -30,7 +30,7 @@
                         <tr class="border">
                             <td>Tanggal Lahir </td>
                             <td> : </td>
-                            <td><span t-esc="dob" /></td>
+                            <td><span t-esc="dob" t-field-options='{"format": "d MMMM y"}'/></td>
                         </tr>
                         <tr class="border">
                             <td>DPJP</td>

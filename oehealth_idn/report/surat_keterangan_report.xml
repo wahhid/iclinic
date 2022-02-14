@@ -16,7 +16,7 @@
                             <t t-if="not o or not 'company_id' in o">
                                 <t t-set="company" t-value="res_company"/>
                             </t>
-                            
+                            <br/><br/>
                             <img style="width:70px;height:70px;" t-if="company.logo" t-att-src="'data:image/png;base64,%s' %company.logo"/>
                         </td>
                         <td style="text-align:bottom; padding:8px;">
