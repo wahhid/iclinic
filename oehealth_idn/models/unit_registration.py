@@ -254,7 +254,7 @@ class unit_registration(models.Model):
     tipe_konsul = fields.Selection([('konsul1','Mohon konsultasi satu kali'), ('konsul2','Mohon untuk rawat bersama'), ('konsul3','Mohon alih rawat')], string='Tipe Konsultasi')
 
     perstujuan_tindakan = fields.Boolean(string='Persetujuan Tindakan')
-
+    evaluation_ids = fields.One2many('oeh.medical.evaluation', 'reg_id', 'Evaluations')
     
     _sql_constraints = [
      ('full_name_uniq', 'unique (name)', 'The Queue Number must be unique')]

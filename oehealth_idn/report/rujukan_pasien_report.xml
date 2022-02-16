@@ -57,7 +57,7 @@
                     <br/><br/>
                     <t t-set="nomor" t-value="1" />
 
-                    <t t-foreach='o.evaluation_id' t-as='line'>
+                    <t t-foreach='o.evaluation_ids' t-as='line'>
                     
                         <table style="width:100%; padding: 6px;">
                             <tr>

@@ -53,7 +53,7 @@ table, th, td {
 
               </table>
 
-              <t t-foreach="o.evaluation_id" t-as="l">
+              <t t-foreach="o.evaluation_ids" t-as="l">
 
                 <t t-if="true == l.doctor.is_doctor">
 
@@ -178,7 +178,7 @@ table, th, td {
                   </div>
                 </div>
 
-                <t t-foreach="o.evaluation_id" t-as="l">
+                <t t-foreach="o.evaluation_ids" t-as="l">
                   <t t-if="true == l.doctor.is_doctor">
                     <div class="container">
                       <div class="row">
@@ -299,7 +299,7 @@ table, th, td {
                   </div>
                 </div>
 
-                <t t-foreach="o.evaluation_id" t-as="l">
+                <t t-foreach="o.evaluation_ids" t-as="l">
                   <t t-if="true == l.doctor.is_doctor">
                     <div class="container">
                       <div class="row">

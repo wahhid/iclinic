@@ -34,7 +34,7 @@ table, th, td {
                                                 <td>Diagnosa</td>
                                                 <td> : </td>
                                                 <td>
-                                                    <t t-foreach='o.evaluation_id' t-as='l'>
+                                                    <t t-foreach='o.evaluation_ids' t-as='l'>
                                                         <t t-foreach='l.diagnostic_ids' t-as='line'>
                                                             <span t-field="line.pathology_id.name" />, 
                                                         </t>
@@ -62,7 +62,7 @@ table, th, td {
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <t t-foreach='o.evaluation_id' t-as='evl'>
+                                                    <t t-foreach='o.evaluation_ids' t-as='evl'>
                                                         <t t-if="true == evl.dm_stroke_p">DM Stroke, </t>
                                                         <t t-if="true == evl.katarak">Katarak, </t>
                                                         <t t-if="true == evl.hipertensi_p">Hipertensi , </t>	
@@ -97,7 +97,7 @@ table, th, td {
                                                     <br/><br/>
                                                     Tindakan :
                                                     <br/>
-                                                    <t t-foreach='o.evaluation_id' t-as='ev'>
+                                                    <t t-foreach='o.evaluation_ids' t-as='ev'>
                                                         <span t-field="ev.notes_complaint" />,
                                                     </t>
                                                 </td>

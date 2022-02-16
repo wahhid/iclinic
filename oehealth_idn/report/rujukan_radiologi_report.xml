@@ -62,7 +62,7 @@
                                                 <tr>
                                                     <td>
                                                         <strong>Mohon dilakukan pemeriksaan : <br/>
-                                                        <t t-foreach="o.evaluation_id" t-as="l">
+                                                        <t t-foreach="o.evaluation_ids" t-as="l">
                                                             <t t-if="l.doctor.is_doctor == true">
                                                                 <span t-field="l.notes_complaint" />
                                                             </t>
