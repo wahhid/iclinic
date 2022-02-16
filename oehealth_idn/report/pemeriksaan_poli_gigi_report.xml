@@ -2,22 +2,22 @@
 <odoo>
   <template id="report_pemeriksaan_poli_gigi">
     <t t-call="report.html_container">
-      <t t-call="report.external_layout">
+      
         <t t-foreach="docs" t-as="o">
           <div class="page">
             <style>
 
-th, td {
-  padding: 5px;
-}
-.center {
-  margin-left: auto;
-  margin-right: auto;
-}
-.text-center {
-  border: 1px solid black; text-align:center;
-}
-</style>
+              th, td {
+                padding: 5px;
+              }
+              .center {
+                margin-left: auto;
+                margin-right: auto;
+              }
+              .text-center {
+                border: 1px solid black; text-align:center;
+              }
+            </style>
             <div class="oe_structure">
               <h2 style="text-align:center;">FORMULIR PEMERIKSAAN ODONTOGRAM</h2>
               <br />
@@ -234,7 +234,7 @@ th, td {
             </div>
           </div>
         </t>
-      </t>
+      
     </t>
   </template>
 </odoo>

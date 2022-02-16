@@ -2,15 +2,15 @@
 <odoo>
     <template id="report_pengkajian_rawat_jalan">
         <t t-call="report.html_container">
-            <t t-call="report.external_layout">
+            
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
                         <style>
 
-th, td {
-  padding: 8px;
-}
-</style>
+                            th, td {
+                                padding: 8px;
+                            }
+                        </style>
                         <div class="oe_structure">
                             <br/><br/>
                             <h2 style="text-align:center;">FORM PENGKAJIAN AWAL KLINIS (RAWAT JALAN)</h2>
@@ -612,7 +612,7 @@ th, td {
                         </div>
                     </div>
                 </t>
-            </t>
+            
         </t>
     </template>
 </odoo>

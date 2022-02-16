@@ -3,56 +3,55 @@
     <data>
         <template id="report_physiciandetails">
             <t t-call="report.html_container">
-                <t t-call="report.external_layout">
-                    <div class="page">
-                        <div class="text-center">
-                            <h2>Physician Income Details</h2>
-                            <strong>
-                                <t t-esc="date_start" t-options="{'widget': 'datetime'}"/>
- -                                <t t-esc="date_stop" t-options="{'widget': 'datetime'}"/>
-                            </strong>
-                        </div>
-                        <table class="table table-condensed">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Order</th>
-                                    <th>Patient</th>
-                                    <th>Arrival</th>
-                                    <th>Registration</th>
-                                    <th>Product</th>
-                                    <th>Qty</th>
-                                    <th>Amount</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach='incomes' t-as='income'>
-                                    <tr style="font-size: 16px;background-color: black;color: white;">
-                                        <td colspan="8">
-                                            <span t-esc="income['physician_name']"/>
-                                        </td>   
-                                    </tr>
-                                    <t t-set="total" t-value="0"/>
-                                    <tr t-foreach="income['income_lines']" t-as="income_line">
-                                        <td><span t-esc="income_line['date_order']"/></td>
-                                        <td><span t-esc="income_line['sale_order']"/></td>
-                                        <td><span t-esc="income_line['patient_name']"/></td>
-                                        <td><span t-esc="income_line['arrival_id']"/></td>
-                                        <td><span t-esc="income_line['reg_id']"/></td>
-                                        <td><span t-esc="income_line['product_name']"/></td>
-                                        <td><span t-esc="income_line['qty']"/></td>
-                                        <td><span t-esc="income_line['amount']"/></td>
-                                        <t t-set="total" t-value="total + income_line['amount']"/>
-                                    </tr>
-                                    <tr style="font-size: 16px;background-color: black;color: white;">
-                                        <td colspan="7">Total <span t-esc="income['physician_name']"/></td>
-                                        <td><span t-esc="total"/></td>
-                                    </tr>
-                                </t>
-                            </tbody>
-                        </table>
+                
+                <div class="page">
+                    <div class="text-center">
+                        <h2>Physician Income Details</h2>
+                        <strong>
+                            <t t-esc="date_start" t-options="{'widget': 'datetime'}"/> - <t t-esc="date_stop" t-options="{'widget': 'datetime'}"/>
+                        </strong>
                     </div>
-                </t>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Order</th>
+                                <th>Patient</th>
+                                <th>Arrival</th>
+                                <th>Registration</th>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach='incomes' t-as='income'>
+                                <tr style="font-size: 16px;background-color: black;color: white;">
+                                    <td colspan="8">
+                                        <span t-esc="income['physician_name']"/>
+                                    </td>   
+                                </tr>
+                                <t t-set="total" t-value="0"/>
+                                <tr t-foreach="income['income_lines']" t-as="income_line">
+                                    <td><span t-esc="income_line['date_order']"/></td>
+                                    <td><span t-esc="income_line['sale_order']"/></td>
+                                    <td><span t-esc="income_line['patient_name']"/></td>
+                                    <td><span t-esc="income_line['arrival_id']"/></td>
+                                    <td><span t-esc="income_line['reg_id']"/></td>
+                                    <td><span t-esc="income_line['product_name']"/></td>
+                                    <td><span t-esc="income_line['qty']"/></td>
+                                    <td><span t-esc="income_line['amount']"/></td>
+                                    <t t-set="total" t-value="total + income_line['amount']"/>
+                                </tr>
+                                <tr style="font-size: 16px;background-color: black;color: white;">
+                                    <td colspan="7">Total <span t-esc="income['physician_name']"/></td>
+                                    <td><span t-esc="total"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                
             </t>
         </template>
     </data>

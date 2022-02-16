@@ -2,16 +2,16 @@
 <odoo>
   <template id="report_persetujuan_tindakan">
     <t t-call="report.html_container">
-      <t t-call="report.external_layout">
+      
         <t t-foreach="docs" t-as="o">
           <div class="page">
             <style>
 
-table, th, td {
-  padding: 5px;
-  border:1px solid black;
-}
-</style>
+              table, th, td {
+                padding: 5px;
+                border:1px solid black;
+              }
+            </style>
             <div class="oe_structure">
               <table style="width:100%">
                 <tr>
@@ -397,7 +397,7 @@ table, th, td {
             </div>
           </div>
         </t>
-      </t>
+      
     </t>
   </template>
 </odoo>

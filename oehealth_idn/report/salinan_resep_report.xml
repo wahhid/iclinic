@@ -2,125 +2,124 @@
 <odoo>
     <template id="report_salinan_resep">
         <t t-call="report.html_container">
-                <t t-foreach="docs" t-as="o">
-                    <!-- Header -->
-                    <t t-if="not o and doc">
-                        <t t-set="o" t-value="doc"/>
-                    </t>
-                    <t t-if="o and 'company_id' in o">
-                        <t t-set="company" t-value="o.company_id"/>
-                    </t>
-                    <t t-if="not o or not 'company_id' in o">
-                        <t t-set="company" t-value="res_company"/>
-                    </t>
-                    <div class="header">
-                        <div class="row" style="border-bottom: 1px solid black;">
-                            <div class="col-xs-3">
-                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
-                            </div>
-                            
-                            <div class="col-xs-9" style="position: relative;">
-                                <h2><span t-field="o.pharmacy.operating_unit_id.name" /></h2> <br/>
-                                <span t-field="o.pharmacy.operating_unit_id.unit_address" /><br/>
-                                No. Izin Klinik : <span t-field="o.pharmacy.operating_unit_id.izin_klinik" /><br/>
-                                No. Izin Apotik : <span t-field="o.pharmacy.operating_unit_id.izin_apotik" />
-                            </div>
-                        
-                        </div>
-                    </div>
-                    <!-- end header -->
-                    <div class="page">
-                        <style>
-                            th, td {
-                                font-size:10px;
-                            }
-                        </style>
-                        <div class="oe_structure">
-                             <div class="row">
-                                <p style="font-size:24px;text-align:center;font-weight:bold;">Salinan Resep</p>
-                            </div>
-                            <table style="width:100%; padding:5px;">
-                                   <tr>
-                                        <td style="padding:8px;">No. : <span t-field="o.name" />      Tanggal  : <span t-field="o.date" />  </td>
-                                   </tr>
-                                    <tr>
-                                        <td style="padding:8px;">Dari Dokter :  <span t-field="o.doctor.name" /></td>
-                                   </tr>
-                                   <tr>
-                                        <td style="padding:8px;">Dibuat Tanggal  : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
-                                   </tr>  
-                                   <tr>
-                                        <td style="padding:8px;">Untuk  :  <span t-field="o.remarks" /></td>
-                                   </tr>
-                            </table>
-                            <h2><i>R/</i></h2> 
-                            <br/>
-                            
-                            <table class="table table-condensed mt32">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">Obat</th>
-                                            <th class="text-left">Dosis</th>
-                                            <th class="text-left">QTY</th>
-                                            <th class="text-left">Frequency</th>
-                                            <th class="text-left">Admin hours</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="invoice_tbody">
-                                    <tr t-foreach="o.prescription_line" t-as="s">
-                                        <td class="text-left">
-                                                <span t-field="s.name"/>
-                                            </td>
-                                            <td class="text-left">
-                                                <span t-field="s.dose"/> Mg
-                                            </td>
-                                            <td class="text-left">
-                                                <span t-field="s.qty"/>
-                                            </td>
-                                            <td class="text-left">
-                                                <span t-field="s.common_dosage"/>
-                                            </td>
-                                            <td class="text-left">
-                                                <span t-field="s.admin_times"/>
-                                            </td>
-                                    </tr>
-                                    <t t-foreach="o.concoction_ids" t-as="cc">
-                                        <tr>  
-                                            <th colspan="4"> 
-                                                Obat : <span t-field="cc.product_id.name" />
-                                                Jumlah : <span t-field="cc.qty" />
-                                                Keterangan : <span t-field="cc.remark" />
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th></th>
-                                            <th>Detail Obat</th>
-                                            <th>Zat Aktif</th>
-                                            <th colspan="1">Total Qty</th>
-                                        </tr>
-                                        <t t-foreach="cc.concoction_detail_ids" t-as="ccd">
-                                            <tr>
-                                                <td></td>
-                                                <td>
-                                                    <span t-field="ccd.product_id.name" />
-                                                </td>
-                                                <td>
-                                                    <span t-field="ccd.zat_qty" />
-                                                </td>
-                                                <td colspan="1">
-                                                    <span t-field="ccd.total" />
-                                                </td>
-                                            </tr>
-                                        </t>
-                                    </t>
-
-                                </tbody>
-                            </table>
-                            <br/><br/>
-                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
-                        </div>
-                    </div>
+            <t t-foreach="docs" t-as="o">
+                <!-- Header -->
+                <t t-if="not o and doc">
+                    <t t-set="o" t-value="doc"/>
                 </t>
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"/>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+                <div class="header">
+                    <div class="container" style="border-bottom: 1px solid black;">
+                        <table style="width:100%">
+                            <tr>
+                                <td style="text-align:center; padding:8px; width:15%;">
+                                    <br/>
+                                    <img style="width:50px;height:50px;" t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"/>
+                                </td>
+                                <td style="text-align:bottom; padding:8px;">
+
+                                    <h4><span t-field="o.pharmacy.operating_unit_id.name"/></h4>
+                                    <h5><span t-field="o.pharmacy.operating_unit_id.unit_address"/></h5>
+                                    <h6>No. Izin Klinik : <span t-field="o.pharmacy.operating_unit_id.izin_klinik"/></h6>
+                                    <h6>No. Izin Apotik : <span t-field="o.pharmacy.operating_unit_id.izin_apotik"/></h6>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- end header -->
+                <div class="page">
+                    <div class="oe_structure">
+                        <div class="row">
+                            <p style="font-size:24px;text-align:center;font-weight:bold;">Salinan Resep</p>
+                        </div>
+                        <table style="width:100%; padding:5px;">
+                            <tr>
+                                <td style="padding:8px;">No. : <span t-field="o.name" />      Tanggal  : <span t-field="o.date" />  </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:8px;">Dari Dokter :  <span t-field="o.doctor.name" /></td>
+                            </tr>
+                            <tr>
+                                <td style="padding:8px;">Dibuat Tanggal  : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
+                            </tr>  
+                            <tr>
+                                <td style="padding:8px;">Untuk  :  <span t-field="o.remarks" /></td>
+                            </tr>
+                        </table>
+                        <h2><i>R/</i></h2> 
+                        <br/>
+                        
+                        <table class="table table-condensed mt32">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">Obat</th>
+                                        <th class="text-left">Dosis</th>
+                                        <th class="text-left">QTY</th>
+                                        <th class="text-left">Frequency</th>
+                                        <th class="text-left">Admin hours</th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <tr t-foreach="o.prescription_line" t-as="s">
+                                    <td class="text-left">
+                                            <span t-field="s.name"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-field="s.dose"/> Mg
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-field="s.qty"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-field="s.common_dosage"/>
+                                        </td>
+                                        <td class="text-left">
+                                            <span t-field="s.admin_times"/>
+                                        </td>
+                                </tr>
+                                <t t-foreach="o.concoction_ids" t-as="cc">
+                                    <tr>  
+                                        <th colspan="4"> 
+                                            Obat : <span t-field="cc.product_id.name" />
+                                            Jumlah : <span t-field="cc.qty" />
+                                            Keterangan : <span t-field="cc.remark" />
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>Detail Obat</th>
+                                        <th>Zat Aktif</th>
+                                        <th colspan="1">Total Qty</th>
+                                    </tr>
+                                    <t t-foreach="cc.concoction_detail_ids" t-as="ccd">
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <span t-field="ccd.product_id.name" />
+                                            </td>
+                                            <td>
+                                                <span t-field="ccd.zat_qty" />
+                                            </td>
+                                            <td colspan="1">
+                                                <span t-field="ccd.total" />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+
+                            </tbody>
+                        </table>
+                        <br/><br/>
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                    </div>
+                </div>
+            </t>
         </t>
     </template>
 </odoo>

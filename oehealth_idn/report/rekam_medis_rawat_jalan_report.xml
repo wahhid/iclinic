@@ -4,90 +4,89 @@
 
     <template id="report_rekam_medis_rawat_jalan">
         <t t-call="report.html_container">
-            <t t-call="report.external_layout">
-                <t t-foreach="docs" t-as="o">
-                    <div class="page">
-                        <style>
+            
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <style>
+                        th, td {
+                        padding: 5px;
+                        }
+                    </style>
+                    <div class="oe_structure">
+                        <h2 style="text-align:center;">REKAM MEDIS RAWAT JALAN</h2>
 
-th, td {
-  padding: 5px;
-}
-</style>
-                        <div class="oe_structure">
-                            <h2 style="text-align:center;">REKAM MEDIS RAWAT JALAN</h2>
-
-                            <table style="width:100%">
+                        <table style="width:100%">
+                            <tr>
+                                <td>No.RM : <span t-field="o.patient.medical_record" /></td>
+                                <td></td>
+                                <td>No.NPP : 
+                                        <t t-if="'Employe' == o.walkin.payment">
+                                                <span t-field="o.employee_id.employee_number" />
+                                        </t>
+                                        
+                                </td>
+                                <th rowspan="3" style="border:1px solid black;">
+                                    RIWAYAT ALERGI
+                                    <br />
+                                    <span t-field="o.allergy_history" />
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>Nama Lengkap :  <span t-field="o.patient.name" /></td>
+                                <td></td>
+                                <td>Jenis Kelamin : <span t-field="o.patient.sex" /></td>
+                            </tr>
+                            <tr>
+                                <td>TTL : <span t-field="o.patient.place_birth"/>, <span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
+                                <td></td>
+                                <td>Umur : <span t-field="o.patient.age" /></td>
+                            </tr>
+                        </table>
+                        <table style="width:100%">
+                            <tr>
+                                <th style="border:1px solid black;">TANGGAL POLI</th>
+                                <th style="border:1px solid black;">ASUHAN KEPERAWATAN DNA KEBIDANAN SOAP</th>
+                                <th style="border:1px solid black;">PERAWAT BIDAN</th>
+                                <th style="border:1px solid black;">ANAMNESA DAN DIAGNOSA</th>
+                                <th style="border:1px solid black;">PEMERIKSAAN PENUNJANG</th>
+                                <th style="border:1px solid black;">TERAPI/TINDAKAN</th>
+                                <th style="border:1px solid black;">DOKTER</th>
+                            </tr>
+                            
                                 <tr>
-                                    <td>No.RM : <span t-field="o.patient.medical_record" /></td>
-                                    <td></td>
-                                    <td>No.NPP : 
-                                            <t t-if="'Employe' == o.walkin.payment">
-                                                    <span t-field="o.employee_id.employee_number" />
-                                            </t>
-                                            
+                                    <td style="border:1px solid black;"><span t-field="o.evaluation_start_date" /></td>
+                                    <td style="border:1px solid black;">
+                                        S : 
+                                        <P t-field="o.subjective" />
+                                        <br/>
+                                        O : <br />
+                                            BB : <span t-field="o.weight" />  kg
+                                            <br /><br />
+                                            TB : <span t-field="o.height" />  cm
+                                            <br /><br />
+                                            IMT : <span t-field="o.bmi" />  (BB/TB2/M)
+                                            <br /><br />
+                                        A :
+                                        <P t-field="o.notes" />
+                                        <br/>
+                                        P :
+                                        <P t-field="o.notes_complaint" />
+                                        <br/>
                                     </td>
-                                    <th rowspan="3" style="border:1px solid black;">
-                                        RIWAYAT ALERGI
-                                        <br />
-                                        <span t-field="o.allergy_history" />
-                                    </th>
+                                    <td style="border:1px solid black;">
+                                        <span t-field="o.env.name"/>
+                                    </td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
+                                    <td style="border:1px solid black;"></td>
                                 </tr>
-                                <tr>
-                                    <td>Nama Lengkap :  <span t-field="o.patient.name" /></td>
-                                    <td></td>
-                                    <td>Jenis Kelamin : <span t-field="o.patient.sex" /></td>
-                                </tr>
-                                <tr>
-                                    <td>TTL : <span t-field="o.patient.place_birth"/>, <span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
-                                    <td></td>
-                                    <td>Umur : <span t-field="o.patient.age" /></td>
-                                </tr>
-                            </table>
-                            <table style="width:100%">
-                                <tr>
-                                    <th style="border:1px solid black;">TANGGAL POLI</th>
-                                    <th style="border:1px solid black;">ASUHAN KEPERAWATAN DNA KEBIDANAN SOAP</th>
-                                    <th style="border:1px solid black;">PERAWAT BIDAN</th>
-                                    <th style="border:1px solid black;">ANAMNESA DAN DIAGNOSA</th>
-                                    <th style="border:1px solid black;">PEMERIKSAAN PENUNJANG</th>
-                                    <th style="border:1px solid black;">TERAPI/TINDAKAN</th>
-                                    <th style="border:1px solid black;">DOKTER</th>
-                                </tr>
-                                
-                                    <tr>
-                                        <td style="border:1px solid black;"><span t-field="o.evaluation_start_date" /></td>
-                                        <td style="border:1px solid black;">
-                                            S : 
-                                            <P t-field="o.subjective" />
-                                            <br/>
-                                            O : <br />
-                                                BB : <span t-field="o.weight" />  kg
-                                                <br /><br />
-                                                TB : <span t-field="o.height" />  cm
-                                                <br /><br />
-                                                IMT : <span t-field="o.bmi" />  (BB/TB2/M)
-                                                <br /><br />
-                                            A :
-                                            <P t-field="o.notes" />
-                                            <br/>
-                                            P :
-                                            <P t-field="o.notes_complaint" />
-                                            <br/>
-                                        </td>
-                                        <td style="border:1px solid black;">
-                                            <span t-field="o.env.name"/>
-                                        </td>
-                                        <td style="border:1px solid black;"></td>
-                                        <td style="border:1px solid black;"></td>
-                                        <td style="border:1px solid black;"></td>
-                                        <td style="border:1px solid black;"></td>
-                                    </tr>
-                                
-                            </table>
-                        </div>
+                            
+                        </table>
                     </div>
-                </t>
+                </div>
             </t>
+            
         </t>
     </template>
 </odoo>
