@@ -15,6 +15,7 @@ class account_invoice(models.Model):
     medical_record = fields.Char(string='Medical Record', related='patient.identification_code')
     amount_pay = fields.Float(string='Amount Pay')
     amount_change = fields.Float(string='Change', compute='get_change')
+    
 
     @api.depends('amount_pay')
     def get_change(self):
