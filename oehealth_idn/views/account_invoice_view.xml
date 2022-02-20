@@ -11,6 +11,7 @@
             <xpath expr="//page[@name='other_info']/group/group[2]/field[@name='name']" position="after">
                 <field name="arrival_id" readonly="1"/>
                 <field name="reg_id" readonly="1"/>
+                <field name="insurance_type_id"/>
             </xpath>
             <xpath expr="//page/field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
                 <field name="patient_id" readonly="1"/>

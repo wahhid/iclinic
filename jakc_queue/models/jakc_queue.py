@@ -294,7 +294,7 @@ class QueueSequence(models.Model):
 
     _name = 'queue.sequence'
 
-    @api.one
+   # @api.one
     def action_reset_sequence(self):
         queue_sequence_ids = self.env['queue.sequence'].search([])
         for queue_sequence_id in queue_sequence_ids:

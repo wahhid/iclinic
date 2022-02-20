@@ -16,6 +16,9 @@ class account_invoice(models.Model):
     amount_pay = fields.Float(string='Amount Pay')
     amount_change = fields.Float(string='Change', compute='get_change')
     
+    insurance_type_id = fields.Many2one('medical.insurance.type', 'Insurance Type')
+    claim_number = fields.Char('Claim Number', size=100)
+
 
     @api.depends('amount_pay')
     def get_change(self):
