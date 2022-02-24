@@ -91,6 +91,42 @@ class unit_registration(models.Model):
         data = {'walkin_id': walkin_id.id, 'type': self.type}
         return self.env['report'].get_action([], 'oehealth_idn.report_cppt', data=data)
 
+    def print_radiologi(self):
+        walkin_id = False
+        
+        walkin_id = self.id
+        _logger.info(walkin_id)
+
+        data = {'walkin_id': walkin_id, 'type': self.type}
+        return self.env['report'].get_action([], 'oehealth_idn.report_rujukan_radiologi', data=data)
+
+    def print_external(self):
+        walkin_id = False
+        
+        walkin_id = self.id
+        _logger.info(walkin_id)
+
+        data = {'walkin_id': walkin_id, 'type': self.type}
+        return self.env['report'].get_action([], 'oehealth_idn.report_rujukan_pasien', data=data)
+
+    def print_internal(self):
+        walkin_id = False
+        
+        walkin_id = self.id
+        _logger.info(walkin_id)
+
+        data = {'walkin_id': walkin_id, 'type': self.type}
+        return self.env['report'].get_action([], 'oehealth_idn.report_rujukan_internal', data=data)
+
+    def print_persetujuan_tindakan(self):
+        walkin_id = False
+        
+        walkin_id = self.id
+        _logger.info(walkin_id)
+
+        data = {'walkin_id': walkin_id, 'type': self.type}
+        return self.env['report'].get_action([], 'oehealth_idn.report_persetujuan_tindakan', data=data)
+
     def action_next(self):
         _logger.info("Unit Registration Action Next")
         if self.queue_trans_id.type_id.unit_administration_id.id == self.env.user.default_unit_administration_id.id:

@@ -2,23 +2,21 @@
 <odoo>
     <template id="report_pengkajian_rawat_jalan">
         <t t-call="report.html_container">
-            
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
                         <style>
-
                             th, td {
-                                padding: 8px;
+                                padding: 3px;
+                                font-size:9px;
                             }
                         </style>
                         <div class="oe_structure">
-                            <br/><br/>
-                            <h2 style="text-align:center;">FORM PENGKAJIAN AWAL KLINIS (RAWAT JALAN)</h2>
-                            <table class="gt_table" width="100%" style="border: 1px solid #000; ">
+                            <h4 style="text-align:center;">FORM PENGKAJIAN AWAL KLINIS (RAWAT JALAN)</h4>
+                            <table class="gt_table" width="100%">
                                 <tbody>
                                     <tr>
                                         <td style="border: 1px solid #000; width:50%;">
-                                            <table style="border: 0;" width="100%">
+                                            <table width="100%">
                                                 <tbody>
                                                     <tr>
                                                         <td style="">Nama</td>
@@ -76,222 +74,247 @@
                                                     <tr>
                                                         <td style="">Kewarganegaraan</td>
                                                         <td style=""> : </td>
-                                                        <td style=""><span t-field="o.patient.country_id" /></td>
+                                                        <td style=""><span t-field="o.patient.nationality" /></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td colspan="2" style="border: 1px solid #000; ">
                                             <t t-if="'Insurance' == o.walkin.payment">
                                                 BPJS/Insurance No : <span t-field="o.walkin.insurance.ins_no" />
                                             </t>
                                             <t t-if="'Employe' == o.walkin.payment">
                                                 NPP No: <span t-field="o.walkin.employee_id.employee_number" />
                                             </t>
-                                            <br />
+                                             | 
                                             <span t-field="o.walkin.detail_payment_guarantor" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="border: 1px solid #000; vertical-align:top" colspan="2">
-                                            <b><h5>RIWAYAT PENYAKIT</h5></b>
-                                            <br /><br />
-                                            a. Riwayat Penyakit Pribadi
-                                            <br /><br/>
-                                            <center>
-                                            <table style="border: 1px solid #000;" width="70%">
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">DM.Stroke</td>
-                                                        <td style="border: 1px solid #000; ">
-                                                    <t t-if="true == o.dm_stroke_p">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Katarak</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.katarak">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Hipertensi</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.hipertensi_p">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Penyakit jantung koroner</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.jantung_p">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Kolesterol,Penyakit Ginjal</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.kolesterol">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Penyakit hati/liver</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.liver">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Asam urat</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.asam_urat">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Pendarahan Lama</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.pendarahan">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; " colspan="2">Lain-Lain : <span t-field="o.lain_rpp" /></td>
-                                                        
-                                                    </tr>
-                                                </tbody>
+                                            <h5 style="text-align:center;">RIWAYAT PENYAKIT</h5>
+                                            <br />
+                                            
+                                            <br />
+                                            <table  style="width:100%">
+                                                <tr>
+                                                    <td>
+                                                        <table width="100%">
+                                                                <tr>
+                                                                    <th colspan="2">A. Riwayat Penyakit Pribadi</th>
+                                                                </tr>
+                                                            
+                                                                <tr>
+                                                                    <td style="border: 0px solid #000; ">DM.Stroke</td>
+                                                                    <td style="border: 0px solid #000; text-align:center;">
+                                                                <t t-if="true == o.dm_stroke_p">
+                                                                        ✔ 
+                                                                    </t></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="border: 0px solid #000; ">Katarak</td>
+                                                                    <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.katarak">
+                                                                        ✔ 
+                                                                    </t></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="border: 0px solid #000; ">Hipertensi</td>
+                                                                    <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.hipertensi_p">
+                                                                        ✔ 
+                                                                    </t></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="border: 0px solid #000; ">Penyakit jantung koroner</td>
+                                                                    <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.jantung_p">
+                                                                        ✔ 
+                                                                    </t></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="border: 0px solid #000; ">Kolesterol,Penyakit Ginjal</td>
+                                                                    <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.kolesterol">
+                                                                        ✔ 
+                                                                    </t></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="border: 0px solid #000; ">Penyakit hati/liver</td>
+                                                                    <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.liver">
+                                                                        ✔ 
+                                                                    </t></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="border: 0px solid #000; ">Asam urat</td>
+                                                                    <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.asam_urat">
+                                                                        ✔ 
+                                                                    </t></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="border: 0px solid #000; ">Pendarahan Lama</td>
+                                                                    <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.pendarahan">
+                                                                        ✔ 
+                                                                    </t></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="border: 0px solid #000; " colspan="2">Lain-Lain : <span t-field="o.lain_rpp" /></td>
+                                                                    
+                                                                </tr>
+                                                            
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <table  width="100%">
+                                                            <tr>
+                                                                <th colspan="2">B. Riwayat Penyakit Keluarga</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 0px solid #000; ">DM</td>
+                                                                <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.dm_stroke_k">
+                                                                    ✔ 
+                                                                </t></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 0px solid #000; ">Hipertensi</td>
+                                                                <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.hipertensi_k">
+                                                                    ✔ 
+                                                                </t></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 0px solid #000; ">Penyakit jantung koroner</td>
+                                                                <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.jantung_k">
+                                                                    ✔ 
+                                                                </t></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 0px solid #000; ">Penyakit gangguan ginjal</td>
+                                                                <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.gangguan_ginjal">
+                                                                    ✔ 
+                                                                </t></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 0px solid #000; ">Kejiwaan/Depresi</td>
+                                                                <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.kejiwaan">
+                                                                    ✔ 
+                                                                </t></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 0px solid #000; ">Serangan Jantung</td>
+                                                                <td style="border: 0px solid #000; text-align:center;"><t t-if="true == o.serangan_jantung">
+                                                                    ✔ 
+                                                                </t></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: 0px solid #000; " colspan="2">Lain-lain : <span t-field="o.lain_rpk" /></td>
+                                                            </tr>
+                                                            
+                                                        </table>
+                                                    </td>
+                                                </tr>
                                             </table>
-                                            </center>
                                             <br />
-                                            b. Riwayat Penyakit Keluarga
-                                            <br />
-                                            <br />
-                                            <center>
-                                            <table style="border: 1px solid #000;" width="70%">
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">DM</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.dm_stroke_k">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Hipertensi</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.hipertensi_k">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Penyakit jantung koroner</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.jantung_k">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Penyakit gangguan ginjal</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.gangguan_ginjal">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Kejiwaan/Depresi</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.kejiwaan">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; ">Serangan Jantung</td>
-                                                        <td style="border: 1px solid #000; "><t t-if="true == o.serangan_jantung">
-                                                            ✔ 
-                                                        </t></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="border: 0px solid #000; " colspan="2">Lain-lain : <span t-field="o.lain_rpk" /></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            </center>
-                                            <br /><br />
-
-                                        
-                                            c. Riwayat Alergi Obat dan Makanan : 
+                                            C. Riwayat Alergi Obat dan Makanan : 
                                             <t t-if="true == o.alergi_obat_makanan">
-                                                            <p>Ya, Sebutkan :  <span t-field="o.lain_alergi_obat_makanan" /></p>
-                                                        </t>
+                                                <p>Ya, Sebutkan :  <span t-field="o.lain_alergi_obat_makanan" /></p>
+                                            </t>
                                             <t t-if="false == o.alergi_obat_makanan">
-                                                            Tidak
-                                                        </t>
-                                                        <br /><br />
-                                            <b><h5>KAJIAN BIOPSIKOSOSIAL</h5></b>
-                                            <br /><br />
-                                            a. Kebiasaan
-                                            <br />
-                                            <br />
+                                                Tidak
+                                            </t>
+                                            <table style="width:100%">
+                                                <tr>
+                                                    <td>
+                                                        <table class="table" style="width:100%">
+                                                            <tr>
+                                                                <th>KAJIAN BIOPSIKOSOSIAL</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>A. Kebiasaan</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Meroko / Minum Alkohol : 
+                                                                    <t t-if="true == o.alkohol">
+                                                                    [ ✔ ] 
+                                                                </t></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Lain-lain :
+                                                                    <span t-field="o.lain_kebiasaan" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>B. Pekerjaan</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Apakah pekerjaan pasien berhubungan dengan bahan berbahaya?(Misal,Kimia,Gas dll) : 
+                                                                    <t t-if="true == o.bahan_berbahaya_pekerjaan">
+                                                                        <br/>
+                                                                        Ya, Sebutkan :  <span t-field="o.sebutkan_bahan_berbahaya" />
+                                                                    </t>
+                                                                    <t t-if="false == o.bahan_berbahaya_pekerjaan">
+                                                                        Tidak
+                                                                    </t></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>C. Psikologis</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Tingkat Pendidikan : <span t-field="o.tingkat_pendidikan" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Disorientasi : <t t-if="true == o.disorientasi">
+                                                                        Ya, <p> Sebutkan :  <span t-field="o.sebutkan_disorientasi" /></p>
+                                                                    </t>
+                                                                    <t t-if="false == o.disorientasi">
+                                                                        Tidak
+                                                                    </t></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Emosi : <span t-field="o.emosi" /></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                        <table class="table" style="width:100%">
+                                                            
+                                                            <tr>
+                                                                <td>D. Sosial</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>- Tempat tinggal : 
+                                                                <span t-field="o.tinggal" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>- Bantuan yang di butuhkan di rumah</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td> Makan [<t t-if="true == o.bantuan_makan">
+                                                                        ✔ 
+                                                                    </t>] / Mandir [<t t-if="true == o.bantuan_mandi">
+                                                                        ✔ 
+                                                                    </t>] / BAK [<t t-if="true == o.bantuan_bak">
+                                                                        ✔ 
+                                                                    </t>] / BAB [<t t-if="true == o.bantuan_bab">
+                                                                        ✔ 
+                                                                    </t>] / Berjalan [<t t-if="true == o.bantuan_berjalan">
+                                                                        ✔ 
+                                                                    </t>]</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Status Gizi (Malnutrition Screening Tool MST)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>BB : <span t-field="o.weight" />  kg</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>TB : <span t-field="o.height" />  cm</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>IMT : <span t-field="o.bmi" />  (BB/TB2/M)</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                             
-                                                Meroko / Minum Alkohol : 
-                                                <t t-if="true == o.alkohol">
-                                                    [ ✔ ] 
-                                                </t>
-                                                <br /><br />
-                                                Lain-lain :
-                                                <span t-field="o.lain_kebiasaan" />
-                                            
-                                            <br /><br />
-                                            b. Pekerjaan
-                                            <br />
-                                            <br />
-                                            Apakah pekerjaan pasien berhubungan dengan bahan berbahaya?(Misal,Kimia,Gas dll)
-                                            <t t-if="true == o.bahan_berbahaya_pekerjaan">
-                                                            <p>Ya, Sebutkan :  <span t-field="o.sebutkan_bahan_berbahaya" /></p>
-                                                        </t>
-                                            <t t-if="false == o.bahan_berbahaya_pekerjaan">
-                                                            Tidak
-                                                        </t>             
-                                            
-                                            <br /><br />
-                            
-                                            c. Psikologis
-                                            <br />
-                                            <br />
-                                            Tingkat Pendidikan : <span t-field="o.tingkat_pendidikan" />
-                                            <br /><br />
-                                            Disorientasi : <t t-if="true == o.disorientasi">
-                                                            Ya, <p> Sebutkan :  <span t-field="o.sebutkan_disorientasi" /></p>
-                                                        </t>
-                                            <t t-if="false == o.disorientasi">
-                                                            Tidak
-                                                        </t>     
-                                            <br /><br />
-                                            Emosi : <span t-field="o.emosi" />
-                                            <br /><br />
-                                            d. Sosial
-                                            <br />
-                                            <br />
-                                             - Tempat tinggal : 
-                                            <span t-field="o.tinggal" />
-                                            <br />
-                                             - Bantuan yang di butuhkan di rumah
-                                            <br /><br />
-                                            Makan [<t t-if="true == o.bantuan_makan">
-                                                            ✔ 
-                                                        </t>] / Mandir [<t t-if="true == o.bantuan_mandi">
-                                                            ✔ 
-                                                        </t>] / BAK [<t t-if="true == o.bantuan_bak">
-                                                            ✔ 
-                                                        </t>] / BAB [<t t-if="true == o.bantuan_bab">
-                                                            ✔ 
-                                                        </t>] / Berjalan [<t t-if="true == o.bantuan_berjalan">
-                                                            ✔ 
-                                                        </t>]
-                                            <br /><br />
-                                            <b><h5>Status Gizi (Malnutrition Screening Tool MST)</h5></b>
-                                            <br /><br />
-                                            BB : <span t-field="o.weight" />  kg
-                                            <br /><br />
-                                            TB : <span t-field="o.height" />  cm
-                                            <br /><br />
-                                            IMT : <span t-field="o.bmi" />  (BB/TB2/M)
-                                            <br /><br />
-
-                                        
-                                            <table width="70%">
+                                            <table  class="table" style="width:100%">
                                                 <tbody>
                                                     <t t-set="i" t-value="0" />
                                                     <t t-set="l" t-value="0" />
@@ -346,13 +369,13 @@
                                                         <td style="border: 0px solid #000; "> <span t-esc="l" /> </td>
                                                     </tr>
                                                     <tr>
-                                                        <td >Total : <span t-esc="t" /></td>
-                                                        <td >  </td>
+                                                        <td style="text-align:right;">Total : <span t-esc="t" /></td>
+                                                        <td > </td>
                                                     </tr>
-                                                   
+                                                
                                                 </tbody>
                                             </table>
-                                           
+                                            
                                         </td>
                                     </tr>
 

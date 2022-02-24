@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <template id="report_pemeriksaan_poli_gigi">
+    <div class="header">
+        <div class="container" style="border-bottom: 1px solid black;">
+            <table style="width:100%">
+                <tr>
+                    <td style="text-align:center; padding:8px; width:15%;">
+                                            
+                        <!-- Multicompany -->
+                        <t t-if="not o and doc">
+                            <t t-set="o" t-value="doc"/>
+                        </t>
+                        <t t-if="o and 'company_id' in o">
+                            <t t-set="company" t-value="o.company_id"/>
+                        </t>
+                        <t t-if="not o or not 'company_id' in o">
+                            <t t-set="company" t-value="res_company"/>
+                        </t>
+                        <br/>
+                        <img style="width:50px;height:50px;" t-if="company.logo" t-att-src="'data:image/png;base64,%s' %company.logo"/>
+                        
+                    </td>
+                    <td style="text-align:bottom; padding:8px;">
+                        
+                        <t t-foreach="docs" t-as="o">
+                            <h4><span t-field="o.unit.operating_id.name"/></h4>
+                            <h5><span t-field="o.unit.operating_id.unit_address"/></h5>
+                            <h6>No. Izin Klinik : <span t-field="o.unit.operating_id.izin_klinik"/></h6>
+                            <h6>No. Izin Apotik : <span t-field="o.unit.operating_id.izin_apotik"/></h6>
+                        </t>
+                        
+                    </td>
+                </tr>
+            </table>  
+        </div>
+    </div>
     <t t-call="report.html_container">
-      
         <t t-foreach="docs" t-as="o">
           <div class="page">
             <style>
-
               th, td {
                 padding: 5px;
               }
@@ -19,7 +51,7 @@
               }
             </style>
             <div class="oe_structure">
-              <h2 style="text-align:center;">FORMULIR PEMERIKSAAN ODONTOGRAM</h2>
+              <h3 style="text-align:center;">FORMULIR PEMERIKSAAN ODONTOGRAM</h3>
               <br />
               <br />
               <table style="width:80%" class="center">
@@ -28,8 +60,8 @@
                   <td>JENIS KELAMIN : <span t-field="o.patient.sex" /> </td>
                 </tr>
                 <tr>
-                  <td>NIK/KTP : _________________________</td>
-                  <td>TTL : _________________________ </td>
+                  <td>NIK/KTP : <span t-field="o.patient.identity"/></td>
+                  <td>TTL : <span t-field="o.patient.place_birth"/>, <span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /> </td>
                 </tr>
               </table>
               <br />
@@ -226,8 +258,8 @@
                   </td>
                 </tr>
                 <tr>
-                  <td class="text-center">(Drg._____________________)</td>
-                  <td class="text-center">(<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>)</td>
+                  <td class="text-center">( <span t-field="o.doctor" /> )</td>
+                  <td class="text-center">(Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>)</td>
                   <td class="text-center">(_______________________)</td>
                 </tr>
               </table>

@@ -62,9 +62,15 @@
                                                 <tr>
                                                     <td>
                                                         <strong>Mohon dilakukan pemeriksaan : <br/>
-                                                        <t t-foreach="o.evaluation_id" t-as="l">
-                                                            <t t-if="l.doctor.is_doctor == true">
-                                                                <span t-field="l.notes_complaint" />
+                                                        <t t-set="foo" t-value="False"/>
+                                                        <t t-foreach="evaluation_list" t-as="ev">
+                                                            <!-- check is_docktor -->
+                                                            <t t-if="ev['is_doctor'] == true">
+                                                                <!-- limit loop -->
+                                                                <t t-if="foo == False">
+                                                                    <span t-esc="ev['notes_complaint']" />
+                                                                    <t t-set="foo" t-value="True"/>
+                                                                </t>
                                                             </t>
                                                         </t>
                                                         </strong>

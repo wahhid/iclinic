@@ -1,8 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <template id="report_rujukan_poli_gigi">
+    <div class="header">
+        <div class="container" style="border-bottom: 1px solid black;">
+            <table style="width:100%">
+                <tr>
+                    <td style="text-align:center; padding:8px; width:15%;">
+                                            
+                        <!-- Multicompany -->
+                        <t t-if="not o and doc">
+                            <t t-set="o" t-value="doc"/>
+                        </t>
+                        <t t-if="o and 'company_id' in o">
+                            <t t-set="company" t-value="o.company_id"/>
+                        </t>
+                        <t t-if="not o or not 'company_id' in o">
+                            <t t-set="company" t-value="res_company"/>
+                        </t>
+                        <br/>
+                        <img style="width:50px;height:50px;" t-if="company.logo" t-att-src="'data:image/png;base64,%s' %company.logo"/>
+                        
+                    </td>
+                    <td style="text-align:bottom; padding:8px;">
+                        
+                        <t t-foreach="docs" t-as="o">
+                            <h4><span t-field="o.unit.operating_id.name"/></h4>
+                            <h5><span t-field="o.unit.operating_id.unit_address"/></h5>
+                            <h6>No. Izin Klinik : <span t-field="o.unit.operating_id.izin_klinik"/></h6>
+                            <h6>No. Izin Apotik : <span t-field="o.unit.operating_id.izin_apotik"/></h6>
+                        </t>
+                        
+                    </td>
+                </tr>
+            </table>  
+        </div>
+    </div>
     <t t-call="report.html_container">
-      
       <t t-foreach="docs" t-as="o">
         <div class="page">
           <style>
@@ -20,10 +53,10 @@
               margin-left: 90%;
               margin-right: 10%;
             }
-            </style>
+          </style>
           <div class="oe_structure">
             <p style="text-align:right;">
-                _______,_____,_____,_____
+                Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
             </p>
             <p>
               Kepada Yth,
@@ -31,13 +64,10 @@
               <br />
               Teman sejawat Yth,
               <br />
-              _____________________
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-
+              <span t-field="o.unit_administration" />
+              <span t-field="o.unit_administration_internal.name" /><br/>
+              <span t-field="o.reference_hospital" />
+              <br /><br /><br />
             </p>
             <p>
               Dengan hormat,
@@ -46,23 +76,23 @@
               <br />
             </p>
 
-            <table style="width:50%">
+            <table style="width:90%">
               <tr>
-                <td style="border:1px solid black;">________</td>
+                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
                 <td>Dental/Periapical</td>
-                <td style="border:1px solid black;">________</td>
+                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
                 <td>Oclusal</td>
               </tr>
               <tr>
-                <td style="border:1px solid black;">________</td>
+                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
                 <td>Panoramic</td>
-                <td style="border:1px solid black;">________</td>
+                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
                 <td>TMJ</td>
               </tr>
               <tr>
-                <td style="border:1px solid black;">________</td>
+                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
                 <td>Chepalometri</td>
-                <td style="border:1px solid black;">________</td>
+                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
                 <td>SKULL AP CO/CR</td>
               </tr>
             </table>
@@ -139,29 +169,29 @@
             <br />
             <table style="width:40%">
               <tr>
-                <td>Untuk pasien </td>
-                <td> : </td>
-                <td>_____________________</td>
+                <td>Untuk pasien, </td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Nama</td>
                 <td> : </td>
-                <td>_____________________</td>
+                <td><span t-field="o.patient.name" /></td>
               </tr>
               <tr>
                 <td>Usia</td>
                 <td> : </td>
-                <td>_____________________</td>
+                <td><span t-field="o.patient.age" /></td>
               </tr>
               <tr>
                 <td>Alamat</td>
                 <td> : </td>
-                <td>_____________________</td>
+                <td><span t-field="o.patient.street" /></td>
               </tr>
               <tr>
                 <td>Telp.</td>
                 <td> : </td>
-                <td>_____________________</td>
+                <td><span t-field="o.patient.phone" /></td>
               </tr>
             </table>
             <br />
@@ -183,7 +213,7 @@
                 </td>
               </tr>
               <tr>
-                <td style="text-align:center;">(_____________________)</td>
+                <td style="text-align:center;">( <span t-field="o.doctor" /> )</td>
               </tr>
             </table>
           </div>
