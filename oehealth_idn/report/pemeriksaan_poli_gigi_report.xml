@@ -41,6 +41,7 @@
             <style>
               th, td {
                 padding: 5px;
+                font-size: 9px;
               }
               .center {
                 margin-left: auto;
@@ -54,7 +55,7 @@
               <h3 style="text-align:center;">FORMULIR PEMERIKSAAN ODONTOGRAM</h3>
               <br />
               <br />
-              <table style="width:80%" class="center">
+              <table style="width:70%" class="center">
                 <tr>
                   <td>NAMA LENGKAP : <span t-field="o.patient.name" /></td>
                   <td>JENIS KELAMIN : <span t-field="o.patient.sex" /> </td>
