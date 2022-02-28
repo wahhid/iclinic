@@ -37,9 +37,9 @@
         </div>
         <t t-call="report.html_container">
             
-                <div class="oe_structure">
-                    <div class="page">
-                    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <div class="page">
+                    <div class="oe_structure">
+                    <br/><br/><br/><br/><br/><br/><br/>
                         <div class="container">
                             <div class="row">
                                 <div class="col-sm-12">
@@ -62,9 +62,15 @@
                                                 <tr>
                                                     <td>
                                                         <strong>Mohon dilakukan pemeriksaan : <br/>
-                                                        <t t-foreach="o.evaluation_ids" t-as="l">
-                                                            <t t-if="l.doctor.is_doctor == true">
-                                                                <span t-field="l.notes_complaint" />
+                                                        <t t-set="foo" t-value="False"/>
+                                                        <t t-foreach="evaluation_list" t-as="ev">
+                                                            <!-- check is_docktor -->
+                                                            <t t-if="ev['is_doctor'] == true">
+                                                                <!-- limit loop -->
+                                                                <t t-if="foo == False">
+                                                                    <span t-esc="ev['notes_complaint']" />
+                                                                    <t t-set="foo" t-value="True"/>
+                                                                </t>
                                                             </t>
                                                         </t>
                                                         </strong>

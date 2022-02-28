@@ -2,20 +2,20 @@
 <odoo>
   <template id="report_persetujuan_tindakan">
     <t t-call="report.html_container">
-      <t t-call="report.external_layout">
+      
         <t t-foreach="docs" t-as="o">
           <div class="page">
             <style>
 
-table, th, td {
-  padding: 5px;
-  border:1px solid black;
-}
-</style>
+              table, th, td {
+                padding: 5px;
+                border:1px solid black;
+              }
+            </style>
             <div class="oe_structure">
               <table style="width:100%">
                 <tr>
-                  <th rowspan="6">TINDAKAN KEDOKTERAN</th>
+                  <th rowspan="6" style="text-align:center;"><br/><br/>TINDAKAN KEDOKTERAN</th>
                   <td>Nama  : <span t-field="o.patient.name" /></td>
                 </tr>
                 <tr>
@@ -53,351 +53,345 @@ table, th, td {
 
               </table>
 
-              <t t-foreach="o.evaluation_ids" t-as="l">
+              <t t-set="foo" t-value="False"/>
+              <t t-foreach="evaluation_list" t-as="ev">
+                  <!-- check is_docktor -->
+                  <t t-if="ev['is_doctor'] == true">
+                      <!-- limit loop -->
+                      <t t-if="foo == False">
+                        <table style="width:100%">
+                          <tr>
+                            <th>No</th>
+                            <th>JENIS INFORMASI</th>
+                            <th>ISI INFORMASI</th>
+                            <th>Paraf Penerima Informasi</th>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>Diagnosis (diagnosis kerja dan diagnosis banding)</td>
+                            <td>
+                            <t t-foreach="ev['pathology_list']" t-as="li">
+                                <span t-esc="li['pathology']" />, 
+                            </t>
+                            </td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Dasar diagnosis</td>
+                            <td><span t-esc="ev['subjective']" /></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>Tindakan kedokteran</td>
+                            <td><span t-esc="ev['notes_complaint']" /></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>Indikasi tindakan</td>
+                            <td>Akses cairan dan obat</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>5</td>
+                            <td>Tata Cara</td>
+                            <td>Sesuai SOP</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>6</td>
+                            <td>Tujuan</td>
+                            <td><span t-esc="ev['tujuan']" /></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>7</td>
+                            <td>Resiko</td>
+                            <td><span t-esc="ev['resiko']" /></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>Komplikasi</td>
+                            <td><span t-esc="ev['komplikasi']" /></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>9</td>
+                            <td>Prognosis</td>
+                            <td>DUBIA</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>10</td>
+                            <td>Alternatif dan Resiko</td>
+                            <td><span t-esc="ev['alternatif']" /></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>11</td>
+                            <td>Lain-lain</td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td colspan="3">Dengan ini menyatakan bahwa saya telah menerangkan hal-hal diatas secara benar dan jelas dan memberikan kesempatan untuk bertanya dan / berdiskusi</td>
+                            <td>Tanda tangan Dokter</td>
+                            
+                          </tr>
+                          <tr>
+                            <td colspan="3">Dengan ini menyatakan bahwa saya telah menerima informasi sebagaimana diatas yang saya beri tanda/paraf di kolom kanannya dan telah memahaminya</td>
+                            <td>Tanda tangan penerima informasi</td>
+                            
+                          </tr>
+                          <tr>
+                            <th colspan="4">Bila pasien tidak berkompeten atau tidak mau menerima informasi, maka penerima informasi adalah wali atau keluarga terdekat</th>
+                          </tr>
+                        </table>
+                      
+                        <p style="page-break-after:always;page-break-inside: avoid;"></p>
 
-                <t t-if="true == l.doctor.is_doctor">
+                        <t t-if="true == o.perstujuan_tindakan">
 
-                  <table style="width:100%">
-                    <tr>
-                      <th>No</th>
-                      <th>JENIS INFORMASI</th>
-                      <th>ISI INFORMASI</th>
-                      <th>Paraf Penerima Informasi</th>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Diagnosis (diagnosis kerja dan diagnosis banding)</td>
-                      <td>
-                      <t t-foreach="l.diagnostic_ids" t-as="d">
-                      <span t-field="d.pathology_id.name" />
+                          <div class="row">
+                            <p style="font-size:24px;text-align:center;font-weight:bold;">PERSETUJUAN TINDAKAN KEDOKTERAN</p>
+                          </div>
+
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-4">
+                                <p>
+                                  <strong>Nama: <span t-field="o.patient.name" /> / </strong>
+                                </p>
+                                <p>
+                                  <strong>Alamat: <span t-field="o.patient.street" /> / </strong>
+                                </p>
+                                <p>
+                                  <strong>Umur: <span t-field="o.patient.age" /> / </strong>
+                                </p>
+                              </div>
+                              <div class="col-sm-4"></div>
+                              <div class="col-sm-4"></div>
+                            </div>
+                          </div>
+
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <p>Dengan ini menyatakan SETUJU untuk dilakukan tindakan <span t-esc="ev['notes_complaint']" /></p>
+                                <p>Terhadap Saya,</p>
+                              </div>
+                            </div>
+                          </div>
+                    
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-4">
+                                <p>
+                                  <strong>Nama: <span t-field="o.patient.name" /></strong>
+                                </p>
+                                <p>
+                                  <strong>Alamat: <span t-field="o.patient.street" /></strong>
+                                </p>
+                                <p>
+                                  <strong>Umur: <span t-field="o.patient.age" /></strong>
+                                </p>
+                              </div>
+                              <div class="col-sm-4"></div>
+                              <div class="col-sm-4"></div>
+                            </div>
+                          </div>
+
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <p>Saya memahami perlunya dan manfaat tindakan tersebut sebagaimana telah dijelaskan
+                                              seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
+                                <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
+                                              kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
+                                <p>Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
+                                <p>
+                                  <br />
+                                </p>
+                                <p>
+                                  <br />
+                                </p>
+                                <p>
+                                  <br />
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <center>
+                            <table style="text-align:center;">
+                              <tr>
+                                <td>YANG MENYATAKAN,</td>
+                                <td>DOKTER,</td>
+                                <td>SAKSI,</td>
+                              </tr>
+                              <tr>
+                                <td rowspan="4">
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                </td>
+                                <td rowspan="4">
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                </td>
+                                <td rowspan="4">
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                </td>
+                              </tr>
+                              <tr></tr>
+                              <tr></tr>
+                              <tr></tr>
+                              <tr>
+                                <td>   (...................................)   </td>
+                                <td>   (...................................)   </td>
+                                <td>   (...................................)   </td>
+                              </tr>
+                            </table>
+                          </center>
+                        </t>
+
+                        <p style="page-break-after:always;page-break-inside: avoid;"></p>
+
+                        <t t-if="false == o.perstujuan_tindakan">
+
+                          <div class="row mt32">
+                            <p style="font-size:20px;text-align:left;font-weight:bold">PENOLAKAN TINDAKAN KEDOKTERAN</p>
+                          </div>
+
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-4">
+                                <p>
+                                  <strong>Nama: <span t-field="o.patient.name" /> / </strong>
+                                </p>
+                                <p>
+                                  <strong>Alamat: <span t-field="o.patient.street" /> / </strong>
+                                </p>
+                                <p>
+                                  <strong>Umur: <span t-field="o.patient.age" /> / </strong>
+                                </p>
+                              </div>
+                              <div class="col-sm-4"></div>
+                              <div class="col-sm-4"></div>
+                            </div>
+                          </div>
+
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <p>Dengan ini menyatakan TIDAK SETUJU untuk dilakukan tindakan <span t-esc="ev['notes_complaint']" /></p>
+                                <p>Terhadap Saya,</p>
+                              </div>
+                            </div>
+                          </div>
+               
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-4">
+                                <p>
+                                  <strong>Nama: <span t-field="o.patient.name" /></strong>
+                                </p>
+                                <p>
+                                  <strong>Alamat: <span t-field="o.patient.street" /></strong>
+                                </p>
+                                <p>
+                                  <strong>Umur: <span t-field="o.patient.age" /></strong>
+                                </p>
+                              </div>
+                              <div class="col-sm-4"></div>
+                              <div class="col-sm-4"></div>
+                            </div>
+                          </div>
+
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <p>Saya memahami perlunya dan manfaat tindakan tersebut sebagaimana telah dijelaskan
+                                              seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
+                                <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
+                                              kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
+                                <p><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
+                                <p>
+                                  <br />
+                                </p>
+                                <p>
+                                  <br />
+                                </p>
+                                <p>
+                                  <br />
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        
+
+                          <center>
+                            <table style="text-align:center;">
+                              <tr>
+                                <td>YANG MENYATAKAN,</td>
+                                <td>DOKTER,</td>
+                                <td>SAKSI,</td>
+                              </tr>
+                              <tr>
+                                <td rowspan="4">
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                </td>
+                                <td rowspan="4">
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                </td>
+                                <td rowspan="4">
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                  <br />
+                                </td>
+                              </tr>
+                              <tr></tr>
+                              <tr></tr>
+                              <tr></tr>
+                              <tr>
+                                <td>   (...................................)   </td>
+                                <td>   (...................................)   </td>
+                                <td>   (...................................)   </td>
+                              </tr>
+                            </table>
+                          </center>
+                        </t>
+
+                        <t t-set="foo" t-value="True"/>
                       </t>
-                      </td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Dasar diagnosis</td>
-                      <td><span t-field="l.subjective" /></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Tindakan kedokteran</td>
-                      <td><span t-field="l.notes_complaint" /></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Indikasi tindakan</td>
-                      <td>Akses cairan dan obat</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Tata Cara</td>
-                      <td>Sesuai SOP</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>Tujuan</td>
-                      <td><span t-field="l.tujuan" /></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>7</td>
-                      <td>Resiko</td>
-                      <td><span t-field="l.resiko" /></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>8</td>
-                      <td>Komplikasi</td>
-                      <td><span t-field="l.komplikasi" /></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>9</td>
-                      <td>Prognosis</td>
-                      <td>DUBIA</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>10</td>
-                      <td>Alternatif dan Resiko</td>
-                      <td><span t-field="l.alternatif" /></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td>11</td>
-                      <td>Lain-lain</td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td colspan="3">Dengan ini menyatakan bahwa saya telah menerangkan hal-hal diatas secara benar dan jelas dan memberikan kesempatan untuk bertanya dan / berdiskusi</td>
-                      <td>Tanda tangan Dokter</td>
-                      >
-                    </tr>
-                    <tr>
-                      <td colspan="3">Dengan ini menyatakan bahwa saya telah menerima informasi sebagaimana diatas yang saya beri tanda/paraf di kolom kanannya dan telah memahaminya</td>
-                      <td>Tanda tangan penerima informasi</td>
-                      >
-                    </tr>
-                    <tr>
-                      <th colspan="4">Bila pasien tidak berkompeten atau tidak mau menerima informasi, maka penerima informasi adalah wali atau keluarga terdekat</th>
-                    </tr>
-                  </table>
-
-                </t>
-              </t>
-
-                <p style="page-break-after:always;page-break-inside: avoid;"></p>
-
-              <t t-if="true == o.perstujuan_tindakan">
-
-                <div class="row">
-                  <p style="font-size:24px;text-align:center;font-weight:bold;">PERSETUJUAN TINDAKAN KEDOKTERAN</p>
-                </div>
-
-                <div class="container">
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <p>
-                        <strong>Nama: <span t-field="o.patient.name" /> / </strong>
-                      </p>
-                      <p>
-                        <strong>Alamat: <span t-field="o.patient.street" /> / </strong>
-                      </p>
-                      <p>
-                        <strong>Umur: <span t-field="o.patient.age" /> / </strong>
-                      </p>
-                    </div>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4"></div>
-                  </div>
-                </div>
-
-                <t t-foreach="o.evaluation_ids" t-as="l">
-                  <t t-if="true == l.doctor.is_doctor">
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <p>Dengan ini menyatakan SETUJU untuk dilakukan tindakan <span t-field="l.notes_complaint" /></p>
-                          <p>Terhadap Saya,</p>
-                        </div>
-                      </div>
-                    </div>
                   </t>
-                </t>
-
-                <div class="container">
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <p>
-                        <strong>Nama: <span t-field="o.patient.name" /></strong>
-                      </p>
-                      <p>
-                        <strong>Alamat: <span t-field="o.patient.street" /></strong>
-                      </p>
-                      <p>
-                        <strong>Umur: <span t-field="o.patient.age" /></strong>
-                      </p>
-                    </div>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4"></div>
-                  </div>
-                </div>
-
-                <div class="container">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <p>Saya memahami perlunya dan manfaat tindakan tersebut sebagaimana telah dijelaskan
-                                    seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
-                      <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
-                                    kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
-                      <p>Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
-                      <p>
-                        <br />
-                      </p>
-                      <p>
-                        <br />
-                      </p>
-                      <p>
-                        <br />
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <center>
-                  <table style="text-align:center;">
-                    <tr>
-                      <td>YANG MENYATAKAN,</td>
-                      <td>DOKTER,</td>
-                      <td>SAKSI,</td>
-                    </tr>
-                    <tr>
-                      <td rowspan="4">
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                      </td>
-                      <td rowspan="4">
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                      </td>
-                      <td rowspan="4">
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                      </td>
-                    </tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr>
-                      <td>   (...................................)   </td>
-                      <td>   (...................................)   </td>
-                      <td>   (...................................)   </td>
-                    </tr>
-                  </table>
-                </center>
               </t>
-
-              
-                <p style="page-break-after:always;page-break-inside: avoid;"></p>
-
-              <t t-if="false == o.perstujuan_tindakan">
-
-                <div class="row mt32">
-                  <p style="font-size:20px;text-align:left;font-weight:bold">PENOLAKAN TINDAKAN KEDOKTERAN</p>
-                </div>
-
-                <div class="container">
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <p>
-                        <strong>Nama: <span t-field="o.patient.name" /> / </strong>
-                      </p>
-                      <p>
-                        <strong>Alamat: <span t-field="o.patient.street" /> / </strong>
-                      </p>
-                      <p>
-                        <strong>Umur: <span t-field="o.patient.age" /> / </strong>
-                      </p>
-                    </div>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4"></div>
-                  </div>
-                </div>
-
-                <t t-foreach="o.evaluation_ids" t-as="l">
-                  <t t-if="true == l.doctor.is_doctor">
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <p>Dengan ini menyatakan TIDAK SETUJU untuk dilakukan tindakan <span t-field="l.notes_complaint" /></p>
-                          <p>Terhadap Saya,</p>
-                        </div>
-                      </div>
-                    </div>
-                  </t>
-                </t>
-
-                <div class="container">
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <p>
-                        <strong>Nama: <span t-field="o.patient.name" /></strong>
-                      </p>
-                      <p>
-                        <strong>Alamat: <span t-field="o.patient.street" /></strong>
-                      </p>
-                      <p>
-                        <strong>Umur: <span t-field="o.patient.age" /></strong>
-                      </p>
-                    </div>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4"></div>
-                  </div>
-                </div>
-
-                <div class="container">
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <p>Saya memahami perlunya dan manfaat tindakan tersebut sebagaimana telah dijelaskan
-                                    seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
-                      <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
-                                    kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
-                      <p><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
-                      <p>
-                        <br />
-                      </p>
-                      <p>
-                        <br />
-                      </p>
-                      <p>
-                        <br />
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              
-
-                <center>
-                  <table style="text-align:center;">
-                    <tr>
-                      <td>YANG MENYATAKAN,</td>
-                      <td>DOKTER,</td>
-                      <td>SAKSI,</td>
-                    </tr>
-                    <tr>
-                      <td rowspan="4">
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                      </td>
-                      <td rowspan="4">
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                      </td>
-                      <td rowspan="4">
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                      </td>
-                    </tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr></tr>
-                    <tr>
-                      <td>   (...................................)   </td>
-                      <td>   (...................................)   </td>
-                      <td>   (...................................)   </td>
-                    </tr>
-                  </table>
-                </center>
-              </t>
-
             </div>
           </div>
         </t>
-      </t>
+      
     </t>
   </template>
 </odoo>

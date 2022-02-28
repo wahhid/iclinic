@@ -61,11 +61,18 @@
                         </div>
                     </div>
                     <div class="oe_button_box" name="buttons">
-                        <!--
-                        <button type="object" class="oe_stat_button" name="view_medical_record" icon="fa-list">
-                            <label string="View Medical Record"/>
+                        <button type="object" class="oe_stat_button" name="print_persetujuan_tindakan" icon="fa-print">
+                            <label string="PS Tindakan"/>
                         </button>
-                        -->
+                        <button type="object" class="oe_stat_button" name="print_radiologi" icon="fa-print">
+                            <label string="RJ Radiologi"/>
+                        </button><br/>
+                        <button type="object" class="oe_stat_button" name="print_internal" icon="fa-print">
+                            <label string="RJ Internal"/>
+                        </button>
+                        <button type="object" class="oe_stat_button" name="print_external" icon="fa-print">
+                            <label string="RJ External"/>
+                        </button><br/>
                         <t attrs="{'invisible': [('type', '!=', 'In-Patient')]}">
                             <button type="object" class="oe_stat_button" name="set_to_hospitalized" states="Unlock" icon="fa-building-o">
                                 <label string="Check-In"/>

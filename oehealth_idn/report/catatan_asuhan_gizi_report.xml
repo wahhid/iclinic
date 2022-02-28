@@ -2,297 +2,296 @@
 <odoo>
     <template id="report_catatan_asuhan_gizi">
         <t t-call="report.html_container">
-            <t t-call="report.external_layout">
-                <t t-foreach="docs" t-as="o">
-                    <div class="page">
-                        <style>
+            
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <style>
+                        th, td {
+                        padding: 5px;
+                        }
+                    </style>
+                    <div class="oe_structure">
+                        <table style="width:100%">
+                            <tr>
+                                <td style="border:1px solid black;">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>No.Rekam Medis</td>
+                                            <td> : </td>
+                                            <td><span t-field="o.patient.medical_record" /></td>
+                                            <td>Ruang</td>
+                                            <td> : </td>
+                                            <td><span t-field="o.walkin.unit_ids.bed.name" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nama</td>
+                                            <td> : </td>
+                                            <td><span t-field="o.patient.name" /> - <span t-field="o.patient.sex" /></td>
+                                            <td>Tanggal Lahir</td>
+                                            <td> : </td>
+                                            <td><span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table style="width:100%">
+                            <tr>
+                                <th style="border:1px solid black;" colspan="2">ASESMEN GIZI LANJUT</th>
+                            </tr>
+                            <tr>
+                                <th style="border:1px solid black;">Riwayat Klien</th>
+                                <td style="border:1px solid black;">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>Umur : <span t-field="o.patient.age" /></td>
+                                            <td>Jenis Kelamin :<span t-field="o.patient.sex" /></td>
+                                            <td>Agama : <span t-field="o.patient.religion" /></td>
+                                            <td>Kemampuan Baca : <span t-field="o.penglihatan" /></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>Pekerjaan : <span t-field="o.patient.function" /> </td>
+                                            <td>Pendidikan : <span t-field="o.tingkat_pendidikan" /></td>
+                                            <td>Peran dalam keluarga: <span t-field="o.peran_dlm_keluarga" /> </td>
 
-th, td {
-  padding: 5px;
-}
-</style>
-                        <div class="oe_structure">
-                            <table style="width:100%">
-                                <tr>
-                                    <td style="border:1px solid black;">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>No.Rekam Medis</td>
-                                                <td> : </td>
-                                                <td><span t-field="o.patient.medical_record" /></td>
-                                                <td>Ruang</td>
-                                                <td> : </td>
-                                                <td><span t-field="o.walkin.unit_ids.bed.name" /></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nama</td>
-                                                <td> : </td>
-                                                <td><span t-field="o.patient.name" /> - <span t-field="o.patient.sex" /></td>
-                                                <td>Tanggal Lahir</td>
-                                                <td> : </td>
-                                                <td><span t-field="o.patient.dob" t-field-options='{"format": "d MMMM y"}' /></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                            <table style="width:100%">
-                                <tr>
-                                    <th style="border:1px solid black;" colspan="2">ASESMEN GIZI LANJUT</th>
-                                </tr>
-                                <tr>
-                                    <th style="border:1px solid black;">Riwayat Klien</th>
-                                    <td style="border:1px solid black;">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>Umur : <span t-field="o.patient.age" /></td>
-                                                <td>Jenis Kelamin :<span t-field="o.patient.sex" /></td>
-                                                <td>Agama : <span t-field="o.patient.religion" /></td>
-                                                <td>Kemampuan Baca : <span t-field="o.penglihatan" /></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>Pekerjaan : <span t-field="o.patient.function" /> </td>
-                                                <td>Pendidikan : <span t-field="o.tingkat_pendidikan" /></td>
-                                                <td>Peran dalam keluarga: <span t-field="o.peran_dlm_keluarga" /> </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>Keterbatasan Fisik : <span t-field="o.keterbatasan_fisik" /></td>
+                                            <td>Mobilitas : <span t-field="o.mobilitas" /> </td>
+                                            <td>Perokok: 
+                                                <t t-if="true == o.alkohol"> 
+                                                    Ya 
+                                                </t> 
+                                                <t t-if="false == o.alkohol"> Tidak </t> 
+                                                
+                                            </td>
 
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>Keterbatasan Fisik : <span t-field="o.keterbatasan_fisik" /></td>
-                                                <td>Mobilitas : <span t-field="o.mobilitas" /> </td>
-                                                <td>Perokok: 
-                                                    <t t-if="true == o.alkohol"> 
-                                                        Ya 
-                                                    </t> 
-                                                    <t t-if="false == o.alkohol"> Tidak </t> 
-                                                    
-                                                </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>
+                                                Riwayat medis / kesehatan pasien / keluarga :
+                                                <br />
+                                                <br />
+                                                Diagnosa Dokter :
+                                                
+                                                <t t-foreach='o.diagnostic_ids.pathology_id' t-as='line'>
+                                                    <t t-esc="line.name" />,
+                                                </t>
+                                                <br />
+                                            </td>
+                                            <td>
+                                                Riwayat Sosial Ekonomi : <span t-field="o.patient.socioeconomics" />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                            </td>
 
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>
-                                                    Riwayat medis / kesehatan pasien / keluarga :
-                                                    <br />
-                                                    <br />
-                                                    Diagnosa Dokter :
-                                                    
-                                                    <t t-foreach='o.diagnostic_ids.pathology_id' t-as='line'>
-                                                        <t t-esc="line.name" />,
-                                                    </t>
-                                                    <br />
-                                                </td>
-                                                <td>
-                                                    Riwayat Sosial Ekonomi : <span t-field="o.patient.socioeconomics" />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>RIWAYAT DIET</td>
+                                            <td>Alergi Makanan: <span t-field="o.lain_alergi_obat_makanan" /> </td>
+                                            <td>Ketidaksukaan Makanan : <span t-field="o.ketidaksukaan_makan" /> </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pantangan makanan : <span t-field="o.pantangan_makan" /> </td>
+                                            <td></td>
+                                            <td>
+                                                Pengalaman diet/konseling sebelumnya : <span t-field="o.pengalaman_diet" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <th>ANTROPOMETRI</th>
+                                            <td>BB saat ini: <span t-field="o.weight" /> </td>
+                                            <td>PB/TB : <span t-field="o.height" /> cm</td>
+                                            <td>IMT : <span t-field="o.bmi" /></td>
+                                            <td>Status Gizi : <span t-field="o.status_gizi" /></td>
+                                        </tr>
 
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>RIWAYAT DIET</td>
-                                                <td>Alergi Makanan: <span t-field="o.lain_alergi_obat_makanan" /> </td>
-                                                <td>Ketidaksukaan Makanan : <span t-field="o.ketidaksukaan_makan" /> </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pantangan makanan : <span t-field="o.pantangan_makan" /> </td>
-                                                <td></td>
-                                                <td>
-                                                    Pengalaman diet/konseling sebelumnya : <span t-field="o.pengalaman_diet" />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <th>ANTROPOMETRI</th>
-                                                <td>BB saat ini: <span t-field="o.weight" /> </td>
-                                                <td>PB/TB : <span t-field="o.height" /> cm</td>
-                                                <td>IMT : <span t-field="o.bmi" /></td>
-                                                <td>Status Gizi : <span t-field="o.status_gizi" /></td>
-                                            </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>Riwayat penurunan BB</td>
+                                            <td>BB Biasanya : <span t-field="o.berat_badan_biasanya" /> kg </td>
+                                            <td>Penurunan : <span t-field="o.penurunan_berat_badan" /> %</td>
+                                            <td>dalam : <span t-field="o.penurunan_berat_badan_dalam" /> mgg bln</td>
+                                        </tr>
 
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>Riwayat penurunan BB</td>
-                                                <td>BB Biasanya : <span t-field="o.berat_badan_biasanya" /> kg </td>
-                                                <td>Penurunan : <span t-field="o.penurunan_berat_badan" /> %</td>
-                                                <td>dalam : <span t-field="o.penurunan_berat_badan_dalam" /> mgg bln</td>
-                                            </tr>
-
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-        Pengukuran Lainnya : <span t-field="o.pengukuran_lain" />
-        </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>BIOKIMIA TERKAIT GIZI : </td>
-                                                <td>Prosedur :  <span t-field="o.prosedur_terkait_gizi" /></td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>FISIK KLINIS GIZI </td>
-                                                <td>Atropi otot lengan : <span t-field="o.atropi" />  </td>
-                                                <td>Hilang lemak sub kutan </td>
-                                                <td>Udem : <span t-field="o.udem" /> </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>Nafsu Makan : <span t-field="o.nafsu_makan" /> </td>
-                                                <td>Mual : <span t-field="o.mual" /> </td>
-                                                <td>Muntah : <span t-field="o.muntah" />  </td>
-                                                <td>Kembung : <span t-field="o.kembung" />  </td>
-                                                <td>Konstipasi : <span t-field="o.konstipasi" />  </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>Diare : <span t-field="o.diare" /> </td>
-                                                <td>Kulit : <span t-field="o.fisik_gizi_kulit" /> </td>
-                                                <td>Kepala dan mata :  <span t-field="o.kepaladanmata" /> </td>
-                                                <td>Gigi geligi : <span t-field="o.gigi_geligi" /> </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>Ganguan menelan : <span t-field="o.ganguan_menelan" /> </td>
-                                                <td>Ganguan mengunyah : <span t-field="o.ganguan_mengunyah" />  </td>
-                                                <td>Ganguan menghisap : <span t-field="o.ganguan_menghisap" /> </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        Tanda-tanda Vital : <br/><br/>
-                                        Tekanan Darah : <span t-field="o.systolic" /> / <span t-field="o.diastolic" /> mmHg<br/>
-                                        Suhu : <span t-field="o.temperature" /> C <br/>
-                                        Nadi : <span t-field="o.nadi" /> x/m (Regular/Ireguler) <br/>
-                                        Penapasan : <span t-field="o.respiratory_rate" /> x/m (Regular/Ireguler) <br/>
-                                        <br/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-        Lain-lain : 
-        </td>
-                                </tr>
-                                <tr>
-                                    <th style="border:1px solid black;" colspan="2">
-        DIAGNOSA GIZI
-        </th>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        <span t-field="o.notes" />
-                                        <br/>
-                                        <t t-foreach='o.diagnostic_ids.pathology_id' t-as='line'>
-                                            <t t-esc="line.name" />
-                                        </t>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="border:1px solid black;" colspan="2">
-        INTERVENSI GIZI
-        </th>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid black;" colspan="2">
-                                        Tujuan : <span t-field="o.tujuan" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="border:1px solid black;" colspan="2">
-        RENCANA MONITORING EVALUASI GIZI
-        </th>
-                                </tr>
-                                <tr>
-                                    <th style="border:1px solid black;" rowspan="3">
-                                        <span t-field="o.notes_complaint" />
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th style="border:1px solid black;">
-        PEMBERIAN BERTAHAP
-        </th>
-                                </tr>
-                                <tr>
-                                    <th style="border:1px solid black;">
-                                        <br />
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td>Tanggal : Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/> </td>
-                                                <td></td>
-                                                <td>Tanda tangan dan nama Dietisien : __________ </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    Pengukuran Lainnya : <span t-field="o.pengukuran_lain" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>BIOKIMIA TERKAIT GIZI : </td>
+                                            <td>Prosedur :  <span t-field="o.prosedur_terkait_gizi" /></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>FISIK KLINIS GIZI </td>
+                                            <td>Atropi otot lengan : <span t-field="o.atropi" />  </td>
+                                            <td>Hilang lemak sub kutan </td>
+                                            <td>Udem : <span t-field="o.udem" /> </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>Nafsu Makan : <span t-field="o.nafsu_makan" /> </td>
+                                            <td>Mual : <span t-field="o.mual" /> </td>
+                                            <td>Muntah : <span t-field="o.muntah" />  </td>
+                                            <td>Kembung : <span t-field="o.kembung" />  </td>
+                                            <td>Konstipasi : <span t-field="o.konstipasi" />  </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>Diare : <span t-field="o.diare" /> </td>
+                                            <td>Kulit : <span t-field="o.fisik_gizi_kulit" /> </td>
+                                            <td>Kepala dan mata :  <span t-field="o.kepaladanmata" /> </td>
+                                            <td>Gigi geligi : <span t-field="o.gigi_geligi" /> </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>Ganguan menelan : <span t-field="o.ganguan_menelan" /> </td>
+                                            <td>Ganguan mengunyah : <span t-field="o.ganguan_mengunyah" />  </td>
+                                            <td>Ganguan menghisap : <span t-field="o.ganguan_menghisap" /> </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    Tanda-tanda Vital : <br/><br/>
+                                    Tekanan Darah : <span t-field="o.systolic" /> / <span t-field="o.diastolic" /> mmHg<br/>
+                                    Suhu : <span t-field="o.temperature" /> C <br/>
+                                    Nadi : <span t-field="o.nadi" /> x/m (Regular/Ireguler) <br/>
+                                    Penapasan : <span t-field="o.respiratory_rate" /> x/m (Regular/Ireguler) <br/>
+                                    <br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    Lain-lain : 
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="border:1px solid black;" colspan="2">
+                                    DIAGNOSA GIZI
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    <span t-field="o.notes" />
+                                    <br/>
+                                    <t t-foreach='o.diagnostic_ids.pathology_id' t-as='line'>
+                                        <t t-esc="line.name" />
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="border:1px solid black;" colspan="2">
+                                    INTERVENSI GIZI
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;" colspan="2">
+                                    Tujuan : <span t-field="o.tujuan" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th style="border:1px solid black;" colspan="2">
+                                    RENCANA MONITORING EVALUASI GIZI
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="border:1px solid black;" rowspan="3">
+                                    <span t-field="o.notes_complaint" />
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="border:1px solid black;">
+                                    PEMBERIAN BERTAHAP
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="border:1px solid black;">
+                                    <br />
+                                </th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>Tanggal : Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/> </td>
+                                            <td></td>
+                                            <td>Tanda tangan dan nama Dietisien : __________ </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                </t>
+                </div>
             </t>
+            
         </t>
     </template>
 </odoo>

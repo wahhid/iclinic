@@ -2,17 +2,17 @@
 <odoo>
   <template id="report_catatan_registrasi_pasien">
     <t t-call="report.html_container">
-      <t t-call="report.external_layout">
+      
         <t t-foreach="docs" t-as="o">
           <div class="page">
             <style>
-.border{
-  border:1px solid black;
-}
-th, td {
-  padding: 5px;
-}
-</style>
+            .border{
+              border:1px solid black;
+            }
+            th, td {
+              padding: 5px;
+            }
+            </style>
             <div class="oe_structure">
               <table style="width:100%">
                 <tr>
@@ -231,7 +231,7 @@ th, td {
                 <tr>
                   <td class="border">
                     Tindakan Operasi
-        a. Saat pulang / On Dischange :
+                    a. Saat pulang / On Dischange :
                     <br />
                     __________________________
                     <br />
@@ -280,7 +280,7 @@ th, td {
             </div>
           </div>
         </t>
-      </t>
+      
     </t>
   </template>
 </odoo>
