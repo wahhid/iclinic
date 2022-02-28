@@ -45,6 +45,7 @@
                     <group string="General Information">
                         <group>
                             <field name="date" attrs="{'readonly': [('state','not in',('Draft'))]}"/>
+                            <field name="registration_status"/>
                             <field name="operating_unit_id"/>
                             <field name="queue_trans_id"  options="{'no_create': True}" attrs="{'readonly': [('state','not in',('Draft'))]}" domain="[('type_id.unit_administration_id','=', user_unit_administration_id ),('state','=','open'),('trans_date','=',context_today().strftime('%%Y-%%m-%%d'))]"/>
                             <field name="type_id"/>
@@ -66,20 +67,29 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Out-Patient Care">
+                        <page string="Out-Patient Care" attrs="{'invisible':[('registration_status','not in', ['Outpatient','Inpatient'])]}">
                             <field name="clinic_ids" context="{'default_patient':patient, 'default_type': 'Out-Patient', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_employee_id': employee_id, 'default_queue_trans_id': queue_trans_id, 'default_payment_guarantor_discount_id': payment_guarantor_discount_id}"/>
                         </page>
-                        <page string="In-Patient Care">
+                        <page string="In-Patient Care" attrs="{'invisible':[('registration_status','!=', 'Inpatient')]}">
                             <field name="unit_ids" context="{'default_patient':patient, 'default_type': 'In-Patient', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_admission_reason': admission_reason, 'default_employee_id': employee_id}, 'default_payment_guarantor_discount_id': payment_guarantor_discount_id"/>
                         </page>
-                        <page string="Emergency Care">
+                        <page string="Emergency Care" attrs="{'invisible':[('registration_status','not in', ['Inpatient','Emergency'])]}">
                             <field name="emergency_ids" context="{'default_patient':patient, 'default_type': 'Emergency', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_employee_id': employee_id, 'default_payment_guarantor_discount_id': payment_guarantor_discount_id}"/>
                         </page>
-                        <page string="Lab Test">
+                        <page string="Prescriptions">
+                            <field name="prescription_ids" readonly="1" context="{'default_patient':patient, 'default_type': 'Emergency', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_employee_id': employee_id, 'default_payment_guarantor_discount_id': payment_guarantor_discount_id}"/>
+                        </page>
+                        <page string="Pharmacy Orders">
+                            <field name="pharmacy_order_ids" readonly="1" context="{'default_patient':patient, 'default_type': 'Emergency', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_employee_id': employee_id, 'default_payment_guarantor_discount_id': payment_guarantor_discount_id}"/>
+                        </page>
+                        <page string="Lab Test" attrs="{'invisible':[('registration_status','not in', ['Outpatient','Inpatient','Laboratory','Emergency'])]}">
                             <field name="lab_test_ids" context="{'default_patient': patient, 'default_requestor': '', 'default_queue_trans_id': queue_trans_id, 'default_payment_guarantor_discount_id': payment_guarantor_discount_id}"/>
                         </page>
                         <page string="Medical Support">
-                            <field name="support_ids" context="{'default_patient':patient, 'default_type': 'Medical Support', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_employee_id': employee_id, 'default_queue_trans_id': queue_trans_id, 'default_payment_guarantor_discount_id': payment_guarantor_discount_id}"/>
+                            <field name="support_ids" readonly="1" context="{'default_patient':patient, 'default_type': 'Medical Support', 'default_payment': payment, 'default_company': company, 'default_insurance': insurance, 'default_employee_id': employee_id, 'default_queue_trans_id': queue_trans_id, 'default_payment_guarantor_discount_id': payment_guarantor_discount_id}"/>
+                        </page>
+                        <page string="Evaluations"  attrs="{'invisible':[('registration_status','not in', ['Outpatient','Inpatient','Laboratory', 'Emergency'])]}">
+                            <field name="evaluation_ids" readonly="1"/>
                         </page>
                         <page string="Comments">
                             <group>

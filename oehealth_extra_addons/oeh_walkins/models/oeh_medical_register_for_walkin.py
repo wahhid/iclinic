@@ -56,6 +56,7 @@ class OeHealthAppointmentWalkin(models.Model):
     state = fields.Selection(WALKIN_STATUS, string='State', readonly=True, states={'Scheduled': [('readonly', False)]}, default=lambda *a: 'Scheduled')
     comments = fields.Text(string='Comments', readonly=True, states={'Scheduled': [('readonly', False)]})
     date = fields.Datetime(string='Date', required=True, readonly=True, states={'Scheduled': [('readonly', False)]}, default=lambda *a: datetime.datetime.now())
+    
     evaluation_ids = fields.One2many('oeh.medical.evaluation', 'walkin', string='Evaluation', readonly=True, states={'Scheduled': [('readonly', False)]})
     prescription_ids = fields.One2many('oeh.medical.prescription', 'walkin', string='Prescriptions', readonly=True, states={'Scheduled': [('readonly', False)]})
     lab_test_ids = fields.One2many('oeh.medical.lab.test', 'walkin', string='Lab Tests', readonly=True, states={'Scheduled': [('readonly', False)]})

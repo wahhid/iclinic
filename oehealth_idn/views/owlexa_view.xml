@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_owlexa_batch_tree">
+        <field name="name">view_owlexa_batch_tree</field>
+        <field name="model">owlexa.batch</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Owlexa Batch">
+                <field name="name"/>
+                <field name="trans_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_owlexa_batch_form">
+        <field name="name">view_owlexa_batch_form</field>
+        <field name="model">owlexa.batch</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Owlexa Batch">
+                <header>
+                    <button name="trans_process_document" string="Process Document" type="object" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="trans_date"/>
+                    </group>
+                    <notebook>
+                        <page name="owlexa_batch_lines" string="Lines">
+                            <field name="account_invoice_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_owlexa_batch" model="ir.actions.act_window">
+        <field name="name">Owlexa Batch</field>
+        <field name="res_model">owlexa.batch</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+
+</odoo>

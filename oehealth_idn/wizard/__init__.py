@@ -7,3 +7,4 @@ from . import wizard_reference_hospital
 from . import wizard_report_physician_income
 from . import wizard_next_step
 from . import wizard_observasi_patient_process
+from . import wizard_owlexa_invoice

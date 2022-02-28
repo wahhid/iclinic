@@ -70,4 +70,8 @@
 
     <menuitem id="oehealth.oeh_medical_hospital_menu" parent="oehealth.oeh_medical_conf_menu" name="Health Centers"/>
     <menuitem id="oehealth.oeh_medical_physician_list" parent="oehealth.oeh_medical_conf_physician" name="Physicians" action="oehealth.oeh_medical_physician_action_tree"/>
+
+    <!-- Owlexa -->
+    <menuitem id="menu_owlexa_batch" parent="account.menu_finance" action="action_owlexa_batch"  sequence="11"/>
+
 </odoo>

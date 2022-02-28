@@ -179,6 +179,7 @@
                             <field name="unit_id" readonly="1"/>
                             <field name="pricelist_id" readonly="1"/>
                             <!-- <field name="reg_id" readonly="1"/> -->
+                            <field name="arrival_id" readonly="1"/>
                             <field name="reg_ids" readonly="1"/>
                             <field name="queue_trans_id"/>
                             <field name="type_id"/>

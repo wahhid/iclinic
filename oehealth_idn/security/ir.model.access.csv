@@ -198,4 +198,5 @@ access_multi_diagnostic_medical_service,multi.diagnostic,model_oeh_multi_diagnos
 access_multi_diagnostic_cashier,multi.diagnostic,model_oeh_multi_diagnostic,group_cashier,1,1,1,1
 access_multi_diagnostic_physician,multi.diagnostic,model_oeh_multi_diagnostic,oehealth.group_oeh_medical_physician,1,1,1,1
 access_multi_diagnostic_manager,multi.diagnostic,model_oeh_multi_diagnostic,oehealth.group_oeh_medical_manager,1,1,1,1
-
+,,,,,,,
+access_medical_health_center_pharmacy_line_customer_service,medical.health.center.pharmacy.line.customer.service,model_oeh_medical_health_center_pharmacy_line,group_customer_service,1,0,0,0

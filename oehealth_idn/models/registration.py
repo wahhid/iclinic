@@ -35,11 +35,12 @@ class register_walkin(models.Model):
      ('Cancelled', 'Cancelled')]
 
     REGISTRATION_STATUS = [
-        ('MedicalSupport', 'Medical Support'),
         ('Outpatient', 'Out-Patient'),
-        ('Inpatient', 'In-Patient'),
-        ('Pharmacy', 'Pharmacy'),
+        ('Emergency', 'Emergency'),
         ('Laboratory', 'Laboratory'),
+        ('Pharmacy', 'Pharmacy'),
+        ('Inpatient', 'In-Patient'),
+        ('MedicalSupport', 'Medical Support'),
     ]
 
     @api.multi
@@ -211,7 +212,9 @@ class register_walkin(models.Model):
     emergency_ids = fields.One2many(comodel_name='unit.registration', inverse_name='emergency_walkin_id', string='Emergency Registration', readonly=True, states={'Scheduled': [('readonly', False)],'Draft': [('readonly', False)]}, track_visibility='onchange')
     support_ids = fields.One2many(comodel_name='unit.registration', inverse_name='support_walkin_id', string='Medical Support Registration', readonly=True, states={'Scheduled': [('readonly', False)], 'Draft': [('readonly', False)]}, track_visibility='onchange')
     lab_test_ids = fields.One2many(comodel_name='oeh.medical.lab.test', inverse_name='walkin', string='Lab Test Registration', readonly=True, states={'Scheduled': [('readonly', False)], 'Draft': [('readonly', False)]}, track_visibility='onchange')
-    
+    pharmacy_order_ids = fields.One2many(comodel_name='oeh.medical.health.center.pharmacy.line', inverse_name='arrival_id', string='Pharmay Orders', readonly=True, states={'Scheduled': [('readonly', False)], 'Draft': [('readonly', False)]}, track_visibility='onchange')
+
+
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Scheduled': [('readonly', False)]}, track_visibility='onchange')
@@ -228,8 +231,7 @@ class register_walkin(models.Model):
     detail_payment_guarantor = fields.Selection([('dpg1','Peg & Kel Pasca Tambang'), 
     ('dpg2','Peg & Kel UPBE Pongkor'), ('dpg3','Peg & Kel UBPN Pomala'), ('dpg4','Pens & Kel Antam'), ('dpg5','Pihak III'), ('dpg6','Lain-lain / BPJS / ASURANSI')], string='Payment Guarantor Details')
 
-
-
+    registration_status = fields.Selection(REGISTRATION_STATUS, string="Registration Status", required=True, track_visibility='onchange')
     state = fields.Selection(WALKIN_STATUS, string='State', readonly=True, states={'Scheduled': [('readonly', False)]}, default=lambda *a: 'Draft')
 
     @api.model

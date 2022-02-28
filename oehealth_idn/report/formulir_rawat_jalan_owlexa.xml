@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+    <template id="report_formulir_rawat_jalan_owlexa">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="row">
+                        <div class="col-xs-9">
+                            <div class="row text-right">
+                                <span>PT Aplikanusa Lintasarta</span>
+                            </div>
+                            <div class="row text-right">
+                                <span>Menara Thamrin - Arcadia Lt. 2</span>
+                            </div>
+                            <div class="row text-right">
+                                <span>l. MH Thamrin Kav.3 Jakarta 10250</span>
+                            </div>
+                            <div class="row text-right">
+                                <span>Email: customercare@owlexa.com</span>
+                            </div>
+                            <div class="row text-right">
+                                <span>Website : <A HREF="http://www.owlexa.com/">www.owlexa.com</A></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <img src="/oehealth_idn/static/src/img/owlexa_logo.png" width="100"/>
+                        </div>
+                    </div>    
+                    <hr style="color:#00e6e6;size:10"/>    
+                    <div class="row text-center">
+                        <span style="font-size:24px;background-color:grey;">FORMULIR KLAIM RAWAT JALAN (Outpatient Claim Form)</span>
+                    </div>  
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span>IDENTITAS PASIEN (Patient Information) - diisi oleh Peserta (Filled by member)</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <span>Nama Rumah Sakit/Klinik (Hospital/Clinic's name)</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <span>: <span t-field="o.operating_unit_id"/></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <span>Tgl Masuk (Date of Admission)</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <span>: <span t-field="o.date"/></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <span>Nama Perusahaan / Asuransi (Name of Company/Insurance)</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <span>: </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <span>Nama Karyawan (Employee's name)</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <span>: <span t-field="o.patient"/></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <span>Nama Pasien (Patient's name)</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <span>: <span t-field="o.patient"/></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <span>No. Peserta (Membership Number)</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <span>: <span t-field="o.insurance.ins_no"/></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <span>Tgl Lahir (Date of Birth)</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <span>: <span t-field="o.dob"/></span>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                            <th>INFORMASI MEDIS (Medical Information) - diisi oleh Dokter yang Merawat (Filled by Attending Physician)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> 
+                                    <p>Anamnesa (Anamnesis)</p>
+                                    <p>
+                                        <t t-foreach="o.evaluation_ids" t-as="line">
+                                            <t t-if="line.doctor.is_doctor == true">
+                                                <span t-field="line.subjective"/>
+                                            </t>
+                                        </t>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Pemeriksaan Fisik dan Penunjang Medis (Physical Examination dan Supporting Diagnostic Examination)</p>
+                                    <p>
+                                        <t t-foreach="o.evaluation_ids" t-as="line">
+                                            <t t-if="line.doctor.is_nurse == true">
+                                                Temperature: <span t-field="line.temperature"/>, Systolic : <span t-field="line.systolic"/>, Diastolic: <span t-field="line.diastolic"/>
+                                            </t>
+                                        </t>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Diagnosa (Diagnose)</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Tindakan/terapi (Procedure/Therapy)</p>
+                                    <p>
+                                        <t t-foreach="o.evaluation_ids" t-as="line">
+                                            <t t-if="line.doctor.is_doctor == true">
+                                                <span t-field="line.notes_complaint"/>
+                                            </t>
+                                        </t>
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span>PERNYATAAN PEMBERIAN KUASA (Authorization)</span>
+                        </div>
+                        <div class="col-xs-12">
+                            <p>
+                                Dengan ini saya memberikan kuasa kepada Owlexa Healthcare untuk mendapatkan data medis maupun riwayat
+kesehatan saya dari Rumah Sakit/Klinik/Dokter sejauh diperlukan untuk menilai klaim ini.
+                            </p>
+                            <p>
+                                I hereby authorize Owlexa Healthcare to get my medical data or my medical record needed to analyze my claim from Hospital/Clinic/Physician.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 border">
+                            Mohon tagihan dilampiri dengan : <br/>
+                            1. Kuitansi Asli (Original receipt) <br/>
+                            2. Copy Resep (Copy recipe) <br/>
+                            3. Copy hasil penunjang (Copy of the supporting diagnostic) <br/>
+                            4. Resume medis (Medical Resume) <br/>
+                            5. Copy KTP/kartu peserta Orang Tua untuk Pasien anak (Copy of ID Card / Card member)
+                        </div>
+                        <div class="col-xs-8">
+                            <div class="row">
+                                <span>Ditandatangani di (Sign at) ......................................,</span>
+                            </div>
+                            <div class="row">
+                                <span>tanggal (date).......................................</span>
+                            </div>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    ( <span t-field="o.insurance.patient.name"/> ) <br/>
+                                    Tanda tangan pasien/Orang tua pasien <br/>
+                                    (Patient/Parent's Signature)
+                                </div>
+                                <div class="col-xs-6">
+                                    ( <span t-field="o.clinic_ids[0].doctor"/> ) <br/>
+                                    Tanda tangan Dokter yang merawat <br/>
+                                    (Attending Physician's Signature) <br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <report
+        string="Formulir Rawat Jalan (Owlexa)"
+        id="action_report_formulir_rawat_jalan_owlexa"
+        model="oeh.medical.appointment.register.walkin"
+        report_type="qweb-pdf"
+        name="oehealth_idn.report_formulir_rawat_jalan_owlexa"
+        file="oehealth_idn.report_formulir_rawat_jalan_owlexa"
+    />
+    </data>
+</odoo>

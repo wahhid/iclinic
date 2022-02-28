@@ -10,6 +10,7 @@ from . import product
 from . import sale_order
 from . import concoction
 from . import prescription
+from . import owlexa
 from . import account_invoice
 from . import registration
 from . import unit_registration

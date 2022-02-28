@@ -5,10 +5,258 @@
 # Embedded file name: D:\Workspaces\Odoo10\mod\Health\addons-custom\oehealth_idn\models\account_invoice.py
 # Compiled at: 2019-01-09 17:38:07
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, Warning
+from odoo.exceptions import UserError, Warning, ValidationError
+import base64
+import PyPDF2
+from io import StringIO, BytesIO
+import requests
+import json
+import logging
+import uuid
+
+_logger = logging.getLogger(__name__)
+
+
 
 class account_invoice(models.Model):
     _inherit = 'account.invoice'
+
+    def generate_insurance_report_file(self):
+        pdfWriter = PyPDF2.PdfFileWriter()
+
+        report_name = "oehealth_idn.report_formulir_rawat_jalan_owlexa"
+        owlexa_report = self.env['report'].sudo().get_pdf([self.arrival_id.id], report_name)
+        _logger.info(type(owlexa_report))
+        owlexa_file = BytesIO()
+        owlexa_file.write(owlexa_report)
+        _logger.info(type(owlexa_file))
+        pdf1Reader = PyPDF2.PdfFileReader(owlexa_file)
+        # Loop through all the pagenumbers for the first document
+        for pageNum in range(pdf1Reader.numPages):
+            pageObj = pdf1Reader.getPage(pageNum)
+            pdfWriter.addPage(pageObj)
+       
+        report_name = "account.report_invoice"
+        invoice_report = self.env['report'].sudo().get_pdf([self.id], report_name)
+        invoice_file = BytesIO()
+        invoice_file.write(invoice_report)
+        pdf2Reader = PyPDF2.PdfFileReader(invoice_file)
+
+        # Loop through all the pagenumbers for the second document
+        for pageNum in range(pdf2Reader.numPages):
+            pageObj = pdf2Reader.getPage(pageNum)
+            pdfWriter.addPage(pageObj)
+
+        if len(self.arrival_id.prescription_ids) > 0:
+            report_name = "oehealth_idn.report_resep"
+            prescription_ids = [x.id for x in self.arrival_id.prescription_ids]
+            resep_report = self.env['report'].sudo().get_pdf(prescription_ids, report_name)
+            resep_file = BytesIO()
+            resep_file.write(resep_report)
+            pdf3Reader = PyPDF2.PdfFileReader(resep_file)
+
+            # Loop through all the pagenumbers for the second document
+            for pageNum in range(pdf3Reader.numPages):
+                pageObj = pdf3Reader.getPage(pageNum)
+                pdfWriter.addPage(pageObj)
+        
+        #Lab Report
+        # if len(self.arrival_id.lab_test_ids) > 0:
+        #     report_name = "oehealth.report_oeh_medical_patient_labtest"
+        #     lab_test_ids = [x.id for x in self.arrival_id.lab_test_ids]
+        #     lab_report = self.env['report'].sudo().get_pdf(lab_test_ids, report_name)
+        #     lab_file = BytesIO()
+        #     lab_file.write(lab_report)
+        #     pdf4Reader = PyPDF2.PdfFileReader(lab_file)
+
+        #     # Loop through all the pagenumbers for the second document
+        #     for pageNum in range(pdf4Reader.numPages):
+        #         pageObj = pdf4Reader.getPage(pageNum)
+        #         pdfWriter.addPage(pageObj)
+                
+        #Imaging Report
+        #oehealth_extra_addons.report_oeh_medical_patient_imaging
+        
+        output_file = BytesIO()
+        pdfWriter.write(output_file)
+        self.invoice_pdf_file = base64.encodestring(output_file.getvalue())
+
+    def sync_to_owlexa(self):
+        _logger.info("Sync To Owlexa")
+       
+        headers = {
+        'API-Key': '8HCmYbU+phImFJXgg1hHjpd6HBQFekEUvsn+TGoBDkc=',
+        'Content-Type': 'application/json'
+        }
+        base_url = 'https://test.owlexa.com/owlexa-api/invoice/v1/sync-transaction'
+        try:
+            data = {
+                "claimNumber" : "20200200290031",
+                "cardNumber": "1000620030002010",
+                "paidToProviderAmount": 580000,
+                "providerTransactionNumber": "INV-00002"
+            }
+            _logger.info(data)
+            req = requests.post(base_url, headers=headers ,data=json.dumps(data))
+            _logger.info(req.text)
+            response_json = req.json()
+            if req.status_code != 200:
+                body = """
+                    Sync To Owlexa <br/>
+                    Code : {}
+                """.format(response_json['code'])
+                self.message_post(body=body)
+                _logger.info("Error")
+            else:
+                body = """
+                    Sync To Owlexa <br/>
+                    <ul>
+                        <li>Code : {}</li>
+                        <li>Data : {}</li>
+                        <li>Message : {}</li>
+                        <li>Status : {}</li>
+                        <li>Total Data : {}</li>
+                        <li>Trans ID : {}</li>
+                    </ul>
+                """.format(response_json['code'], response_json['data'], response_json['message'], response_json['status'], response_json['totalData'], response_json['transactionId'])
+                self.message_post(body=body)
+                if response_json['code'] == 200:
+                    _logger.info('Success')
+                if response_json['code'] == 400:
+                    _logger.info('Failed')
+                if response_json['code'] == 401:
+                    _logger.info('Failed')
+           
+        except Exception as err:
+            _logger.error(err)  
+    
+    def upload_document_to_owlexa(self):
+        _logger.info("Upload Document To Owlexa")
+       
+        headers = {
+            'API-Key': '8HCmYbU+phImFJXgg1hHjpd6HBQFekEUvsn+TGoBDkc='
+        }
+
+        base_url = 'https://test.owlexa.com/owlexa-api/invoice/v1/upload-document'
+        try:
+ 
+
+            #file_content=base64.b64decode(self.invoice_pdf_file)
+            # filename = "/tmp/" + str(uuid.uuid4())
+            # with open(filename, 'wb') as file_to_save:
+            #     decoded_data = base64.b64decode(self.invoice_pdf_file)
+            #     file_to_save.write(decoded_data)
+            
+            # file_to_read = open(filename,'rb')
+
+
+           #owlexa_file.write(file_content)
+
+           
+
+            file_content = base64.b64decode(self.invoice_pdf_file)
+            filename = "/tmp/" + str(uuid.uuid4())
+            _logger.info(filename)
+            with open(filename, 'wb') as file_to_save:
+                file_to_save.write(file_content)
+            
+            
+            # multipart_form_data = {
+            #     'file': ('file',('INV-00001.pdf',open(filename,'rb'),'application/pdf')),
+            #     'includeInvoice': (None, 'true'),
+            #     'providerTransactionNumber': (None, 'INV-00001')
+            # }
+
+            data={
+                'includeInvoice': 'true',
+                'providerTransactionNumber': 'INV-00001'
+            }
+
+            files=[
+                ('file',('INV-00001.pdf',open(filename,'rb'),'application/pdf'))
+            ]
+
+
+
+            req = requests.post( base_url, headers=headers, data=data, files=files)
+            response_json = req.json()
+            if req.status_code != 200:
+                body = """
+                    Upload Document to Owlexa <br/>
+                    Code : {}
+                """.format(response_json['code'])
+                self.message_post(body=body)
+                _logger.info("Error")
+            else:
+                body = """
+                    Upload Document To Owlexa <br/>
+                    <ul>
+                        <li>Code : {}</li>
+                        <li>Data : {}</li>
+                        <li>Message : {}</li>
+                        <li>Status : {}</li>
+                        <li>Total Data : {}</li>
+                        <li>Trans ID : {}</li>
+                    </ul>
+                """.format(response_json['code'], response_json['data'], response_json['message'], response_json['status'], response_json['totalData'], response_json['transactionId'])
+                self.message_post(body=body)
+                if response_json['code'] == 200:
+                    _logger.info('Success')
+                if response_json['code'] == 400:
+                    _logger.info('Failed')
+                if response_json['code'] == 401:
+                    _logger.info('Failed')
+           
+        except Exception as err:
+            _logger.error(err)  
+
+    def check_document_status(self):
+        _logger.info("Check Document Status")
+       
+        headers = {
+            'Content-Type': 'application/json',
+            'API-Key': '8HCmYbU+phImFJXgg1hHjpd6HBQFekEUvsn+TGoBDkc='
+        }
+
+        base_url = 'https://test.owlexa.com/owlexa-api/invoice/v1/check-document'
+        try:
+           
+            data={
+                'providerTransactionNumber': 'INV-00001'
+            }
+
+            req = requests.post( base_url, headers=headers, data=json.dumps(data))
+            response_json = req.json()
+            if req.status_code != 200:
+                body = """
+                    Check Document Status <br/>
+                    Code : {}
+                """.format(response_json['code'])
+                self.message_post(body=body)
+                _logger.info("Error")
+            else:
+                body = """
+                    Check Document Status <br/>
+                    <ul>
+                        <li>Code : {}</li>
+                        <li>Data : {}</li>
+                        <li>Message : {}</li>
+                        <li>Status : {}</li>
+                        <li>Total Data : {}</li>
+                        <li>Trans ID : {}</li>
+                    </ul>
+                """.format(response_json['code'], response_json['data'], response_json['message'], response_json['status'], response_json['totalData'], response_json['transactionId'])
+                self.message_post(body=body)
+                if response_json['code'] == 200:
+                    _logger.info('Success')
+                if response_json['code'] == 400:
+                    _logger.info('Failed')
+                if response_json['code'] == 401:
+                    _logger.info('Failed')
+           
+        except Exception as err:
+            _logger.error(err)  
+
 
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID')
@@ -18,6 +266,8 @@ class account_invoice(models.Model):
     
     insurance_type_id = fields.Many2one('medical.insurance.type', 'Insurance Type')
     claim_number = fields.Char('Claim Number', size=100)
+    invoice_pdf_file = fields.Binary("Invoice PDF File", readonly=True)
+    is_sync = fields.Boolean("Is Sync", default=False, readonly=True)
 
 
     @api.depends('amount_pay')
