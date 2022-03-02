@@ -2,24 +2,6 @@
 <odoo>
 <!-- Main template -->
     <template id="report_rekammedisrawatjalan">
-        <style>
-            #fontsize {
-                font-size:11px;
-            }
-
-            #fontsizeheader {
-                font-size:9px;
-                font-family: Arial, Helvetica, sans-serif;
-            }
-
-            table, th, td {
-                font-size:9px;
-            }
-            hr.new4 {
-                border: 1px solid black;
-            }
-        </style>
-
         <t t-call="report.html_container">
             <div class="page">
                 <div class="oe_structure">
@@ -33,10 +15,14 @@
                                 <td>No.RM : <span t-esc="patient['medical_record']" /></td>
                                 <td></td>
                                 <td>No.NPP : 
-                                        <!-- <t t-if="'Employee' == o.walkin.payment">
-                                                <span t-field="o.employee_id.employee_number" />
+                                        <t t-if="'Insurance' == patient['guarantor']">
+                                            <span t-esc="patient['insurance_name']" /> -
+                                            <span t-esc="patient['insurance_no']" />
                                         </t>
-                                            -->
+                                        <t t-if="'Employee' == patient['guarantor']">
+                                            <span t-esc="patient['employee_number']" />
+                                        </t>
+                                           
                                 </td>
                                 <th rowspan="3" >
                                     RIWAYAT ALERGI <br/>
@@ -53,7 +39,7 @@
                                 <td>Jenis Kelamin : <span t-esc="patient['sex']" /></td>
                             </tr>
                             <tr>
-                                <td>TTL : <span t-esc="patient['ttl']" /></td>
+                                <td>TTL : <span t-esc="patient['ttl']" />, <span t-esc="patient['dob']" t-field-options='{"format": "d MMMM y"}' /></td>
                                 <td></td>
                                 <td>Umur : <span t-esc="patient['age']" /></td>
                             </tr>

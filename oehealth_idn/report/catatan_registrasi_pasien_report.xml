@@ -64,7 +64,9 @@
                     Status Perkawinan :
                     <span t-field="o.patient.marital_status" />
                     <br />
-                    Nama Penanggung Biaya : <span t-field="o.patient.name" /> / 
+                    Nama Penanggung Biaya : <span t-field="o.patient.name" /> / <t t-if="o.patient.is_have_parent == true">
+                                                            <span t-field="o.parent_id.name"/> 
+                                                        </t>
                     <br />
                     Alamat : <span t-field="o.patient.street" /> / 
                     <br />

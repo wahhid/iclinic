@@ -27,10 +27,11 @@ class ReportRujukanExternal(models.AbstractModel):
             pathology_list = []
             for diag in ev.diagnostic_ids:
                 pathology_list.append({
-                    'pathology': diag.pathology_id.name
+                    'pathology': diag.name
                 })
 
             evaluation_list.append({
+                'is_nurse' : ev.doctor.is_nurse,
                 'is_doctor': ev.doctor.is_doctor,
                 'notes_complaint': ev.notes_complaint,
                 'systolic': ev.systolic,

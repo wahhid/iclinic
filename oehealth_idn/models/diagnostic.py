@@ -9,10 +9,8 @@ from odoo.exceptions import UserError, Warning
 from datetime import timedelta
 
 
-class multi_diagnostic(models.Model):
-    _name = 'oeh.multi.diagnostic'
-    _rec_name = 'pathology_id'
+class pathology_diagnostic(models.Model):
+    _inherit = 'oeh.medical.pathology'
 
-    pathology_id = fields.Many2one('oeh.medical.pathology', string='Pathology')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID #')
     eval_id = fields.Many2one(comodel_name='oeh.medical.evaluation', string='Evaluation ID #')

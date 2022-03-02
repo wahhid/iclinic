@@ -92,7 +92,7 @@
                                                 <br />
                                                 Diagnosa Dokter :
                                                 
-                                                <t t-foreach='o.diagnostic_ids.pathology_id' t-as='line'>
+                                                <t t-foreach='o.diagnostic_ids' t-as='line'>
                                                     <t t-esc="line.name" />,
                                                 </t>
                                                 <br />
@@ -241,7 +241,7 @@
                                 <td style="border:1px solid black;" colspan="2">
                                     <span t-field="o.notes" />
                                     <br/>
-                                    <t t-foreach='o.diagnostic_ids.pathology_id' t-as='line'>
+                                    <t t-foreach='o.diagnostic_ids' t-as='line'>
                                         <t t-esc="line.name" />
                                     </t>
                                 </td>

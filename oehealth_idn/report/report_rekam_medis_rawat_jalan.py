@@ -30,7 +30,12 @@ class ReportRekamMedisRawatJalan(models.AbstractModel):
             'medical_record': walkin.patient.medical_record,
             'sex': walkin.patient.sex,
             'age': walkin.patient.age,
-            'ttl': walkin.patient.place_birth
+            'ttl': walkin.patient.place_birth,
+            'dob': walkin.patient.dob,
+            'guarantor': walkin.payment,
+            'employee_number': walkin.employee_id.employee_number,
+            'insurance_name': walkin.insurance.ins_type.name,
+            'insurance_no': walkin.insurance.ins_no
         }
 
         records.update({'type': type})
@@ -57,7 +62,7 @@ class ReportRekamMedisRawatJalan(models.AbstractModel):
             if evaluation_id.doctor.is_nurse:
                 for diagnos in evaluation_id.diagnostic_ids:
                     vals = {
-                        'pathology_name': diagnos.pathology_id.name,
+                        'pathology_name': diagnos.name,
                     }
                     pathologys.append(vals)
                 vals = {
@@ -79,7 +84,7 @@ class ReportRekamMedisRawatJalan(models.AbstractModel):
             if evaluation_id.doctor.is_doctor:
                 for diagnos in evaluation_id.diagnostic_ids:
                     vals = {
-                        'pathology_name': diagnos.pathology_id.name,
+                        'pathology_name': diagnos.name,
                     }
                     pathologys.append(vals)
                 vals = {

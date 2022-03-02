@@ -26,8 +26,6 @@
                             <t t-foreach="docs" t-as="o">
                                 <h4><span t-field="o.unit.operating_id.name"/></h4>
                                 <h5><span t-field="o.unit.operating_id.unit_address"/></h5>
-                                <h6>No. Izin Klinik : <span t-field="o.unit.operating_id.izin_klinik"/></h6>
-                                <h6>No. Izin Apotik : <span t-field="o.unit.operating_id.izin_apotik"/></h6>
                             </t>
                             
                         </td>
@@ -63,33 +61,38 @@
                             <td style="border: 1px solid black; width:50%; padding: 6px;">
                                 <t t-set="foo" t-value="False"/>
                                 <t t-foreach='evaluation_list' t-as='line'>
-                                    <!-- check is_docktor -->
-                                    <t t-if="line['is_doctor'] == true">
-                                        <!-- limit loop -->
-                                        <t t-if="foo == False">
-                                            <table style="width:100%">
-                                                <tr>
-                                                    <td colspan="3">IDENTITAS PASIEN</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nama Pasien</td>
-                                                    <td> : </td>
-                                                    <td>
-                                                        <span t-field="o.patient.name" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Umur</td>
-                                                    <td> : </td>
-                                                    <td>
-                                                        <span t-field="o.patient.age" />
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Penanggung Biaya</td>
-                                                    <td> : </td>
-                                                    <td><span t-field="o.patient.name" /> / </td>
-                                                </tr>
+                                    
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td colspan="3">IDENTITAS PASIEN</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nama Pasien</td>
+                                            <td> : </td>
+                                            <td>
+                                                <span t-field="o.patient.name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Umur</td>
+                                            <td> : </td>
+                                            <td>
+                                                <span t-field="o.patient.age" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Penanggung Biaya</td>
+                                            <td> : </td>
+                                            <td><span t-field="o.patient.name" /> / <t t-if="o.patient.is_have_parent == true">
+                                                    <span t-field="o.parent_id.name"/> 
+                                                </t></td>
+                                        </tr>
+
+                                        <t t-set="foo" t-value="False"/>
+                                        <t t-if="line['is_doctor'] == true">
+                                            <!-- limit loop -->
+                                            <t t-if="foo == False">
+
                                                 <tr>
                                                     <td>Diagnosa Medis</td>
                                                     <td> : </td>
@@ -99,6 +102,15 @@
                                                         </t>
                                                     </td>
                                                 </tr>
+                                                <t t-set="foo" t-value="True"/>
+
+                                            </t>
+                                        </t>    
+                                        <t t-set="fo" t-value="False"/>
+                                        <t t-if="line['is_nurse'] == true">
+                                            <!-- limit loop -->
+                                            <t t-if="fo == False">
+
                                                 <tr>
                                                     <td colspan="3">TANDA-TANDA VITAL</td>
                                                 </tr>
@@ -162,12 +174,12 @@
                                                         ________________________________________
                                                         <br /><br/>
                                                     </td>
-
                                                 </tr>
-                                            </table>
-                                            <t t-set="foo" t-value="True"/>
+                                                <t t-set="fo" t-value="True"/>
+                                            </t>
                                         </t>
-                                    </t>
+                                    </table>
+                                            
                                 </t>
                             </td>
                             

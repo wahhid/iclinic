@@ -26,8 +26,6 @@
                         <t t-foreach="docs" t-as="o">
                             <h4><span t-field="o.unit.operating_id.name"/></h4>
                             <h5><span t-field="o.unit.operating_id.unit_address"/></h5>
-                            <h6>No. Izin Klinik : <span t-field="o.unit.operating_id.izin_klinik"/></h6>
-                            <h6>No. Izin Apotik : <span t-field="o.unit.operating_id.izin_apotik"/></h6>
                         </t>
                         
                     </td>
@@ -169,9 +167,7 @@
             <br />
             <table style="width:40%">
               <tr>
-                <td>Untuk pasien, </td>
-                <td></td>
-                <td></td>
+                <td colspan="2">Untuk pasien, </td>
               </tr>
               <tr>
                 <td>Nama</td>

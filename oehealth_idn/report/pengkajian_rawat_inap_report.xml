@@ -35,7 +35,9 @@
                                 <td class="border">Tanggal Masuk : <span t-field="o.evaluation_start_date"/></td>
                             </tr>
                             <tr>
-                                <td class="border">Penanggung : <span t-field="o.patient.name"/> / </td>
+                                <td class="border">Penanggung : <span t-field="o.patient.name"/> / <t t-if="o.patient.is_have_parent == true">
+                                                            <span t-field="o.parent_id.name"/> 
+                                                        </t></td>
                                 <td class="border">Tanggal Keluar : </td>
                             </tr>
                             <tr>
@@ -160,7 +162,7 @@
                                     IV. Daftar Masalah/Diagnosis (Diisi oleh dokter)
                                     <br /><br />
                                     <t t-foreach="o.diagnostic_ids" t-as="l">
-                                            <span t-field="l.pathology_id.name" /> , 
+                                            <span t-field="l.name" /> , 
                                     </t>
                                     <br />
                                     _______________________________________
