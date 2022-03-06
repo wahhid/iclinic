@@ -83,114 +83,116 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2" style="border: 1px solid black">
-                                                <table style="width:100%">
-                                                    <tr>
-                                                        <td>
-                                                            Kepada TS : 
-                                                            <span t-field="o.unit_administration_internal" />
-                                                            <span t-field="o.unit_administration" />
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Dengan ini kami konsulkan pasien.</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Riwayat Penyakit : </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
+                                                <div style="margin-left: 5%; margin-right: 5%;">
+                                                    <table style="width:100%">
+                                                        <tr>
+                                                            <td><br/>
+                                                                Kepada TS : 
+                                                                <span t-field="o.unit_administration_internal" />
+                                                                <span t-field="o.unit_administration" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Dengan ini kami konsulkan pasien.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Riwayat Penyakit : </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                
+                                                                <t t-if="true == ev['dm_stroke_p']">DM Stroke, </t>
+                                                                <t t-if="true == ev['katarak']">Katarak, </t>
+                                                                <t t-if="true == ev['hipertensi_p']">Hipertensi , </t>	
+                                                                <t t-if="true == ev['jantung_p']">Penyakit jantung koroner , </t>	
+                                                                <t t-if="true == ev['kolesterol']">Kolesterol,Penyakit Ginjal , </t>	
+                                                                <t t-if="true == ev['liver']">Liver , </t>
+                                                                <t t-if="true == ev['asam_urat']">Asam Urat 	, </t>
+                                                                <t t-if="true == ev['pendarahan']">Pendarahan Lama , </t>
+                                                                <t t-if="true == ev['rpp']">
+                                                                    <br/>Lain-lain, <br/>
+                                                                    Sebutkan : <span t-esc="ev['lain_rpp']" />
+                                                                </t>
+                                                                
+                                                            </td>
                                                             
-                                                            <t t-if="true == ev['dm_stroke_p']">DM Stroke, </t>
-                                                            <t t-if="true == ev['katarak']">Katarak, </t>
-                                                            <t t-if="true == ev['hipertensi_p']">Hipertensi , </t>	
-                                                            <t t-if="true == ev['jantung_p']">Penyakit jantung koroner , </t>	
-                                                            <t t-if="true == ev['kolesterol']">Kolesterol,Penyakit Ginjal , </t>	
-                                                            <t t-if="true == ev['liver']">Liver , </t>
-                                                            <t t-if="true == ev['asam_urat']">Asam Urat 	, </t>
-                                                            <t t-if="true == ev['pendarahan']">Pendarahan Lama , </t>
-                                                            <t t-if="true == ev['rpp']">
-                                                                <br/>Lain-lain, <br/>
-                                                                Sebutkan : <span t-esc="ev['lain_rpp']" />
-                                                            </t>
-                                                            
-                                                        </td>
-                                                        
-                                                    </tr>
-                                                    <tr>
-                                                        <td>____________________________________________________</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>____________________________________________________</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Obat dan tindakan yang diberikan : </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Obat :
-                                                            <br/>
-                                                            
-                                                            <t t-foreach='prescription_list' t-as='line'>
-                                                                <span t-esc="line['name']" />,
-                                                            </t>
-                                                            
-                                                            <br/><br/>
-                                                            Tindakan :
-                                                            <br/>
-                                                            
-                                                            <span t-esc="ev['notes_complaint']" />,
-                                                            
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>________________________________________</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Terimakasih atas bantuan dan kerjasamanya.</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <table style="width:90%">
-                                                                <tr>
-                                                                    <t t-if="o.tipe_konsul == 'konsul1'">
-                                                                        <td style="border:1px solid black; width:5%; text-align:center;">✔</td>
-                                                                        <td><span t-field="o.tipe_konsul" /></td>
-                                                                    </t>
-                                                                    <t t-if="o.tipe_konsul == 'konsul2'">
-                                                                        <td style="border:1px solid black; width:5%; text-align:center;">✔</td>
-                                                                        <td><span t-field="o.tipe_konsul" /></td>
-                                                                    </t>
-                                                                    <t t-if="o.tipe_konsul == 'konsul3'">
-                                                                        <td style="border:1px solid black; width:5%; text-align:center;">✔</td>
-                                                                        <td><span t-field="o.tipe_konsul" /></td>
-                                                                    </t>
-                                                                </tr>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><br/>Obat dan tindakan yang diberikan : </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Obat :
+                                                                <br/>
+                                                                
+                                                                <t t-foreach='prescription_list' t-as='line'>
+                                                                    <span t-esc="line['name']" />,
+                                                                </t>
+                                                                
+                                                                <br/><br/>
+                                                                Tindakan :
+                                                                <br/>
+                                                                
+                                                                <span t-esc="ev['notes_complaint']" />,
+                                                                
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><br/>Terimakasih atas bantuan dan kerjasamanya.<br/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <table style="width:90%">
+                                                                    <tr>
+                                                                        <t t-if="o.tipe_konsul == 'konsul1'">
+                                                                            <td style="border:1px solid black; width:5%; text-align:center;">✔</td>
+                                                                            <td><span t-field="o.tipe_konsul" /></td>
+                                                                        </t>
+                                                                        <t t-if="o.tipe_konsul == 'konsul2'">
+                                                                            <td style="border:1px solid black; width:5%; text-align:center;">✔</td>
+                                                                            <td><span t-field="o.tipe_konsul" /></td>
+                                                                        </t>
+                                                                        <t t-if="o.tipe_konsul == 'konsul3'">
+                                                                            <td style="border:1px solid black; width:5%; text-align:center;">✔</td>
+                                                                            <td><span t-field="o.tipe_konsul" /></td>
+                                                                        </t>
+                                                                    </tr>
 
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align:right;"> Kijang, <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align:center;"> </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align:center;"> </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align:center;"> Dokter yang merawat,</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align:center;"><br/><br/></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align:center;"><br/><br/></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
-                                                    </tr>
-                                                    
-                                                </table>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:right;"> Kijang, <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:center;"> </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:center;"> </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:center;"> Dokter yang merawat,</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:center;"><br/><br/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:center;"><br/><br/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
+                                                        </tr>
+                                                        
+                                                    </table>
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
@@ -228,48 +230,50 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="border: 1px solid black">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <td>Pemeriksaan : ______________</td>
-                                        </tr>
-                                        <tr>
-                                            <td>____________________________________________________</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Diagnosa : _____________________________</td>
-                                        </tr>
-                                        <tr>
-                                            <td>____________________________________________________</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Saran Terapi : _______________________</td>
-                                        </tr>
-                                        <tr>
-                                            <td>____________________________________________________</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Terimakasih atas  kerjasamanya.</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align:right;"> Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align:center;"> Dokter yang merawat,</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align:center;"><br/><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align:center;"><br/><br/></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
-                                        </tr>
-                                        
-                                    </table>
+                                    <div style="margin-left: 5%; margin-right: 5%;">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td><br/>Pemeriksaan : </td>
+                                            </tr>
+                                            <tr>
+                                                <td><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td><br/>Diagnosa : </td>
+                                            </tr>
+                                            <tr>
+                                                <td><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td><br/>Saran Terapi : </td>
+                                            </tr>
+                                            <tr>
+                                                <td><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
+                                            </tr>
+                                            <tr>
+                                                <td><br/>Terimakasih atas  kerjasamanya.<br/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:right;"> Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"> Dokter yang merawat,</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"><br/><br/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"><br/><br/></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
+                                            </tr>
+                                            
+                                        </table>
+                                    </div>
                                 </td>
                             </tr>
 

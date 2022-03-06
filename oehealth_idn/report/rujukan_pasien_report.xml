@@ -226,9 +226,9 @@
                 <br/><br/><br/>
                 <table style="width:90%;">
                     <tr>
-                        <td>PETUGAS PENGANTAR</td>
-                        <td>PETUGAS PENERIMA</td>
-                        <td>DOKTER PEMERIKSA</td>
+                        <td style="text-align:center;">PETUGAS PENGANTAR</td>
+                        <td style="text-align:center;">PETUGAS PENERIMA</td>
+                        <td style="text-align:center;">DOKTER PEMERIKSA</td>
                     </tr>
                     <tr>
                         <td>
@@ -254,9 +254,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>(_______________________)</td>
-                        <td>(_______________________)</td>
-                        <td>(_______________________)</td>
+                        <td style="text-align:center;">(_______________________)</td>
+                        <td style="text-align:center;">(_______________________)</td>
+                        <td style="text-align:center;">(_______________________)</td>
                     </tr>
                 </table>
                 <br/><br/>
