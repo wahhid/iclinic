@@ -15,10 +15,7 @@
                                 <td>No.RM : <span t-esc="patient['medical_record']" /></td>
                                 <td></td>
                                 <td>No.NPP : 
-                                        <t t-if="'Insurance' == patient['guarantor']">
-                                            <span t-esc="patient['insurance_name']" /> -
-                                            <span t-esc="patient['insurance_no']" />
-                                        </t>
+                                        
                                         <t t-if="'Employee' == patient['guarantor']">
                                             <span t-esc="patient['employee_number']" />
                                         </t>

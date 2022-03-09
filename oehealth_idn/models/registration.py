@@ -160,6 +160,26 @@ class register_walkin(models.Model):
         }
         return {}
 
+    def print_catatan_registrasi_pasien(self):
+        walkin_id = False
+        
+        if len(self.clinic_ids) > 0:
+
+            regis_ids = self.env['unit.registration'].sudo().search([('clinic_walkin_id','=', self.id)], order='create_date desc', limit=1)
+
+            walkin_id = regis_ids.id
+
+        if len(self.unit_ids) > 0:
+
+            regis_ids = self.env['unit.registration'].sudo().search([('unit_walkin_id','=', self.id)], order='create_date desc', limit=1)
+
+            walkin_id = regis_ids.id
+
+        _logger.info(walkin_id)
+
+        data = {'walkin_id': walkin_id}
+        return self.env['report'].get_action([], 'oehealth_idn.report_catatan_registrasi_pasien', data=data)
+
     clinic_ids = fields.One2many(comodel_name='unit.registration', inverse_name='clinic_walkin_id', string='Out-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)],'Draft': [('readonly', False)]}, track_visibility='onchange')
     unit_ids = fields.One2many(comodel_name='unit.registration', inverse_name='unit_walkin_id', string='In-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)],'Draft': [('readonly', False)]}, track_visibility='onchange')
     emergency_ids = fields.One2many(comodel_name='unit.registration', inverse_name='emergency_walkin_id', string='Emergency Registration', readonly=True, states={'Scheduled': [('readonly', False)],'Draft': [('readonly', False)]}, track_visibility='onchange')
@@ -181,7 +201,10 @@ class register_walkin(models.Model):
     user_unit_administration_id = fields.Many2one('unit.administration',  default=lambda self: self.env.user.default_unit_administration_id.id)
     detail_payment_guarantor = fields.Selection([('dpg1','Peg & Kel Pasca Tambang'), 
     ('dpg2','Peg & Kel UPBE Pongkor'), ('dpg3','Peg & Kel UBPN Pomala'), ('dpg4','Pens & Kel Antam'), ('dpg5','Pihak III'), ('dpg6','Lain-lain / BPJS / ASURANSI')], string='Payment Guarantor Details')
-
+    pasien_masuk = fields.Selection([('RJ','Rawat Jalan'), ('UGD','UGD'), ], string='Pasien Masuk Melalui')
+    pasien_masuk_dikirim = fields.Selection([('RJ','Dokter'), ('DS','Datang Sendiri'), ('KP','Kasus Polisi'), ('RS','RS Lain'), ('LN','Lain-lain'),], string='Pasien Masuk Dikirim oleh')
+    kondisi_pasien_keluar = fields.Selection([('Sembuh','Sembuh'), ('Membaik','Membaik'), ('BelumSembuh','Belum Sembuh'), ('Meninggal','Meninggal')], string='Kondisi Pasien Keluar')
+    pasien_pulang = fields.Selection([('DJPULANG','Diijinkan pulang'), ('PP','Pulang Paksa'), ('DRJ','Dirujuk'), ], string='Pasien Pulang')
 
 
     state = fields.Selection(WALKIN_STATUS, string='State', readonly=True, states={'Scheduled': [('readonly', False)]}, default=lambda *a: 'Draft')

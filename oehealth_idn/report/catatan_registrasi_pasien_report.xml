@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <template id="report_catatan_registrasi_pasien">
+    <div class="header">
+        <div class="container" style="border-bottom: 1px solid black;">
+            <table style="width:100%">
+                <tr>
+                    <td style="text-align:center; padding:8px; width:15%;">
+                                            
+                        <!-- Multicompany -->
+                        <t t-if="not o and doc">
+                            <t t-set="o" t-value="doc"/>
+                        </t>
+                        <t t-if="o and 'company_id' in o">
+                            <t t-set="company" t-value="o.company_id"/>
+                        </t>
+                        <t t-if="not o or not 'company_id' in o">
+                            <t t-set="company" t-value="res_company"/>
+                        </t>
+            
+                        <img style="width:50px;height:50px;" t-if="company.logo" t-att-src="'data:image/png;base64,%s' %company.logo"/>
+                        
+                    </td>
+                    <td style="text-align:bottom; padding:8px;">
+                        
+                        <t t-foreach="docs" t-as="o">
+                            <h4><span t-field="o.unit.operating_id.name"/></h4>
+                            <h5><span t-field="o.unit.operating_id.unit_address"/></h5>
+                        </t>
+                        
+                    </td>
+                </tr>
+            </table>  
+        </div>
+    </div>
     <t t-call="report.html_container">
-      
         <t t-foreach="docs" t-as="o">
           <div class="page">
             <style>
             .border{
               border:1px solid black;
             }
-            th, td {
+            table, th, td {
               padding: 5px;
+              font-size:9px;
             }
             </style>
             <div class="oe_structure">
               <table style="width:100%">
                 <tr>
-                  <th class="border">RINGKASAN MASUK DAN KELUAR PASIEN</th>
+                  <th class="border" style="text-align:center; font-size:11px;"><br/><br/><br/>RINGKASAN MASUK DAN KELUAR PASIEN</th>
 
                   <td class="border">
-                    <table style="width:50%">
+                    <table>
                       <tr>
                         <td>No RM</td>
                         <td> : </td>
@@ -50,16 +82,17 @@
                 </tr>
                 <tr>
                   <td class="border">
-                    NPP : <t t-if="'Insurance' == o.payment">
-                                    <span t-field="o.insurance.ins_type.name" /> -
-                                    <span t-field="o.insurance.ins_no" />
-                            </t>
+                    NPP : 
                             <t t-if="'Employe' == o.payment">
                                     <span t-field="o.patient.detail_payment" /> - 
                                     <span t-field="o.employee_id.employee_number" />
                             </t>
                     <br />
-                    Nomor Peserta Askes : <span t-field="o.name" />
+                    Nomor Peserta Askes : 
+                    <t t-if="'Insurance' == o.payment">
+                                    <span t-field="o.insurance.ins_type.name" /> -
+                                    <span t-field="o.insurance.ins_no" />
+                            </t>
                     <br />
                     Status Perkawinan :
                     <span t-field="o.patient.marital_status" />
@@ -70,195 +103,294 @@
                     <br />
                     Alamat : <span t-field="o.patient.street" /> / 
                     <br />
-                    __________________________
-                    <br />
-                    <br />
                   </td>
                   <td class="border">
-                    NPP : <t t-if="'Insurance' == o.payment">
-                                    <span t-field="o.insurance.ins_type.name" /> -
-                                    <span t-field="o.insurance.ins_no" />
-                            </t>
+                    NPP : 
                             <t t-if="'Employe' == o.payment">
                                     <span t-field="o.patient.detail_payment" /> - 
                                     <span t-field="o.employee_id.employee_number" />
                             </t>
                     <br />
-                    Nomor Peserta Askes : <span t-field="o.name" />
+                    Nomor Peserta Askes : 
+                    <t t-if="'Insurance' == o.payment">
+                                    <span t-field="o.insurance.ins_type.name" /> -
+                                    <span t-field="o.insurance.ins_no" />
+                            </t>
                     <br />
-                    <br />
-                    <span t-field="o.detail_payment_guarantor" />
-                    <br />
+                    <span t-field="o.clinic_walkin_id.detail_payment_guarantor" />
+                    <span t-field="o.unit_walkin_id.detail_payment_guarantor" />
+                    <span t-field="o.emergency_walkin_id.detail_payment_guarantor" />
                   </td>
                 </tr>
                 <tr>
                   <td class="border">
-                    Dokter Penanggung Jawab : <span t-field="o.unit_ids.doctor.name" />
+                    Dokter Penanggung Jawab : <span t-field="o.doctor.name" />
                     <br />
+                    Ruang Rawat : <span t-field="o.room_id.name" />
                     <br />
-                    Ruang Rawat : <span t-field="o.unit_ids.room_id.name" />
-                    <br />
-                    Kelas : <span t-field="o.unit_ids.bed.name" />
-                    <br />
-                  </td>
-                  <td class="border">
-                    Cara penerimaan melalui :
-                    <br />
-                    <t t-if="o.clinic_ids">
-                      (1) Rawat Jalan
-                    </t>
-                    <br />
-                    <t t-if="o.emergency_ids">
-                      (2) UGD
-                    </t>
-                    <br />
-                    
-                  </td>
-                </tr>
-                <tr>
-                  <td class="border">
-                    Diagnosa
-                    <br />
-                    a. Masuk / Onadmission :
-                    <br />
-                    1. _________________
-                    <br />
-                    2. _________________
-                    <br />
-                    b. Akhir / Ondischange :
-                    <br />
-                    __________________________
+                    Kelas : <span t-field="o.bed.name" />
                     <br />
                   </td>
                   <td class="border">
-                    Cara masuk dikirim oleh :
-                    <br />
-                    (1) Dokter
-                    <br />
-                    (2) Datang Sendiri
-                    <br />
-                    (3) Kasus Polisi
-                    <br />
-                    (4) RS Lain
-                    <br />
-                    (5) Lain-lain
+                    Cara penerimaan melalui : 
+                    <span t-field="o.clinic_walkin_id.pasien_masuk" />
+                    <span t-field="o.unit_walkin_id.pasien_masuk" />
+                    <span t-field="o.emergency_walkin_id.pasien_masuk" />
                     <br />
                     <br />
                   </td>
                 </tr>
                 <tr>
                   <td class="border">
-                    Anamnesis / History Of Liness :
+                    Diagnosa :
+                    <table>
+                      <tr>
+                        <th>Nomor</th>
+                        <th>Tanggal</th>
+                        <th>Diagnosa</th>
+                      </tr>
+                      <!-- evaluation -->
+                      <t t-foreach="evaluation_list" t-as="ev">
+                        <t t-if="ev['is_doctor'] == true">
+                          <tr>
+                            <td><span t-esc="ev['name']"/></td>
+                            <td><span t-esc="ev['date']"/></td>
+                            <td>
+                              <t t-foreach="ev['pathology_list']" t-as="path">
+                                <span t-esc="path['pathology']"/>,
+                              </t>
+                            </td>
+                          </tr>
+                        </t>
+                      </t>
+                    </table>
                     <br />
-                    __________________________
-                    <br />
-                    __________________________
+                  </td>
+                  <td class="border" >
+                    Cara masuk dikirim oleh : 
+                    <span t-field="o.clinic_walkin_id.pasien_masuk_dikirim" />
+                    <span t-field="o.unit_walkin_id.pasien_masuk_dikirim" />
+                    <span t-field="o.emergency_walkin_id.pasien_masuk_dikirim" />
                     <br />
                     <br />
                   </td>
+                </tr>
+                <tr>
                   <td class="border">
-                    Tanggal Masuk :  <span t-field="o.date" t-field-options='{"format": "d MMMM y"}' />
+                    Anamnesis / History Of Lines :
+                    <br />
+                    <table>
+                      <tr>
+                        <th>Nomor</th>
+                        <th>Tanggal</th>
+                        <th>Anamnesis</th>
+                      </tr>
+                      <!-- evaluation -->
+                      <t t-foreach="evaluation_list" t-as="ev">
+                        <tr>
+                          <td><span t-esc="ev['name']"/></td>
+                          <td><span t-esc="ev['date']"/></td>
+                          <td>Subjective : <br/>
+                          <span t-esc="ev['subjective']"/> <br/>
+                          Extra Information : <br/>
+                          <span t-esc="ev['notes']"/>
+                          </td>
+                        </tr>
+                      </t>
+                    </table>
+                    <br />
+                  </td>
+                  <td class="border">
+
+                    Tanggal Masuk :  <span t-field="o.admission_date" />
+                    <br />
                     Dipindahkan ke ruangan : ________/_____/____ Jam
                     <br />
-                    Tanggal Keluar : _________/____/____ Jam
+                    Tanggal Keluar : <span t-field="o.discharge_date" />
                     <br />
                   </td>
                 </tr>
                 <tr>
-                  <td class="border">
-                    Pemeriksaan fisik / Physical Examination :
+                  <td class="border" colspan="2">
+                    Pemeriksaan Fisik / Physical Examination :
                     <br />
-                    <!-- Keterbatasan : <span t-field="o.keterbatasan_fisik" /> -->
-                    <br />
-                    __________________________
-                    <br />
+                    <table>
+                      <tr>
+                        <th>Nomor</th>
+                        <th>Tanggal</th>
+                        <th>Pemeriksaan Fisik</th>
+                      </tr>
+                      <!-- evaluation -->
+                      <t t-foreach="evaluation_list" t-as="ev">
+                        <t t-if="ev['is_nurse'] == true">
+                          <tr>
+                            <td><span t-esc="ev['name']"/></td>
+                            <td><span t-esc="ev['date']"/></td>
+                            <td>
+                              Tekanan Darah : <span t-esc="ev['systolic']" /> / <span t-esc="ev['diastolic']" /> mmHg , 
+                              Suhu :  <span t-esc="ev['temperature']"/> C ,
+                              Nadi : <span t-esc="ev['nadi']"/> x/m (Regular/Ireguler) , 
+                              Penapasan : <span t-esc="ev['respiratory_rate']"/> x/m (Regular/Ireguler) <br />
+                              Saturasi : <span t-esc="ev['osat']"/> % , 
+                              GCS : E <span t-esc="ev['gcs_e']" /> V <span t-esc="ev['gcs_v']" /> M <span t-esc="ev['gcs_m']"/> ,
+                              Total GCS : <span t-esc="ev['total_gcs']" /> , 
+                              GDS : <span t-esc="ev['gds']" /> mg/dl <br />
+                            </td>
+                          </tr>
+                        </t>
+                      </t>
+                    </table>
                     <br />
                   </td>
+                </tr>
+                <tr>
                   <td class="border">
                     Pemeriksaan Penunjang :
                     <br />
-                    __________________________
-                    <br />
-                    __________________________
-                    <br />
+                    <table>
+                      <tr>
+                        <th>Nomor</th>
+                        <th>Pemeriksaan</th>
+                      </tr>
+                      <!-- Check Labs dan Imaging Test -->
+                      <t t-foreach="lab_list" t-as="lab">
+                        <tr>
+                          <td><span t-esc="lab['name']" /></td>
+                          <td>Check Labs</td>
+                        </tr>
+                      </t>
+                      <t t-foreach="imaging_list" t-as="img">
+                        <tr>
+                          <td><span t-esc="img['name']" /></td>
+                          <td>Imaging Test</td>
+                        </tr>
+                      </t>
+
+                    </table>
                     <br />
                   </td>
-                </tr>
-                <tr>
                   <td class="border">
                     Konsultasi / Consultation :
                     <br />
-                    __________________________
-                    <br />
-                    __________________________
-                    <br />
-                    <br />
-                  </td>
-                  <td class="border">
-                    Pengobatan / Therapy :
-                    <br />
-                    __________________________
-                    <br />
-                    __________________________
-                    <br />
+                    <table>
+                      <tr>
+                        <th>Nomor</th>
+                        <th>Tanggal</th>
+                        <th>Konsultasi</th>
+                      </tr>
+                      <!-- evaluation -->
+                      <t t-foreach="evaluation_list" t-as="ev">
+                        <tr>
+                          <td><span t-esc="ev['name']"/></td>
+                          <td><span t-esc="ev['date']"/></td>
+                          <td><span t-esc="ev['notes_complaint']" /></td>
+                        </tr>
+                      </t>
+
+                    </table>
                     <br />
                   </td>
                 </tr>
                 <tr>
-                  <td colspan="2" class="border">
+                  <td class="border">
+                    Pengobatan / Therapy :
+                    <br />
+                    <table style="width:100%">
+                      <tr>
+                          <td colspan="4" style="text-align:center;">TERAPI YANG SUDAH DIBERIKAN : <br/></td>
+                      </tr>
+                      <t t-foreach='prescription_list' t-as='fo'>
+                        <tr>
+                            <td colspan="4"> Nomor : <span t-esc="fo['nomor']"/></td>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid black;">No</th>
+                            <th style="border: 1px solid black;">Obat</th>
+                            <th style="border: 1px solid black;">Rute</th>
+                        </tr>
+                        <t t-set="no" t-value="1" />
+                        <t t-foreach="fo['list_obat']" t-as="i">
+                            <tr>
+                                <td style="border: 1px solid black;">
+                                    <t t-esc="no" />
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-esc="i['name']"/>
+                                </td>
+                                <td style="border: 1px solid black;">
+                                    <span t-esc="i['dose_route']"/>
+                                </td>
+                                <t t-set="no" t-value="no + 1"/>
+                            </tr>
+                        </t>
+                      </t>
+                    </table>
+                    <br />
+                  </td>
+                  <td class="border">
                     Kondisi Pasien Keluar :
-                    <br />
-                    (1) Sembuh   (2) Membaik  (3) Belum Sembuh   (4) Meninggal
-                    <br />
+                    <span t-field="o.clinic_walkin_id.kondisi_pasien_keluar" />
+                    <span t-field="o.unit_walkin_id.kondisi_pasien_keluar" />
+                    <span t-field="o.emergency_walkin_id.kondisi_pasien_keluar" />
+                    <br /><br />
                   </td>
                 </tr>
                 <tr>
                   <td class="border">
                     Tranfusi : Ada/Tidak ada ________cc
                     <br />
-                    Golda : A/B/AB/O      Rhesus : +/-
+                    Golda : <span t-field="o.patient.blood_type" />
+                    <br />
+                    Rhesus : <span t-field="o.patient.rh" />
                   </td>
                   <td class="border">
-                    Cara pulang :
-                    <br />
-                    (1) Diijinkan pulang
-                    <br />
-                    (2) Pulang Paksa
-                    <br />
-                    (3) Dirujuk
+                    Cara pulang : 
+                    <span t-field="o.clinic_walkin_id.pasien_pulang" />
+                    <span t-field="o.unit_walkin_id.pasien_pulang" />
+                    <span t-field="o.emergency_walkin_id.pasien_pulang" />
                     <br />
                     <br />
                   </td>
                 </tr>
                 <tr>
                   <td class="border">
-                    Tindakan Operasi
-                    a. Saat pulang / On Dischange :
+                    Tindakan :
                     <br />
-                    __________________________
-                    <br />
-                    b. Komplikasi / Complication :
-                    <br />
-                    __________________________
-                    <br />
-                    c. Meninggal / Death :
-                    <br />
-                    __________________________
-                    <br />
+                    <table>
+                      <tr>
+                        <th>Tanggal</th>
+                        <th>Tindakan</th>
+                        <th>Dokter</th>
+                      </tr>
+                      <!-- sale order by type services -->
+                      <t t-foreach="sale_order_list" t-as="sol">
+                        <tr>
+                          <td><span t-esc="sol['tanggal']"/></td>
+                          <td><span t-esc="sol['tindakan']"/></td>
+                          <td><span t-esc="sol['doctor_name']"/></td>
+                        </tr>
+                      </t>
+                    </table>
                     <br />
 
                   </td>
                   <td class="border">
                     Terapi Pulang :
                     <br />
-                    __________________________
+                    <!-- evaluation summery terakhir check dokter-->
+                    <t t-set="fo" t-value="False"/>
+                    <t t-foreach="evaluation_list" t-as="ev">
+                      <t t-if="ev['is_doctor'] == true">
+                        <t t-if="fo == False">
+                          <span t-esc="ev['notes_complaint']"/>
+                          <t t-set="fo" t-value="True"/>
+                        </t>
+                      </t>
+                    </t>
                     <br />
-                    __________________________
-                    <br />
-                    __________________________
                     <br />
                     <br />
-                    Kontrol tanggal : <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                    Kontrol tanggal : <span t-field="o.date" t-field-options='{"format": "d MMMM y"}'/>
                     <br />
                   </td>
                 </tr>
@@ -268,6 +400,7 @@
                     <br />
                     <br />
                     <br />
+                    ( <span t-field="o.doctor" /> )
                     <br />
                   </td>
                   <td class="border">

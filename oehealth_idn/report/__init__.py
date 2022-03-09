@@ -6,4 +6,5 @@ from . import rujukan_radiologi
 from . import rujukan_pasien
 from . import rujukan_internal
 from . import persetujuan_tindakan
+from . import catatan_registrasi_pasien
 # from . import obserpasi_terapi_patient_report
