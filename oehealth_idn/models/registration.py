@@ -150,6 +150,15 @@ class register_walkin(models.Model):
                 self.queue_trans_id.write({'type_id' : next_type_id.id, 'state': 'draft'})
         else:
             raise Warning('Queue have different unit administration')
+    
+    def print_catatan_registrasi_pasien(self):
+        walkin_id = False
+        
+        walkin_id = self.id
+        _logger.info(walkin_id)
+
+        data = {'walkin': walkin_id, 'patient': self.patient.id}
+        return self.env['report'].get_action([], 'oehealth_idn.report_catatan_registrasi_pasien', data=data)
 
     def get_user_unit_administration(self):
         # for row in self:
@@ -159,26 +168,6 @@ class register_walkin(models.Model):
             'user_unit_administration_id'
         }
         return {}
-
-    def print_catatan_registrasi_pasien(self):
-        walkin_id = False
-        
-        if len(self.clinic_ids) > 0:
-
-            regis_ids = self.env['unit.registration'].sudo().search([('clinic_walkin_id','=', self.id)], order='create_date desc', limit=1)
-
-            walkin_id = regis_ids.id
-
-        if len(self.unit_ids) > 0:
-
-            regis_ids = self.env['unit.registration'].sudo().search([('unit_walkin_id','=', self.id)], order='create_date desc', limit=1)
-
-            walkin_id = regis_ids.id
-
-        _logger.info(walkin_id)
-
-        data = {'walkin_id': walkin_id}
-        return self.env['report'].get_action([], 'oehealth_idn.report_catatan_registrasi_pasien', data=data)
 
     clinic_ids = fields.One2many(comodel_name='unit.registration', inverse_name='clinic_walkin_id', string='Out-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)],'Draft': [('readonly', False)]}, track_visibility='onchange')
     unit_ids = fields.One2many(comodel_name='unit.registration', inverse_name='unit_walkin_id', string='In-Patient Registration', readonly=True, states={'Scheduled': [('readonly', False)],'Draft': [('readonly', False)]}, track_visibility='onchange')

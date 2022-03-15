@@ -76,19 +76,19 @@ class unit_registration(models.Model):
     def print_implementasi_keperawatan(self):
         walkin_id = False
         
-        walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
-        _logger.info(walkin_id.id)
+        walkin_id = self.id
+        _logger.info(walkin_id)
 
-        data = {'walkin_id': walkin_id.id, 'type': self.type}
+        data = {'walkin_id': walkin_id, 'type': self.type}
         return self.env['report'].get_action([], 'oehealth_idn.report_implementasi_keperawatan', data=data)
     
     def print_cppt(self):
         walkin_id = False
         
-        walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
-        _logger.info(walkin_id.id)
+        walkin_id = self.id
+        _logger.info(walkin_id)
 
-        data = {'walkin_id': walkin_id.id, 'type': self.type}
+        data = {'walkin_id': walkin_id, 'type': self.type}
         return self.env['report'].get_action([], 'oehealth_idn.report_cppt', data=data)
 
     def print_radiologi(self):

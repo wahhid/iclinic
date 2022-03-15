@@ -10,17 +10,49 @@ class ReportCatatanRegistrasi(models.AbstractModel):
     _name = 'report.oehealth_idn.report_catatan_registrasi_pasien'
 
     @api.model
-    def _get_report_values(self, walkin_id=False):
+    def _get_report_values(self, walkin_id=False, patient=False):
         records = {}
+
+        walkin = self.env['oeh.medical.appointment.register.walkin'].sudo().search([('id','=', walkin_id)])
+        reg_id = False
+
+        if len(walkin.clinic_ids) > 0:
+            bol = False
+            for ffe in walkin.clinic_ids:
+                if bol == False:
+                    reg_id = ffe.id
+                    bol = True 
+
+        if len(walkin.unit_ids) > 0:
+            bol = False
+            for ffe in walkin.unit_ids:
+                if bol == False:
+                    reg_id = ffe.id
+                    bol = True 
+
+        if len(walkin.emergency_ids) > 0:
+            bol = False
+            for ffe in walkin.emergency_ids:
+                if bol == False:
+                    reg_id = ffe.id
+                    bol = True 
+
+        if len(walkin.support_ids) > 0:
+            bol = False
+            for ffe in walkin.support_ids:
+                if bol == False:
+                    reg_id = ffe.id
+                    bol = True 
+            
         
-        reg_id = self.env['unit.registration'].sudo().search([('id','=', walkin_id)])
+        registration_id = self.env['unit.registration'].sudo().search([('id','=', reg_id)])
         
-        records.update({'docs': reg_id}) 
+        records.update({'docs': registration_id}) 
 
         
-        evaluation_ids = self.env['oeh.medical.evaluation'].sudo().search([('reg_id','=', reg_id.id)], order='create_date desc')
-        lab_ids = self.env['oeh.medical.lab.test'].sudo().search([('reg_id','=', reg_id.id)], order='create_date desc')
-        imaging_ids = self.env['oeh.medical.imaging'].sudo().search([('reg_id','=', reg_id.id)], order='create_date desc')
+        evaluation_ids = self.env['oeh.medical.evaluation'].sudo().search([('reg_id','=', registration_id.id)], order='create_date desc')
+        lab_ids = self.env['oeh.medical.lab.test'].sudo().search([('reg_id','=', registration_id.id)], order='create_date desc')
+        imaging_ids = self.env['oeh.medical.imaging'].sudo().search([('reg_id','=', registration_id.id)], order='create_date desc')
         
         evaluation_list = []
         for ev in evaluation_ids:
@@ -78,7 +110,7 @@ class ReportCatatanRegistrasi(models.AbstractModel):
 
         # TINDAKAN
         sale_order_list = []
-        sale_order_ids = self.env['sale.order'].sudo().search([('reg_id','=', reg_id.id)])
+        sale_order_ids = self.env['sale.order'].sudo().search([('reg_id','=', registration_id.id)])
         for order in sale_order_ids:
             sale_order_line_ids = self.env['sale.order.line'].sudo().search([('order_id','=', order.id)])
 
@@ -96,7 +128,7 @@ class ReportCatatanRegistrasi(models.AbstractModel):
         records.update({'sale_order_list': sale_order_list}) 
 
         
-        prescription_ids = self.env['oeh.medical.prescription'].sudo().search([('reg_id','=', reg_id.id)], order='create_date desc')
+        prescription_ids = self.env['oeh.medical.prescription'].sudo().search([('reg_id','=', registration_id.id)], order='create_date desc')
         
         prescription_list = []
         for pres in prescription_ids:
@@ -124,8 +156,10 @@ class ReportCatatanRegistrasi(models.AbstractModel):
     @api.multi
     def render_html(self, docids, data=None):
         _logger.info("Render Report")
-        data = dict(data or {}) 
-        medis= self._get_report_values(data['walkin_id'])
+        _logger.info(str(data['walkin']))
+        data = dict(data or {})
+        medis = self._get_report_values(data['walkin'])
+        _logger.info('WALKIN ID ===')
         _logger.info(medis)
         data.update(medis)
         return self.env['report'].render('oehealth_idn.report_catatan_registrasi_pasien', data)

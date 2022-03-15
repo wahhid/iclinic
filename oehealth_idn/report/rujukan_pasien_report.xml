@@ -1,276 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_rujukan_pasien">
-        <div class="header">
-            <div class="container" style="border-bottom: 1px solid black;">
-                <table style="width:100%">
-                    <tr>
-                        <td style="text-align:center; padding:8px; width:15%;">
-                                                
-                            <!-- Multicompany -->
-                            <t t-if="not o and doc">
-                                <t t-set="o" t-value="doc"/>
-                            </t>
-                            <t t-if="o and 'company_id' in o">
-                                <t t-set="company" t-value="o.company_id"/>
-                            </t>
-                            <t t-if="not o or not 'company_id' in o">
-                                <t t-set="company" t-value="res_company"/>
-                            </t>
-                            
-                            <img style="width:50px;height:50px;" t-if="company.logo" t-att-src="'data:image/png;base64,%s' %company.logo"/>
-                            
-                        </td>
-                        <td style="text-align:bottom; padding:8px;">
-                            
-                            <t t-foreach="docs" t-as="o">
-                                <h4><span t-field="o.unit.operating_id.name"/></h4>
-                                <h5><span t-field="o.unit.operating_id.unit_address"/></h5>
-                            </t>
-                            
-                        </td>
-                    </tr>
-                </table>  
-            </div>
-        </div>
-           
-        <div class="page">
-            <style>
-                table, th, td {
-                    padding: 4px;
-                    font-size:9px;
-                }
-            </style>
-            <div class="oe_structure">
-                <t t-foreach="docs" t-as="o">
-                    <h4 style="text-align:center;">FORMULIR RUJUKAN PASIEN</h4>
-                    <br/>
-                    <br/>
-                    <p style="text-align:right;">
-                        Kepada Yth, TS
-                        <br />
-                        <span t-field="o.unit_administration" />
-                        <span t-field="o.unit_administration_internal.name" /><br/>
-                        <span t-field="o.reference_hospital" /><br/>
-                        Di Tempat
-                    </p>
-                    <br/><br/>
+        <t t-call="report.html_container">
+            <t t-call="oehealth_idn.header_unit_registration_layout">
+                <div class="page">
+                    <style>
+                        table, th, td {
+                            padding: 4px;
+                            font-size:9px;
+                        }
+                    </style>
+                    <div class="oe_structure">
+                        <t t-foreach="docs" t-as="o">
+                            <h4 style="text-align:center;">FORMULIR RUJUKAN PASIEN</h4>
+                            <br/>
+                            <br/>
+                            <p style="text-align:right;">
+                                Kepada Yth, TS
+                                <br />
+                                <span t-field="o.unit_administration" />
+                                <span t-field="o.unit_administration_internal.name" /><br/>
+                                <span t-field="o.reference_hospital" /><br/>
+                                Di Tempat
+                            </p>
+                            <br/><br/>
 
-                    <table style="width:100%; padding: 6px;">
-                        <tr>
-                            <td style="border: 1px solid black; width:50%; padding: 6px;">
-                                <t t-set="foo" t-value="False"/>
-                                <t t-foreach='evaluation_list' t-as='line'>
+                            <table style="width:100%; padding: 6px;">
+                                <tr>
+                                    <td style="border: 1px solid black; width:50%; padding: 6px;">
+
+                                        <table style="width:100%">
+                                            <t t-set="foo" t-value="False"/>
+                                            <t t-foreach='evaluation_list' t-as='line'>
+                                                <t t-if="line['is_doctor'] == true">
+                                                    <!-- limit loop -->
+                                                    <t t-if="foo == False">
+                                                        <tr>
+                                                            <td colspan="3">IDENTITAS PASIEN</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Nama Pasien</td>
+                                                            <td> : </td>
+                                                            <td>
+                                                                <span t-field="o.patient.name" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Umur</td>
+                                                            <td> : </td>
+                                                            <td>
+                                                                <span t-field="o.patient.age" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Penanggung Biaya</td>
+                                                            <td> : </td>
+                                                            <td><span t-field="o.patient.name" /> / <t t-if="o.patient.is_have_parent == true">
+                                                                    <span t-field="o.parent_id.name"/> 
+                                                                </t></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Diagnosa Medis</td>
+                                                            <td> : </td>
+                                                            <td>
+                                                                <t t-foreach="line['pathology_list']" t-as="li">
+                                                                    <span t-esc="li['pathology']" />, 
+                                                                </t>
+                                                            </td>
+                                                        </tr>
+                                                        <t t-set="foo" t-value="True"/>
+                                                    </t>
+                                                </t>
+                                            </t>
+
+                                            <t t-set="fo" t-value="False"/>
+                                            <t t-foreach='evaluation_list' t-as='line'>
+                                                <t t-if="line['is_nurse'] == true">
+                                                    <!-- limit loop -->
+                                                    <t t-if="fo == False">
+
+                                                        <tr>
+                                                            <td colspan="3">TANDA-TANDA VITAL</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Tekanan Darah</td>
+                                                            <td> : </td>
+                                                            <td>
+                                                                <span t-esc="line['systolic']" /> / <span t-esc="line['diastolic']" /> mmHg
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Suhu</td>
+                                                            <td> : </td>
+                                                            <td>
+                                                                <span t-esc="line['temperature']" />
+                                                                C
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Nadi</td>
+                                                            <td> : </td>
+                                                            <td><span t-esc="line['nadi']" /> x/m (Regular/Ireguler)</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Penapasan</td>
+                                                            <td> : </td>
+                                                            <td>
+                                                                <span t-esc="line['respiratory_rate']" />
+                                                                x/m (Regular/Ireguler)
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Saturasi</td>
+                                                            <td> : </td>
+                                                            <td>
+                                                                <span t-esc="line['osat']" />
+                                                                %
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>GCS</td>
+                                                            <td> : </td>
+                                                            <td>E <span t-esc="line['gcs_e']" /> V <span t-esc="line['gcs_v']" /> M <span t-esc="line['gcs_m']"/> </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total GCS</td>
+                                                            <td> : </td>
+                                                            <td><span t-esc="line['total_gcs']" /></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>GDS</td>
+                                                            <td> : </td>
+                                                            <td><span t-esc="line['gds']" /> mg/dl</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                TINDAKAN YANG SUDAH DI LAKUKAN :
+                                                                <br />
+                                                                <span t-esc="line['notes_complaint']" />
+                                                                <br />
+                                                                ________________________________________
+                                                                <br /><br/>
+                                                            </td>
+                                                        </tr>
+                                                        <t t-set="fo" t-value="True"/>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                        </table>
+
+                                    </td>
                                     
-                                    <table style="width:100%">
-                                        <tr>
-                                            <td colspan="3">IDENTITAS PASIEN</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nama Pasien</td>
-                                            <td> : </td>
-                                            <td>
-                                                <span t-field="o.patient.name" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Umur</td>
-                                            <td> : </td>
-                                            <td>
-                                                <span t-field="o.patient.age" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Penanggung Biaya</td>
-                                            <td> : </td>
-                                            <td><span t-field="o.patient.name" /> / <t t-if="o.patient.is_have_parent == true">
-                                                    <span t-field="o.parent_id.name"/> 
-                                                </t></td>
-                                        </tr>
-
-                                        <t t-set="foo" t-value="False"/>
-                                        <t t-if="line['is_doctor'] == true">
-                                            <!-- limit loop -->
-                                            <t t-if="foo == False">
-
+                                    <td style="border: 1px solid black;vertical-align: top; padding: 6px;">
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td colspan="4" style="text-align:center;">TERAPI YANG SUDAH DIBERIKAN : <br/></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="border: 1px solid black;">No</th>
+                                                <th style="border: 1px solid black;">Waktu</th>
+                                                <th style="border: 1px solid black;">Obat</th>
+                                                <th style="border: 1px solid black;">Rute</th>
+                                            </tr>
+                                            <t t-set="nomor" t-value="1" />
+                                            <t t-foreach='prescription_list' t-as='i'>
                                                 <tr>
-                                                    <td>Diagnosa Medis</td>
-                                                    <td> : </td>
-                                                    <td>
-                                                        <t t-foreach="line['pathology_list']" t-as="li">
-                                                            <span t-esc="li['pathology']" />, 
-                                                        </t>
+                                                    <td style="border: 1px solid black;">
+                                                        <t t-esc="nomor" />
                                                     </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <span t-esc="i['common_dosage']" />
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <span t-esc="i['name']"/>
+                                                    </td>
+                                                    <td style="border: 1px solid black;">
+                                                        <span t-esc="i['dose_route']"/>
+                                                    </td>
+                                                    <t t-set="nomor" t-value="nomor + 1"/>
                                                 </tr>
-                                                <t t-set="foo" t-value="True"/>
-
                                             </t>
-                                        </t>    
-                                        <t t-set="fo" t-value="False"/>
-                                        <t t-if="line['is_nurse'] == true">
-                                            <!-- limit loop -->
-                                            <t t-if="fo == False">
-
-                                                <tr>
-                                                    <td colspan="3">TANDA-TANDA VITAL</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Tekanan Darah</td>
-                                                    <td> : </td>
-                                                    <td>
-                                                        <span t-esc="line['systolic']" /> / <span t-esc="line['diastolic']" /> mmHg
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Suhu</td>
-                                                    <td> : </td>
-                                                    <td>
-                                                        <span t-esc="line['temperature']" />
-                                                        C
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Nadi</td>
-                                                    <td> : </td>
-                                                    <td><span t-esc="line['nadi']" /> x/m (Regular/Ireguler)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Penapasan</td>
-                                                    <td> : </td>
-                                                    <td>
-                                                        <span t-esc="line['respiratory_rate']" />
-                                                        x/m (Regular/Ireguler)
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Saturasi</td>
-                                                    <td> : </td>
-                                                    <td>
-                                                        <span t-esc="line['osat']" />
-                                                        %
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>GCS</td>
-                                                    <td> : </td>
-                                                    <td>E <span t-esc="line['gcs_e']" /> V <span t-esc="line['gcs_v']" /> M <span t-esc="line['gcs_m']"/> </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Total GCS</td>
-                                                    <td> : </td>
-                                                    <td><span t-esc="line['total_gcs']" /></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>GDS</td>
-                                                    <td> : </td>
-                                                    <td><span t-esc="line['gds']" /> mg/dl</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3">
-                                                        TINDAKAN YANG SUDAH DI LAKUKAN :
-                                                        <br />
-                                                        <span t-esc="line['notes_complaint']" />
-                                                        <br />
-                                                        ________________________________________
-                                                        <br /><br/>
-                                                    </td>
-                                                </tr>
-                                                <t t-set="fo" t-value="True"/>
-                                            </t>
-                                        </t>
-                                    </table>
-                                            
-                                </t>
-                            </td>
-                            
-                            <td style="border: 1px solid black;vertical-align: top; padding: 6px;">
-                                <table style="width:100%">
-                                    <tr>
-                                        <td colspan="4" style="text-align:center;">TERAPI YANG SUDAH DIBERIKAN : <br/></td>
-                                    </tr>
-                                    <tr>
-                                        <th style="border: 1px solid black;">No</th>
-                                        <th style="border: 1px solid black;">Waktu</th>
-                                        <th style="border: 1px solid black;">Obat</th>
-                                        <th style="border: 1px solid black;">Rute</th>
-                                    </tr>
-                                    <t t-set="nomor" t-value="1" />
-                                    <t t-foreach='prescription_list' t-as='i'>
-                                        <tr>
-                                            <td style="border: 1px solid black;">
-                                                <t t-esc="nomor" />
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-esc="i['common_dosage']" />
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-esc="i['name']"/>
-                                            </td>
-                                            <td style="border: 1px solid black;">
-                                                <span t-esc="i['dose_route']"/>
-                                            </td>
-                                            <t t-set="nomor" t-value="nomor + 1"/>
-                                        </tr>
-                                    </t>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                  
-                </t>
-                <br/><br/>
-                <p>Atas kerjasamanya, kami mengucapkan terimakasih</p>
-                <br/><br/>
-                <p style="text-align:right;">Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
-                <center>
-                <br/><br/><br/>
-                <table style="width:90%;">
-                    <tr>
-                        <td style="text-align:center;">PETUGAS PENGANTAR</td>
-                        <td style="text-align:center;">PETUGAS PENERIMA</td>
-                        <td style="text-align:center;">DOKTER PEMERIKSA</td>
-                    </tr>
-                    <tr>
-                        <td>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/>
+                            <p>Atas kerjasamanya, kami mengucapkan terimakasih</p>
+                            <br/><br/>
+                            <p style="text-align:right;">Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
+                            <center>
+                            <br/><br/><br/>
+                            <table style="width:90%;">
+                                <tr>
+                                    <td style="text-align:center;">PETUGAS PENGANTAR</td>
+                                    <td style="text-align:center;">PETUGAS PENERIMA</td>
+                                    <td style="text-align:center;">DOKTER PEMERIKSA</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </td>
+                                    <td>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </td>
+                                    <td>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center;">(_______________________)</td>
+                                    <td style="text-align:center;">(_______________________)</td>
+                                    <td style="text-align:center;">( <span t-field="o.doctor.name" /> )</td>
+                                </tr>
+                            </table>
+                            <br/><br/>
+                            </center>
+                        </t>
+                        <p>
+                            Lampiran :
                             <br />
+                            1. RS Rujukan
                             <br />
+                            2. Rekam Medis
                             <br />
-                            <br />
-                            <br />
-                        </td>
-                        <td>
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                        </td>
-                        <td>
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center;">(_______________________)</td>
-                        <td style="text-align:center;">(_______________________)</td>
-                        <td style="text-align:center;">(_______________________)</td>
-                    </tr>
-                </table>
-                <br/><br/>
-                </center>
-                <p>
-                    Lampiran :
-                    <br />
-                    1. RS Rujukan
-                    <br />
-                    2. Rekam Medis
-                    <br />
-                </p>
-            </div>
-        </div>
-    
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </t>
     </template>
 </odoo>

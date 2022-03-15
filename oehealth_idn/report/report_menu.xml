@@ -62,7 +62,7 @@
 
     <report id="surat_keterangan_report_menu" string="Surat Keterangan" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_surat_keterangan" menu="True" />
 
-    <report id="catatan_registrasi_pasien_report_menu" string="Catatan Registrasi Pasien" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_catatan_registrasi_pasien" menu="True" />
+    <report id="catatan_registrasi_pasien_report_menu" string="Catatan Registrasi Pasien" model="oeh.medical.appointment.register.walkin" report_type="qweb-pdf" name="oehealth_idn.report_catatan_registrasi_pasien" menu="False" />
 
     <report id="daftar_transaksi_detail_report_menu" string="Daftar Transaksi Detail" model="sale.order" report_type="qweb-pdf" name="oehealth_idn.report_daftar_transaksi_detail" menu="True" />
 

@@ -17,15 +17,15 @@
                         <t t-if="not o or not 'company_id' in o">
                             <t t-set="company" t-value="res_company"/>
                         </t>
-            
+                        <br/>
                         <img style="width:50px;height:50px;" t-if="company.logo" t-att-src="'data:image/png;base64,%s' %company.logo"/>
-                        
+                        <br/>
                     </td>
                     <td style="text-align:bottom; padding:8px;">
-                        
+                        <br/>
                         <t t-foreach="docs" t-as="o">
-                            <h4><span t-field="o.unit.operating_id.name"/></h4>
-                            <h5><span t-field="o.unit.operating_id.unit_address"/></h5>
+                            <h4><span t-field="o.operating_unit_id.name"/></h4>
+                            <h5><span t-field="o.operating_unit_id.unit_address"/></h5>
                         </t>
                         
                     </td>

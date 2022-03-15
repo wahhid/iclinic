@@ -1,223 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <template id="report_rujukan_poli_gigi">
-    <div class="header">
-        <div class="container" style="border-bottom: 1px solid black;">
-            <table style="width:100%">
-                <tr>
-                    <td style="text-align:center; padding:8px; width:15%;">
-                                            
-                        <!-- Multicompany -->
-                        <t t-if="not o and doc">
-                            <t t-set="o" t-value="doc"/>
-                        </t>
-                        <t t-if="o and 'company_id' in o">
-                            <t t-set="company" t-value="o.company_id"/>
-                        </t>
-                        <t t-if="not o or not 'company_id' in o">
-                            <t t-set="company" t-value="res_company"/>
-                        </t>
-                        
-                        <img style="width:50px;height:50px;" t-if="company.logo" t-att-src="'data:image/png;base64,%s' %company.logo"/>
-                        
-                    </td>
-                    <td style="text-align:bottom; padding:8px;">
-                        
-                        <t t-foreach="docs" t-as="o">
-                            <h4><span t-field="o.unit.operating_id.name"/></h4>
-                            <h5><span t-field="o.unit.operating_id.unit_address"/></h5>
-                        </t>
-                        
-                    </td>
-                </tr>
-            </table>  
-        </div>
-    </div>
     <t t-call="report.html_container">
-      <t t-foreach="docs" t-as="o">
-        <div class="page">
-          <style>
-            p, th, td{
-              font-size: 18px;
-            }
-            .center {
-              margin-left: auto;
-              margin-right: auto;
-            }
-            .text-center {
-              border-bottom: 1px solid black; text-align:center;
-            }
-            .right {
-              margin-left: 90%;
-              margin-right: 10%;
-            }
-          </style>
-          <div class="oe_structure">
-            <p style="text-align:right;">
-                Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
-            </p>
-            <p>
-              Kepada Yth,
-              <br />
-              <br />
-              Teman sejawat Yth,
-              <br />
-              <span t-field="o.unit_administration" />
-              <span t-field="o.unit_administration_internal.name" /><br/>
-              <span t-field="o.reference_hospital" />
-              <br /><br /><br />
-            </p>
-            <p>
-              Dengan hormat,
-              <br />
-              Mohon dilakukan pemeriksaan X-Ray film :
-              <br />
-            </p>
+      <t t-call="oehealth_idn.header_unit_registration_layout">
+        <t t-foreach="docs" t-as="o">
+          <div class="page">
+            <style>
+              p, th, td{
+                font-size: 18px;
+              }
+              .center {
+                margin-left: auto;
+                margin-right: auto;
+              }
+              .text-center {
+                border-bottom: 1px solid black; text-align:center;
+              }
+              .right {
+                margin-left: 90%;
+                margin-right: 10%;
+              }
+            </style>
+            <div class="oe_structure">
+              <p style="text-align:right;">
+                  Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+              </p>
+              <p>
+                Kepada Yth,
+                <br />
+                <br />
+                Teman sejawat Yth,
+                <br />
+                <span t-field="o.unit_administration" />
+                <span t-field="o.unit_administration_internal.name" /><br/>
+                <span t-field="o.reference_hospital" />
+                <br /><br /><br />
+              </p>
+              <p>
+                Dengan hormat,
+                <br />
+                Mohon dilakukan pemeriksaan X-Ray film :
+                <br />
+              </p>
 
-            <table style="width:90%">
-              <tr>
-                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
-                <td>Dental/Periapical</td>
-                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
-                <td>Oclusal</td>
-              </tr>
-              <tr>
-                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
-                <td>Panoramic</td>
-                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
-                <td>TMJ</td>
-              </tr>
-              <tr>
-                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
-                <td>Chepalometri</td>
-                <td style="border:1px solid black; padding: 8px; width:5%;"></td>
-                <td>SKULL AP CO/CR</td>
-              </tr>
-            </table>
-            <br />
-            <br />
-            <table style="width:70%" class="center">
-              <tr>
-                <td class="text-center">8</td>
-                <td class="text-center">7</td>
-                <td class="text-center">6</td>
-                <td class="text-center">5</td>
-                <td class="text-center">4</td>
-                <td class="text-center">3</td>
-                <td class="text-center">2</td>
-                <td style="border-bottom: 1px solid black; text-align:center; border-right:1px solid black;">1</td>
-                <td class="text-center">1</td>
-                <td class="text-center">2</td>
-                <td class="text-center">3</td>
-                <td class="text-center">4</td>
-                <td class="text-center">5</td>
-                <td class="text-center">6</td>
-                <td class="text-center">7</td>
-                <td class="text-center">8</td>
-              </tr>
-              <tr>
-                <td class="text-center">8</td>
-                <td class="text-center">7</td>
-                <td class="text-center">6</td>
-                <td class="text-center">5</td>
-                <td class="text-center">4</td>
-                <td class="text-center">3</td>
-                <td class="text-center">2</td>
-                <td style="border-right:1px solid black; border-bottom: 1px solid black; text-align:center;">1</td>
-                <td class="text-center">1</td>
-                <td class="text-center">2</td>
-                <td class="text-center">3</td>
-                <td class="text-center">4</td>
-                <td class="text-center">5</td>
-                <td class="text-center">6</td>
-                <td class="text-center">7</td>
-                <td class="text-center">8</td>
-              </tr>
-
-            </table>
-            <br />
-            <table style="width:50%" class="center">
-              <tr>
-                <td class="text-center">V</td>
-                <td class="text-center">IV</td>
-                <td class="text-center">III</td>
-                <td class="text-center">II</td>
-                <td style="border-bottom: 1px solid black; text-align:center; border-right:1px solid black;">I</td>
-                <td class="text-center">I</td>
-                <td class="text-center">II</td>
-                <td class="text-center">III</td>
-                <td class="text-center">IV</td>
-                <td class="text-center">V</td>
-              </tr>
-              <tr>
-                <td class="text-center">V</td>
-                <td class="text-center">IV</td>
-                <td class="text-center">III</td>
-                <td class="text-center">II</td>
-                <td style="border-right:1px solid black; text-align:center; border-bottom: 1px solid black;">I</td>
-                <td class="text-center">I</td>
-                <td class="text-center">II</td>
-                <td class="text-center">III</td>
-                <td class="text-center">IV</td>
-                <td class="text-center">V</td>
-              </tr>
-
-            </table>
-            <br />
-            <br />
-            <table style="width:40%">
-              <tr>
-                <td colspan="2">Untuk pasien, </td>
-              </tr>
-              <tr>
-                <td>Nama</td>
-                <td> : </td>
-                <td><span t-field="o.patient.name" /></td>
-              </tr>
-              <tr>
-                <td>Usia</td>
-                <td> : </td>
-                <td><span t-field="o.patient.age" /></td>
-              </tr>
-              <tr>
-                <td>Alamat</td>
-                <td> : </td>
-                <td><span t-field="o.patient.street" /></td>
-              </tr>
-              <tr>
-                <td>Telp.</td>
-                <td> : </td>
-                <td><span t-field="o.patient.phone" /></td>
-              </tr>
-            </table>
-            <br />
-            <br />
-
-            <p>Selanjudnya pasien dalam perawatan kami. Atas bantuan dan kerjasamanya diucapkan banyak terima kasih.</p>
-            <br />
-            <br />
-            <div style="margin-left: 80%;">
-              <table>
+              <table style="width:90%">
                 <tr>
-                  <td style="text-align:center;">Hormat kami,</td>
+                  <td style="border:1px solid black; padding: 8px; width:5%;"></td>
+                  <td>Dental/Periapical</td>
+                  <td style="border:1px solid black; padding: 8px; width:5%;"></td>
+                  <td>Oclusal</td>
                 </tr>
                 <tr>
-                  <td>
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                  </td>
+                  <td style="border:1px solid black; padding: 8px; width:5%;"></td>
+                  <td>Panoramic</td>
+                  <td style="border:1px solid black; padding: 8px; width:5%;"></td>
+                  <td>TMJ</td>
                 </tr>
                 <tr>
-                  <td style="text-align:center;">( <span t-field="o.doctor" /> )</td>
+                  <td style="border:1px solid black; padding: 8px; width:5%;"></td>
+                  <td>Chepalometri</td>
+                  <td style="border:1px solid black; padding: 8px; width:5%;"></td>
+                  <td>SKULL AP CO/CR</td>
                 </tr>
               </table>
+              <br />
+              <br />
+              <table style="width:70%" class="center">
+                <tr>
+                  <td class="text-center">8</td>
+                  <td class="text-center">7</td>
+                  <td class="text-center">6</td>
+                  <td class="text-center">5</td>
+                  <td class="text-center">4</td>
+                  <td class="text-center">3</td>
+                  <td class="text-center">2</td>
+                  <td style="border-bottom: 1px solid black; text-align:center; border-right:1px solid black;">1</td>
+                  <td class="text-center">1</td>
+                  <td class="text-center">2</td>
+                  <td class="text-center">3</td>
+                  <td class="text-center">4</td>
+                  <td class="text-center">5</td>
+                  <td class="text-center">6</td>
+                  <td class="text-center">7</td>
+                  <td class="text-center">8</td>
+                </tr>
+                <tr>
+                  <td class="text-center">8</td>
+                  <td class="text-center">7</td>
+                  <td class="text-center">6</td>
+                  <td class="text-center">5</td>
+                  <td class="text-center">4</td>
+                  <td class="text-center">3</td>
+                  <td class="text-center">2</td>
+                  <td style="border-right:1px solid black; border-bottom: 1px solid black; text-align:center;">1</td>
+                  <td class="text-center">1</td>
+                  <td class="text-center">2</td>
+                  <td class="text-center">3</td>
+                  <td class="text-center">4</td>
+                  <td class="text-center">5</td>
+                  <td class="text-center">6</td>
+                  <td class="text-center">7</td>
+                  <td class="text-center">8</td>
+                </tr>
+
+              </table>
+              <br />
+              <table style="width:50%" class="center">
+                <tr>
+                  <td class="text-center">V</td>
+                  <td class="text-center">IV</td>
+                  <td class="text-center">III</td>
+                  <td class="text-center">II</td>
+                  <td style="border-bottom: 1px solid black; text-align:center; border-right:1px solid black;">I</td>
+                  <td class="text-center">I</td>
+                  <td class="text-center">II</td>
+                  <td class="text-center">III</td>
+                  <td class="text-center">IV</td>
+                  <td class="text-center">V</td>
+                </tr>
+                <tr>
+                  <td class="text-center">V</td>
+                  <td class="text-center">IV</td>
+                  <td class="text-center">III</td>
+                  <td class="text-center">II</td>
+                  <td style="border-right:1px solid black; text-align:center; border-bottom: 1px solid black;">I</td>
+                  <td class="text-center">I</td>
+                  <td class="text-center">II</td>
+                  <td class="text-center">III</td>
+                  <td class="text-center">IV</td>
+                  <td class="text-center">V</td>
+                </tr>
+
+              </table>
+              <br />
+              <br />
+              <table style="width:40%">
+                <tr>
+                  <td colspan="2">Untuk pasien, </td>
+                </tr>
+                <tr>
+                  <td>Nama</td>
+                  <td> : </td>
+                  <td><span t-field="o.patient.name" /></td>
+                </tr>
+                <tr>
+                  <td>Usia</td>
+                  <td> : </td>
+                  <td><span t-field="o.patient.age" /></td>
+                </tr>
+                <tr>
+                  <td>Alamat</td>
+                  <td> : </td>
+                  <td><span t-field="o.patient.street" /></td>
+                </tr>
+                <tr>
+                  <td>Telp.</td>
+                  <td> : </td>
+                  <td><span t-field="o.patient.phone" /></td>
+                </tr>
+              </table>
+              <br />
+              <br />
+
+              <p>Selanjudnya pasien dalam perawatan kami. Atas bantuan dan kerjasamanya diucapkan banyak terima kasih.</p>
+              <br />
+              <br />
+              <div style="margin-left: 80%;">
+                <table>
+                  <tr>
+                    <td style="text-align:center;">Hormat kami,</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:center;">( <span t-field="o.doctor" /> )</td>
+                  </tr>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
+        </t>
       </t>
-      
     </t>
   </template>
 </odoo>

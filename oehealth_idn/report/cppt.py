@@ -14,16 +14,11 @@ class ReportCPPT(models.AbstractModel):
         records = {}
         evaluation_list = []
 
-        unit_register_ids = self.env['unit.registration'].sudo().search([('clinic_walkin_id','=', walkin_id)])
-        
-        records.update({'no_rm': unit_register_ids[0].patient.medical_record}) 
-        records.update({'patient_name': unit_register_ids[0].patient.name}) 
-        records.update({'dob': unit_register_ids[0].patient.dob})
-        records.update({'gender': unit_register_ids[0].patient.sex})
-        records.update({'kelas': unit_register_ids[0].room_id.name})
-        records.update({'bed': unit_register_ids[0].bed.name})
+        reg_id = self.env['unit.registration'].sudo().search([('id','=', walkin_id)])
 
-        for reg in unit_register_ids:
+        records.update({'docs': reg_id})
+
+        for reg in reg_id:
             evaluation_ids = self.env['oeh.medical.evaluation'].sudo().search([('reg_id','=', reg.id)])
             
             for ev in evaluation_ids:

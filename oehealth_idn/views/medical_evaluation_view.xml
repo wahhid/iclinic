@@ -9,17 +9,20 @@
             <xpath expr="//notebook/page[1]/group[2]" position="after">
                 <group>
                     <group string="Riwayat Penyakit Pribadi">
+                        <field name="dm_p"/>
                         <field name="dm_stroke_p"/>
                         <field name="katarak"/>
                         <field name="hipertensi_p"/>
                         <field name="jantung_p"/>
                         <field name="kolesterol"/>
+                        <field name="penyakit_ginjal"/>
                         <field name="liver"/>
                         <field name="asam_urat"/>
                         <field name="pendarahan"/>
                         <field name="lain_rpp"/>  
                     </group>
                     <group string="Riwayat Penyakit Keluarga">
+                        <field name="dm_k"/>
                         <field name="dm_stroke_k"/>
                         <field name="hipertensi_k"/>
                         <field name="jantung_k"/>
