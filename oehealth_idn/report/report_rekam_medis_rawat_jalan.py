@@ -38,8 +38,8 @@ class ReportRekamMedisRawatJalan(models.AbstractModel):
             'insurance_no': walkin.insurance.ins_no
         }
 
-        records.update({'type': type})
-        records.update({'patient': patient})
+        # records.update({'type': type})
+        # records.update({'patient': patient})
     
         evaluation_ids = self.env['oeh.medical.evaluation'].search([('reg_id','=', walkin.id)])
         _logger.info(evaluation_ids)
