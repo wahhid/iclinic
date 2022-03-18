@@ -22,7 +22,24 @@ class account_invoice(models.Model):
     _inherit = 'account.invoice'
 
     def generate_insurance_report_file(self):
+        _logger.info("Generate Insurance Report for " + self.number)
         pdfWriter = PyPDF2.PdfFileWriter()
+
+        if self.is_has_owlexa_invoice:
+            context=self.env.context
+            _logger.info(context.get('batch_id'))
+            report_name = "oehealth_idn.report_invoice_batch_owlexa"
+            owlexa_report = self.env['report'].sudo().get_pdf([context.get('batch_id')], report_name)
+            _logger.info(type(owlexa_report))
+            owlexa_file = BytesIO()
+            owlexa_file.write(owlexa_report)
+            _logger.info(type(owlexa_file))
+            pdfReader = PyPDF2.PdfFileReader(owlexa_file)
+            # Loop through all the pagenumbers for the first document
+            for pageNum in range(pdfReader.numPages):
+                pageObj = pdfReader.getPage(pageNum)
+                pdfWriter.addPage(pageObj)
+
 
         report_name = "oehealth_idn.report_formulir_rawat_jalan_owlexa"
         owlexa_report = self.env['report'].sudo().get_pdf([self.arrival_id.id], report_name)
@@ -47,10 +64,11 @@ class account_invoice(models.Model):
             pageObj = pdf2Reader.getPage(pageNum)
             pdfWriter.addPage(pageObj)
 
-        if len(self.arrival_id.prescription_ids) > 0:
+        for prescription_id in self.arrival_id.prescription_ids:
+            _logger.info(self.arrival_id.prescription_ids)
             report_name = "oehealth_idn.report_resep"
-            prescription_ids = [x.id for x in self.arrival_id.prescription_ids]
-            resep_report = self.env['report'].sudo().get_pdf(prescription_ids, report_name)
+            #prescription_ids = [x.id for x in self.arrival_id.prescription_ids]
+            resep_report = self.env['report'].sudo().get_pdf([prescription_id.id], report_name)
             resep_file = BytesIO()
             resep_file.write(resep_report)
             pdf3Reader = PyPDF2.PdfFileReader(resep_file)
@@ -61,18 +79,17 @@ class account_invoice(models.Model):
                 pdfWriter.addPage(pageObj)
         
         #Lab Report
-        # if len(self.arrival_id.lab_test_ids) > 0:
-        #     report_name = "oehealth.report_oeh_medical_patient_labtest"
-        #     lab_test_ids = [x.id for x in self.arrival_id.lab_test_ids]
-        #     lab_report = self.env['report'].sudo().get_pdf(lab_test_ids, report_name)
-        #     lab_file = BytesIO()
-        #     lab_file.write(lab_report)
-        #     pdf4Reader = PyPDF2.PdfFileReader(lab_file)
+        for lab_test_id in self.arrival_id.lab_test_ids:
+            report_name = "oehealth.report_oeh_medical_patient_labtest"
+            lab_report = self.env['report'].sudo().get_pdf([lab_test_id], report_name)
+            lab_file = BytesIO()
+            lab_file.write(lab_report)
+            pdf4Reader = PyPDF2.PdfFileReader(lab_file)
 
-        #     # Loop through all the pagenumbers for the second document
-        #     for pageNum in range(pdf4Reader.numPages):
-        #         pageObj = pdf4Reader.getPage(pageNum)
-        #         pdfWriter.addPage(pageObj)
+            # Loop through all the pagenumbers for the second document
+            for pageNum in range(pdf4Reader.numPages):
+                pageObj = pdf4Reader.getPage(pageNum)
+                pdfWriter.addPage(pageObj)
                 
         #Imaging Report
         #oehealth_extra_addons.report_oeh_medical_patient_imaging
@@ -80,6 +97,7 @@ class account_invoice(models.Model):
         output_file = BytesIO()
         pdfWriter.write(output_file)
         self.invoice_pdf_file = base64.encodestring(output_file.getvalue())
+        self.is_document_ready = True
 
     def sync_to_owlexa(self):
         _logger.info("Sync To Owlexa")
@@ -91,10 +109,10 @@ class account_invoice(models.Model):
         base_url = 'https://test.owlexa.com/owlexa-api/invoice/v1/sync-transaction'
         try:
             data = {
-                "claimNumber" : "20200200290031",
+                "claimNumber" : self.claim_number,
                 "cardNumber": "1000620030002010",
-                "paidToProviderAmount": 580000,
-                "providerTransactionNumber": "INV-00002"
+                "paidToProviderAmount": self.amount_total_temp,
+                "providerTransactionNumber": self.number
             }
             _logger.info(data)
             req = requests.post(base_url, headers=headers ,data=json.dumps(data))
@@ -108,6 +126,7 @@ class account_invoice(models.Model):
                 self.message_post(body=body)
                 _logger.info("Error")
             else:
+                
                 body = """
                     Sync To Owlexa <br/>
                     <ul>
@@ -121,6 +140,7 @@ class account_invoice(models.Model):
                 """.format(response_json['code'], response_json['data'], response_json['message'], response_json['status'], response_json['totalData'], response_json['transactionId'])
                 self.message_post(body=body)
                 if response_json['code'] == 200:
+                    self.is_sync = True
                     _logger.info('Success')
                 if response_json['code'] == 400:
                     _logger.info('Failed')
@@ -166,14 +186,20 @@ class account_invoice(models.Model):
             #     'includeInvoice': (None, 'true'),
             #     'providerTransactionNumber': (None, 'INV-00001')
             # }
-
-            data={
-                'includeInvoice': 'true',
-                'providerTransactionNumber': 'INV-00001'
-            }
+            
+            if self.is_has_owlexa_invoice:
+                data={
+                    'includeInvoice': 'true',
+                    'providerTransactionNumber': self.number
+                }
+            else:
+                data={
+                    'includeInvoice': 'false',
+                    'providerTransactionNumber': self.number
+                }
 
             files=[
-                ('file',('INV-00001.pdf',open(filename,'rb'),'application/pdf'))
+                ('file',(self.number + '.pdf',open(filename,'rb'),'application/pdf'))
             ]
 
 
@@ -201,6 +227,7 @@ class account_invoice(models.Model):
                 """.format(response_json['code'], response_json['data'], response_json['message'], response_json['status'], response_json['totalData'], response_json['transactionId'])
                 self.message_post(body=body)
                 if response_json['code'] == 200:
+                    self.is_upload = True
                     _logger.info('Success')
                 if response_json['code'] == 400:
                     _logger.info('Failed')
@@ -266,8 +293,12 @@ class account_invoice(models.Model):
     
     insurance_type_id = fields.Many2one('medical.insurance.type', 'Insurance Type')
     claim_number = fields.Char('Claim Number', size=100)
+    amount_total_temp = fields.Float('Total Amount Temp')
     invoice_pdf_file = fields.Binary("Invoice PDF File", readonly=True)
+    is_document_ready = fields.Boolean('Document Ready', default=False, readonly=True)
     is_sync = fields.Boolean("Is Sync", default=False, readonly=True)
+    is_upload = fields.Boolean('Is Upload', default=False, readonly=True)
+    is_has_owlexa_invoice = fields.Boolean("Has Owlexa Invoice", default=False)
 
 
     @api.depends('amount_pay')

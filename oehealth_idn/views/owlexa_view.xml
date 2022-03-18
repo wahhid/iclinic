@@ -7,8 +7,9 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Owlexa Batch">
-                <field name="name"/>
                 <field name="trans_date"/>
+                <field name="name"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
@@ -20,19 +21,41 @@
         <field name="arch" type="xml">
             <form string="Owlexa Batch">
                 <header>
-                    <button name="trans_process_document" string="Process Document" type="object" class="oe_highlight"/>
+                    <button name="trans_generate_document" string="Generate Document" type="object" states="draft" confirm="Do you want to generate document?" class="oe_highlight"/>
+                    <button name="trans_sync_transaction" string="Sync Owlexa" type="object" states="generate" confirm="Do you want to sync transaction?" class="oe_highlight"/>
+                    <button name="trans_upload_document" string="Upload Document" type="object" states="sync" confirm="Do you want to upload document?" class="oe_highlight"/>
+                    <button name="trans_create_batch" string="Create Batch" type="object" states="upload" confirm="Do you want to create batch?" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <group>
                         <field name="name"/>
                         <field name="trans_date"/>
+                        <field name="partner_id"/>
+                        <field name="total_amount"/>
+                        <field name="total_count"/>
                     </group>
                     <notebook>
                         <page name="owlexa_batch_lines" string="Lines">
-                            <field name="account_invoice_ids"/>
+                            <field name="account_invoice_ids" domain="[('is_sync','=',False),('state','=','open'),('type','=','out_invoice')]" >
+                                <tree>
+                                    <field name="number"/>
+                                    <field name="partner_id"/>
+                                    <field name="origin"/>
+                                    <field name="claim_number"/>
+                                    <field name="amount_total"/>
+                                    <field name="is_document_ready"/>
+                                    <field name="is_sync"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>

@@ -54,7 +54,7 @@
                                 <t t-if="foo == False">
                                     <table style="width:100%;">
                                         <tr>
-                                            <th style="border: 1px solid black; text-align:center;">LEMBAR KONSULTASI</th>
+                                            <th style="border: 1px solid black; text-align:center;width:50%">LEMBAR KONSULTASI</th>
                                             <th style="border: 1px solid black">
                                                 <table style="width:100%; text-align:left;">
                                                     <tr>
@@ -78,34 +78,6 @@
                                                             <t t-foreach="ev['pathology_list']" t-as="li">
                                                             <span t-esc="li['pathology']" />, 
                                                         </t>
-<<<<<<< HEAD
-                                                    </t>
-                                                    <br/><br/>
-                                                    Tindakan :
-                                                    <br/>
-                                                    <t t-foreach='o.evaluation_ids' t-as='ev'>
-                                                        <span t-field="ev.notes_complaint" />,
-                                                    </t>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>________________________________________</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Terimakasih atas bantuan dan kerjasamanya.</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <table style="width:100%">
-                                                        <tr>
-                                                            <t t-if="o.tipe_konsul == 'konsul1'">
-                                                                <td style="border:1px solid black; width:10%;">✔</td>
-                                                                <td><span t-field="o.tipe_konsul" /></td>
-                                                            </t>
-                                                            <t t-if="o.tipe_konsul == 'konsul2'">
-                                                                <td style="border:1px solid black; width:10%;">✔</td>
-                                                                <td><span t-field="o.tipe_konsul" /></td>
-=======
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -141,7 +113,6 @@
                                                             <t t-if="true == ev['rpp']">
                                                                 <br/>Lain-lain, <br/>
                                                                 Sebutkan : <span t-esc="ev['lain_rpp']" />
->>>>>>> 10.0-yogi
                                                             </t>
                                                             
                                                         </td>
@@ -232,7 +203,7 @@
                         <!-- <p style="page-break-after:always;page-break-inside: avoid;"></p> -->
                         <table style="width:100%;">
                             <tr>
-                                <th style="border: 1px solid black; text-align:center;">BALASAN KONSULTASI</th>
+                                <th style="border: 1px solid black; text-align:center;width:50%">BALASAN KONSULTASI</th>
                                 <th style="border: 1px solid black">
                                     <table style="width:100%; text-align:left;">
                                         <tr>

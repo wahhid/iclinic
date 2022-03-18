@@ -100,6 +100,7 @@
         "report/resep_report.xml",
         "report/formulir_rawat_jalan_owlexa.xml",
         # "report/new_external_layout.xml",
+        "report/kwitansi_batch_owlexa.xml",
         "report/report_menu.xml",
     ],
     "installable": True,

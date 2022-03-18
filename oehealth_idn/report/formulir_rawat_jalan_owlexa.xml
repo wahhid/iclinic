@@ -185,7 +185,10 @@ kesehatan saya dari Rumah Sakit/Klinik/Dokter sejauh diperlukan untuk menilai kl
                                     (Patient/Parent's Signature)
                                 </div>
                                 <div class="col-xs-6">
-                                    ( <span t-field="o.clinic_ids[0].doctor"/> ) <br/>
+                                    (   <t t-if="len(o.clinic_ids) > 0">
+                                            <span t-field="o.clinic_ids[0].doctor"/> 
+                                        </t>
+                                    ) <br/>
                                     Tanda tangan Dokter yang merawat <br/>
                                     (Attending Physician's Signature) <br/>
                                 </div>

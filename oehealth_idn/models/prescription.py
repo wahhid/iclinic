@@ -5,7 +5,7 @@
 # Embedded file name: D:\Workspaces\Odoo10\mod\Health\addons-custom\oehealth_idn\models\prescription.py
 # Compiled at: 2018-11-22 17:20:13
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, Warning
+from odoo.exceptions import UserError, Warning, ValidationError
 import datetime
 import logging
 
@@ -164,22 +164,30 @@ class oeh_medical_prescription_line(models.Model):
 
     @api.onchange('name')
     def onchange_product(self):
-        domain = [('unit_ids','in',(self.env.user.default_unit_administration_id.id))]
-        stock_location_id = self.env['stock.location'].search(domain, limit=1)
-        if stock_location_id:
-            domain = [
-                ('product_id','=',self.name.id),
-                ('location_id','=', stock_location_id.id)
-            ]
-            _logger.info(domain)
-            fields = ['product_id','qty']
-            groupby = ['product_id']
-            result = self.env['stock.quant'].read_group(domain, fields=fields, groupby=groupby)
-            _logger.info(result)
-            if len(result) > 0:
-                self.qty_available = result[0]['qty']
-            else:
-                self.qty_available = 0.0
+        _logger.info(self.env.user.default_unit_administration_id)
+        if not self.env.user.default_unit_administration_id:
+            raise ValidationError("User didn't have default unit administration!")
+
+        self.qty_available = self.name.qty_available
+
+
+        # domain = [('unit_ids','in',[self.env.user.default_unit_administration_id.id])]
+        # _logger.info(domain)
+        # stock_location_id = self.env['stock.location'].search(domain, limit=1)
+        # if stock_location_id:
+        #     domain = [
+        #         ('product_id','=',self.name.id),
+        #         ('location_id','=', stock_location_id.id)
+        #     ]
+        #     _logger.info(domain)
+        #     fields = ['product_id','qty']
+        #     groupby = ['product_id']
+        #     result = self.env['stock.quant'].read_group(domain, fields=fields, groupby=groupby)
+        #     _logger.info(result)
+        #     if len(result) > 0:
+        #         self.qty_available = result[0]['qty']
+        #     else:
+        #         self.qty_available = 0.0
 
     name = fields.Many2one('product.product', string='Medicines', help='Prescribed Medicines', domain=[('item_type', '=', 'Medicine')], required=True)
     product_template_categ_id = fields.Many2one('product.template.category', related='name.product_template_categ_id')

@@ -22,10 +22,12 @@
 
             <xpath expr="//page[@name='other_info']/group/group[2]" position="after">
                 <group>
-                    <field name="insurance_type_id" readonly="1"/>
-                    <field name="claim_number" readonly="1"/>
+                    <field name="insurance_type_id"/>
+                    <field name="claim_number"/>
                     <field name="invoice_pdf_file" readonly="1"/>
                     <field name="is_sync" readonly="1"/>
+                    <field name="amount_total_temp"/>
+                    <field name="is_has_owlexa_invoice" readonly="0"/>
                 </group>
             </xpath>
             
