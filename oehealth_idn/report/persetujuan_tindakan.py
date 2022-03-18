@@ -27,7 +27,7 @@ class ReportPersetujuanTindakan(models.AbstractModel):
             pathology_list = []
             for diag in ev.diagnostic_ids:
                 pathology_list.append({
-                    'pathology': diag.pathology_id.name
+                    'pathology': diag.name
                 })
 
 

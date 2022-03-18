@@ -2,7 +2,7 @@
 <odoo>
   <template id="report_perintah_rawat_inap">
     <t t-call="report.html_container">
-      
+      <t t-call="oehealth_idn.header_unit_registration_layout">
         <t t-foreach="docs" t-as="o">
           <div class="page">
             <style>
@@ -267,7 +267,7 @@
             </div>
           </div>
         </t>
-      
+      </t>
     </t>
   </template>
 </odoo>

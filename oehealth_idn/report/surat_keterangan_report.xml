@@ -5,7 +5,8 @@
             <div class="container" style="border-bottom: 1px solid black;">
                 <table style="width:100%">
                     <tr>
-                        <td style="text-align:center; padding:8px; width:15%;">                    
+                        <td style="text-align:center; padding:8px; width:15%;">
+                                                
                             <!-- Multicompany -->
                             <t t-if="not o and doc">
                                 <t t-set="o" t-value="doc"/>
@@ -16,16 +17,17 @@
                             <t t-if="not o or not 'company_id' in o">
                                 <t t-set="company" t-value="res_company"/>
                             </t>
-                            <br/><br/>
-                            <img style="width:70px;height:70px;" t-if="company.logo" t-att-src="'data:image/png;base64,%s' %company.logo"/>
+                            <br/>
+                            <img style="width:50px;height:50px;" t-if="company.logo" t-att-src="'data:image/png;base64,%s' %company.logo"/>
+                            <br/>
                         </td>
                         <td style="text-align:bottom; padding:8px;">
+                            <br/>
                             <t t-foreach="docs" t-as="o">
-                                <h4><span t-field="o.operating_unit_id.name" /></h4>
-                                <h5><span t-field="o.operating_unit_id.unit_address" /></h5>
-                                <h6>No. Izin Klinik : <span t-field="o.operating_unit_id.izin_klinik" /></h6>
-                                <h6>No. Izin Apotik : <span t-field="o.operating_unit_id.izin_apotik" /></h6>
+                                <h4><span t-field="o.operating_unit_id.name"/></h4>
+                                <h5><span t-field="o.operating_unit_id.unit_address"/></h5>
                             </t>
+                            
                         </td>
                     </tr>
                 </table>  
@@ -104,14 +106,29 @@
                                     </tr>
                                     <tr>
                                         <td style="padding:8px;">
-                                            ( <t t-if="o.clinic_ids">
+                                            ( 
+                                                <t t-if="o.clinic_ids">
                                                 <t t-foreach="o.clinic_ids" t-as="cl">
                                                     <t t-if="cl.doctor.is_doctor == true">
                                                         <span t-field="cl.doctor.name" />
                                                     </t>
                                                 </t>
                                                 </t>
+                                                <t t-if="o.unit_ids">
+                                                <t t-foreach="o.unit_ids" t-as="em">
+                                                    <t t-if="em.doctor.is_doctor == true">
+                                                        <span t-field="em.doctor.name" />
+                                                    </t>
+                                                </t>
+                                                </t>
                                                 <t t-if="o.emergency_ids">
+                                                <t t-foreach="o.emergency_ids" t-as="em">
+                                                    <t t-if="em.doctor.is_doctor == true">
+                                                        <span t-field="em.doctor.name" />
+                                                    </t>
+                                                </t>
+                                                </t>
+                                                <t t-if="o.support_ids">
                                                 <t t-foreach="o.emergency_ids" t-as="em">
                                                     <t t-if="em.doctor.is_doctor == true">
                                                         <span t-field="em.doctor.name" />

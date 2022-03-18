@@ -33,14 +33,17 @@ class medical_evaluation_patient(models.Model):
         ('bb6', 'Penurunan BB sebanyak > 15kg'),
         ('bb7', 'Tidak tahu berapa kg penurunannya')]
 
-    dm_stroke_p = fields.Boolean(string='DM Stroke')
-    dm_stroke_k = fields.Boolean(string='DM Stroke')
+    dm_p = fields.Boolean(string='Diabetes Meletus (DM)')
+    dm_stroke_p = fields.Boolean(string='Stroke')
+    dm_k = fields.Boolean(string='Diabetes Meletus (DM)')
+    dm_stroke_k = fields.Boolean(string='Stroke')
     katarak = fields.Boolean(string='Katarak')
     hipertensi_p = fields.Boolean(string='Hipertensi')
     hipertensi_k = fields.Boolean(string='Hipertensi')
     jantung_p = fields.Boolean(string='Penyakit jantung koroner')
     jantung_k = fields.Boolean(string='Penyakit jantung koroner')
-    kolesterol = fields.Boolean(string='Kolesterol, Penyakit Ginjal ')
+    kolesterol = fields.Boolean(string='Kolesterol')
+    penyakit_ginjal = fields.Boolean(string='Penyakit Ginjal')
     liver = fields.Boolean(string='Liver ')
     asam_urat = fields.Boolean(string='Asam Urat')
     pendarahan = fields.Boolean(string='Pendarahan Lama')
@@ -103,7 +106,7 @@ class medical_evaluation_patient(models.Model):
 
     organ_atas = fields.Text(string='Kepala dan Leher')
     organ_paru = fields.Text(string='Paru')
-    organ_jantung = fields.Text(string='Jantung')
+    organ_jantung = fields.Text(string='Jantung / Paru')
     organ_perut = fields.Text(string='Perut')
     organ_anggota_gerak = fields.Text(string='Anggota Gerak')
     organ_genetalia = fields.Text(string='Genetalia')

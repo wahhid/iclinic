@@ -2,6 +2,7 @@
 <odoo>
     <template id="report_pengkajian_rawat_jalan">
         <t t-call="report.html_container">
+            <t t-call="oehealth_idn.header_evaluation_layout">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
                         <style>
@@ -583,16 +584,17 @@
                                     <td style="text-align: Left;">
                                         Tanggal Pemeriksaan
                                         <br />
+                                        Kijang,<span t-field="o.evaluation_start_date" t-field-options='{"format": "d MMMM y"}' />
                                         <br />
                                         <br />
-                                        Keterangan
+                                        
                                     </td>
                                     <td style="text-align: center;">
                                         Pemeriksa
                                         <br />
                                         <br />
                                         <br />
-                                        __________________
+                                        ( <span t-field="o.doctor.name" /> )
                                     </td>
 
                                 </tr>
@@ -635,7 +637,7 @@
                         </div>
                     </div>
                 </t>
-            
+            </t>
         </t>
     </template>
 </odoo>

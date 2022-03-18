@@ -163,6 +163,15 @@ class register_walkin(models.Model):
                     self.state = 'Unlock'
         else:
             raise Warning('Queue have different unit administration')
+    
+    def print_catatan_registrasi_pasien(self):
+        walkin_id = False
+        
+        walkin_id = self.id
+        _logger.info(walkin_id)
+
+        data = {'walkin': walkin_id, 'patient': self.patient.id}
+        return self.env['report'].get_action([], 'oehealth_idn.report_catatan_registrasi_pasien', data=data)
 
     # def action_next(self):
     #     if not self.queue_trans_id:
@@ -232,6 +241,12 @@ class register_walkin(models.Model):
     ('dpg2','Peg & Kel UPBE Pongkor'), ('dpg3','Peg & Kel UBPN Pomala'), ('dpg4','Pens & Kel Antam'), ('dpg5','Pihak III'), ('dpg6','Lain-lain / BPJS / ASURANSI')], string='Payment Guarantor Details')
 
     registration_status = fields.Selection(REGISTRATION_STATUS, string="Registration Status", required=True, track_visibility='onchange')
+    pasien_masuk = fields.Selection([('RJ','Rawat Jalan'), ('UGD','UGD'), ], string='Pasien Masuk Melalui')
+    pasien_masuk_dikirim = fields.Selection([('RJ','Dokter'), ('DS','Datang Sendiri'), ('KP','Kasus Polisi'), ('RS','RS Lain'), ('LN','Lain-lain'),], string='Pasien Masuk Dikirim oleh')
+    kondisi_pasien_keluar = fields.Selection([('Sembuh','Sembuh'), ('Membaik','Membaik'), ('BelumSembuh','Belum Sembuh'), ('Meninggal','Meninggal')], string='Kondisi Pasien Keluar')
+    pasien_pulang = fields.Selection([('DJPULANG','Diijinkan pulang'), ('PP','Pulang Paksa'), ('DRJ','Dirujuk'), ], string='Pasien Pulang')
+
+
     state = fields.Selection(WALKIN_STATUS, string='State', readonly=True, states={'Scheduled': [('readonly', False)]}, default=lambda *a: 'Draft')
 
     @api.model

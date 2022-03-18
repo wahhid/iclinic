@@ -2,7 +2,7 @@
 <odoo>
   <template id="report_persetujuan_tindakan">
     <t t-call="report.html_container">
-      
+      <t t-call="oehealth_idn.header_unit_registration_layout">
         <t t-foreach="docs" t-as="o">
           <div class="page">
             <style>
@@ -25,10 +25,10 @@
                   <td>No.RM  : <span t-field="o.patient.medical_record"/></td>
                 </tr>
                 <tr>
-                  <td>Jenis Kelamin  : <span t-field="o.patient.sex" /> Ruang  : <span t-field="o.type_id.name" /></td>
+                  <td>Jenis Kelamin  : <span t-field="o.patient.sex" />, Ruang  : <span t-field="o.room_id.name" /></td>
                 </tr>
                 <tr>
-                  <td>Tanggal Masuk  : <span t-field="o.date" /> Kelas  : </td>
+                  <td>Tanggal Masuk  : <span t-field="o.date" />, Kelas  : <span t-field="o.class_id.name" /></td>
                 </tr>
                 <tr>
                   <td>DPJP  : <span t-field="o.doctor.name" /></td>
@@ -211,7 +211,7 @@
                                               seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
                                 <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
                                               kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
-                                <p>Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
+                                <p>Kijang, <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
                                 <p>
                                   <br />
                                 </p>
@@ -327,7 +327,7 @@
                                               seperti di atas kepada saya, termasuk resiko dan komplikasi yang mungkin timbul.</p>
                                 <p>Saya menyadari bahwa oleh karena ilmu kedokteran bukan ilmu pasti, maka keberhasilan tindakan
                                               kedokteran bukanlah keniscayaan, melainkan sangat tergantung kepada Tuhan Yang Maha Esa. </p>
-                                <p><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
+                                <p>Kijang, <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
                                 <p>
                                   <br />
                                 </p>
@@ -391,7 +391,7 @@
             </div>
           </div>
         </t>
-      
+      </t>
     </t>
   </template>
 </odoo>

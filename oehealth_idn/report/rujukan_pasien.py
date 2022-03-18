@@ -31,6 +31,7 @@ class ReportRujukanExternal(models.AbstractModel):
                 })
 
             evaluation_list.append({
+                'is_nurse' : ev.doctor.is_nurse,
                 'is_doctor': ev.doctor.is_doctor,
                 'notes_complaint': ev.notes_complaint,
                 'systolic': ev.systolic,

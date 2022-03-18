@@ -117,19 +117,19 @@ class unit_registration(models.Model):
     def print_implementasi_keperawatan(self):
         walkin_id = False
         
-        walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
-        _logger.info(walkin_id.id)
+        walkin_id = self.id
+        _logger.info(walkin_id)
 
-        data = {'walkin_id': walkin_id.id, 'type': self.type}
+        data = {'walkin_id': walkin_id, 'type': self.type}
         return self.env['report'].get_action([], 'oehealth_idn.report_implementasi_keperawatan', data=data)
     
     def print_cppt(self):
         walkin_id = False
         
-        walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
-        _logger.info(walkin_id.id)
+        walkin_id = self.id
+        _logger.info(walkin_id)
 
-        data = {'walkin_id': walkin_id.id, 'type': self.type}
+        data = {'walkin_id': walkin_id, 'type': self.type}
         return self.env['report'].get_action([], 'oehealth_idn.report_cppt', data=data)
 
     def print_radiologi(self):
@@ -271,7 +271,7 @@ class unit_registration(models.Model):
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', compute='set_arrival_id', string='Arrival ID #')
     arrival_txt = fields.Char(compute='set_arrival_id', string='Arrival #')
     sale_ids = fields.One2many(comodel_name='sale.order', inverse_name='reg_id', string='Transactions')
-    diagnostic_ids = fields.One2many(comodel_name='oeh.multi.diagnostic', inverse_name='reg_id', string='Diagnostic')
+    diagnostic_ids = fields.One2many(comodel_name='oeh.medical.pathology', inverse_name='reg_id', string='Diagnostic')
     state = fields.Selection(CLINIC_STATUS, string='State', default='Draft', track_visibility='onchange')
     
     queue_trans_id = fields.Many2one('queue.trans','Queue', domain=[('unit','','')])
