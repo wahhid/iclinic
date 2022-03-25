@@ -77,12 +77,12 @@ class unit_registration(models.Model):
     def print_medical_record(self):
         #arrival_id
         #evaluations = []
-        walkin_id = False
-        if self.type == 'Out-Patient':
-            walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
-            _logger.info(walkin_id.id)
+        walkin_id = self.id
+        # if self.type == 'Out-Patient':
+        #     walkin_id = self.env['oeh.medical.appointment.register.walkin'].browse(self.clinic_walkin_id.id)
+        #     _logger.info(walkin_id.id)
 
-        data = {'walkin_id': walkin_id.id, 'type': self.type}
+        data = {'walkin_id': walkin_id, 'type': self.type}
         return self.env['report'].get_action([], 'oehealth_idn.report_rekammedisrawatjalan', data=data)
 
     # clinic_walkin_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Clinic Walkin')
