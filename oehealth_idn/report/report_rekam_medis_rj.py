@@ -33,7 +33,8 @@ class ReportRekamMedisRawatJalan(models.AbstractModel):
             'ttl': walkin.patient.place_birth,
             'dob': walkin.patient.dob,
             'guarantor': walkin.payment,
-            'employee_number': walkin.employee_id.employee_number,
+            'is_employee': walkin.patient.is_employee,
+            'employee_number': walkin.patient.employee_number,
             'insurance_name': walkin.insurance.ins_type.name,
             'insurance_no': walkin.insurance.ins_no
         }

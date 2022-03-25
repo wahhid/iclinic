@@ -83,9 +83,9 @@
                 <tr>
                   <td class="border">
                     NPP : 
-                            <t t-if="'Employe' == o.payment">
-                                    <span t-field="o.patient.detail_payment" /> - 
-                                    <span t-field="o.employee_id.employee_number" />
+                            <t t-if="o.patient.is_employee == true">
+                              
+                                    <span t-field="o.patient.employee_number" />
                             </t>
                     <br />
                     Nomor Peserta Askes : 
@@ -106,9 +106,9 @@
                   </td>
                   <td class="border">
                     NPP : 
-                            <t t-if="'Employe' == o.payment">
-                                    <span t-field="o.patient.detail_payment" /> - 
-                                    <span t-field="o.employee_id.employee_number" />
+                            <t t-if="o.patient.is_employee == true">
+                            
+                                    <span t-field="o.patient.employee_number" />
                             </t>
                     <br />
                     Nomor Peserta Askes : 

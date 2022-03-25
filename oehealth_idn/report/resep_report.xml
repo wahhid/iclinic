@@ -144,9 +144,9 @@
                             <tr>
                                 <td>NPP</td>
                                 <td> : </td>
-                                <td><t t-if="'Employe' == o.walkin.payment">
-                                                                        <span t-field="o.walkin.employee_id.employee_number" />
-                                                                    </t></td>
+                                <td><t t-if="o.patient.is_employee == true">
+                                            <span t-field="o.patient.employee_number" />
+                                        </t></td>
                             </tr>
                             <tr>
                                 <td>Alamat</td>

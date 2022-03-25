@@ -66,8 +66,7 @@ class unit_registration(models.Model):
         #     row.insurance = row.patient.current_insurance
     
     def print_medical_record(self):
-        #arrival_id
-        #evaluations = []
+        
         walkin_id = self.id
         _logger.info(walkin_id)
 

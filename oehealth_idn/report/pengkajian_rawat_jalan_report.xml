@@ -86,8 +86,8 @@
                                             <t t-if="'Insurance' == o.walkin.payment">
                                                 BPJS/Insurance No : <span t-field="o.walkin.insurance.ins_no" />
                                             </t>
-                                            <t t-if="'Employe' == o.walkin.payment">
-                                                NPP No: <span t-field="o.walkin.employee_id.employee_number" />
+                                            <t t-if="o.patient.is_employee == true">
+                                                NPP No: <span t-field="o.patient.employee_number" />
                                             </t>
                                              | 
                                             <span t-field="o.walkin.detail_payment_guarantor" />

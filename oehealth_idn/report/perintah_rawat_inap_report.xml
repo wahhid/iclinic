@@ -98,9 +98,8 @@
                                     <span t-field="o.insurance.ins_type.name" /> -
                                     <span t-field="o.insurance.ins_no" />
                             </t>
-                            <t t-if="'Employe' == o.payment">
-                                    <span t-field="o.patient.detail_payment" /> - 
-                                    <span t-field="o.employee_id.employee_number" />
+                            <t t-if="o.patient.is_employee == true">
+                                    <span t-field="o.patient.employee_number" />
                             </t>
                           </td>
 
