@@ -16,7 +16,7 @@
                                 <td></td>
                                 <td>No.NPP : 
                                         
-                                        <t t-if="'Employee' == patient['guarantor']">
+                                        <t t-if="patient['is_employee'] == true">
                                             <span t-esc="patient['employee_number']" />
                                         </t>
                                            

@@ -58,8 +58,10 @@
                 <td></td>
               </tr>
               <tr>
-                <td>NPP/No.BPJS</td>
-                <td>..........</td>
+                <td>NPP</td>
+                <td><t t-if="o.patient.is_employee == true">
+                           <span t-field="o.patient.employee_number" />
+                            </t></td>
                 <td>60</td>
                 <td>140</td>
                 <td>40</td>
