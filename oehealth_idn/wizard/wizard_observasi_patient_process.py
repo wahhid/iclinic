@@ -87,16 +87,18 @@ class WizardReportObservasi(models.TransientModel):
             worksheet.write(1, 1, regis_id.patient.medical_record, bold)
             worksheet.write(2, 0, _('Nama Pasien '), left_header)
             worksheet.write(2, 1, regis_id.patient.name, bold)
-            worksheet.write(1, 3, _('NPP/No.BPJS'), left_header)
-            if regis_id.employee_id.employee_number:
-                worksheet.write(1, 4, regis_id.employee_id.employee_number, bold)
-            worksheet.write(2, 3, _('Ruang Perawatan'), left_header)
+            worksheet.write(1, 3, _('Tanggal Lahir '), left_header)
+            worksheet.write(1, 4, regis_id.patient.dob, bold)
+            worksheet.write(2, 3, _('NPP/No.BPJS'), left_header)
+            if regis_id.patient.is_employee:
+                worksheet.write(2, 4, regis_id.patient.employee_number, bold)
+            worksheet.write(1, 6, _('Ruang Perawatan'), left_header)
             if regis_id.room_id.name:
-                worksheet.write(2, 4, regis_id.room_id.name, bold)
-            worksheet.write(1, 6, _('Tanggal Masuk'), left_header)
-            worksheet.write(1, 7, _(''), bold)
-            worksheet.write(2, 6, _('Tanggal Keluar'), left_header)
-            worksheet.write(2, 7, _(''), bold)
+                worksheet.write(1, 7, regis_id.room_id.name, bold)
+            worksheet.write(2, 6, _('Tanggal Masuk'), left_header)
+            worksheet.write(2, 7, regis_id.admission_date, bold)
+            worksheet.write(1, 9, _('Tanggal Keluar'), left_header)
+            worksheet.write(1, 10, regis_id.discharge_date, bold)
 
 
             # Add the worksheet data that the charts will refer to.

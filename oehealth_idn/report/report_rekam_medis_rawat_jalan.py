@@ -25,6 +25,10 @@ class ReportRekamMedisRawatJalan(models.AbstractModel):
     def get_details(self, walkin_id=False, type=False):
         records = {}
         walkin = self.env['unit.registration'].search([('id','=',walkin_id)])
+
+        walkinid = walkin.clinic_walkin_id.id or walkin.unit_walkin_id.id or walkin.emergency_walkin_id.id or walkin.support_walkin_id.id
+        walkinids = self.env['oeh.medical.appointment.register.walkin'].search([('id','=',walkinid)])
+
         patient = {
             'patient_name':  walkin.patient.name,
             'medical_record': walkin.patient.medical_record,
@@ -108,7 +112,7 @@ class ReportRekamMedisRawatJalan(models.AbstractModel):
         records.update({'evaluation': evaluation})
 
         labs = []
-        for lab_test in walkin.lab_id:
+        for lab_test in walkinids.lab_test_ids:
             labs.append(lab_test.name)
         records.update({'labs': labs})
 

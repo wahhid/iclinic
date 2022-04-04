@@ -29,10 +29,10 @@ class ReportImplementasiKeperawatan(models.AbstractModel):
                 for line in sale_order_line_ids:
                     date_order = order.date_order
 
-                    if line.product_id.type == 'service':
+                    if (line.product_id.type == 'service') and (line.product_id.item_type != 'Doctor'):
                         vals = {
                             'tanggal': date_order,
-                            'tujuan' : line.name,
+                            'tujuan' : line.product_id.name,
                             'doctor_name': order.doctor_id.name,
                         }
                         sale_order_list.append(vals)
