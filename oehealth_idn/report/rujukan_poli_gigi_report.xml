@@ -134,12 +134,12 @@
               </table>
               <br />
               <br />
-              <table style="width:40%">
+              <table style="width:90%">
                 <tr>
                   <td colspan="2">Untuk pasien, </td>
                 </tr>
                 <tr>
-                  <td>Nama</td>
+                  <td style="width:20%">Nama</td>
                   <td> : </td>
                   <td><span t-field="o.patient.name" /></td>
                 </tr>

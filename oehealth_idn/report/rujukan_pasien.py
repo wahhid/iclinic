@@ -14,8 +14,16 @@ class ReportRujukanExternal(models.AbstractModel):
         records = {}
         
         reg_id = self.env['unit.registration'].sudo().search([('id','=', walkin_id)])
+
+        age = ''
+        if reg_id[0].patient.dob:
+            dob = datetime.strptime(reg_id[0].patient.dob, "%Y-%m-%d")
+            age_calc = (datetime.today() - dob).days/365
+            age = str(age_calc) + ' Tahun'
+            age = age
         
-        records.update({'docs': reg_id}) 
+        records.update({'age': age})
+        records.update({'docs': reg_id})
 
         
         evaluation_ids = self.env['oeh.medical.evaluation'].sudo().search([('reg_id','=', reg_id.id)], order='create_date desc')

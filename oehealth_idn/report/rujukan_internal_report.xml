@@ -138,25 +138,21 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="text-align:right;"> Kijang, <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
+                                                                <td style="text-align:right;">Kijang, <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                                                                <br/><br/><br/>
+                                                                </td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="text-align:center;"> </td>
+                                                                <td style="text-align:right;"><div style="margin-right: 3%;">Dokter yang merawat,</div></td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="text-align:center;"> </td>
+                                                                <td><br/><br/></td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="text-align:center;"> Dokter yang merawat,</td>
+                                                                <td><br/><br/></td>
                                                             </tr>
                                                             <tr>
-                                                                <td style="text-align:center;"><br/><br/></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="text-align:center;"><br/><br/></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
+                                                                <td style="text-align:center;">Tanda tangan dan nama lengkap <br/><br/></td>
                                                             </tr>
                                                             
                                                         </table>
@@ -204,40 +200,39 @@
                                                     <td><br/>Pemeriksaan : </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
+                                                    <td><br/><br/><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
                                                 </tr>
                                                 <tr>
                                                     <td><br/>Diagnosa : </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
+                                                    <td><br/><br/><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
                                                 </tr>
                                                 <tr>
                                                     <td><br/>Saran Terapi : </td>
                                                 </tr>
                                                 <tr>
-                                                    <td><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
+                                                    <td><br/><br/><div class="container" style="border-bottom: 1px solid black;"><br/></div></td>
                                                 </tr>
                                                 <tr>
                                                     <td><br/>Terimakasih atas  kerjasamanya.<br/></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align:right;"> Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></td>
+                                                    <td style="text-align:right;">Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                                                    <br/><br/><br/>
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <td></td>
+                                                    <td style="text-align:right;"><div style="margin-right: 3%;">Dokter yang merawat,</div></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align:center;"> Dokter yang merawat,</td>
+                                                    <td><br/><br/></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align:center;"><br/><br/></td>
+                                                    <td><br/><br/></td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align:center;"><br/><br/></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="text-align:center;"> Tanda tangan dan nama lengkap</td>
+                                                    <td style="text-align:right;">Tanda tangan dan nama lengkap <br/><br/></td>
                                                 </tr>
                                                 
                                             </table>

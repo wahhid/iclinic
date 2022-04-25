@@ -39,8 +39,11 @@
             <t t-foreach="docs" t-as="o">
                 <div class="page">
                     <div class="oe_structure">
+                        <div class="container">
                             <div class="row">
+                            <br/><br/><br/><br/><br/><br/><br/>
                             <p style="font-size:24px;text-align:center;font-weight:bold;">RESEP</p>
+                            </div>
                         </div>
 
                         <table style="width:100%" class="center">
@@ -71,7 +74,7 @@
                                                         <span t-field="s.name"/>
                                                     </td>
                                                     <td class="text-left">
-                                                        <span t-field="s.dose"/> Mg
+                                                        <span t-field="s.dose"/>
                                                     </td>
                                                     <td class="text-left">
                                                         <span t-field="s.qty"/>
@@ -105,7 +108,7 @@
                                                             <span t-field="ccd.product_id.name" />
                                                         </td>
                                                         <td>
-                                                            <span t-field="ccd.zat_qty" /> (mg/g/ml)
+                                                            <span t-field="ccd.zat_qty" /> <span t-field="ccd.zat_uom.name" />
                                                         </td>
                                                         <td colspan="2">
                                                             <span t-field="ccd.total" />

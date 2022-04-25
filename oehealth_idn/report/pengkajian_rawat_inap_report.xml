@@ -83,7 +83,9 @@
                                         c. Riwayat penyakit terdahulu :
                                         <br /><br />
                                         <t t-foreach="o.patient.evaluation_ids" t-as="i">
-                                            <p t-field="i.notes_complaint" />,
+                                            <t t-if="i.notes_complaint">
+                                                <span t-field="i.notes_complaint" />,
+                                            </t>
                                         </t>
                                         <br />
                                         _______________________________________
@@ -141,19 +143,23 @@
                                         III. Hasil Pemeriksaan penunjang (dicantumkan oleh dokter)
                                         <br /><br />
                                         <t t-foreach="o.walkin.unit_ids.lab_id" t-as="lab">
-                                            <p t-field="lab.name" />,
+                                            <t t-if="lab.name"><p t-field="lab.name" />,</t>
+                                            
                                         </t>
-                                        <br />
+                              
                                         <t t-foreach="o.walkin.unit_ids.imaging_id" t-as="img">
-                                            <p t-field="img.name" />,
+                                            <t t-if="img.name"><p t-field="img.name" />,</t>
+                                            
                                         </t>
-                                        <br />
+                                        
                                         <t t-foreach="o.walkin.unit_ids.ophthalmology_id" t-as="oph">
-                                            <p t-field="oph.name" />,
+                                            <t t-if="oph.name"><p t-field="oph.name" />,</t>
+                                            
                                         </t>
-                                        <br />
+                                        
                                         <t t-foreach="o.walkin.unit_ids.gynecology_id" t-as="gyn">
-                                            <p t-field="gyn.name" />,
+                                            <t t-if="gyn.name"><p t-field="gyn.name" />,</t>
+                                            
                                         </t>
                                         <br />
                                         _______________________________________
@@ -185,6 +191,9 @@
                                        
                                     </td>
                                 </tr>
+                            </table>
+                            <p style="page-break-after:always;page-break-inside: avoid;"></p>
+                            <table style="width:100%;">
                                 <tr>
                                     <td colspan="2">
                                     <br /><br />

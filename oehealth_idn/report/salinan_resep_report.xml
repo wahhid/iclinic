@@ -39,8 +39,11 @@
             <t t-foreach="docs" t-as="o">
                 <div class="page">
                     <div class="oe_structure">
-                        <div class="row">
-                            <p style="font-size:24px;text-align:center;font-weight:bold;">Salinan Resep</p>
+                        <div class="container">
+                            <div class="row">
+                                <br/><br/><br/><br/><br/><br/><br/>
+                                <p style="font-size:24px;text-align:center;font-weight:bold;">Salinan Resep</p>
+                            </div>
                         </div>
                         <table style="width:100%; padding:5px;">
                             <tr>
