@@ -270,7 +270,7 @@ class unit_registration(models.Model):
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', compute='set_arrival_id', string='Arrival ID #')
     arrival_txt = fields.Char(compute='set_arrival_id', string='Arrival #')
     sale_ids = fields.One2many(comodel_name='sale.order', inverse_name='reg_id', string='Transactions')
-    diagnostic_ids = fields.One2many(comodel_name='oeh.medical.pathology', inverse_name='reg_id', string='Diagnostic')
+    diagnostic_ids = fields.One2many(comodel_name='oeh.medical.pathology', inverse_name='reg_id', string='Diagnostic')    
     state = fields.Selection(CLINIC_STATUS, string='State', default='Draft', track_visibility='onchange')
     
     queue_trans_id = fields.Many2one('queue.trans','Queue', domain=[('unit','','')])

@@ -81,7 +81,7 @@ class account_invoice(models.Model):
         #Lab Report
         for lab_test_id in self.arrival_id.lab_test_ids:
             report_name = "oehealth.report_oeh_medical_patient_labtest"
-            lab_report = self.env['report'].sudo().get_pdf([lab_test_id], report_name)
+            lab_report = self.env['report'].sudo().get_pdf([lab_test_id.id], report_name)
             lab_file = BytesIO()
             lab_file.write(lab_report)
             pdf4Reader = PyPDF2.PdfFileReader(lab_file)

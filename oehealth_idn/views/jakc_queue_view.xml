@@ -71,6 +71,7 @@
                 <field name="unit_administration_id" domain="[('operating_id','=', operating_unit_id)]"/>
                 <field name="is_unit"/>
                 <field name="is_lab"/>
+                <field name="is_pharmacy"/>
             </field>
             <field name="next_type_id" position="replace">
                 <field name="next_type_id" domain="[('operating_unit_id','=', operating_unit_id)]"/>

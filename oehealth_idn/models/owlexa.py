@@ -140,6 +140,8 @@ class owlexa_batch(models.Model):
     partner_id = fields.Many2one('res.partner','Partner', required=True)
     total_count = fields.Integer('Total Count', compute="get_invoice_total_count", readonly=True)
     total_amount = fields.Float('Total Amount', compute="get_invoice_total_amount", readonly=True)
+    kwitansi_file = fields.Binary('Kwitansi File')
+    kwitansi_filename = fields.Char('Kwintansi Filename', size=255)
     account_invoice_ids = fields.Many2many('account.invoice', 'owlexa_batch_account_invoice_rel',  'account_invoice_id', 'owlexa_batch_id', 'Invoices')
     state = fields.Selection(AVAILABLESTATES, 'Status', readonly="1", default="draft")
 
