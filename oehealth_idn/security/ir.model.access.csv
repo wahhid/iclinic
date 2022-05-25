@@ -200,3 +200,11 @@ access_multi_diagnostic_physician,multi.diagnostic,model_oeh_multi_diagnostic,oe
 access_multi_diagnostic_manager,multi.diagnostic,model_oeh_multi_diagnostic,oehealth.group_oeh_medical_manager,1,1,1,1
 ,,,,,,,
 access_medical_health_center_pharmacy_line_customer_service,medical.health.center.pharmacy.line.customer.service,model_oeh_medical_health_center_pharmacy_line,group_customer_service,1,0,0,0
+,,,,,,,
+access_operating_unit_customer_service,operating.unit,model_operating_unit,group_customer_service,1,0,0,0
+access_res_partner_customer_service,res.partner,model_res_partner,group_customer_service,1,0,0,0
+access_unit_registration_account_manager,unit.registration,model_unit_registration,account.group_account_manager,1,1,0,0
+access_product_cashier,product.product,model_unit_registration,group_cashier,1,1,1,0
+access_product_template_cashier,product.template,model_unit_registration,group_cashier,1,1,1,0
+access_product_price_history_cashier,product.price.history,model_unit_registration,group_cashier,1,1,1,0
+,,,,,,,

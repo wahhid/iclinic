@@ -164,40 +164,43 @@ class oeh_medical_prescription_line(models.Model):
 
     @api.onchange('name')
     def onchange_product(self):
-        _logger.info(self.env.user.default_unit_administration_id)
-        if not self.env.user.default_unit_administration_id:
-            raise ValidationError("User didn't have default unit administration!")
+        # _logger.info(self.env.user.default_unit_administration_id)
+        # if not self.env.user.default_unit_administration_id:
+        #     raise ValidationError("User didn't have default unit administration!")
 
-        self.qty_available = self.name.qty_available
+        # self.qty_available = self.name.sudo().qty_available
 
 
         # domain = [('unit_ids','in',[self.env.user.default_unit_administration_id.id])]
         # _logger.info(domain)
         # stock_location_id = self.env['stock.location'].search(domain, limit=1)
-        # if stock_location_id:
-        #     domain = [
-        #         ('product_id','=',self.name.id),
-        #         ('location_id','=', stock_location_id.id)
-        #     ]
-        #     _logger.info(domain)
-        #     fields = ['product_id','qty']
-        #     groupby = ['product_id']
-        #     result = self.env['stock.quant'].read_group(domain, fields=fields, groupby=groupby)
-        #     _logger.info(result)
-        #     if len(result) > 0:
-        #         self.qty_available = result[0]['qty']
-        #     else:
-        #         self.qty_available = 0.0
+        if self.prescription_id.pharmacy.stock_location_id:
+            domain = [
+                ('product_id','=',self.name.id),
+                ('location_id','=', self.prescription_id.pharmacy.stock_location_id.id)
+            ]
+            _logger.info(domain)
+            fields = ['product_id','qty']
+            groupby = ['product_id']
+            result = self.env['stock.quant'].sudo().read_group(domain, fields=fields, groupby=groupby)
+            _logger.info(result)
+            if len(result) > 0:
+                self.qty_available = result[0]['qty']
+            else:
+                self.qty_available = 0.0
+        else:
+            raise Warning('Stock Location not defined in Pharmacy!')
 
     name = fields.Many2one('product.product', string='Medicines', help='Prescribed Medicines', domain=[('item_type', '=', 'Medicine')], required=True)
     product_template_categ_id = fields.Many2one('product.template.category', related='name.product_template_categ_id')
-    qty_available = fields.Float("Qty On Hand")
+    qty_available = fields.Float(compute=onchange_product, string="Qty On Hand", default=lambda *a: 0.0)
 
 #Pharmacy Order
 
 class oeh_medical_health_center_pharmacy(models.Model):
     _inherit = 'oeh.medical.health.center.pharmacy'
     operating_unit_id = fields.Many2one('operating.unit', 'Operating Unit', required=True)
+    stock_location_id = fields.Many2one('stock.location', 'Stock Location', required=True)
 
 class oeh_medical_health_center_pharmacy_line(models.Model):
     _inherit = 'oeh.medical.health.center.pharmacy.line'
@@ -208,7 +211,8 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
         ('Insurance', 'Insurance'),
         ('Employee', 'Employee')
     ]
-
+ 
+            
     @api.multi
     def view_picking(self, context):
         '''
@@ -291,7 +295,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
 
     is_public = fields.Boolean('Is Public', default=False)
     remark = fields.Text('Remark')
-    pharmacist = fields.Many2one('oeh.medical.physician', string='Pharmacist', help='Current primary care / family doctor', domain=[('is_pharmacist', '=', True)], required=True, readonly=True, states={'Draft': [('readonly', False)]})
+    pharmacist = fields.Many2one('oeh.medical.physician', string='Pharmacist', help='Current primary care / family doctor', domain=[('is_pharmacist', '=', True)], required=True)
     payment = fields.Selection(PAYMENT_TYPE, string='Payment Guarantor', default='Personal', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     company = fields.Many2one(comodel_name='res.partner', string='Company', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
     insurance = fields.Many2one(comodel_name='medical.insurance', string='Insurance', readonly=True, states={'Draft': [('readonly', False)]}, track_visibility='onchange')
@@ -384,7 +388,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                     
                     _logger.info(self.env.user.default_operating_unit_id)
                     _logger.info("Get User Warehouse")
-                    warehouse_id = self.env['stock.warehouse'].search([('operating_unit_id','=',self.env.user.default_operating_unit_id.id)], limit=1)
+                    warehouse_id = self.env['stock.warehouse'].sudo().search([('operating_unit_id','=',self.pharmacist.unit_ids.id)], limit=1)
                     val_obj = {
                         'reg_id': acc.reg_ids.id, 
                         'arrival_id': acc.arrival_id.id, 
@@ -396,7 +400,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id, 
                         'operating_unit_id': self.env.user.default_operating_unit_id.id,
                         'user_id': self.env.user.id,
-                        'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_unit_administration_id.id))], limit=1).id,
+                        'location_id':  self.env['stock.location'].sudo().search([('unit_ids', 'in', (self.pharmacist.unit_ids.id))], limit=1).id,
                         #'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id,
                         'pricelist_id': acc.patient.partner_id.property_product_pricelist.id, 
                         #'warehouse_id':  False if not warehouse_id else warehouse_id.id
@@ -416,7 +420,8 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                         'operating_unit_id': self.env.user.default_operating_unit_id.id,
                         'team_id': team_id.id,
                         'user_id': self.env.user.id,
-                        'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_unit_administration_id.id))], limit=1).id
+                        'location_id':  self.env['stock.location'].sudo().search([('unit_ids', 'in', (self.pharmacist.unit_ids.id))], limit=1).id
+                        # 'location_id':  self.env['stock.location'].search([('unit_ids', 'in', (self.env.user.default_unit_administration_id.id))], limit=1).id
                     }
 
                     _logger.info(val_obj)
@@ -523,7 +528,7 @@ class oeh_medical_health_center_pharmacy_line(models.Model):
                     'partner_shipping_id': guarantor,
                     'payment_guarantor_discount_id': acc.payment_guarantor_discount_id.id,
                     'operating_unit_id': self.env.user.default_operating_unit_id.id,
-                    'location_id': self.env['stock.location'].search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
+                    'location_id': self.env['stock.location'].sudo().search([('unit_ids.operating_id', '=', self.env.user.default_operating_unit_id.id)], limit=1).id}
                 inv_ids = obj.create(val_obj)
                 
                 if inv_ids:
@@ -618,21 +623,111 @@ class oeh_medical_health_center_pharmacy_prescription_line(models.Model):
         return max(base_price, final_price)
 
     @api.multi
-    @api.onchange('name')
-    def onchange_name(self, name=False):
+    @api.onchange('name','actual_qty')
+    def onchange_name(self):
         _logger.info('On Change Name')
+  
         vals = {}
         result = {}
         if self.name:
-            product_context = dict(self.env.context, partner_id=self.prescription_id.patient.partner_id.id, date=datetime.datetime.now(), uom=self.name.uom_id.id)
-            final_price, rule_id = self.prescription_id.pricelist_id.with_context(product_context).get_product_price_rule(self.name, self.actual_qty or 1.0, self.prescription_id.patient.partner_id)
+            # product_context = dict(self.env.context, partner_id=self.prescription_id.patient.partner_id.id, date=datetime.datetime.now(), uom=self.name.uom_id.id)
+            # final_price, rule_id = self.prescription_id.pricelist_id.with_context(product_context).get_product_price_rule(self.name, self.actual_qty or 1.0, self.prescription_id.patient.partner_id)
             _logger.info("Final Price")
-            _logger.info(final_price)
-            vals['price_unit'] = final_price
+            _logger.info(self.prescription_id.payment_guarantor_discount_id.medicine)
+            discount = 0.0
+            if self.prescription_id.payment_guarantor_discount_id:
+                if self.name.item_type == 'General Item':
+                    discount = self.prescription_id.payment_guarantor_discount_id.general_item
+                    price = self.name.lst_price * self.actual_qty 
+                    price = price * (1 - (discount or 0.0) / 100.0)
+
+                elif self.name.item_type == 'Medical Item':        
+                    discount = self.prescription_id.payment_guarantor_discount_id.medical_item
+                    price = self.name.lst_price * self.actual_qty 
+                    price = price * (1 - (discount or 0.0) / 100.0)
+
+                elif self.name.item_type == 'Food Item':        
+                    discount = self.prescription_id.payment_guarantor_discount_id.food_item
+                    price = self.name.lst_price * self.actual_qty 
+                    price = price * (1 - (discount or 0.0) / 100.0)
+
+                elif self.name.item_type == 'Medicine':        
+                    discount = self.prescription_id.payment_guarantor_discount_id.medicine
+                    price = self.name.lst_price * self.actual_qty 
+                    price = price * (1 - (discount or 0.0) / 100.0)
+
+                elif self.name.item_type == 'Doctor':        
+                    discount = self.prescription_id.payment_guarantor_discount_id.doctor
+                    price = self.name.lst_price * self.actual_qty 
+                    price = price * (1 - (discount or 0.0) / 100.0)
+
+                elif self.name.item_type == 'Nurse':        
+                    discount = self.prescription_id.payment_guarantor_discount_id.nurse
+                    price = self.name.lst_price * self.actual_qty 
+                    price = price * (1 - (discount or 0.0) / 100.0)
+
+                else:
+
+                    price = self.name.lst_price * self.actual_qty 
+                    price = price * (1 - (discount or 0.0) / 100.0)
+            
+
+            vals['price_unit'] = self.name.lst_price
+            vals['discount'] = discount
+            vals['price_subtotal'] = price
             self.update(vals)
+
+        
         return {'value': result}
+
+    @api.multi
+    def _amount_line_calculate(self):
+        """
+        Compute the total amounts of the Prescription lines.
+        """
+        
+        for line in self:
+            # discount = 0.0
+            price = line.price_unit * line.actual_qty
+            line.price_subtotal = price * (1 - (line.discount or 0.0) / 100.0)
+
+        return True
+
+    @api.onchange('name')
+    def onchange_qty_available(self):
+        # _logger.info(self.env.user.default_unit_administration_id)
+        # if not self.env.user.default_unit_administration_id:
+        #     raise ValidationError("User didn't have default unit administration!")
+
+        # self.qty_available = self.name.sudo().qty_available
+
+
+        domain = [('unit_ids','in',[self.prescription_id.pharmacist.unit_ids.id])]
+        _logger.info(domain)
+        stock_location_id = self.env['stock.location'].search(domain, limit=1)
+        if stock_location_id:
+            domain = [
+                ('product_id','=',self.name.id),
+                ('location_id','=', stock_location_id.id)
+            ]
+            _logger.info(domain)
+            fields = ['product_id','qty']
+            groupby = ['product_id']
+            result = self.env['stock.quant'].sudo().read_group(domain, fields=fields, groupby=groupby)
+            _logger.info(result)
+            if len(result) > 0:
+                self.qty_available = result[0]['qty']
+            else:
+                self.qty_available = 0.0
+        else:
+            raise Warning('Stock Location not defined in Pharmacy!')
+
     
 
     name = fields.Many2one('product.product', string='Medicines', help='Prescribed Medicines', domain=[('item_type', '=', 'Medicine')], required=True)
-    qty_available = fields.Float(related='name.qty_available')
+    qty_available = fields.Float(compute='onchange_qty_available')
+    discount = fields.Float(name="Discount (%) ")
     actual_qty = fields.Integer(string='Actual Qty Given', help='Actual quantity given to the patient', default=1)
+    price_subtotal = fields.Float(compute=_amount_line_calculate, string='Subtotal', default=lambda *a: 0.0)
+
+ 

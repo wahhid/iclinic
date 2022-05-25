@@ -20,6 +20,7 @@ from . import diagnostic
 from . import medical_evaluation
 from . import lab
 from . import stock_operation_pack
+from . import stock_scrap
 from . import jakc_queue
 from . import res_users
 from . import purchase_order

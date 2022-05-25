@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
     <!-- Prescription -->
@@ -6,9 +6,9 @@
         <field name="name">oeh_medical_prescription_view_inherit</field>
         <field name="model">oeh.medical.prescription</field>
         <field name="type">form</field>
-        <field name="inherit_id" ref="oehealth.oeh_medical_prescription_view"/>
+        <field name="inherit_id" ref="oehealth.oeh_medical_prescription_view" />
         <field name="arch" type="xml">
-            
+
             <xpath expr="//button[@name='action_prescription_invoice_create']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
@@ -18,36 +18,36 @@
             <xpath expr="//notebook/page[1]/field[@name='prescription_line']" position="attributes">
                 <attribute name="context">{'default_patient' : patient}</attribute>
             </xpath>
-            
+
             <xpath expr="//notebook/page[1]/field[@name='prescription_line']/tree[1]/field[@name='name']" position="after">
-                <field name="qty_available" readonly="1"/>
+                <field name="qty_available" readonly="1" />
             </xpath>
 
             <xpath expr="//notebook/page[1]/field[@name='prescription_line']/form[1]/group[1]/group[1]/field[@name='name']" position="after">
-                <field name="product_template_categ_id" readonly="1"/>
-                <field name="qty_available" readonly="1"/>
+                <field name="product_template_categ_id" readonly="1" />
+                <field name="qty_available" readonly="1" />
             </xpath>
             <xpath expr="//field[@name='pharmacy']" position="after">
-                <field name="remarks"/>
+                <field name="remarks" />
             </xpath>
             <xpath expr="//notebook/page[1]" position="after">
                 <page string="Concoctions">
                     <field name="concoction_ids" context="{'default_doctor_id': doctor}">
                         <tree>
-                            <field name="product_id"/>
-                            <field name="item_type"/>
-                            <field name="qty"/>
-                            <field name="product_uom"/>
-                            <field name="price" invisible="1"/>
-                            <field name="date" invisible="1"/>
-                            <field name="state" invisible="1"/>
+                            <field name="product_id" />
+                            <field name="item_type" />
+                            <field name="qty" />
+                            <field name="product_uom" />
+                            <field name="price" invisible="1" />
+                            <field name="date" invisible="1" />
+                            <field name="state" invisible="1" />
                         </tree>
                         <form>
                             <header>
                                 <!--
                                 <button type="object" name="confirm_order" string="Confirm Order" states="draft" class="oe_highlight"/>
                                 -->
-                                <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                                <field name="state" widget="statusbar" statusbar_visible="draft,done" />
                             </header>
                             <!-- <div class="oe_button_box" name="button_box">
                                 <button class="oe_stat_button" type="object" name="" icon="fa-building-o">
@@ -56,11 +56,11 @@
                             </div> -->
                             <group>
                                 <group>
-                                    <field name="product_id" required="1" domain="[('is_concoction','=',True)]"/>
-                                    <field name="doctor_id" required="1"/>
-                                    <label for="qty" string="Quantity"/>
+                                    <field name="product_id" required="1" domain="[('is_concoction','=',True)]" />
+                                    <field name="doctor_id" required="1" />
+                                    <label for="qty" string="Quantity" />
                                     <div>
-                                        <field name="qty" class="oe_inline" required="1" style="width:25% !important"/>
+                                        <field name="qty" class="oe_inline" required="1" style="width:25% !important" />
                                         <!--
                                         <field name="qty_unit" class="oe_inline" style="width:18% !important"/>
                                         <field name="product_uom" class="oe_inline" style="width:47% !important"/>
@@ -68,25 +68,25 @@
                                     </div>
                                 </group>
                                 <group>
-                                    <field name="remark"/>
+                                    <field name="remark" />
                                 </group>
                             </group>
                             <notebook>
                                 <page string="Ingredients">
                                     <field name="concoction_detail_ids">
                                         <tree editable="bottom">
-                                            <field name="product_id" required="1" domain="[('item_type','=','Medicine')]"/>
-                                            <field name="item_type" readonly="1"/>
+                                            <field name="product_id" required="1" domain="[('item_type','=','Medicine')]" />
+                                            <field name="item_type" readonly="1" />
                                             <!--
                                             <field name="big_qty"/>
                                             <field name="uom_po_id" readonly="1"/>
                                             -->
-                                            <field name="is_alt_uom"/>
-                                            <field name="qty" attrs="{'readonly':[('is_alt_uom','=',True)], 'required': [('is_alt_uom','=',False)]}"/>
-                                            <field name="uom_id" readonly="1"/>
-                                            <field name="zat_qty" attrs="{'readonly':[('is_alt_uom','=',False)], 'required': [('is_alt_uom','=',True)]}"/>
-                                            <field name="zat_uom" readonly="1"/>
-                                            <field name="total"/>
+                                            <field name="is_alt_uom" />
+                                            <field name="qty" attrs="{'readonly':[('is_alt_uom','=',True)], 'required': [('is_alt_uom','=',False)]}" />
+                                            <field name="uom_id" readonly="1" />
+                                            <field name="zat_qty" attrs="{'readonly':[('is_alt_uom','=',False)], 'required': [('is_alt_uom','=',True)]}" />
+                                            <field name="zat_uom" readonly="1" />
+                                            <field name="total" />
                                             <!-- <field name="depot_id"/> -->
                                         </tree>
                                     </field>
@@ -117,21 +117,22 @@
         <field name="name">oeh_medical_healthcenters_pharmacy_view_inherit</field>
         <field name="model">oeh.medical.health.center.pharmacy</field>
         <field name="type">form</field>
-        <field name="inherit_id" ref="oehealth.oeh_medical_healthcenters_pharmacy_view"/>
+        <field name="inherit_id" ref="oehealth.oeh_medical_healthcenters_pharmacy_view" />
         <field name="arch" type="xml">
             <field name="info" position="before">
-                <field name="operating_unit_id"/>
+                <field name="operating_unit_id" />
+                <field name="stock_location_id" />
             </field>
             <xpath expr="//notebook/page[1]/field[@name='pharmacy_lines']/form/header/button[@name='action_prescription_invoice_create']" position="replace">
-                <button confirm="Are you sure you want to create the transaction?" name="create_sale" states="Draft" string="Create Transaction" type="object" class="oe_highlight"/>
+                <button confirm="Are you sure you want to create the transaction?" name="create_sale" states="Draft" string="Create Transaction" type="object" class="oe_highlight" />
             </xpath>
             <xpath expr="//field[@name='doctor']" position="after">
-                <field name="unit_id" readonly="1"/>
+                <field name="unit_id" readonly="1" />
                 <!-- <field name="reg_id" readonly="1"/> -->
-                <field name="reg_ids" readonly="1"/>
+                <field name="reg_ids" readonly="1" />
             </xpath>
             <xpath expr="//notebook/page[1]/field[@name='prescription_lines']/tree/field[@name='name']" position="after">
-                <field name="qty_available"/>
+                <field name="qty_available" />
             </xpath>
         </field>
     </record>
@@ -144,11 +145,11 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Prescriptions" nolabel="1" colors="grey:state=='Invoiced';blue:state=='Draft'">
-                <field name="name"/>
-                <field name="patient"/>
-                <field name="doctor"/>
-                <field name="amount_total" sum="Prescription Total"/>
-                <field name="state"/>
+                <field name="name" />
+                <field name="patient" />
+                <field name="doctor" />
+                <field name="amount_total" sum="Prescription Total" />
+                <field name="state" />
             </tree>
         </field>
     </record>
@@ -160,44 +161,44 @@
         <field name="arch" type="xml">
             <form string="Prescriptions" nolabel="1">
                 <header>
-                    <button confirm="Are you sure you want to create the transaction?" name="create_sale" states="Draft" string="Create Transaction" type="object" class="oe_highlight"/>
-                    <button confirm="Menlanjutkan ke bagian berikutnya ?" name="action_next" type="object" states="Invoiced" string="Confirm"  class="oe_highlight"/>
-                    <field name="state" widget="statusbar" statusbar_visible="Draft,Invoiced" statusbar_colors="{&quot;Draft&quot;:&quot;blue&quot;,&quot;Invoiced&quot;:&quot;grey&quot;}"/>
+                    <button confirm="Are you sure you want to create the transaction?" name="create_sale" states="Draft" string="Create Transaction" type="object" class="oe_highlight" />
+                    <button confirm="Menlanjutkan ke bagian berikutnya ?" name="action_next" type="object" states="Invoiced" string="Confirm" class="oe_highlight" />
+                    <field name="state" widget="statusbar" statusbar_visible="Draft,Invoiced" statusbar_colors="{&quot;Draft&quot;:&quot;blue&quot;,&quot;Invoiced&quot;:&quot;grey&quot;}" />
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button type="object" class="oe_stat_button" name="view_picking" icon="fa-list" attrs="{'invisible':[('sale_order_id','=', False)]}">
-                            <label string="View Picking"/>
+                            <label string="View Picking" />
                         </button>
                     </div>
                     <group>
                         <group>
                             <!-- <field name="name" on_change="onchange_prescription_id(name)" attrs="{'required': [('is_public','=', False)],'readonly': [('is_public','=', True)]}" options="{'no_create': True}"/> -->
-                            <field name="name" on_change="onchange_prescription_id(name)" attrs="{'required': [('is_public','=', False)],'readonly': [('is_public','=', True)]}" options="{'no_create': True}"/>
-                            <field name="doctor" options="{'no_create': True}"/>
-                            <field name="pharmacist"/>
-                            <field name="unit_id" readonly="1"/>
-                            <field name="pricelist_id" readonly="1"/>
+                            <field name="name" on_change="onchange_prescription_id(name)" attrs="{'required': [('is_public','=', False)],'readonly': [('is_public','=', True)]}" options="{'no_create': True}" />
+                            <field name="doctor" options="{'no_create': True}" />
+                            <field name="pharmacist" attrs="{'readonly': [('state','=', 'Invoiced')]}" />
+                            <field name="unit_id" readonly="1" />
+                            <field name="pricelist_id" readonly="1" />
                             <!-- <field name="reg_id" readonly="1"/> -->
-                            <field name="arrival_id" readonly="1"/>
-                            <field name="reg_ids" readonly="1"/>
-                            <field name="queue_trans_id"/>
-                            <field name="type_id"/>
-                            <field name="is_public" readonly="1" invisible="1"/>
+                            <field name="arrival_id" readonly="1" />
+                            <field name="reg_ids" readonly="1" />
+                            <field name="queue_trans_id" />
+                            <field name="type_id" />
+                            <field name="is_public" readonly="1" invisible="1" />
                         </group>
                         <group>
-                            <field name="patient"/>
-                            <field name="amount_total" sum="Prescription Total"/>
-                            <field name="sale_order_id"/>
-                            <label for="payment" string="Payment Guarantor"/>
+                            <field name="patient" />
+                            <field name="amount_total" sum="Prescription Total" />
+                            <field name="sale_order_id" />
+                            <label for="payment" string="Payment Guarantor" />
                             <div>
-                                <field name="payment" class="oe_inline" nolabel="1"/>
-                                <span style="margin-right:10px"/>
-                                <field name="company" placeholder="Company" domain="[('is_company','=',True), ('customer','=',True)]" attrs="{'invisible': [('payment','!=','Corporate')], 'required': [('payment','=','Corporate')]}" class="oe_inline" nolabel="1"/>
-                                <field name="insurance" placeholder="Insurance" domain="[('patient','=',patient), ('state','=','Active')]" context="{'default_patient': patient, 'default_state': 'Active'}" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')]}" class="oe_inline" nolabel="1"/>
-                                <field name="employee_id" placeholder="Employee" domain="[('patient','=',patient), ('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
+                                <field name="payment" class="oe_inline" nolabel="1" />
+                                <span style="margin-right:10px" />
+                                <field name="company" placeholder="Company" domain="[('is_company','=',True), ('customer','=',True)]" attrs="{'invisible': [('payment','!=','Corporate')], 'required': [('payment','=','Corporate')]}" class="oe_inline" nolabel="1" />
+                                <field name="insurance" placeholder="Insurance" domain="[('patient','=',patient), ('state','=','Active')]" context="{'default_patient': patient, 'default_state': 'Active'}" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')]}" class="oe_inline" nolabel="1" />
+                                <field name="employee_id" placeholder="Employee" domain="[('patient','=',patient), ('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1" />
                             </div>
-                            <field name="payment_guarantor_discount_id" readonly="1"/>
+                            <field name="payment_guarantor_discount_id" />
                         </group>
                     </group>
                     <notebook>
@@ -205,45 +206,44 @@
                             <group string="Prescription">
                                 <field name="prescription_lines" nolabel="1">
                                     <tree string="Prescription Lines" nolabel="1" editable="bottom">
-                                        <field name="name" onchange="onchange_name(name)"/>
-                                        <field name="qty_available"/>
-                                        <field name="indication"/>
-                                        <field name="qty" readonly="1"/>
+                                        <field name="name" onchange="onchange_name(name)" />
+                                        <field name="qty_available" />
+                                        <field name="indication" />
+                                        <field name="qty" readonly="1" />
                                         <!-- <field name="actual_qty" on_change="onchange_qty_and_price(actual_qty,price_unit)"/>
                                         <field name="price_unit" on_change="onchange_qty_and_price(actual_qty,price_unit)"/> -->
-                                        <field name="actual_qty"
-                                            context="{'actual_qty':actual_qty, 'pricelist':parent.pricelist_id}"/>
-                                        <field name="price_unit" 
-                                            context="{'actual_qty':actual_qty, 'pricelist':parent.pricelist_id}"/>
-                                        <field name="price_subtotal"/>
+                                        <field name="actual_qty" context="{'actual_qty':actual_qty, 'pricelist':parent.pricelist_id}" />
+                                        <field name="price_unit" context="{'actual_qty':actual_qty, 'pricelist':parent.pricelist_id}" />
+                                        <field name="discount" />
+                                        <field name="price_subtotal" />
                                     </tree>
                                 </field>
                             </group>
                             <group string="Concoction">
-                                <field name="concoction_ids"  nolabel="1" context="{'default_doctor_id': doctor}">
+                                <field name="concoction_ids" nolabel="1" context="{'default_doctor_id': doctor}">
                                     <tree>
-                                        <field name="product_id"/>
-                                        <field name="item_type"/>
-                                        <field name="qty"/>
-                                        <field name="product_uom"/>
-                                        <field name="price"/>
-                                        <field name="date" invisible="1"/>
-                                        <field name="state" invisible="1"/>
+                                        <field name="product_id" />
+                                        <field name="item_type" />
+                                        <field name="qty" />
+                                        <field name="product_uom" />
+                                        <field name="price" />
+                                        <field name="date" invisible="1" />
+                                        <field name="state" invisible="1" />
                                     </tree>
                                     <form>
                                         <header>
                                             <!--
                                             <button type="object" name="confirm_order" string="Confirm Order" states="draft" class="oe_highlight"/>
                                             -->
-                                            <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                                            <field name="state" widget="statusbar" statusbar_visible="draft,done" />
                                         </header>
                                         <group>
                                             <group>
-                                                <field name="product_id" required="1" domain="[('is_concoction','=',True)]"/>
-                                                <field name="doctor_id" required="1"/>
-                                                <label for="qty" string="Quantity"/>
+                                                <field name="product_id" required="1" domain="[('is_concoction','=',True)]" />
+                                                <field name="doctor_id" required="1" />
+                                                <label for="qty" string="Quantity" />
                                                 <div>
-                                                    <field name="qty" class="oe_inline" required="1" style="width:25% !important"/>
+                                                    <field name="qty" class="oe_inline" required="1" style="width:25% !important" />
                                                     <!--
                                                     <field name="qty_unit" class="oe_inline" style="width:18% !important"/>
                                                     <field name="product_uom" class="oe_inline" style="width:47% !important"/>
@@ -251,25 +251,25 @@
                                                 </div>
                                             </group>
                                             <group>
-                                                <field name="remark"/>
+                                                <field name="remark" />
                                             </group>
                                         </group>
                                         <notebook>
                                             <page string="Ingredients">
                                                 <field name="concoction_detail_ids">
                                                     <tree editable="bottom">
-                                                        <field name="product_id" required="1" domain="[('item_type','=','Medicine')]"/>
-                                                        <field name="item_type" readonly="1"/>
+                                                        <field name="product_id" required="1" domain="[('item_type','=','Medicine')]" />
+                                                        <field name="item_type" readonly="1" />
                                                         <!--
                                                         <field name="big_qty"/>
                                                         <field name="uom_po_id" readonly="1"/>
                                                         -->
-                                                        <field name="is_alt_uom"/>
-                                                        <field name="qty" attrs="{'invisible':[('is_alt_uom','=',True)],'readonly':[('is_alt_uom','=',True)], 'required': [('is_alt_uom','=',False)]}"/>
-                                                        <field name="uom_id" readonly="1"/>
-                                                        <field name="zat_qty" attrs="{'invisible':[('is_alt_uom','=',False)],'readonly':[('is_alt_uom','=',False)], 'required': [('is_alt_uom','=',True)]}"/>
-                                                        <field name="zat_uom" readonly="1"/>
-                                                        <field name="total"/>
+                                                        <field name="is_alt_uom" />
+                                                        <field name="qty" attrs="{'invisible':[('is_alt_uom','=',True)],'readonly':[('is_alt_uom','=',True)], 'required': [('is_alt_uom','=',False)]}" />
+                                                        <field name="uom_id" readonly="1" />
+                                                        <field name="zat_qty" attrs="{'invisible':[('is_alt_uom','=',False)],'readonly':[('is_alt_uom','=',False)], 'required': [('is_alt_uom','=',True)]}" />
+                                                        <field name="zat_uom" readonly="1" />
+                                                        <field name="total" />
                                                         <!-- <field name="depot_id"/> -->
                                                     </tree>
                                                 </field>
@@ -293,10 +293,10 @@
             <search string="Pharmacies Order">
                 <field name="name" />
                 <field name="doctor" />
-                <field name="pharmacist"/>
-                <field name="state"/>
-                <separator/>
-                <filter string="Draft" name="draft" domain="[('state','=','Draft')]"/>
+                <field name="pharmacist" />
+                <field name="state" />
+                <separator />
+                <filter string="Draft" name="draft" domain="[('state','=','Draft')]" />
 
             </search>
         </field>

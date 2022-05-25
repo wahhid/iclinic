@@ -11,6 +11,11 @@
                 <field name="is_nurse"/>
                 <field name="is_doctor"/>
                 <field name="physician_position"/>
+                <field name="jasa_dokter_id"/>
+            </xpath>
+
+            <xpath expr="//field[@name='consultancy_price']" position="after">
+                <field name="insurance_type_id" />
             </xpath>
 
         </field>

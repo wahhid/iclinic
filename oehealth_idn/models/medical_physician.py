@@ -13,4 +13,7 @@ class medical_evaluation_patient(models.Model):
     is_nurse = fields.Boolean('Is Nurse', default=False)
     is_doctor = fields.Boolean(string='Is Doctor ?')
     physician_position = fields.Char(string='Position')
+    jasa_dokter_id = fields.Many2one(comodel_name='product.product', string='Jasa Dokter')
+    insurance_type_id = fields.Many2one(comodel_name='medical.insurance.type', string='Insurance Type BPJS')
+    
     

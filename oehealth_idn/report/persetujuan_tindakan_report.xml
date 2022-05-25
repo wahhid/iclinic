@@ -15,7 +15,7 @@
             <div class="oe_structure">
               <table style="width:100%">
                 <tr>
-                  <th rowspan="6" style="text-align:center;"><br/><br/>TINDAKAN KEDOKTERAN</th>
+                  <th rowspan="8" style="text-align:center;"><br/><br/><br/>TINDAKAN KEDOKTERAN</th>
                   <td>Nama  : <span t-field="o.patient.name" /></td>
                 </tr>
                 <tr>
@@ -25,10 +25,16 @@
                   <td>No.RM  : <span t-field="o.patient.medical_record"/></td>
                 </tr>
                 <tr>
-                  <td>Jenis Kelamin  : <span t-field="o.patient.sex" />, Ruang  : <span t-field="o.room_id.name" /></td>
+                  <td>Jenis Kelamin  : <span t-field="o.patient.sex" /></td>
                 </tr>
                 <tr>
-                  <td>Tanggal Masuk  : <span t-field="o.date" />, Kelas  : <span t-field="o.class_id.name" /></td>
+                  <td>Ruang  : <span t-field="o.room_id.name" /></td>
+                </tr>
+                <tr>
+                  <td>Tanggal Masuk  : <span t-field="o.date" /></td>
+                </tr>
+                <tr>
+                  <td>Kelas  : <span t-field="o.class_id.name" /></td>
                 </tr>
                 <tr>
                   <td>DPJP  : <span t-field="o.doctor.name" /></td>
@@ -138,12 +144,24 @@
                           </tr>
                           <tr>
                             <td colspan="3">Dengan ini menyatakan bahwa saya telah menerangkan hal-hal diatas secara benar dan jelas dan memberikan kesempatan untuk bertanya dan / berdiskusi</td>
-                            <td>Tanda tangan Dokter</td>
+                            <td>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            Tanda tangan Dokter</td>
                             
                           </tr>
                           <tr>
                             <td colspan="3">Dengan ini menyatakan bahwa saya telah menerima informasi sebagaimana diatas yang saya beri tanda/paraf di kolom kanannya dan telah memahaminya</td>
-                            <td>Tanda tangan penerima informasi</td>
+                            <td>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            Tanda tangan penerima informasi</td>
                             
                           </tr>
                           <tr>
@@ -154,9 +172,12 @@
                         <p style="page-break-after:always;page-break-inside: avoid;"></p>
 
                         <t t-if="true == o.perstujuan_tindakan">
-
+                          
                           <div class="row">
-                            <p style="font-size:24px;text-align:center;font-weight:bold;">PERSETUJUAN TINDAKAN KEDOKTERAN</p>
+                            <div style="text-align:center;">
+                              <p style="font-size:20px;">PERSETUJUAN TINDAKAN KEDOKTERAN</p>
+                              <br/><br/>
+                            </div>
                           </div>
 
                           <div class="container">
@@ -272,7 +293,10 @@
                         <t t-if="false == o.perstujuan_tindakan">
 
                           <div class="row mt32">
-                            <p style="font-size:20px;text-align:left;font-weight:bold">PENOLAKAN TINDAKAN KEDOKTERAN</p>
+                            <div style="text-align:center;">
+                              <p style="font-size:20px;">PENOLAKAN TINDAKAN KEDOKTERAN</p>
+                              <br/><br/>
+                            </div>
                           </div>
 
                           <div class="container">

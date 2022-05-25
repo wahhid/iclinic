@@ -8,7 +8,8 @@
             <style>
 
               th, td {
-                padding: 7px;
+                padding: 4px;
+                font-size:10px;
               }
               </style>
             <div class="oe_structure">
@@ -22,8 +23,8 @@
                     <table border="0" style="width:100%;">
                       <tbody>
                         <tr>
-                          <td>Nama</td>
-                          <td>:</td>
+                          <td style="width:20%;">Nama</td>
+                          <td style="width:3%;">:</td>
                           <td><span t-field="o.doctor.name" /></td>
                         </tr>
                         <tr>
@@ -193,8 +194,8 @@
                           <td colspan="3">Yang bertanda tangan di bawah ini saya :</td>
                         </tr>
                         <tr>
-                          <td>Nama</td>
-                          <td>:</td>
+                          <td style="width:20%;">Nama</td>
+                          <td style="width:3%;">:</td>
                           <td><span t-field="o.patient.name" /> / </td>
                         </tr>
                         <tr>

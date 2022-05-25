@@ -436,62 +436,118 @@ class unit_registration(models.Model):
 
                 if inv_ids:
                     inv_id = inv_ids.id
-                    if self.arrival_id and not self.arrival_id.have_register:
-                        product = self.env['product.product'].search([('auto_billing', '!=', False)])
-                        for product_id in product:
-                            discount = 0.0
-                            if acc.payment_guarantor_discount_id:
-                                if product_id.item_type == 'General Item':
-                                    discount = acc.payment_guarantor_discount_id.general_item
-                                elif product_id.item_type == 'Medical Item':        
-                                    discount = acc.payment_guarantor_discount_id.medical_item
-                                elif product_id.item_type == 'Food Item':        
-                                    discount = acc.payment_guarantor_discount_id.food_item
-                                elif product_id.item_type == 'Medicine':        
-                                    discount = acc.payment_guarantor_discount_id.medicine
-                                elif product_id.item_type == 'Doctor':        
-                                    discount = acc.payment_guarantor_discount_id.doctor
-                                elif product_id.item_type == 'Nurse':        
-                                    discount = acc.payment_guarantor_discount_id.nurse
-                            
-                            if product_id.item_type == 'Doctor':
-                                lst_price = acc.doctor.consultancy_price
-                            else:
-                                lst_price = product_id.lst_price
-                                
-                            _logger.info(lst_price)
-                            if product_id.item_type == 'Doctor':
-                                _logger.info("Product Doctor")
-                                vals = {
-                                    'order_id': inv_id, 
-                                    'product_id': product_id.id, 
-                                    'name': product_id.name, 
-                                    'product_uom_qty': 1, 
-                                    'product_uom': product_id.uom_id.id, 
-                                    'price_unit': lst_price,
-                                    'discount_type': 'percent',
-                                    'discount': discount,
-                                    'doctor_id': False
-                                }
-                            else:
-                                _logger.info("Product non Doctor")
-                                vals = {
-                                    'order_id': inv_id, 
-                                    'product_id': product_id.id, 
-                                    'name': product_id.name, 
-                                    'product_uom_qty': 1, 
-                                    'product_uom': product_id.uom_id.id, 
-                                    'price_unit': lst_price,
-                                    'discount_type': 'percent',
-                                    'discount': discount,
-                                    'doctor_id': False
-                                }
-                            #create sale order line
-                            line_obj.create(vals)
+
+                    if acc.doctor.jasa_dokter_id:
                         
-                        #Set Have Register Status
-                        arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)
-                        arrival.write({'have_register': True})
+                        _logger.info("Jasa Doctor")
+                        if acc.payment_guarantor_discount_id.insurance_type_id.id == acc.doctor.insurance_type_id.id:
+                            lst_price = acc.doctor.bpjs_price
+                        else:
+                            lst_price = acc.doctor.consultancy_price
+
+                        discount = 0.0
+                        if acc.payment_guarantor_discount_id:
+                            if acc.doctor.jasa_dokter_id.item_type == 'General Item':
+                                discount = acc.payment_guarantor_discount_id.general_item
+                            elif acc.doctor.jasa_dokter_id.item_type == 'Medical Item':        
+                                discount = acc.payment_guarantor_discount_id.medical_item
+                            elif acc.doctor.jasa_dokter_id.item_type == 'Food Item':        
+                                discount = acc.payment_guarantor_discount_id.food_item
+                            elif acc.doctor.jasa_dokter_id.item_type == 'Medicine':        
+                                discount = acc.payment_guarantor_discount_id.medicine
+                            elif acc.doctor.jasa_dokter_id.item_type == 'Doctor':        
+                                discount = acc.payment_guarantor_discount_id.doctor
+                            elif acc.doctor.jasa_dokter_id.item_type == 'Nurse':        
+                                discount = acc.payment_guarantor_discount_id.nurse
+
+                        vals = {
+                            'order_id': inv_id, 
+                            'product_id': acc.doctor.jasa_dokter_id.id, 
+                            'name': acc.doctor.jasa_dokter_id.name, 
+                            'product_uom_qty': 1, 
+                            'product_uom': acc.doctor.jasa_dokter_id.uom_id.id, 
+                            'price_unit': lst_price,
+                            'discount_type': 'percent',
+                            'discount': discount,
+                            'doctor_id': False
+                        }
+
+                        line_obj.create(vals)
+
+                        # # for line in product:
+                        # vals = {
+                        #     'order_id': inv_id, 
+                        #     'product_id': acc.doctor.jasa_dokter_id.id, 
+                        #     'name': acc.doctor.jasa_dokter_id.name, 
+                        #     'product_uom_qty': 1,
+                        #     # 'product_uom': product_id.uom_id.id, 
+                        #     'price_unit': lst_price
+                        #     # 'discount_type': 'percent',
+                        #     # 'discount': discount,
+                        #     # 'doctor_id': False
+                        # }
+                        # line_obj.create(vals)
+
+                    else:
+                        raise UserError(_('Configuration error! \n Could not find any Jasa Dokter to create the transactions !'))
+                        
+                    
+                    # if self.arrival_id and not self.arrival_id.have_register:
+                    #     product = self.env['product.product'].search([('auto_billing', '!=', False)])
+                    #     for product_id in product:
+                    #         discount = 0.0
+                    #         if acc.payment_guarantor_discount_id:
+                    #             if product_id.item_type == 'General Item':
+                    #                 discount = acc.payment_guarantor_discount_id.general_item
+                    #             elif product_id.item_type == 'Medical Item':        
+                    #                 discount = acc.payment_guarantor_discount_id.medical_item
+                    #             elif product_id.item_type == 'Food Item':        
+                    #                 discount = acc.payment_guarantor_discount_id.food_item
+                    #             elif product_id.item_type == 'Medicine':        
+                    #                 discount = acc.payment_guarantor_discount_id.medicine
+                    #             elif product_id.item_type == 'Doctor':        
+                    #                 discount = acc.payment_guarantor_discount_id.doctor
+                    #             elif product_id.item_type == 'Nurse':        
+                    #                 discount = acc.payment_guarantor_discount_id.nurse
+                            
+                    #         if product_id.item_type == 'Doctor':
+                    #             lst_price = acc.doctor.consultancy_price
+                    #         else:
+                    #             lst_price = product_id.lst_price
+                                
+                    #         _logger.info(lst_price)
+                    #         if product_id.item_type == 'Doctor':
+                    #             _logger.info("Product Doctor")
+                    #             vals = {
+                    #                 'order_id': inv_id, 
+                    #                 'product_id': product_id.id, 
+                    #                 'name': product_id.name, 
+                    #                 'product_uom_qty': 1, 
+                    #                 'product_uom': product_id.uom_id.id, 
+                    #                 'price_unit': lst_price,
+                    #                 'discount_type': 'percent',
+                    #                 'discount': discount,
+                    #                 'doctor_id': False
+                    #             }
+                    #         else:
+                    #             _logger.info("Product non Doctor")
+                    #             vals = {
+                    #                 'order_id': inv_id, 
+                    #                 'product_id': product_id.id, 
+                    #                 'name': product_id.name, 
+                    #                 'product_uom_qty': 1, 
+                    #                 'product_uom': product_id.uom_id.id, 
+                    #                 'price_unit': lst_price,
+                    #                 'discount_type': 'percent',
+                    #                 'discount': discount,
+                    #                 'doctor_id': False
+                    #             }
+                    #         #create sale order line
+                    #         line_obj.create(vals)
+                        
+                    #     #Set Have Register Status
+                    #     arrival = self.env['oeh.medical.appointment.register.walkin'].browse(self.arrival_id.id)
+                    #     arrival.write({'have_register': True})
             else:
                 raise UserError(_('Configuration error! \n Could not find any patient to create the transactions !'))
 

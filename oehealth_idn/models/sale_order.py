@@ -143,16 +143,43 @@ class sale_order_line(models.Model):
                     'price_subtotal': taxes['total_excluded'],
                 })
 
+    @api.onchange('product_id')
+    def onchange_product_qty_available(self):
+        # domain = [('unit_ids','in',[self.env.user.default_unit_administration_id.id])]
+        # _logger.info(domain)
+        # stock_location_id = self.env['stock.location'].search(domain, limit=1)
+        vals = {}
+        for order in self:
+            if order.order_id.location_id.id:
+                domain = [
+                    ('product_id','=',order.product_id.id),
+                    ('location_id','=', order.order_id.location_id.id)
+                ]
+                _logger.info(domain)
+                fields = ['product_id','qty']
+                groupby = ['product_id']
+                result = self.env['stock.quant'].sudo().read_group(domain, fields=fields, groupby=groupby)
+                _logger.info(result)
+                for line in result:
+                    if len(result) > 0:
+                        _logger.info(line['qty'])
+                        order.qty_available = line['qty']
+                        # qty_avail += line['qty']
 
-    # p
-    
+                    else:
+                        order.qty_available = 0.0
+            else:
+                raise Warning('Stock Location not defined!')
+
+
 
     arrival_id = fields.Many2one(comodel_name='oeh.medical.appointment.register.walkin', string='Arrival ID', related='order_id.arrival_id')
     reg_id = fields.Many2one(comodel_name='unit.registration', string='Reg ID', related='order_id.reg_id')
     patient_id = fields.Many2one(comodel_name='oeh.medical.patient', related='order_id.patient_id', string='Patient', store=True)
     doctor_id = fields.Many2one(comodel_name='oeh.medical.physician', related='order_id.doctor_id', string='Doctor', store=True)
     prescribe_qty = fields.Float(string='Prescribe Qty')
-    qty_available = fields.Float(related='product_id.qty_available')
+    # qty_available = fields.Float(related='product_id.qty_available')
+    qty_available = fields.Float(compute=onchange_product_qty_available)
     product_type = fields.Selection(related='product_id.type')
     auto_billing = fields.Boolean(related='product_id.auto_billing')
     invoice_check = fields.Selection(related='order_id.invoice_check')
@@ -162,6 +189,20 @@ class sale_order_line(models.Model):
     bpjs_price =  fields.Float('Bpsj Charge', default=0.0)
     is_concoction = fields.Boolean('Concoction', default=False, readonly=True)
     medical_concoction_id = fields.Many2one('medical.concoction', 'Concoction #') 
+
+    # @api.model
+    # def create(self, vals):
+    #     res = super(sale_order_line, self).create(vals)
+    #     res.onchange_product_qty_available()
+    #     return res
+
+    # @api.multi
+    # def write(self, vals):
+    #     """Override default Odoo write function and extend."""
+
+    #     res = super(sale_order_line, self).write(vals)
+    #     res.onchange_product_qty_available()
+    #     return res
 
     @api.multi
     def _prepare_invoice_line(self, qty):

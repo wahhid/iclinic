@@ -53,6 +53,7 @@
         "views/opthalmology_view.xml",
         "views/account_invoice_view.xml",
         "views/stock_pack_operation_views.xml",
+        "views/stock_scrap_view.xml",
         "views/jakc_queue_view.xml",
         "views/res_users_view.xml",
         "views/unit_view.xml",

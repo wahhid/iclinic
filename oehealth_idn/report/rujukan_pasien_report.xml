@@ -12,7 +12,7 @@
                     </style>
                     <div class="oe_structure">
                         <t t-foreach="docs" t-as="o">
-                            <h4 style="text-align:center;">FORMULIR RUJUKAN PASIEN</h4>
+                            <h4 style="text-align:center;">PEMERIKSAAN LABORATORIUM</h4>
                             <br/>
                             <br/>
                             <p style="text-align:right;">
@@ -39,17 +39,24 @@
                                                             <td colspan="3">IDENTITAS PASIEN</td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Nama Pasien</td>
+                                                            <td style="width:40%">Nama Pasien</td>
                                                             <td> : </td>
                                                             <td>
                                                                 <span t-field="o.patient.name" />
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Umur</td>
+                                                            <td>Usia</td>
                                                             <td> : </td>
                                                             <td>
-                                                                <span t-field="o.patient.age" />
+                                                                <span t-esc="age" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Jenis Kelamin</td>
+                                                            <td> : </td>
+                                                            <td>
+                                                                <span t-field="o.patient.sex" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -83,7 +90,7 @@
                                                             <td colspan="3">TANDA-TANDA VITAL</td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Tekanan Darah</td>
+                                                            <td style="width:40%">Tekanan Darah</td>
                                                             <td> : </td>
                                                             <td>
                                                                 <span t-esc="line['systolic']" /> / <span t-esc="line['diastolic']" /> mmHg
@@ -187,7 +194,9 @@
                             <br/><br/>
                             <p>Atas kerjasamanya, kami mengucapkan terimakasih</p>
                             <br/><br/>
+                            <div class="container" style="width:80%;">
                             <p style="text-align:right;">Kijang,<span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></p>
+                            </div>
                             <center>
                             <br/><br/><br/>
                             <table style="width:90%;">

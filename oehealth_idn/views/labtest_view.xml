@@ -45,6 +45,7 @@
                     <field name="insurance" placeholder="Insurance" attrs="{'invisible': [('payment','!=','Insurance')], 'required': [('payment','=','Insurance')]}" class="oe_inline" nolabel="1"/>
                     <field name="employee_id" placeholder="Employee" domain="[('patient','=',patient), ('state','=','Active')]" attrs="{'invisible': [('payment','!=','Employee')], 'required': [('payment','=','Employee')], 'readonly': [('state','not in',('Draft', 'Scheduled'))]}" class="oe_inline" nolabel="1"/>
                 </div>
+                <field name="payment_guarantor_discount_id" />
                 <field name="sale_order_id" readonly="1"/>
                 <field name="total_amount"/>
             </xpath>

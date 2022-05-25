@@ -26,6 +26,11 @@ class ReportRekamMedisRawatJalan(models.AbstractModel):
         records = {}
         walkin = self.env['oeh.medical.appointment.register.walkin'].browse(walkin_id)
         #walkin = self.env['unit.registration'].search([('id','=',walkin_id)])
+        #walkin = self.env['unit.registration'].search([('id','=',walkin_id)])
+
+        walkinid = walkin.clinic_walkin_id.id or walkin.unit_walkin_id.id or walkin.emergency_walkin_id.id or walkin.support_walkin_id.id
+        walkinids = self.env['oeh.medical.appointment.register.walkin'].search([('id','=',walkinid)])
+
         patient = {
             'patient_name':  walkin.patient.name,
             'medical_record': walkin.patient.medical_record,
