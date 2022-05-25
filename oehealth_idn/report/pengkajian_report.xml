@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_pengkajian">
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+
+th, td {
+  padding: 5px;
+}
+</style>
+                        <div class="oe_structure">
+
+                            <table class="gt_table" width="100%" style="border: 1px solid #000; ">
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid #000; width:50%;">
+                                            <table style="border: 0;" width="100%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="">Nama</td>
+                                                        <td style=""> : </td>
+                                                        <td style="">...........</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="">Tanggal Lahir</td>
+                                                        <td style=""> : </td>
+                                                        <td style="">...........</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="">Istri/ Anak dari</td>
+                                                        <td style=""> : </td>
+                                                        <td style="">...........</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="">Alamat</td>
+                                                        <td style=""> : </td>
+                                                        <td style="">...........</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="">Alergi Obat</td>
+                                                        <td style=""> : </td>
+                                                        <td style="">Tidak ada/ada, Sebutkan</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td style="border: 1px solid #000; ">
+                                            <table style="border: 0;" width="100%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="">No. Rekam Medis</td>
+                                                        <td style=""> : </td>
+                                                        <td style="">...........</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="">Pekerjaan</td>
+                                                        <td style=""> : </td>
+                                                        <td style="">...........</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="">Agama</td>
+                                                        <td style=""> : </td>
+                                                        <td style="">...........</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="">Jenis Kelamin</td>
+                                                        <td style=""> : </td>
+                                                        <td style="">...........</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="">Kewarganegaraan</td>
+                                                        <td style=""> : </td>
+                                                        <td style="">...........</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #000; ">
+                                            NPP (Jika ada) :
+                                            <br />
+                                            1. Peg dan kel pasca tambang
+                                            <br />
+                                            2. Peg dan kel UPBE Pongkor
+                                            <br />
+                                            3. Peg dan kel UBPN Pomala
+                                            <br />
+                                        </td>
+                                        <td style="border: 1px solid #000; ">
+                                            No. BPJS (Jika ada) :
+                                            <br />
+                                            4. Pens dan kel.Antam
+                                            <br />
+                                            5. Pihak III
+                                            <br />
+                                            6. Lain-lain/BPJS/ASURANSI
+                                            <br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid #000; vertical-align:top">
+                                            Riwayat Penyakit
+                                            <br />
+                                            a. Riwayat Penyakit Pribadi
+                                            <br />
+
+
+                                            <br />
+                                            b. Riwayat Penyakit Keluarga
+                                            <br />
+
+
+                                            <br />
+                                            <br />
+                                            c. Riwayat Alergi Obat dan Makanan
+                                            <br />
+                                            <br />
+                                            Kajian Biopsikososial
+                                            <br />
+                                            a. kebiasaan
+                                            <br />
+                                            b. Pekerjaan
+                                            <br />
+                                            c. Psikologis
+                                            <br />
+                                            <br />
+                                            Tingkat Pendidikan
+                                            <br />
+                                            Disorientasi
+                                            <br />
+                                            Emosi
+                                            <br />
+                                            d. Sosial
+                                            <br />
+                                            <br />
+                                            Tempat tinggal
+                                            <br />
+                                            Bantuan yang di butuhkan di rumah
+                                            <br />
+                                            Status Gizi (Malnutrition Screening Tool MST)
+                                            <br />
+                                            BB : ......  kg
+                                            <br />
+                                            TB : ......   cm
+                                            <br />
+                                            IMT : ......   (BB/TB2/M)
+                                            <br />
+
+                                        </td>
+                                        <td style="border: 1px solid #000; ">
+                                            <table style="border: 1px solid #000;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">DM.Stroke</td>
+                                                        <td style="border: 1px solid #000; ">..............................</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Katarak</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Hipertensi</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Penyakit jantung koroner</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Kolesterol,Penyakit Ginjal</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Penyakit hati/liver</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Asam urat</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Pendarahan Lama</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Lain-Lain : </td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; "></td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">DM</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Hipertensi</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Penyakit jantung koroner</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Penyakit gangguan ginjal</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Kejiwaan/Depresi</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Serangan Jantung</td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Lain-lain : </td>
+                                                        <td style="border: 1px solid #000; "></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; " colspan="2">
+                                                            Tidak ada/ada
+                                                            
+                                                            Sebutkan : ................
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; " colspan="2">
+                                                            Apakah pekerjaan pasien berhubungan dengan bahan berbahaya?(Misal,Kimia,Gas dll)
+                                                            
+                                                            Tidak/Ya,Sebutkan : .........................
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; " colspan="2">
+                                                            SD/SMP/SMA/D3/S1/S2/S3
+                                                            
+                                                            Tidak ada/ada,Sebutkan : waktu/orang/ruang
+                                                            
+                                                            Tidak bisa menahan diri/mudah tersinggung/gelisah/tenang
+                                                            
+                                                            
+                                                            Sendiri/sewa/bersama keluarga lain
+                                                            
+                                                            Makan/Mandir/BAK/BAB/Berjalan
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; " colspan="2">
+1. Apakah pasien mengalami penurunan berat badan yang tidak direncanakan/tidak di inginkan dalam 6 bulan terakhir?
+</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Tidak</td>
+                                                        <td style="border: 0px solid #000; "> 0 </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Tidak yakin ada tanda : baju menjadi lebih longgar</td>
+                                                        <td style="border: 0px solid #000; "> 2 </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">Ya, ada penurunan BB sebanyak</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; "> 1-5 kg</td>
+                                                        <td style="border: 0px solid #000; "> 1 </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; "> 6-10 kg</td>
+                                                        <td style="border: 0px solid #000; "> 2 </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; "> 11-15 kg</td>
+                                                        <td style="border: 0px solid #000; "> 3 </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; "> > 15 kg</td>
+                                                        <td style="border: 0px solid #000; "> 4 </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">Tidak tahu berapa Kg penurunannya</td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td style="border: 0px solid #000; " colspan="2">
+2. Apakah asupan makanan pasien berkurang karena penurunan nafsu makan/kesulitan menerima makan?
+</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Tidak</td>
+                                                        <td style="border: 0px solid #000; "> 0 </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 0px solid #000; ">Ya</td>
+                                                        <td style="border: 0px solid #000; "> 1 </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <p style="page-break-after:always;page-break-inside: avoid;"></p>
+
+                            <table class="gt_table" width="100%" style="border: 1px solid #000; ">
+                                <tr>
+                                    <th>NO</th>
+                                    <th>PENGKAJIAN</th>
+                                    <th colspan="2">SKALA</th>
+                                    <th>NILAI</th>
+                                    <th>KET</th>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">1. </td>
+                                    <td rowspan="2">
+                                        Rawayat jatuh :
+                                        <br />
+                                        Apakah lansia pernah jatuh dalam 3 bulan terakhir?
+                                    </td>
+                                    <td>Tidak</td>
+                                    <td> 0 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td> Ya </td>
+                                    <td> 25 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">2. </td>
+                                    <td rowspan="2">
+                                        Diagnosa sekunder :
+                                        <br />
+                                        Apakah lansia lebih dari 1 penyakit?
+                                    </td>
+                                    <td>Tidak</td>
+                                    <td> 0 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td> Ya </td>
+                                    <td> 15 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3">3. </td>
+                                    <td>
+                                        Alat bantu jalan :
+                                        <br />
+                                        - Bet Resi/dibantu perawat
+                                    </td>
+                                    <td></td>
+                                    <td> 0 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td> - Krul/tongakat/walker </td>
+                                    <td></td>
+                                    <td> 15 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td> - Berpegangan pada benda-benda disekitar (kursi,lemari,meja)</td>
+                                    <td></td>
+                                    <td> 30 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2">4. </td>
+                                    <td rowspan="2">
+                                        Terapi intravena :
+                                        <br />
+                                        Apakah saat ini lansia terpasang infus?
+                                    </td>
+                                    <td>Tidak</td>
+                                    <td> 0 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td> Ya </td>
+                                    <td> 20 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3">5. </td>
+                                    <td>
+                                        Gaya berjalan / cara berpindah :
+                                        <br />
+                                        - Normal/Bed rest/immobile(tidak dapat bergerak sendiri)
+                                    </td>
+                                    <td></td>
+                                    <td> 0 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td> - Lemah tidak bertenaga </td>
+                                    <td></td>
+                                    <td> 10 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td> - Gangguan/tidak normal(pincang/diseret)</td>
+                                    <td></td>
+                                    <td> 20 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td rowspan="2">6. </td>
+                                    <td>
+                                        status mental :
+                                        <br />
+                                        - Lansia menyadari kondisi dirinya
+                                    </td>
+                                    <td></td>
+                                    <td> 0 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td> - Lansian mengalami keterbatasan daya ingat </td>
+                                    <td></td>
+                                    <td> 15 </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3" style="text-align: right;">Total Nila</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <br />
+                            <table style="width:100%" border="0">
+                                <tr>
+                                    <td style="text-align: Left;">
+                                        Tanggal Pemeriksaan
+                                        <br />
+                                        <br />
+                                        <br />
+                                        Keterangan
+                                    </td>
+                                    <td style="text-align: center;">
+                                        Pemeriksa
+                                        <br />
+                                        <br />
+                                        <br />
+                                        __________________
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <br />
+
+                            <table style="width:100%" border="1">
+                                <tr>
+                                    <th>Tingkatan Resiko</th>
+                                    <th>Nila MFS</th>
+                                    <th>Tindakan</th>
+                                </tr>
+                                <tr>
+                                    <td> Tidak beresiko </td>
+                                    <td> 0 - 24 </td>
+                                    <td> Perawatan dasar</td>
+                                </tr>
+                                <tr>
+                                    <td> Resiko rendah </td>
+                                    <td> 25 - 50 </td>
+                                    <td> Pelaksanaan intervensi pencegahan jatuh standar</td>
+                                </tr>
+                                <tr>
+                                    <td> Resiko tinggi </td>
+                                    <td> >= 51</td>
+                                    <td> Pelaksanaan intervensi jatuh resiko tinggi</td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
