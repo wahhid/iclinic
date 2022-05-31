@@ -168,7 +168,7 @@ class oeh_medical_prescription_line(models.Model):
         if not self.env.user.default_unit_administration_id:
             raise ValidationError("User didn't have default unit administration!")
 
-        self.qty_available = self.name.qty_available
+        self.qty_available = self.name.sudo().qty_available
 
 
         # domain = [('unit_ids','in',[self.env.user.default_unit_administration_id.id])]
